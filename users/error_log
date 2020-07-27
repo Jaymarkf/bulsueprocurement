@@ -1,0 +1,9 @@
+[04-Aug-2019 00:07:14] PHP Notice:  Undefined variable: itemCatDesc in /home2/bulsuepr/public_html/users/dashboard.php on line 93
+[04-Aug-2019 00:09:39] PHP Notice:  Undefined variable: itemCatDesc in /home2/bulsuepr/public_html/users/dashboard.php on line 93
+[04-Aug-2019 00:09:42] PHP Notice:  Undefined variable: itemCatDesc in /home2/bulsuepr/public_html/users/dashboard.php on line 93
+[04-Aug-2019 00:10:59] PHP Parse error:  syntax error, unexpected '<' in /home2/bulsuepr/public_html/users/dashboard.php on line 109
+[04-Aug-2019 00:11:23] PHP Parse error:  syntax error, unexpected '<' in /home2/bulsuepr/public_html/users/dashboard.php on line 109
+[04-Aug-2019 00:11:27] PHP Parse error:  syntax error, unexpected '<' in /home2/bulsuepr/public_html/users/dashboard.php on line 109
+[04-Aug-2019 00:11:34] PHP Parse error:  syntax error, unexpected '<' in /home2/bulsuepr/public_html/users/dashboard.php on line 109
+[05-Aug-2019 21:22:31] PHP Notice:  A session had already been started - ignoring session_start() in /home2/bulsuepr/public_html/users/session.php on line 2
+[05-Aug-2019 21:22:36] PHP Notice:  A session had already been started - ignoring session_start() in /home2/bulsuepr/public_html/users/session.php on line 2
