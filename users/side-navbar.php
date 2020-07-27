@@ -4,7 +4,7 @@
     $cat = $jim->getcategory();
     class Data {
         function getcategory(){
-            $result = mysql_query("SELECT * FROM tbl_item_category ORDER BY itemCatDesc ASC");
+            $result = mysqli_query($conn,"SELECT * FROM tbl_item_category ORDER BY itemCatDesc ASC");
             return $result;
         }
     }
@@ -21,7 +21,7 @@
 			</li>
 				<?php
 					$cat = $jim->getcategory();
-					while($row = mysql_fetch_array($cat)){
+					while($row = mysqli_fetch_array($cat)){
 						echo '<li><a tabindex="-1" class="jkl" href="category.php?filter='.trim($row['itemcategoryID']).'"><i class="icon-tags icon-large"></i> '.$row['ItemCatDesc'].'</a></li>';
 					}
 				?>

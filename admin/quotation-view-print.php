@@ -9,8 +9,8 @@
 	$company = $_GET['company'];
 	$year = $_GET['year'];
 					
-	$qry = mysql_query("SELECT * FROM tbl_quotation WHERE ItemDescription = '$item' AND Company = '$company' AND Year = '$year'")or die(mysql_error());
-	while($row = mysql_fetch_array($qry)) {
+	$qry = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE ItemDescription = '$item' AND Company = '$company' AND Year = '$year'");
+	while($row = mysqli_fetch_array($qry)) {
 		$item = $row['itemDescription'];
 		$brand = $row['Brand_Model'];
 		$qty_unit = $row['Quantity']+' '+$row['unitOfMeasurement'];

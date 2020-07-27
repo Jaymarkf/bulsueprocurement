@@ -17,8 +17,8 @@
 						</div>
 						
 						<?php
-								$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-									while($row = mysql_fetch_array($query)) {
+								$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+									while($row = mysqli_fetch_array($query)) {
 									$Year = $row['Year'];
 								}
 							?>
@@ -31,11 +31,11 @@
 								</script>
 					</div>
 				</div>
-	
+
 			<!-- <div class="span3" id="content">
-				<?php  //include('quotation-add.php');  ?>		   			
+				<?php  //include('quotation-add.php');  ?>
 			</div> -->
-			
+
 						<div class="span12" id="content">
 							<div class="row-fluid">
 								<br/>
@@ -51,30 +51,30 @@
 							</div>
 						</div>
 						<?php
-							$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-								while($row = mysql_fetch_array($query)) {
+							$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+								while($row = mysqli_fetch_array($query)) {
 								$Year = $row['Year'];
 							}
 						?>
-						
+
 			<div class="span12" id="content">
 				 <div class="row-fluid">
 					<!-- block -->
 					<div id="block_bg" class="block">
 						<div class="navbar navbar-inner block-header">
-						<?php 
-						//$query = mysql_query("SELECT * FROM tbl_quotation")or die(mysql_error());
-						//$query = mysql_query("SELECT * FROM tbl_po_items WHERE Year = $Year GROUP BY POno")or die(mysql_error());
-						$query = mysql_query("SELECT * FROM tbl_iar WHERE Year = $Year AND iar_No <> 0 GROUP BY POno")or die(mysql_error());
-						$count = mysql_num_rows($query);
-						
+						<?php
+						//$query = mysqli_query($conn,"SELECT * FROM tbl_quotation");
+						//$query = mysqli_query($conn,"SELECT * FROM tbl_po_items WHERE Year = $Year GROUP BY POno");
+						$query = mysqli_query($conn,"SELECT * FROM tbl_iar WHERE Year = $Year AND iar_No <> 0 GROUP BY POno");
+						$count = mysqli_num_rows($query);
+
 						?>
 							<div class="muted pull-left"><img src="../images/buttons/iaa.png" width="5%"> Inspection and Acceptance Reports Lists</div>
 							<div class="muted pull-right">
 								Number of Inspection and Acceptance Report: <span class="badge badge-info"><?php echo $count; ?></span>
 							</div>
 						</div>
-						
+
 						<div class="block-content collapse in">
 							<div class="span12">
 							<!-- <form action="quotation-delete.php" method="post" id="deleteForm"> -->
@@ -92,10 +92,10 @@
 									</thead>
 									<tbody>
 										<?php
-											//$query =  mysql_query("SELECT * FROM //tbl_po, tbl_po_items WHERE tbl_po.Year = //$Year GROUP BY tbl_po_items.POno")or //die(mysql_error());
-											//$query =  mysql_query("SELECT * FROM tbl_po JOIN tbl_po_items USING (POno) WHERE tbl_po.Year = $Year AND tbl_po.POno <> '' GROUP BY tbl_po_items.POno")or die(mysql_error());
-											$query =  mysql_query("SELECT * FROM tbl_iar JOIN tbl_iar_items USING (POno) WHERE tbl_iar.Year = $Year AND tbl_iar.POno <> 0 GROUP BY tbl_iar_items.POno")or die(mysql_error());
-											while($row = mysql_fetch_array($query)){
+											//$query =  mysqli_query($conn,"SELECT * FROM //tbl_po, tbl_po_items WHERE tbl_po.Year = //$Year GROUP BY tbl_po_items.POno")or //die(mysql_error());
+											//$query =  mysqli_query($conn,"SELECT * FROM tbl_po JOIN tbl_po_items USING (POno) WHERE tbl_po.Year = $Year AND tbl_po.POno <> '' GROUP BY tbl_po_items.POno");
+											$query =  mysqli_query($conn,"SELECT * FROM tbl_iar JOIN tbl_iar_items USING (POno) WHERE tbl_iar.Year = $Year AND tbl_iar.POno <> 0 GROUP BY tbl_iar_items.POno");
+											while($row = mysqli_fetch_array($query)){
 										?>
 											<tr>
 												<td width="5"><?php echo $row['iar_No']; ?></th>
@@ -103,21 +103,21 @@
 												<td width="150"><?php echo $row['supplier']; ?></td>
 												<td width="5"><?php echo $row['POno']; ?></td>
 												<td width="5"><?php echo $row['po_Date']; ?></td>
-												<td width="5">													
+												<td width="5">
 														<?php
 															$iar_No = $row['iar_No'];
 															$POno = $row['POno'];
 															$year = $row['Year'];
 															//$dateC = $row['Date_Created'];
-															
-															$check = mysql_query("SELECT *,COUNT(Year) FROM tbl_iar WHERE Year = '$Year' AND iar_No = '$iar_No'")or die(mysql_error());
-															$bilang = mysql_num_rows($check);
-															
+
+															$check = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_iar WHERE Year = '$Year' AND iar_No = '$iar_No'");
+															$bilang = mysqli_num_rows($check);
+
 															if ($bilang == "0") {
 																echo '<a title="Preview Inspection and Acceptance Report" id="back" data-placement="top" class="btn btn-default"><i class="icon-print icon-large"></i> Preview </a>';
 															}else{
 																echo '<a href="inspection-preview.php?iar_No='.$iar_No.'&POno='.$POno.'" title="Preview Inspection and Acceptance Report" id="back" data-placement="top" class="btn btn-inverse"><i class="icon-print icon-large"></i> Preview </a>';
-															}	
+															}
 														?>
 														<script type="text/javascript">
 															$(document).ready(function(){

@@ -29,12 +29,12 @@
 				
 				<tbody>
 					<?php
-					//$query1 = mysql_query("SELECT * FROM users WHERE Year='$YearID'")or die(mysql_error());
-					//while($row1 = mysql_fetch_array($query1)) {
+					//$query1 = mysqli_query($conn,"SELECT * FROM users WHERE Year='$YearID'");
+					//while($row1 = mysqli_fetch_array($query1)) {
 					//$Year = $row1['Year'];
 					
-					$query3 = mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $YearID AND user_id='$session_id'  AND Status = 'Completed'")or die(mysql_error());
-					while($row3 = mysql_fetch_array($query3)){
+					$query3 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $YearID AND user_id='$session_id'  AND Status = 'Completed'");
+					while($row3 = mysqli_fetch_array($query3)){
 					$id = $row3['ppmpID'];
 					?>
 					<tr>
@@ -55,8 +55,8 @@
 						<th colspan="6" align="right"><h4>TOTAL AMOUNT: </h4></th>
 						
 						<?php
-							$row = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$YearID AND user_id='$session_id'  AND Status = 'Completed'") or die(mysql_error());
-							while($result = mysql_fetch_array($row)){
+							$row = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$YearID AND user_id='$session_id'  AND Status = 'Completed'") ;
+							while($result = mysqli_fetch_array($row)){
 								echo "<th style='text-align:right;'><h4>" . $result['Totalx'] . "</h4></th>";
 							}
 						?>

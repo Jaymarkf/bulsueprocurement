@@ -17,18 +17,18 @@ if (isset($_POST['saveUPDATE'])){
 
 	$TotalAmount = ($PriceCatalogue * $quantity);
 	
-	mysql_query("UPDATE tbl_ppmp SET itemdetailCode='$itemDetailCode',itemdetailDesc='$itemDetailDesc',
+	mysqli_query($conn,"UPDATE tbl_ppmp SET itemdetailCode='$itemDetailCode',itemdetailDesc='$itemDetailDesc',
 	PriceCatalogue='$PriceCatalogue',UnitOfMeasurement='$UnitOfMeasurement',ItemCatDesc='$itemCatDesc',
 	Year='$year',Quantity='$quantity',Month='$month',purpose='$purpose',TotalAmount='$TotalAmount'
-	WHERE ppmpID = '$prodID'")or die(mysql_error());
+	WHERE ppmpID = '$prodID'");
 
-	$query= mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-	$row = mysql_fetch_array($query);
+	$query= mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+	$row = mysqli_fetch_array($query);
 	$fname = $row['firstname'];
 	$lname = $row['lname'];
 	$user_username = $fname.' '.$lname;
 	$itemDetails = $itemDetailCode.' '.$itemDetailDesc.' '.$month.' '.$quantity.' '.$purpose;
 	
-//	mysql_query("insert into activity_log (date,username,action) values(NOW(),'$user_username','Update item details $itemDetails')")or die(mysql_error());
+//	mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Update item details $itemDetails')");
 }
 ?>

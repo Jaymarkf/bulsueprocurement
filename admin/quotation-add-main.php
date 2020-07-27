@@ -4,8 +4,8 @@
 	$itemID = $_GET['item'];
 	
 	if(!empty($itemID)){
-		$sqlSelectItem = mysql_query("SELECT *, sum(Quantity) as Quantity FROM tbl_pr_items WHERE ItemDescription = '$itemID' GROUP BY 'ItemDescription'") or die(mysql_error());
-		$getItemInfo = mysql_fetch_array($sqlSelectItem);
+		$sqlSelectItem = mysqli_query($conn,"SELECT *, sum(Quantity) as Quantity FROM tbl_pr_items WHERE ItemDescription = '$itemID' GROUP BY 'ItemDescription'") ;
+		$getItemInfo = mysqli_fetch_array($sqlSelectItem);
 		
 		$itemDesc = $getItemInfo["ItemDescription"];
 		$itemUnit = $getItemInfo["Unit"];

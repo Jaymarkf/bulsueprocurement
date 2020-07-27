@@ -21,6 +21,6 @@
 	$Nov = $_POST['fNov'];
 	$Dec = $_POST['fDec'];
 
-	mysql_query("insert into tbl_ppmp(EndUserUnit,Code,General_Description,Qty_Size,Estimated_Budget,Mode_of_Procurement,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec) values ('$EndUserUnit','$Code','$GenDesc','$QtySize','$EstBud','$ModProcure','$Jan','$Feb','$Mar','$Apr','$May','$Jun','$July','$Aug','$Sep','$Oct','$Nov','$Dec')")or die(mysql_error());		
-//	mysql_query("insert into activity_log (username,date,action) values('$user_username',NOW(),'Add Student $Code $GenDesc')")or die (mysql_error());
+	mysqli_query($conn,"insert into tbl_ppmp(EndUserUnit,Code,General_Description,Qty_Size,Estimated_Budget,Mode_of_Procurement,Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec) values ('$EndUserUnit','$Code','$GenDesc','$QtySize','$EstBud','$ModProcure','$Jan','$Feb','$Mar','$Apr','$May','$Jun','$July','$Aug','$Sep','$Oct','$Nov','$Dec')");		
+//	mysqli_query($conn,"insert into activity_log (username,date,action) values('$user_username',NOW(),'Add Student $Code $GenDesc')")or die (mysql_error());
 ?>

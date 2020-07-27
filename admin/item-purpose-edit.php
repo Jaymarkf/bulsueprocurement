@@ -15,8 +15,8 @@
                         <div id="block_bg" class="block">
                             <div class="navbar navbar-inner block-header">
                              		<?php 
-							$user_query = mysql_query("select * from tbl_purpose")or die(mysql_error());
-							$count = mysql_num_rows($user_query);
+							$user_query = mysqli_query($conn,"select * from tbl_purpose");
+							$count = mysqli_num_rows($user_query);
 							?>
                                 <div class="muted pull-left"><i class="icon-comments icon-large"></i> Item Purpose List</div>
                                 <div class="muted pull-right">
@@ -44,8 +44,8 @@
 										</thead>
 										<tbody>
 													<?php
-													$user_query1 = mysql_query("select * from tbl_purpose ORDER BY purpose ASC")or die(mysql_error());
-													while($row = mysql_fetch_array($user_query1)){
+													$user_query1 = mysqli_query($conn,"select * from tbl_purpose ORDER BY purpose ASC");
+													while($row = mysqli_fetch_array($user_query1)){
 													$id = $row['purposeID'];
 													?>
 												<tr>

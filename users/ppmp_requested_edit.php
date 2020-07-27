@@ -3,8 +3,8 @@
 <?php
 	$prodID = $_GET['id'];
 	if(!empty($prodID)){
-		$sqlSelectSpecProd = mysql_query("SELECT * FROM tbl_ppmp where ppmpID = '$prodID'") or die(mysql_error());
-		$getProdInfo = mysql_fetch_array($sqlSelectSpecProd);
+		$sqlSelectSpecProd = mysqli_query($conn,"SELECT * FROM tbl_ppmp where ppmpID = '$prodID'") ;
+		$getProdInfo = mysqli_fetch_array($sqlSelectSpecProd);
 		$prodcat = $getProdInfo["ItemCatDesc"];
 		$prodprice = $getProdInfo["PriceCatalogue"];
 		$produom = $getProdInfo["UnitOfMeasurement"];
@@ -39,8 +39,8 @@
 				<div class="row-fluid">
 				
 				<?php
-					$query = mysql_query("SELECT * FROM users WHERE user_id='$session_id'")or die(mysql_error());
-					while($row = mysql_fetch_array($query)) {
+					$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id='$session_id'");
+					while($row = mysqli_fetch_array($query)) {
 					$Year = $row['Year'];
 					}
 				?>
@@ -78,9 +78,9 @@
 										<div class="span6">
 											<?php
 												$session_id = $_SESSION['member_id'];
-												//$result = mysql_query("select * from tbl_year") or die(mysql_error());
-												$result = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'") or die(mysql_error());
-												$row = mysql_fetch_array($result);
+												//$result = mysqli_query($conn,"select * from tbl_year") ;
+												$result = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'") ;
+												$row = mysqli_fetch_array($result);
 												$year = $row["Year"];
 											?>
 											<label><b>Year: </b></label>
@@ -119,8 +119,8 @@
 													<?php
 														//Create query
 														$query = "select * from tbl_purpose";
-														$result=mysql_query($query) or die ("Query Failed: ".mysql_error());
-														while ($row=mysql_fetch_array($result)) {
+														$result=mysqli_query($conn,$query) or die ("Query Failed: ".mysql_error());
+														while ($row=mysqli_fetch_array($result)) {
 															$icPurpose=$row['purpose'];
 															echo "<option>". $icPurpose ."</option>";
 														}
@@ -229,18 +229,18 @@ if (isset($_POST['saveUPDATE'])){
 	$TQtyMonth = ($Jan+$Feb+$Mar+$Apr+$May+$Jun+$Jul+$Aug+$Sep+$Oct+$Nov+$Dec);
 	$TotalAmount = ($PriceCatalogue * $TQtyMonth);
 	
-	mysql_query("UPDATE tbl_ppmp SET `SourceOfFund`='$SOF',`purpose`='$purpose',`Jan`='$Jan',`Feb`='$Feb',`Mar`='$Mar',
+	mysqli_query($conn,"UPDATE tbl_ppmp SET `SourceOfFund`='$SOF',`purpose`='$purpose',`Jan`='$Jan',`Feb`='$Feb',`Mar`='$Mar',
 	`Apr`='$Apr',`May`='$May',`Jun`='$Jun',`Jul`='$Jul',`Aug`='$Aug',`Sep`='$Sep',`Oct`='$Oct',
-	`Nov`='$Nov',`Dec`='$Dec',`TotalQty`='$TQtyMonth',`TotalAmount`='$TotalAmount',`Priority`='$Prio',`Remarks`='$Rem' WHERE ppmpID = '$prodID'")or die(mysql_error());
+	`Nov`='$Nov',`Dec`='$Dec',`TotalQty`='$TQtyMonth',`TotalAmount`='$TotalAmount',`Priority`='$Prio',`Remarks`='$Rem' WHERE ppmpID = '$prodID'");
 
-	$query= mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-	$row = mysql_fetch_array($query);
+	$query= mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+	$row = mysqli_fetch_array($query);
 	$fname = $row['firstname'];
 	$lname = $row['lastname'];
 	$user_username = $fname.' '.$lname;
 	$itemDetails = $prodcode.' '.$proddesc;
 	
-//	mysql_query("insert into activity_log (date,username,action) values(NOW(),'$user_username','Update item details $itemDetails')")or die(mysql_error());
+//	mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Update item details $itemDetails')");
 ?>
 <script>
 	$.ajax({

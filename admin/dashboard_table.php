@@ -30,7 +30,7 @@
 					$user_id2 = $row2['user_id'];
 					$Year2 = $row2['Year'];
 						
-					//$query3= mysql_query("select * from tbl_ppmp WHERE Year = '$Year' AND EndUserUnit='$Branch2' AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND user_id = '$user_id2'")or die(mysql_error());
+					//$query3= mysqli_query($conn,"select * from tbl_ppmp WHERE Year = '$Year' AND EndUserUnit='$Branch2' AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND user_id = '$user_id2'");
 					$query3= mysqli_query($conn,"select * from tbl_ppmp WHERE Year = '$Year' AND EndUserUnit='$Branch2' AND Status = 'Requested' AND BO_PPMP_Status = 'Approved' AND user_id = '$user_id2' GROUP BY Year");
 					$count3 = mysqli_num_rows($query3);
 					

@@ -1,6 +1,6 @@
 	<?php
-			$query = mysql_query("select * from users where user_id = '$session_id'")or die(mysql_error());
-			$row = mysql_fetch_array($query);
+			$query = mysqli_query($conn,"select * from users where user_id = '$session_id'");
+			$row = mysqli_fetch_array($query);
 								?>		
 	
     <form id="change_password" class="form-pass" method="post">
@@ -65,7 +65,7 @@
 					</script>
 			<?php
 				}else{
-					mysql_query("update users set password = '$new_password' where user_id = '$session_id'")or die(mysql_error());
+					mysqli_query($conn,"update users set password = '$new_password' where user_id = '$session_id'");
 			?>
 				<script>
 					$.ajax({

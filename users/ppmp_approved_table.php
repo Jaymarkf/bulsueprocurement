@@ -52,8 +52,8 @@
 				
 				<tbody>
 					<?php
-						$query2 = mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $Year AND user_id='$session_id'  AND Status = 'Completed'")or die(mysql_error());
-						while($row2 = mysql_fetch_array($query2)){
+						$query2 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year AND user_id='$session_id'  AND Status = 'Completed'");
+						while($row2 = mysqli_fetch_array($query2)){
 						$id = $row2['ppmpID'];
 					?>
 					<tr>
@@ -85,8 +85,8 @@
 						<th colspan="16" align="right"><h4>TOTAL AMOUNT: </h4></th>
 						
 						<?php
-							$row = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year AND user_id='$session_id'  AND Status = 'Completed'") or die(mysql_error());
-							while($result = mysql_fetch_array($row)){
+							$row = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year AND user_id='$session_id'  AND Status = 'Completed'") ;
+							while($result = mysqli_fetch_array($row)){
 								echo "<th style='text-align:right;'><h4>" . $result['Totalx'] . "</h4></th>";
 								echo "<th></th>";
 							}

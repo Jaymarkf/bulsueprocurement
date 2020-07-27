@@ -5,8 +5,8 @@ include('session.php');
 $POno = $_POST['ciPOno'];
 
 //search if the item exists before saving the purchase request
-$qry = mysql_query("SELECT * FROM tbl_po_items WHERE POno = '$POno'")or die(mysql_error());
-while($row = mysql_fetch_array($qry)) {
+$qry = mysqli_query($conn,"SELECT * FROM tbl_po_items WHERE POno = '$POno'");
+while($row = mysqli_fetch_array($qry)) {
 $POexist = $row['POno'];
 }
 
@@ -25,9 +25,9 @@ if ($POexist == $POno){
 
 	$uname = $fname.'.'.$lname;
 
-	mysql_query("INSERT INTO tbl_po (Year,EntityName,supplier,address,email,contact_no,TIN,POno,PO_Date,MOP)
-							  VALUES('$Year','$EntityName','$Supplier','$Address','$Email','$ContactNo','$TIN','$POno','$PODate','$MOP')")or die(mysql_error());
+	mysqli_query($conn,"INSERT INTO tbl_po (Year,EntityName,supplier,address,email,contact_no,TIN,POno,PO_Date,MOP)
+							  VALUES('$Year','$EntityName','$Supplier','$Address','$Email','$ContactNo','$TIN','$POno','$PODate','$MOP')");
 
-//	mysql_query("INSERT INTO activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')")or die(mysql_error());
+//	mysqli_query($conn,"INSERT INTO activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')");
 }
 ?>

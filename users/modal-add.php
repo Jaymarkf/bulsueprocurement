@@ -25,13 +25,13 @@
 					</thead>
 					<tbody>
 							<?php
-								$query1 = mysql_query("select * from tbl_item_details ORDER BY itemdetailID DESC")or die(mysql_error());
-								while($row1 = mysql_fetch_array($query1)){
+								$query1 = mysqli_query($conn,"select * from tbl_item_details ORDER BY itemdetailID DESC");
+								while($row1 = mysqli_fetch_array($query1)){
 									$id = $row1['itemdetailID'];
 									$itemcategoryID = $row1['itemcategoryID'];
 								
-								$query2 = mysql_query("select * from tbl_item_category where itemcategoryID='$itemcategoryID'")or die(mysql_error());
-								while($row2= mysql_fetch_array($query2)){
+								$query2 = mysqli_query($conn,"select * from tbl_item_category where itemcategoryID='$itemcategoryID'");
+								while($row2= mysqli_fetch_array($query2)){
 									$itemCatDesc = $row2['ItemCatDesc'];
 								}
 							?>

@@ -22,8 +22,8 @@
 						
 						<?php
 							//use for admin year
-							$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-								while($row = mysql_fetch_array($query)) {
+							$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+								while($row = mysqli_fetch_array($query)) {
 								$Year = $row['Year'];
 							}
 						?>

@@ -28,12 +28,12 @@
                         <!-- block -->
                         <div  id="block_bg" class="block">
 						<?php
-							$query = mysql_query("SELECT * FROM users WHERE user_id='$session_id'")or die(mysql_error());
-							while($row = mysql_fetch_array($query)) {
+							$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id='$session_id'");
+							while($row = mysqli_fetch_array($query)) {
 							$Year = $row['Year'];
 							}
-							$query1 = mysql_query("SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year < '$Year' AND user_id='$session_id'  AND Status = 'Completed' GROUP BY Year")or die(mysql_error());
-							$count1 = mysql_num_rows($query1);
+							$query1 = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year < '$Year' AND user_id='$session_id'  AND Status = 'Completed' GROUP BY Year");
+							$count1 = mysqli_num_rows($query1);
 						?>
                             <div class="navbar navbar-inner block-header">
                                 <div class="muted pull-left"><img src="../images/buttons/ppmp-previous.png" width="5%"> PREVIOUS Project Procurement Management Plan</div>

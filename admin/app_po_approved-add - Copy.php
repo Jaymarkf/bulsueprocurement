@@ -18,17 +18,17 @@
 			//$in_STQty = $STQty[$i];
 			//$in_PriceCat = $PriceCat[$i];
 			//$in_TAmt = $TAmt[$i];
-			$qry = mysql_query("SELECT * FROM tbl_ppmp_consolidated WHERE itemdetailDesc='$in_item'")or die(mysql_error());
-			while($row = mysql_fetch_array($qry)){
+			$qry = mysqli_query($conn,"SELECT * FROM tbl_ppmp_consolidated WHERE itemdetailDesc='$in_item'");
+			while($row = mysqli_fetch_array($qry)){
 				$in_UOM = $row['UnitOfMeasurement'];
 				$in_STQty = $row['TotalQty'];
 				$in_PriceCat = $row['PriceCatalogue'];
 				$in_TAmt = $row['TotalAmount'];
 				 
-				 mysql_query("INSERT INTO tbl_pr_items (Year,PRno,Unit,ItemDescription,Quantity,UnitCost,TotalCost)
-				 values('$year','$PR','$in_UOM','$in_item','$in_STQty','$in_PriceCat','$in_TAmt')")or die(mysql_error());
+				 mysqli_query($conn,"INSERT INTO tbl_pr_items (Year,PRno,Unit,ItemDescription,Quantity,UnitCost,TotalCost)
+				 values('$year','$PR','$in_UOM','$in_item','$in_STQty','$in_PriceCat','$in_TAmt')");
 			} 
-			 //mysql_query("UPDATE tbl_ppmp_consolidated SET Requested = 'Yes' WHERE itemdetailDesc = '$in_item' ")or die(mysql_error());
+			 //mysqli_query($conn,"UPDATE tbl_ppmp_consolidated SET Requested = 'Yes' WHERE itemdetailDesc = '$in_item' ");
 		}
 	}
 ?>
@@ -51,8 +51,8 @@
 						</div>
 
 						<?php
-							$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-								while($row = mysql_fetch_array($query)) {
+							$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+								while($row = mysqli_fetch_array($query)) {
 								$Year = $row['Year'];
 								//$uname = $fname.'.'.$lname;
 								$username = $row['firstname'].' '.$row['lastname'] ;
@@ -71,18 +71,18 @@
 				<!-- top content -->
 
 				<?php					
-					$query1 = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-					while($row1 = mysql_fetch_array($query1)) {
+					$query1 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+					while($row1 = mysqli_fetch_array($query1)) {
 					$Year1 = $row1['Year'];
 					
-						$query2 = mysql_query("SELECT * FROM tbl_pr WHERE Year = $Year1")or die(mysql_error());
-						while($row2 = mysql_fetch_array($query2)){
+						$query2 = mysqli_query($conn,"SELECT * FROM tbl_pr WHERE Year = $Year1");
+						while($row2 = mysqli_fetch_array($query2)){
 						$id2 = $row2['prID'];
 						$PRno = $row2['PRno'];
 						$now=date('m/d/Y');
 						
-						$queryMax = mysql_query("SELECT Max(PRno) as PR FROM tbl_pr WHERE (PRno != '' OR PRno IS NOT NULL)")or die(mysql_error());
-						$rowMax = mysql_fetch_array($queryMax);
+						$queryMax = mysqli_query($conn,"SELECT Max(PRno) as PR FROM tbl_pr WHERE (PRno != '' OR PRno IS NOT NULL)");
+						$rowMax = mysqli_fetch_array($queryMax);
 						
 						//if( $result['total']==0)
 						if ($rowMax['PR'] != ''  OR $rowMax['PR'] != NULL){
@@ -184,14 +184,14 @@
 								$year = $_GET['year'];
 							}
 							
-							$query1 = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-							while($row1 = mysql_fetch_array($query1)) {
+							$query1 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+							while($row1 = mysqli_fetch_array($query1)) {
 								$Year1 = $row1['Year'];
 								$user_id1 = $row1['user_id'];
 							}
 							
-							$query2 = mysql_query("SELECT * FROM tbl_pr_items WHERE Year = '$Year' AND PRno = '$PR'")or die(mysql_error());
-							$count2 = mysql_num_rows($query2);
+							$query2 = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE Year = '$Year' AND PRno = '$PR'");
+							$count2 = mysqli_num_rows($query2);
 						?>
 						
                             <div class="navbar navbar-inner block-header">

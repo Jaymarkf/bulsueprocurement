@@ -2,18 +2,18 @@
 <div class="">
 	<div class="span3 pull-left">
 	<?php
-		$qry1 = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-		while($r1 = mysql_fetch_array($qry1)) {
+		$qry1 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+		while($r1 = mysqli_fetch_array($qry1)) {
 		$Year = $r1['Year'];
 		}
 		
-		$qry2= mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $Year AND user_id='$session_id' AND Status = 'Pending' OR Year = $Year AND user_id='$session_id' AND Status = 'Requested' OR Year = $Year AND user_id='$session_id' AND Status = 'Completed'")or die(mysql_error());
-		while($r2 = mysql_fetch_array($qry2)) {
+		$qry2= mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year AND user_id='$session_id' AND Status = 'Pending' OR Year = $Year AND user_id='$session_id' AND Status = 'Requested' OR Year = $Year AND user_id='$session_id' AND Status = 'Completed'");
+		while($r2 = mysqli_fetch_array($qry2)) {
 		$BO_PPMP_Status = $r2['BO_PPMP_Status'];
 		}
 		
-		$qry3= mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $Year AND user_id='$session_id' AND Status = 'Pending' OR Year = $Year AND user_id='$session_id' AND Status = 'Requested' OR Year = $Year AND user_id='$session_id' AND Status = 'Completed'")or die(mysql_error());
-		while($r3 = mysql_fetch_array($qry3)) {
+		$qry3= mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year AND user_id='$session_id' AND Status = 'Pending' OR Year = $Year AND user_id='$session_id' AND Status = 'Requested' OR Year = $Year AND user_id='$session_id' AND Status = 'Completed'");
+		while($r3 = mysqli_fetch_array($qry3)) {
 		$PU_PPMP_Status = $r3['PU_PPMP_Status'];
 		$Status = $r3['Status'];
 		}
@@ -86,12 +86,12 @@
 			
 			<tbody>
 				<?php
-				$query1 = mysql_query("SELECT * FROM users WHERE user_id='$session_id'")or die(mysql_error());
-				while($row1 = mysql_fetch_array($query1)) {
+				$query1 = mysqli_query($conn,"SELECT * FROM users WHERE user_id='$session_id'");
+				while($row1 = mysqli_fetch_array($query1)) {
 				$Year = $row1['Year'];
 				
-				$query2 = mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $Year AND user_id='$session_id'  AND Status = 'Requested' OR Year = $Year AND user_id='$session_id' AND Status = 'Completed'")or die(mysql_error());
-				while($row2 = mysql_fetch_array($query2)){
+				$query2 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year AND user_id='$session_id'  AND Status = 'Requested' OR Year = $Year AND user_id='$session_id' AND Status = 'Completed'");
+				while($row2 = mysqli_fetch_array($query2)){
 				$id = $row2['ppmpID'];
 				?>
 				
@@ -132,8 +132,8 @@
 					<th colspan="16" align="right"><h4>TOTAL AMOUNT: </h4></th>
 					
 					<?php
-						$row = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year AND user_id='$session_id'  AND Status = 'Requested' OR Year = $Year AND user_id='$session_id' AND Status = 'Completed'") or die(mysql_error());
-						while($result = mysql_fetch_array($row)){
+						$row = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year AND user_id='$session_id'  AND Status = 'Requested' OR Year = $Year AND user_id='$session_id' AND Status = 'Completed'") ;
+						while($result = mysqli_fetch_array($row)){
 							echo "<th style='text-align:right;'><h4>&#8369; " . number_format($result['Totalx'],2, '.', ',') . "</h4></th>";
 							echo "<th></th>";
 							//echo "<th></th>";

@@ -10,8 +10,8 @@
 			<div id="coll" class="nav-collapse collapse">
 				<ul class="nav pull-left">
 					<?php 
-						$query = mysql_query("SELECT * FROM users WHERE approved='no'")or die(mysql_error());
-						$count = mysql_num_rows($query);
+						$query = mysqli_query($conn,"SELECT * FROM users WHERE approved='no'");
+						$count = mysqli_num_rows($query);
 					?>
 					<li class="dropdown">
 						<?php if($count=='0') { ?>
@@ -110,8 +110,8 @@
 					</li>
 					
 					<?php 
-						$query= mysql_query("select * from users where user_id = '$session_id'")or die(mysql_error());
-						$row = mysql_fetch_array($query);
+						$query= mysqli_query($conn,"select * from users where user_id = '$session_id'");
+						$row = mysqli_fetch_array($query);
 					?>
 					<li class="dropdown"> 
 						<a href="#" id="name123" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user icon-large">

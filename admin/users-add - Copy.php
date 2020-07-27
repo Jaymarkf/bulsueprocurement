@@ -24,8 +24,8 @@
 						<select name="branch" placeholder = "Branch" class="span12" required>
 							<option></option>
 							<?php
-								$query = mysql_query("select * from tbl_branch ORDER BY branch ASC")or die(mysql_error());
-								while($row = mysql_fetch_array($query)){
+								$query = mysqli_query($conn,"select * from tbl_branch ORDER BY branch ASC");
+								while($row = mysqli_fetch_array($query)){
 								$id = $row['branchID'];
 							
 								echo "<option>".$row['branch']."</option>";

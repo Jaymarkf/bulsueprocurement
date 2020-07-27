@@ -7,15 +7,15 @@
         <div class="container-fluid" id="">
             <div class="row-fluid">
 			<?php
-				//$query = mysql_query("SELECT * FROM tbl_year")or die(mysql_error());
-				$query = mysql_query("SELECT * FROM users WHERE user_id='$session_id'")or die(mysql_error());
-				while($row = mysql_fetch_array($query)) {
+				//$query = mysqli_query($conn,"SELECT * FROM tbl_year");
+				$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id='$session_id'");
+				while($row = mysqli_fetch_array($query)) {
 					$Year = $row['Year'];
 				}
 				
-				//$query1= mysql_query("select * from tbl_ppmp WHERE Year = '$Year' AND user_id='$session_id' AND Status = 'Pending'")or die(mysql_error());
-				$query1= mysql_query("select * from tbl_ppmp WHERE Year = '$Year' AND user_id='$session_id' AND Status = 'Pending'")or die(mysql_error());
-				$count1 = mysql_num_rows($query1);
+				//$query1= mysqli_query($conn,"select * from tbl_ppmp WHERE Year = '$Year' AND user_id='$session_id' AND Status = 'Pending'");
+				$query1= mysqli_query($conn,"select * from tbl_ppmp WHERE Year = '$Year' AND user_id='$session_id' AND Status = 'Pending'");
+				$count1 = mysqli_num_rows($query1);
 			?>
 			<div class="span12" id="content">
 				<div class="span5" id="content">
@@ -48,13 +48,13 @@
 								<div class="navbar navbar-inner block-header">
 									<div class="muted pull-left"><i class="icon-tags icon-large"></i><a href="dashboard.php" class="muted"> ITEMS BY CATEGORY</a></div>
 									<?php
-										$query1 = mysql_query("SELECT * FROM tbl_item_details where itemcategoryID like '%$filter%'");
-										$count = mysql_num_rows($query1);
-										while($row1 = mysql_fetch_array($query1)) {
+										$query1 = mysqli_query($conn,"SELECT * FROM tbl_item_details where itemcategoryID like '%$filter%'");
+										$count = mysqli_num_rows($query1);
+										while($row1 = mysqli_fetch_array($query1)) {
 											$itemcategoryID = $row1['itemcategoryID'];
 										
-											$query2 = mysql_query("select * from tbl_item_category where itemcategoryID='$itemcategoryID'")or die(mysql_error());
-											while($row2= mysql_fetch_array($query2)){
+											$query2 = mysqli_query($conn,"select * from tbl_item_category where itemcategoryID='$itemcategoryID'");
+											while($row2= mysqli_fetch_array($query2)){
 												$itemCatDesc = $row2['ItemCatDesc'];
 											}
 									?>
@@ -76,9 +76,9 @@
 						                    
 											<!--php starts here-->
 											<?php
-												$query1 = mysql_query("SELECT * FROM tbl_item_details where itemcategoryID like '$filter'");
+												$query1 = mysqli_query($conn,"SELECT * FROM tbl_item_details where itemcategoryID like '$filter'");
 												
-												while($row1 = mysql_fetch_array($query1)) {
+												while($row1 = mysqli_fetch_array($query1)) {
 												$prodID = $row1["itemdetailID"];
 													echo '<div class="content-item">';
 													echo '<ul>';
@@ -89,16 +89,16 @@
 															<h2>&#8369; '. number_format($row1['PriceCatalogue'],2, '.', ',') .' / '.$row1['UnitOfMeasurement'].'</h2>
 															<p>'.$itemCatDesc.'</p>';
 													
-														$searchUserYear = mysql_query("SELECT * FROM users WHERE user_id='$session_id'")or die(mysql_error());
-														$foundUserYear = mysql_fetch_array($searchUserYear);
+														$searchUserYear = mysqli_query($conn,"SELECT * FROM users WHERE user_id='$session_id'");
+														$foundUserYear = mysqli_fetch_array($searchUserYear);
 														$resultUserYear = $foundUserYear['Year'];
 															
-														$searchItemDesc = mysql_query("select * from tbl_item_details where itemdetailID = '$prodID'") or die(mysql_error());
-														$foundItemDesc = mysql_fetch_array($searchItemDesc);
+														$searchItemDesc = mysqli_query($conn,"select * from tbl_item_details where itemdetailID = '$prodID'") ;
+														$foundItemDesc = mysqli_fetch_array($searchItemDesc);
 														$resultItemDesc = $foundItemDesc['itemdetailDesc'];
 														
-														$searchExistItem = mysql_query("select * from tbl_ppmp where itemdetailDesc = '$resultItemDesc' AND Year ='$resultUserYear' AND user_id='$session_id' OR Status<>'Pending' AND Year ='$resultUserYear' AND user_id='$session_id'") or die(mysql_error());
-														$foundExistItem = mysql_fetch_array($searchExistItem);
+														$searchExistItem = mysqli_query($conn,"select * from tbl_ppmp where itemdetailDesc = '$resultItemDesc' AND Year ='$resultUserYear' AND user_id='$session_id' OR Status<>'Pending' AND Year ='$resultUserYear' AND user_id='$session_id'") ;
+														$foundExistItem = mysqli_fetch_array($searchExistItem);
 														
 														if(!empty($foundExistItem)) {
 																echo '<a class="btn btn-default"><i class="icon-shopping-cart icon-large"></i> Item on Cart </a>';

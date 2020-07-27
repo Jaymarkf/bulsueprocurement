@@ -3,10 +3,10 @@
 <?php
 	$item = $_GET['item'];
 					
-	//$qry = mysql_query("SELECT *, sum(Quantity) as Quantity FROM tbl_pr_items WHERE ItemDescription = '$item' GROUP BY ItemDescription")or die(mysql_error());
-	$qry = mysql_query("SELECT *, sum(Quantity) as Quantity FROM tbl_quotation WHERE Company = '$item' GROUP BY Company")or die(mysql_error());
-	while($row = mysql_fetch_array($qry)) {
-		//$row = mysql_fetch_array($qry)
+	//$qry = mysqli_query($conn,"SELECT *, sum(Quantity) as Quantity FROM tbl_pr_items WHERE ItemDescription = '$item' GROUP BY ItemDescription");
+	$qry = mysqli_query($conn,"SELECT *, sum(Quantity) as Quantity FROM tbl_quotation WHERE Company = '$item' GROUP BY Company");
+	while($row = mysqli_fetch_array($qry)) {
+		//$row = mysqli_fetch_array($qry)
 	$date = $row['Q_date'];
 	$year = $row['Year'];
 	$item = $row['itemDescription'];

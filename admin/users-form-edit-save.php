@@ -37,7 +37,7 @@ if (isset($_POST['update'])){
 <?php
 	}else{
 	
-		mysql_query("update users set branch= '$branch',username = '$username',password = '$password',status='$status',approved='$approved' where user_id = '$get_id' ")or die(mysql_error());
+		mysqli_query($conn,"update users set branch= '$branch',username = '$username',password = '$password',status='$status',approved='$approved' where user_id = '$get_id' ");
 ?>
 		<script>
 			$.ajax({

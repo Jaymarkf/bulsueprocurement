@@ -10,9 +10,9 @@ $username = $_POST['username'];
 
 //if found reject the saving of users
 	$query = "SELECT * FROM users WHERE username='$username'";
-	$result = mysql_query($query)or die(mysql_error());
-	$row = mysql_fetch_array($result);
-	$num_row = mysql_num_rows($result);
+	$result = mysqli_query($conn,$query);
+	$row = mysqli_fetch_array($result);
+	$num_row = mysqli_num_rows($result);
 	
 if( $num_row > 0 ) {
 	header("location: user-registration-failed.php");
@@ -37,7 +37,7 @@ if( $num_row > 0 ) {
 	
 	$password = generatePasswd();
 	
-	mysql_query("insert into users (Year,branch,username,password,status,registered_date,approved,Remarks) values(YEAR(NOW()),'$branch','$username','$password','$status',NOW(),'yes','Registered by Admin')")or die(mysql_error());
-//	mysql_query("insert into activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')")or die(mysql_error());
+	mysqli_query($conn,"insert into users (Year,branch,username,password,status,registered_date,approved,Remarks) values(YEAR(NOW()),'$branch','$username','$password','$status',NOW(),'yes','Registered by Admin')");
+//	mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')");
 }
 ?>

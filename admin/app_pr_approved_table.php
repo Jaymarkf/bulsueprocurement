@@ -18,13 +18,13 @@
 			
 			<tbody>
 				<?php					
-					$query3 = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-					while($row3 = mysql_fetch_array($query3)) {
+					$query3 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+					while($row3 = mysqli_fetch_array($query3)) {
 					$Year3 = $row3['Year'];
 					
-					//$query4 = mysql_query("SELECT * FROM tbl_pr WHERE Year = $Year3 AND PRno <> '0000' ORDER BY PRno DESC")or die(mysql_error());
-					$query4 = mysql_query("SELECT * FROM tbl_pr WHERE Year = $Year3 AND PRno <> '0000' ORDER BY PRno DESC")or die(mysql_error());
-					while($row4 = mysql_fetch_array($query4)){
+					//$query4 = mysqli_query($conn,"SELECT * FROM tbl_pr WHERE Year = $Year3 AND PRno <> '0000' ORDER BY PRno DESC");
+					$query4 = mysqli_query($conn,"SELECT * FROM tbl_pr WHERE Year = $Year3 AND PRno <> '0000' ORDER BY PRno DESC");
+					while($row4 = mysqli_fetch_array($query4)){
 					$PR = $row4['PRno'];
 				?>
 				<tr>

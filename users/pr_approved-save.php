@@ -5,8 +5,8 @@ include('session.php');
 $PRno = $_POST['ciPRno'];
 
 //search if the item exists before saving the purchase request
-$qry = mysql_query("SELECT * FROM tbl_pr_items WHERE PRno = '$PRno'")or die(mysql_error());
-while($row = mysql_fetch_array($qry)) {
+$qry = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE PRno = '$PRno'");
+while($row = mysqli_fetch_array($qry)) {
 $PRexist = $row['PRno'];
 }
 
@@ -24,9 +24,9 @@ if ($PRexist == $PRno){
 
 	$uname = $fname.'.'.$lname;
 
-	mysql_query("INSERT INTO tbl_pr (Year,EntityName,FundCluster,OfficeSection,PRno,PR_Date,RequestedBy,ApprovedBy)
-							  VALUES('$Year','$EntityName','$FundCluster','$OfficeSection','$PRno','$PRDate','$RequestBy','$ApprovedBy')")or die(mysql_error());
+	mysqli_query($conn,"INSERT INTO tbl_pr (Year,EntityName,FundCluster,OfficeSection,PRno,PR_Date,RequestedBy,ApprovedBy)
+							  VALUES('$Year','$EntityName','$FundCluster','$OfficeSection','$PRno','$PRDate','$RequestBy','$ApprovedBy')");
 
-//	mysql_query("INSERT INTO activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')")or die(mysql_error());
+//	mysqli_query($conn,"INSERT INTO activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')");
 }
 ?>

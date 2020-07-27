@@ -5,8 +5,8 @@
 		header('Location: ../index.php');		
 	} else {
 		$session_id=$_SESSION['bo_admin_id'];
-		$query= mysql_query("select * from users where user_id = '$session_id'")or die(mysql_error());
-		$row = mysql_fetch_array($query);
+		$query= mysqli_query($conn,"select * from users where user_id = '$session_id'");
+		$row = mysqli_fetch_array($query);
 		$user_username = $row['username'];
 	}
 ?>

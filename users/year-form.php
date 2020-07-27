@@ -1,6 +1,6 @@
 <?php
-	$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-	$row = mysql_fetch_array($query);
+	$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+	$row = mysqli_fetch_array($query);
 ?>
 
 <form class="form-pass" method="POST" style="color: #000;">
@@ -78,7 +78,7 @@ $.ajax({
 	exit();
 }
 
-mysql_query("UPDATE users SET Year ='$syYear' WHERE user_id = '$session_id'")or die(mysql_error());
+mysqli_query($conn,"UPDATE users SET Year ='$syYear' WHERE user_id = '$session_id'");
 ?>
 <script>
 $.ajax({

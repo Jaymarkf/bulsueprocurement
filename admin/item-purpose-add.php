@@ -58,9 +58,9 @@ $icDesc = trim(strtoupper($_POST['icDesc']));
 
 //if found reject the saving of users
 	$query = "SELECT * FROM tbl_purpose WHERE purpose='$icDesc'";
-	$result = mysql_query($query)or die(mysql_error());
-	$row = mysql_fetch_array($result);
-	$num_row = mysql_num_rows($result);
+	$result = mysqli_query($conn,$query);
+	$row = mysqli_fetch_array($result);
+	$num_row = mysqli_num_rows($result);
 
 if( $num_row > 0 ) {
 ?>
@@ -75,7 +75,7 @@ if( $num_row > 0 ) {
 	</script>
 <?php
 } else {
-	mysql_query("insert into tbl_purpose (purpose) values('$icDesc')")or die(mysql_error());
+	mysqli_query($conn,"insert into tbl_purpose (purpose) values('$icDesc')");
 ?>
 	<script>
 	$.ajax({

@@ -6,12 +6,12 @@ $id=$_POST['selector'];
 $N = count($id);
 for($i=0; $i < $N; $i++)
 {
-	$query = mysql_query("select * from tbl_item_details where itemdetailID ='$id[$i]'")or die(mysql_error());
-	$row = mysql_fetch_array($query);
+	$query = mysqli_query($conn,"select * from tbl_item_details where itemdetailID ='$id[$i]'");
+	$row = mysqli_fetch_array($query);
 	$uname = $row['username'];
 
-//	mysql_query("insert into activity_log (username,date,action) values('$user_username',NOW(),'Deleted  user $uname')")or die (mysql_error());
-	mysql_query("DELETE FROM tbl_item_details where itemdetailID='$id[$i]'");
+//	mysqli_query($conn,"insert into activity_log (username,date,action) values('$user_username',NOW(),'Deleted  user $uname')")or die (mysql_error());
+	mysqli_query($conn,"DELETE FROM tbl_item_details where itemdetailID='$id[$i]'");
 }
 	header("location: item-details.php");
 }else{

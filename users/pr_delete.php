@@ -5,13 +5,13 @@ include('session.php');
 if (isset($_GET['id'])){
 		$id=$_GET['id'];
 		
-		mysql_query("DELETE FROM tbl_pr_items WHERE prID='$id'");
+		mysqli_query($conn,"DELETE FROM tbl_pr_items WHERE prID='$id'");
 		
-		$query = mysql_query("SELECT * FROM users WHERE user_id ='$session_id'")or die(mysql_error());
-		$row = mysql_fetch_array($query);
+		$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id ='$session_id'");
+		$row = mysqli_fetch_array($query);
 		$uname = $row['username'];
 
-//		mysql_query("insert into activity_log (username,date,action) values('$user_username',NOW(),'Deleted item id $uname in PPMP Cart lists')")or die (mysql_error());
+//		mysqli_query($conn,"insert into activity_log (username,date,action) values('$user_username',NOW(),'Deleted item id $uname in PPMP Cart lists')")or die (mysql_error());
 
 		header("location: app_pr_approved-add.php");
 }else{

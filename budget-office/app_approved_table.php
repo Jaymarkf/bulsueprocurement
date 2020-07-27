@@ -42,15 +42,15 @@
 			
 			<tbody>
 				<?php					
-					$query3 = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-					while($row3 = mysql_fetch_array($query3)) {
+					$query3 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+					while($row3 = mysqli_fetch_array($query3)) {
 					$Year3 = $row3['Year'];
 					
-					//$query4 = mysql_query("SELECT *,SUM(Quantity) as SQty,SUM(TotalAmount) as TAmt FROM tbl_ppmp WHERE Year = $Year3 AND Status = 'Completed' AND Status_PPMP='Approved' GROUP BY itemdetailCode")or die(mysql_error());
-					$query4 = mysql_query("SELECT *, SUM(Jan) AS SJan,SUM(Feb) AS SFeb,SUM(Mar) AS SMar,SUM(Apr) AS SApr,
+					//$query4 = mysqli_query($conn,"SELECT *,SUM(Quantity) as SQty,SUM(TotalAmount) as TAmt FROM tbl_ppmp WHERE Year = $Year3 AND Status = 'Completed' AND Status_PPMP='Approved' GROUP BY itemdetailCode");
+					$query4 = mysqli_query($conn,"SELECT *, SUM(Jan) AS SJan,SUM(Feb) AS SFeb,SUM(Mar) AS SMar,SUM(Apr) AS SApr,
 					SUM(May) AS SMay,SUM(Jun) AS SJun,SUM(Jul) AS SJul,SUM(Aug) AS SAug,SUM(Sep) AS SSep,SUM(Oct) AS SOct,
-					SUM(Nov) AS SNov,SUM(`Dec`) AS SDec,SUM(TotalQty) AS STQty,SUM(TotalAmount) as TAmt FROM tbl_ppmp WHERE Year = $Year3 AND Status = 'Completed' AND Status_PPMP='Approved' GROUP BY itemdetailCode")or die(mysql_error());
-					while($row4 = mysql_fetch_array($query4)){
+					SUM(Nov) AS SNov,SUM(`Dec`) AS SDec,SUM(TotalQty) AS STQty,SUM(TotalAmount) as TAmt FROM tbl_ppmp WHERE Year = $Year3 AND Status = 'Completed' AND Status_PPMP='Approved' GROUP BY itemdetailCode");
+					while($row4 = mysqli_fetch_array($query4)){
 					$id4 = $row4['ppmpID'];
 				?>
 				<tr>
@@ -84,9 +84,9 @@
 					<th colspan="17" align="right"><h4>TOTAL AMOUNT: </h4></th>
 					
 					<?php
-						//$row = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year3 AND user_id='$session_id'  AND Status = 'Requested'") or die(mysql_error());
-						$row5 = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year3 AND Status = 'Completed' AND Status_PPMP='Approved'") or die(mysql_error());
-						while($result5 = mysql_fetch_array($row5)){
+						//$row = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year3 AND user_id='$session_id'  AND Status = 'Requested'") ;
+						$row5 = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year3 AND Status = 'Completed' AND Status_PPMP='Approved'") ;
+						while($result5 = mysqli_fetch_array($row5)){
 							echo "<th style='text-align:right;'><h4>" . $result5['Totalx'] . "</h4></th>";
 						}
 					?>

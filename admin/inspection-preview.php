@@ -8,9 +8,9 @@
 	$iar_No = $_GET['iar_No'];
 	$POno = $_GET['POno'];
 	
-	$qry = mysql_query("SELECT * FROM tbl_iar JOIN tbl_iar_items USING (POno) WHERE POno = '$POno'")or die(mysql_error());	
-	//$qry = mysql_query("SELECT * FROM tbl_pr_items WHERE ItemDescription = '$item' AND Year = '$year' GROUP BY ItemDescription")or die(mysql_error());
-	while($row = mysql_fetch_array($qry)) {
+	$qry = mysqli_query($conn,"SELECT * FROM tbl_iar JOIN tbl_iar_items USING (POno) WHERE POno = '$POno'");	
+	//$qry = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE ItemDescription = '$item' AND Year = '$year' GROUP BY ItemDescription");
+	while($row = mysqli_fetch_array($qry)) {
 		$iar_No = $row['iar_No'];
 		$iar_Date = $row['iar_Date'];
 		$Year = $row['Year'];
@@ -71,8 +71,8 @@
 										<td style="width:20%; text-align:center; background-color:lightgrey;"><i><b>Quantity</b></i></td>
 									</tr>
 									<?php
-										$qry1 = mysql_query("SELECT *, SUM(Quantity) as Quantity FROM  tbl_iar_items WHERE POno = '$POno' GROUP BY ItemDescription")or die(mysql_error());	
-										while($row = mysql_fetch_array($qry1)) {
+										$qry1 = mysqli_query($conn,"SELECT *, SUM(Quantity) as Quantity FROM  tbl_iar_items WHERE POno = '$POno' GROUP BY ItemDescription");	
+										while($row = mysqli_fetch_array($qry1)) {
 											$SPno = $row['SPno'];
 											$Unit = $row['Unit'];
 											$ItemDescription = $row['ItemDescription'];

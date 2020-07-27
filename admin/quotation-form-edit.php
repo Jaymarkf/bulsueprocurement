@@ -28,8 +28,8 @@ function getState(val) {
 		<div class="block-content collapse in">
 			<div class="span12">
 				<?php
-					$query = mysql_query("select * from tbl_quotation where quotation_id = '$get_id'")or die(mysql_error());
-					$row = mysql_fetch_array($query);
+					$query = mysqli_query($conn,"select * from tbl_quotation where quotation_id = '$get_id'");
+					$row = mysqli_fetch_array($query);
 				?>
 			<form method="post" id="update_quotation">
 				<div class="span6">
@@ -146,7 +146,7 @@ if (isset($_POST['update'])){
 	$approved = $_POST['approved'];
 	$uname = $fname.'.'.$lname;
 
-mysql_query("update tbl_quotation set branch= '$branch',username = '$uname',firstname ='$fname', lastname='$lname', email='$email', status='$status',approved='$approved' where user_id = '$get_id' ")or die(mysql_error());
+mysqli_query($conn,"update tbl_quotation set branch= '$branch',username = '$uname',firstname ='$fname', lastname='$lname', email='$email', status='$status',approved='$approved' where user_id = '$get_id' ");
 ?>
 
 <script>

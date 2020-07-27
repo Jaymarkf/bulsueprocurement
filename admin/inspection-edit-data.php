@@ -1,6 +1,6 @@
 <?php
-	$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-		while($row = mysql_fetch_array($query)) {
+	$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+		while($row = mysqli_fetch_array($query)) {
 		$Year = $row['Year'];
 	}
 ?>
@@ -9,7 +9,7 @@
 /*for the dropdown and another dropdown*/
 require_once("dbcontroller.php");
 $db_handle = new DBController();
-$query = "SELECT * FROM tbl_quotation WHERE Year = $Year AND extPrice <> 0 GROUP BY itemDescription" or die(mysql_error());
+$query = "SELECT * FROM tbl_quotation WHERE Year = $Year AND extPrice <> 0 GROUP BY itemDescription" ;
 //$query = "SELECT * FROM tbl_pr WHERE PRno <> '0000'";
 $results = $db_handle->runQuery($query);
 ?>
@@ -45,8 +45,8 @@ function getState(val) {
 						<!-- <select name="item_request" placeholder = "Name of articles being requestitioned" class="span12" required>
 							<option><?php echo $item;?></option>
 							<?php							
-								//$query = mysql_query("SELECT * FROM tbl_quotation WHERE Year = $Year AND extPrice <> 0 GROUP BY itemDescription")or die(mysql_error());
-								//while($row = mysql_fetch_array($query)){
+								//$query = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE Year = $Year AND extPrice <> 0 GROUP BY itemDescription");
+								//while($row = mysqli_fetch_array($query)){
 								//$id = $row['bacresID'];
 								//echo "<option>".$row['itemDescription']."</option>";
 								//}
@@ -73,8 +73,8 @@ function getState(val) {
 						<!-- <select name="companyA" placeholder = "Select Company A" class="span12" required>
 							<option><?php echo $coA;?></option>
 							<?php
-								$query = mysql_query("SELECT * FROM tbl_quotation WHERE Year = $Year AND extPrice <> 0 GROUP BY Company")or die(mysql_error());
-								while($row = mysql_fetch_array($query)){
+								$query = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE Year = $Year AND extPrice <> 0 GROUP BY Company");
+								while($row = mysqli_fetch_array($query)){
 									echo "<option>".$row['Company']."</option>";
 								}
 							?>
@@ -93,9 +93,9 @@ function getState(val) {
 						<!-- <select name="companyB" placeholder = "Select Company B" class="span12" required>
 							<option><?php echo $coB;?></option>
 							<?php
-								//$query = mysql_query("SELECT * FROM tbl_bac_resolution WHERE Year = $Year AND extPrice <> 0 GROUP BY Company")or die(mysql_error());
-								$query = mysql_query("SELECT * FROM tbl_quotation WHERE Year = $Year AND extPrice <> 0 GROUP BY Company")or die(mysql_error());
-								while($row = mysql_fetch_array($query)){
+								//$query = mysqli_query($conn,"SELECT * FROM tbl_bac_resolution WHERE Year = $Year AND extPrice <> 0 GROUP BY Company");
+								$query = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE Year = $Year AND extPrice <> 0 GROUP BY Company");
+								while($row = mysqli_fetch_array($query)){
 									echo "<option>".$row['Company']."</option>";
 								}
 							?>
@@ -114,8 +114,8 @@ function getState(val) {
 						<!-- <select name="companyC" placeholder = "Select Company C" class="span12" required>
 							<option><?php echo $coC;?></option>
 							<?php
-								$query = mysql_query("SELECT * FROM tbl_quotation WHERE Year = $Year AND extPrice <> 0 GROUP BY Company")or die(mysql_error());
-								while($row = mysql_fetch_array($query)){
+								$query = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE Year = $Year AND extPrice <> 0 GROUP BY Company");
+								while($row = mysqli_fetch_array($query)){
 									echo "<option>".$row['Company']."</option>";
 								}
 							?>

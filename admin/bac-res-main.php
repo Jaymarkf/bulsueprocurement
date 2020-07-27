@@ -22,8 +22,8 @@
 							</div>
 							
 							<?php
-								$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-									while($row = mysql_fetch_array($query)) {
+								$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+									while($row = mysqli_fetch_array($query)) {
 									$Year = $row['Year'];
 								}
 							?>
@@ -52,8 +52,8 @@
 							</div>
 						</div>
 						<?php
-							$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-								while($row = mysql_fetch_array($query)) {
+							$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+								while($row = mysqli_fetch_array($query)) {
 								$Year = $row['Year'];
 							}
 						?>
@@ -64,9 +64,9 @@
 					<div id="block_bg" class="block">
 						<div class="navbar navbar-inner block-header">
 						<?php 
-						//$query = mysql_query("SELECT * FROM tbl_quotation")or die(mysql_error());
-						$query = mysql_query("SELECT * FROM tbl_bac_resolution WHERE Year = $Year GROUP BY itemDescription")or die(mysql_error());
-						$count = mysql_num_rows($query);
+						//$query = mysqli_query($conn,"SELECT * FROM tbl_quotation");
+						$query = mysqli_query($conn,"SELECT * FROM tbl_bac_resolution WHERE Year = $Year GROUP BY itemDescription");
+						$count = mysqli_num_rows($query);
 						
 						?>
 							<div class="muted pull-left"><img src="../images/buttons/app.png" width="10%"> BAC Resolution List</div>
@@ -92,11 +92,11 @@
 									</thead>
 									<tbody>
 										<?php
-											//$query = mysql_query("SELECT * FROM tbl_quotation ORDER BY quotation_id DESC")or die(mysql_error());
-											//$query = mysql_query("SELECT * FROM tbl_pr_items WHERE Year='2018'")or die(mysql_error());
-											//$query =  mysql_query("SELECT *, sum(TotalCost) as TotalCost, sum(Quantity) as Quantity FROM tbl_pr_items WHERE Year = $Year GROUP BY ItemDescription")or die(mysql_error());
-											$query =  mysql_query("SELECT * FROM tbl_bac_resolution WHERE Year = $Year GROUP BY itemDescription")or die(mysql_error());
-											while($row = mysql_fetch_array($query)){
+											//$query = mysqli_query($conn,"SELECT * FROM tbl_quotation ORDER BY quotation_id DESC");
+											//$query = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE Year='2018'");
+											//$query =  mysqli_query($conn,"SELECT *, sum(TotalCost) as TotalCost, sum(Quantity) as Quantity FROM tbl_pr_items WHERE Year = $Year GROUP BY ItemDescription");
+											$query =  mysqli_query($conn,"SELECT * FROM tbl_bac_resolution WHERE Year = $Year GROUP BY itemDescription");
+											while($row = mysqli_fetch_array($query)){
 											//$id = $row['quotation_id'];
 											$id = $row['bacresID'];
 										?>
@@ -128,8 +128,8 @@
 															$year = $row['Year'];
 															$dateC = $row['Date_Created'];
 															
-															$check = mysql_query("SELECT *,COUNT(Year) FROM tbl_quotation WHERE Year = '$Year' AND itemDescription = '$item' GROUP BY itemDescription")or die(mysql_error());
-															$bilang = mysql_num_rows($check);
+															$check = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_quotation WHERE Year = '$Year' AND itemDescription = '$item' GROUP BY itemDescription");
+															$bilang = mysqli_num_rows($check);
 															
 															if ($bilang == "0") {
 																echo '<a title="View Company Quotation" id="back" data-placement="top" class="btn btn-default"><i class="icon-print icon-large"></i> Preview </a>';

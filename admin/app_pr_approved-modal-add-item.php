@@ -24,12 +24,12 @@
 					</thead>
 					<tbody>
 						<?php					
-							$query3 = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-							while($row3 = mysql_fetch_array($query3)) {
+							$query3 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+							while($row3 = mysqli_fetch_array($query3)) {
 							$Year3 = $row3['Year'];
 							
-							$query4 = mysql_query("SELECT * FROM tbl_ppmp_consolidated WHERE Year = $Year3")or die(mysql_error());
-							while($row4 = mysql_fetch_array($query4)){
+							$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp_consolidated WHERE Year = $Year3");
+							while($row4 = mysqli_fetch_array($query4)){
 							//$id4 = $row4['ppmpID'];
 						?>
 						<tr>

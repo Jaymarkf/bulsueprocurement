@@ -23,8 +23,8 @@
 			<div class="block-content collapse in">
 				<div class="span12">
 				<?php
-					$query = mysql_query("select * from users where user_id = '$get_id'")or die(mysql_error());
-					$row = mysql_fetch_array($query);
+					$query = mysqli_query($conn,"select * from users where user_id = '$get_id'");
+					$row = mysqli_fetch_array($query);
 				?>
 				
 				<!-- <form action="users-form-edit-save.php?id=<?php echo $get_id; ?>" method="POST" id="update_user"> -->
@@ -32,15 +32,15 @@
 						<div class="control-group" id="select_box">
 							<div class="controls">
 								<?php
-									$query = mysql_query("select * from users where user_id = '$get_id'")or die(mysql_error());
-									$rows = mysql_fetch_array($query);
+									$query = mysqli_query($conn,"select * from users where user_id = '$get_id'");
+									$rows = mysqli_fetch_array($query);
 								?>							
 								<label>Access Level</label>
 								<select name="level" placeholder = "Status" class="span12" onchange="fetch_select(this.value);" required>
 									<option><?php echo $row['level'];?></option>
 									<?php
-										$select=mysql_query("SELECT level FROM tbl_branch GROUP BY level");
-										while($row=mysql_fetch_array($select)){
+										$select=mysqli_query($conn,"SELECT level FROM tbl_branch GROUP BY level");
+										while($row=mysqli_fetch_array($select)){
 											echo "<option>".$row['level']."</option>";
 										}
 									?>
@@ -58,8 +58,8 @@
 						</div>
 						
 						<?php
-							$query = mysql_query("select * from users where user_id = '$get_id'")or die(mysql_error());
-							$row = mysql_fetch_array($query);
+							$query = mysqli_query($conn,"select * from users where user_id = '$get_id'");
+							$row = mysqli_fetch_array($query);
 						?>
 				
 						<div class="control-group">
@@ -149,7 +149,7 @@ if (isset($_POST['update'])){
 <?php
 	}else{
 	
-		mysql_query("update users set branch= '$branch',username = '$username',password = '$password',level='$level',approved='$approved' where user_id = '$get_id' ")or die(mysql_error());
+		mysqli_query($conn,"update users set branch= '$branch',username = '$username',password = '$password',level='$level',approved='$approved' where user_id = '$get_id' ");
 ?>
 		<script>
 			$.ajax({

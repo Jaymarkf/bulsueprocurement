@@ -31,8 +31,8 @@
 					<div id="block_bg" class="block">
 						<div class="navbar navbar-inner block-header">
 						<?php 
-						$query = mysql_query("SELECT * FROM tbl_quotation")or die(mysql_error());
-						$count = mysql_num_rows($query);
+						$query = mysqli_query($conn,"SELECT * FROM tbl_quotation");
+						$count = mysqli_num_rows($query);
 						?>
 							<div class="muted pull-left"><i class="icon-user icon-large"></i> Quotation List</div>
 							<div class="muted pull-right">
@@ -82,8 +82,8 @@
 									</thead>
 									<tbody>
 										<?php
-											$query = mysql_query("SELECT * FROM tbl_quotation ORDER BY quotation_id DESC")or die(mysql_error());
-											while($row = mysql_fetch_array($query)){
+											$query = mysqli_query($conn,"SELECT * FROM tbl_quotation ORDER BY quotation_id DESC");
+											while($row = mysqli_fetch_array($query)){
 											$id = $row['quotation_id'];
 										?>
 											<tr>

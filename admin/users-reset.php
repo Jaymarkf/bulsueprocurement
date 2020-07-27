@@ -6,7 +6,7 @@ include('session.php');
 $get_id = $_GET['id'];
 
 //if (isset($_GET['reset'])){
-    mysql_query("UPDATE users SET password = '12345' WHERE user_id = '$get_id' ")or die(mysql_error());
+    mysqli_query($conn,"UPDATE users SET password = '12345' WHERE user_id = '$get_id' ");
 ?>
     <script>
     	$.ajax({

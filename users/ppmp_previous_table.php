@@ -12,8 +12,8 @@
 			
 			<tbody>
 				<?php
-					$query2 = mysql_query("SELECT *,SUM(TotalAmount) as TAmt FROM tbl_ppmp WHERE Year < '$Year' AND user_id='$session_id'  AND Status = 'Completed' GROUP BY Year")or die(mysql_error());				
-					while($row2 = mysql_fetch_array($query2)){
+					$query2 = mysqli_query($conn,"SELECT *,SUM(TotalAmount) as TAmt FROM tbl_ppmp WHERE Year < '$Year' AND user_id='$session_id'  AND Status = 'Completed' GROUP BY Year");				
+					while($row2 = mysqli_fetch_array($query2)){
 					$id = $row2['Year'];
 				?>
 				<tr>				

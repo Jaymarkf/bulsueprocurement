@@ -15,8 +15,8 @@
 							<?php
 								//Create query
 								$query = "select * from tbl_item_category ORDER BY ItemCatDesc ASC";
-								$result=mysql_query($query) or die ("Query Failed: ".mysql_error());
-								while ($row=mysql_fetch_array($result)) {
+								$result=mysqli_query($conn,$query) or die ("Query Failed: ".mysql_error());
+								while ($row=mysqli_fetch_array($result)) {
 									$icitemcategoryID=$row['itemcategoryID'];
 									$icCatDesc=$row['ItemCatDesc'];
 									echo "<option value=". $icitemcategoryID .">". $icCatDesc ."</option>";
