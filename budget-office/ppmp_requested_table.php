@@ -1,42 +1,29 @@
 <?php include('../dbcon.php'); ?>
-
 <?php
 	//require_once 'config.php';
 	//if(isset($_GET['idsup'])) {
 	//	$update_id = $_GET['idsup'];
-
 	//	mysqli_query($conn,"UPDATE tbl_ppmp SET BO_PPMP_Status = 'Supplemental' WHERE Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND EndUserUnit='$update_id'");
-
 	//	header('Location: ppmp_requested.php?id='.$update_id);
 	//}
-	
 	//if(isset($_GET['idrev'])) {
 	//	$update_id = $_GET['idrev'];
-
 	//	mysqli_query($conn,"UPDATE tbl_ppmp SET BO_PPMP_Status = 'Revise' WHERE Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND EndUserUnit='$update_id'");
-
 	//	header('Location: ppmp_requested.php?id='.$update_id);
 	//}
-	
 	if(isset($_GET['idsendback'])) {
 		$update_id = $_GET['idsendback'];
-
-		mysqli_query($conn,"UPDATE tbl_ppmp SET Status = 'Pending' WHERE Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND EndUserUnit='$update_id'");
-
+		mysqli_query($conn,"UPDATE tbl_ppmp SET Status = 'Pending' WHERE Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND EndUserUnit = '$update_id'");
 		header('Location: ppmp_requested.php?id='.$update_id);
 	}
-	
 	if(isset($_GET['idapp'])) {
 		$update_id = $_GET['idapp'];
-
 		//mysqli_query($conn,"UPDATE tbl_ppmp SET Status = 'Completed', BO_PPMP_Status = 'Approved' WHERE Status = 'Requested' AND EndUserUnit='$update_id'");
-		mysqli_query($conn,"UPDATE tbl_ppmp SET BO_PPMP_Status = 'Approved' WHERE Status = 'Requested' AND EndUserUnit='$update_id'");
-
+		mysqli_query($conn,"UPDATE tbl_ppmp SET BO_PPMP_Status = 'Approved' WHERE Status = 'Requested' AND EndUserUnit = '$update_id'");
 		header('Location: ppmp_requested.php?id='.$update_id);
 	}
 ?>
-
-<div class="">	
+<div class="">
 	<div class="span9">
 		<a data-placement="bottom" href="dashboard.php" title="Back to PPMP-Dashboard" id="back" class="btn btn-inverse"><i class="icon-undo icon-large"></i> Back </a>
 			<script type="text/javascript">
@@ -46,7 +33,6 @@
 				});
 			</script>
 		<!-- <th colspan="2" style="text-align:right;"> -->
-		
 			<a data-placement="bottom" title="Approved PPMP" id="previous" href="ppmp_requested_table.php<?php echo '?idapp='.$id; ?>" class="btn btn-success"><i class="icon-check icon-small"></i> Approved </a>
 				<script type="text/javascript">
 				$(document).ready(function(){
@@ -54,7 +40,6 @@
 					$('#previous').tooltip('hide');
 				});
 				</script>
-				
 			<a data-placement="bottom" title="Send Back" id="sendback" href="ppmp_requested_table.php<?php echo '?idsendback='.$id; ?>" class="btn btn-warning"><i class="icon-share icon-small"></i> Send Back </a>
 				<script type="text/javascript">
 				$(document).ready(function(){

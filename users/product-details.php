@@ -16,7 +16,8 @@
 ?>
 
     <body >
-		<?php include('navdisabled.php') ?>
+    <?php include('navbar.php');
+    ?>
         <div class="container-fluid" id="">
             <div class="row-fluid">
 			<div class="span12" id="content">
@@ -237,7 +238,7 @@
 										success: function(html){
 											$.jGrowl("Item successfully added to cart!", { header: 'SUCCESS' });
 											var delay = 1000;
-											setTimeout(function(){ window.location = 'dashboard.php'  }, delay);
+                                        setTimeout(function(){ window.location = 'dashboard.php'  }, delay);
 										}
 									});
 								});
