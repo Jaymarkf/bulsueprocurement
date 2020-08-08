@@ -2,7 +2,7 @@
 require_once("dbcontroller.php");
 $db_handle = new DBController();
 if(!empty($_POST["country_id"])) {
-	$query = "SELECT * FROM tbl_quotation WHERE itemDescription = '" . $_POST["country_id"] . "'" or die(mysql_error());
+	$query = "SELECT * FROM tbl_quotation WHERE itemDescription = '" . $_POST["country_id"] . "'" ;
 	//$query ="SELECT * FROM tbl_pr_items WHERE PRno = '" . $_POST["country_id"] . "'";
 	$results = $db_handle->runQuery($query);
 ?>

@@ -24,8 +24,8 @@
 						<select name="branch" placeholder = "Branch" class="span12" required>
 							<option></option>
 							<?php
-								$query = mysql_query("select * from tbl_branch")or die(mysql_error());
-								while($row = mysql_fetch_array($query)){
+								$query = mysqli_query($conn,"select * from tbl_branch");
+								while($row = mysqli_fetch_array($query)){
 								$id = $row['branchID'];
 							?>
 							<option value ="<?php echo $row['branch'];?>"><?php echo $row['branch'];?></option>

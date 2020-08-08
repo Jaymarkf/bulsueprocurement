@@ -36,8 +36,8 @@ $results = $db_handle->runQuery($query);
 							</div>
 						</div>
 						<?php
-							$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-								while($row = mysql_fetch_array($query)) {
+							$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+								while($row = mysqli_fetch_array($query)) {
 								$Year = $row['Year'];
 							}
 						?>
@@ -48,11 +48,11 @@ $results = $db_handle->runQuery($query);
 					<div id="block_bg" class="block">
 						<div class="navbar navbar-inner block-header">
 						<?php 
-						//$sqlSelectItem = mysql_query("SELECT * FROM tbl_quotation WHERE itemDescription = '$itemID'") or die(mysql_error());
-						//$getItemInfo = mysql_fetch_array($sqlSelectItem);
+						//$sqlSelectItem = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE itemDescription = '$itemID'") ;
+						//$getItemInfo = mysqli_fetch_array($sqlSelectItem);
 		
-						$query = mysql_query("SELECT * FROM tbl_quotation WHERE Year = $Year AND itemDescription = '$itemID'")or die(mysql_error());
-						$count = mysql_num_rows($query);
+						$query = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE Year = $Year AND itemDescription = '$itemID'");
+						$count = mysqli_num_rows($query);
 						
 						?>
 							<div class="muted pull-left"><img src="../images/buttons/rfq.png" width="10%"> Listing of Company</div>
@@ -82,8 +82,8 @@ $results = $db_handle->runQuery($query);
 									</thead>
 									<tbody>
 										<?php
-											$query = mysql_query("SELECT * FROM tbl_quotation WHERE Year = $Year AND itemDescription = '$itemID'")or die(mysql_error());
-											while($row = mysql_fetch_array($query)){
+											$query = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE Year = $Year AND itemDescription = '$itemID'");
+											while($row = mysqli_fetch_array($query)){
 											$id = $row['quotation_id'];
 										?>
 											<tr>

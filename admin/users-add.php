@@ -28,8 +28,8 @@
 							<select name="level" placeholder = "Status" class="span12" onchange="fetch_select(this.value);" required>
 								<option value="" disabled selected>Select Access Level</option>
 								<?php
-									$select=mysql_query("SELECT level FROM tbl_branch GROUP BY level");
-									while($row=mysql_fetch_array($select)){
+									$select=mysqli_query($conn,"SELECT level FROM tbl_branch GROUP BY level");
+									while($row=mysqli_fetch_array($select)){
 										echo "<option>".$row['level']."</option>";
 									}
 								?>
@@ -97,9 +97,9 @@ $username = $_POST['username'];
 
 //if found reject the saving of users
 	$query = "SELECT * FROM users WHERE username='$username'";
-	$result = mysql_query($query)or die(mysql_error());
-	$row = mysql_fetch_array($result);
-	$num_row = mysql_num_rows($result);
+	$result = mysqli_query($conn,$query);
+	$row = mysqli_fetch_array($result);
+	$num_row = mysqli_num_rows($result);
 
 if( $num_row > 0 ) {
 ?>
@@ -133,8 +133,8 @@ if( $num_row > 0 ) {
 	
 	$password = generatePasswd();
 	
-	mysql_query("insert into users (Year,branch,username,password,level,registered_date,approved,Remarks) values(YEAR(NOW()),'$branch','$username','$password','$level',NOW(),'yes','Registered by Admin')")or die(mysql_error());
-	//mysql_query("insert into activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')")or die(mysql_error());
+	mysqli_query($conn,"insert into users (Year,branch,username,password,level,registered_date,approved,Remarks) values(YEAR(NOW()),'$branch','$username','$password','$level',NOW(),'yes','Registered by Admin')");
+	//mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')");
 ?>
 	<script>
 	$.ajax({

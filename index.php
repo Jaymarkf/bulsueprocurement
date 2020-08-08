@@ -70,8 +70,7 @@
 				$result = mysqli_query($conn, $query);
 				$row = mysqli_fetch_array($result);
 				$num_row = mysqli_num_rows($result);
-
-
+              
 				//$pass=$row['password'];
 				$level =$row['level'];
 				$department =$row['branch'];
@@ -107,7 +106,7 @@
 								});
 							</script>
 					<?php
-							//mysql_query("insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")")or die(mysql_error());
+							//mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
 						}
 					}elseif($level=='administrator' AND $department=='Main Office'){
 						$_SESSION['admin_id']=$row['user_id'];
@@ -138,7 +137,7 @@
 								});
 							</script>
 					<?php
-							//mysql_query("insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")")or die(mysql_error());
+							//mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
 						}
 					}elseif($level=='administrator' AND $department=='Budget Office'){
 						$_SESSION['bo_admin_id']=$row['user_id'];
@@ -169,7 +168,7 @@
 								});
 							</script>
 					<?php
-							//mysql_query("insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")")or die(mysql_error());
+							//mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
 						}
 					}elseif($level=='administrator' AND $department=='Procurement Unit'){
 						$_SESSION['admin_id']=$row['user_id'];
@@ -200,11 +199,11 @@
 								});
 							</script>
 					<?php
-							//mysql_query("insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")")or die(mysql_error());
+							//mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
 						}
 					}elseif($level=='user'){
 						$_SESSION['member_id']=$row['user_id'];
-						
+				
 						if($password=='12345'){
 							//header('location: users/password-default');
 					?>
@@ -231,7 +230,7 @@
 								});
 							</script>
 					<?php
-							//mysql_query("insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")")or die(mysql_error());
+							//mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
 						}
 					}
 					else{

@@ -5,8 +5,8 @@
 				<div class="muted pull-left"><i class="icon-pencil icon-large"></i> Edit Item Purpose </div>
 			</div>
 			<?php
-			$query = mysql_query("select * from tbl_purpose where purposeID = '$get_id'")or die(mysql_error());
-			$row = mysql_fetch_array($query);
+			$query = mysqli_query($conn,"select * from tbl_purpose where purposeID = '$get_id'");
+			$row = mysqli_fetch_array($query);
 			?>
 			<div class="block-content collapse in">
 				<div class="span12">
@@ -48,7 +48,7 @@
 if (isset($_POST['update'])){
 $icDesc = trim(strtoupper($_POST['icDesc']));
 
-mysql_query("update tbl_purpose set purpose ='$icDesc' where purposeID = '$get_id' ")or die(mysql_error());
+mysqli_query($conn,"update tbl_purpose set purpose ='$icDesc' where purposeID = '$get_id' ");
 ?>
 
 <script>

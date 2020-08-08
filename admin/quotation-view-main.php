@@ -4,8 +4,8 @@
 	$itemID = $_GET['item'];
 	
 	if(!empty($itemID)){
-		$sqlSelectItem = mysql_query("SELECT * FROM tbl_quotation WHERE itemDescription = '$itemID'") or die(mysql_error());
-		$getItemInfo = mysql_fetch_array($sqlSelectItem);
+		$sqlSelectItem = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE itemDescription = '$itemID'") ;
+		$getItemInfo = mysqli_fetch_array($sqlSelectItem);
 		
 		$Company = $getItemInfo["Company"];
 		$Address = $getItemInfo["Address"];

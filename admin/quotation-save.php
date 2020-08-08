@@ -3,8 +3,8 @@ include('../dbcon.php');
 include('session.php');
 
 
-$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-	while($row = mysql_fetch_array($query)) {
+$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+	while($row = mysqli_fetch_array($query)) {
 	$Year = $row['Year'];
 }
 
@@ -26,7 +26,7 @@ $unit_ExtPrice = $unit_Quantity * $unit_Price;
 
 $uname = $fname.'.'.$lname;
 
-mysql_query("INSERT INTO tbl_quotation (Q_date,Year,Company,Address,Contact_Person,Contact_No,email,TIN,Brand_Model,itemDescription,Quantity,unitOfMeasurement,unitPrice,ABC_Total_Price,ExtPrice)
-			VALUES ('$Q_date','$Year','$co_name','$co_address','$contact_person','$contact_number','$email','$tin','$unit_brand_model','$item_Desc','$unit_Quantity','$unit_of_Measurement','$unit_Price','$unit_ABC_Total_Price','$unit_ExtPrice')")or die(mysql_error());
-//mysql_query("insert into activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')")or die(mysql_error());
+mysqli_query($conn,"INSERT INTO tbl_quotation (Q_date,Year,Company,Address,Contact_Person,Contact_No,email,TIN,Brand_Model,itemDescription,Quantity,unitOfMeasurement,unitPrice,ABC_Total_Price,ExtPrice)
+			VALUES ('$Q_date','$Year','$co_name','$co_address','$contact_person','$contact_number','$email','$tin','$unit_brand_model','$item_Desc','$unit_Quantity','$unit_of_Measurement','$unit_Price','$unit_ABC_Total_Price','$unit_ExtPrice')");
+//mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')");
 ?>

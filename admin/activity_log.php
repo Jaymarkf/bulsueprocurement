@@ -34,8 +34,8 @@
 										<tbody>
 											
                               		<?php
-										$query = mysql_query("SELECT * FROM  activity_log ORDER BY 	activity_log_id DESC")or die(mysql_error());
-										while($row = mysql_fetch_array($query)){
+										$query = mysqli_query($conn,"SELECT * FROM  activity_log ORDER BY 	activity_log_id DESC");
+										while($row = mysqli_fetch_array($query)){
 									?>
 									<tr>
                                          <td><?php  echo $row['date']; ?></td>

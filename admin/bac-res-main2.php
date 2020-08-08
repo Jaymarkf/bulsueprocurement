@@ -17,8 +17,8 @@
 						</div>
 
 						<?php
-							$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-								while($row = mysql_fetch_array($query)) {
+							$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+								while($row = mysqli_fetch_array($query)) {
 								$Year = $row['Year'];
 							}
 						?>
@@ -57,15 +57,15 @@
 								$year = $_GET['year'];
 							}
 							
-							$query1 = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-							while($row1 = mysql_fetch_array($query1)) {
+							$query1 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+							while($row1 = mysqli_fetch_array($query1)) {
 								$Year1 = $row1['Year'];
 								$user_id1 = $row1['user_id'];
 							}
 							
-							//$query2 = mysql_query("SELECT * FROM tbl_po WHERE Year = $Year  AND (POno != '' OR POno IS NOT NULL)")or die(mysql_error());
-							$query2 = mysql_query("SELECT * FROM tbl_quotation WHERE Year = $Year")or die(mysql_error());
-							$count2 = mysql_num_rows($query2);
+							//$query2 = mysqli_query($conn,"SELECT * FROM tbl_po WHERE Year = $Year  AND (POno != '' OR POno IS NOT NULL)");
+							$query2 = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE Year = $Year");
+							$count2 = mysqli_num_rows($query2);
 						?>
                             <div class="navbar navbar-inner block-header">
                                 <div class="muted pull-left"><img src="../images/buttons/app.png" width="5%"> BAC Resolution - <span class="badge badge-warning">YEAR <?php echo $Year; ?></span></div>

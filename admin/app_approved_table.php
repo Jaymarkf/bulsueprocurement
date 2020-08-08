@@ -11,14 +11,14 @@
 		
 		<!-- CHECK IF ALREADY CONSOLIDATE THE PPMP YEAR -->	
 		<?php
-			//$query = mysql_query("SELECT * FROM tbl_year")or die(mysql_error());
-			$query = mysql_query("SELECT * FROM users WHERE user_id='$session_id'")or die(mysql_error());
-			while($row = mysql_fetch_array($query)) {
+			//$query = mysqli_query($conn,"SELECT * FROM tbl_year");
+			$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id='$session_id'");
+			while($row = mysqli_fetch_array($query)) {
 				$Year = $row['Year'];
 			}
 			
-			$query1= mysql_query("select * from tbl_ppmp_consolidated WHERE Year = '$Year'")or die(mysql_error());
-			$count1 = mysql_num_rows($query1);
+			$query1= mysqli_query($conn,"select * from tbl_ppmp_consolidated WHERE Year = '$Year'");
+			$count1 = mysqli_num_rows($query1);
 		?>	
 		
 		<?php if ($count1 == "0") { ?>
@@ -41,14 +41,14 @@
 		<!-- CHECK IF ALREADY CONSOLIDATE THE PPMP YEAR -->
 		<!-- RESET THE CONSOLIDATE PPMP YEAR -->
 		<?php
-			//$query = mysql_query("SELECT * FROM tbl_year")or die(mysql_error());
-			$query = mysql_query("SELECT * FROM users WHERE user_id='$session_id'")or die(mysql_error());
-			while($row = mysql_fetch_array($query)) {
+			//$query = mysqli_query($conn,"SELECT * FROM tbl_year");
+			$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id='$session_id'");
+			while($row = mysqli_fetch_array($query)) {
 				$Year = $row['Year'];
 			}
 			
-			$query2= mysql_query("select * from tbl_ppmp_consolidated WHERE Year = '$Year'")or die(mysql_error());
-			$count2 = mysql_num_rows($query2);
+			$query2= mysqli_query($conn,"select * from tbl_ppmp_consolidated WHERE Year = '$Year'");
+			$count2 = mysqli_num_rows($query2);
 		?>	
 		
 		<?php if ($count2 == "0") { ?>
@@ -86,12 +86,12 @@
 			
 			<tbody>
 				<?php					
-					$query3 = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-					while($row3 = mysql_fetch_array($query3)) {
+					$query3 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+					while($row3 = mysqli_fetch_array($query3)) {
 					$Year3 = $row3['Year'];
 					
-					$query4 = mysql_query("SELECT * FROM tbl_ppmp_consolidated WHERE Year = $Year3")or die(mysql_error());
-					while($row4 = mysql_fetch_array($query4)){
+					$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp_consolidated WHERE Year = $Year3");
+					while($row4 = mysqli_fetch_array($query4)){
 					$id4 = $row4['consolidatedID'];
 				?>
 				<tr>
@@ -111,9 +111,9 @@
 					<th colspan="4" align="right"><h4>TOTAL AMOUNT: </h4></th>
 					
 					<?php
-						//$row = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year3 AND user_id='$session_id'  AND Status = 'Requested'") or die(mysql_error());
-						$row5 = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp_consolidated WHERE Year=$Year3") or die(mysql_error());
-						while($result5 = mysql_fetch_array($row5)){
+						//$row = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year3 AND user_id='$session_id'  AND Status = 'Requested'") ;
+						$row5 = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp_consolidated WHERE Year=$Year3") ;
+						while($result5 = mysqli_fetch_array($row5)){
 							echo "<th style='text-align:right;'><h4>&#8369;" . number_format($result5['Totalx'],2, '.', ',') . "</h4></th>";
 						}
 					?>

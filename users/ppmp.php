@@ -23,13 +23,13 @@
                         <!-- block -->
                         <div  id="block_bg" class="block">
 						<?php
-							//$query1 = mysql_query("SELECT * FROM tbl_year")or die(mysql_error());
-							$query = mysql_query("SELECT * FROM users WHERE user_id='$session_id'")or die(mysql_error());
-							while($row = mysql_fetch_array($query)) {
+							//$query1 = mysqli_query($conn,"SELECT * FROM tbl_year");
+							$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id='$session_id'");
+							while($row = mysqli_fetch_array($query)) {
 							$Year = $row['Year'];
 							}
-							$query1= mysql_query("SELECT * FROM tbl_ppmp WHERE Year = '$Year' AND user_id='$session_id' AND Status = 'Pending'")or die(mysql_error());
-							$count = mysql_num_rows($query1);
+							$query1= mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = '$Year' AND user_id='$session_id' AND Status = 'Pending'");
+							$count = mysqli_num_rows($query1);
 						?>					
                             <div class="navbar navbar-inner block-header">
                                 <div class="muted pull-left"><i class="icon-shopping-cart icon-large"></i> PPMP CART Lists - <span class="badge badge-warning">YEAR <?php echo $Year; ?></span></div>

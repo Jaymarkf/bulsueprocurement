@@ -13,6 +13,6 @@ $specialChars = preg_match('@[^\w]@', $new_password);
 if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($new_password) < 8) {
     echo 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.';
 }else{
-    mysql_query("update users set password = '$new_password' where user_id = '$session_id'")or die(mysql_error());
+    mysqli_query($conn,"update users set password = '$new_password' where user_id = '$session_id'");
 }
  ?>

@@ -3,7 +3,7 @@
 	if(isset($_GET['update_id'])) {
 		$update_id = $_GET['update_id'];
 		
-		mysql_query("UPDATE tbl_ppmp SET Status = 'Completed' WHERE Status = 'Requested' AND BO_PPMP_Status='Approved' AND EndUserUnit='$update_id'")or die(mysql_error());
+		mysqli_query($conn,"UPDATE tbl_ppmp SET Status = 'Completed' WHERE Status = 'Requested' AND BO_PPMP_Status='Approved' AND EndUserUnit='$update_id'");
 		
 		header('Location: dashboard.php');
 	}
@@ -24,21 +24,21 @@
 			
 			<tbody>
 				<?php
-				$query2 = mysql_query("SELECT * FROM users WHERE Year<> '0' AND Year='$Year' AND level='user' AND approved='yes'")or die(mysql_error());
-				while($row2 = mysql_fetch_array($query2)){
+				$query2 = mysqli_query($conn,"SELECT * FROM users WHERE Year<> '0' AND Year='$Year' AND level='user' AND approved='yes'");
+				while($row2 = mysqli_fetch_array($query2)){
 					$Branch2 = $row2['branch'];
 					$user_id2 = $row2['user_id'];
 					$Year2 = $row2['Year'];
 						
-					$query3= mysql_query("select * from tbl_ppmp WHERE Year = '$Year' AND EndUserUnit='$Branch2' AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND user_id = '$user_id2' GROUP BY Year")or die(mysql_error());
-					$count3 = mysql_num_rows($query3);
+					$query3= mysqli_query($conn,"select * from tbl_ppmp WHERE Year = '$Year' AND EndUserUnit='$Branch2' AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND user_id = '$user_id2' GROUP BY Year");
+					$count3 = mysqli_num_rows($query3);
 					
-					//$query4 = mysql_query("SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year = '$Year' AND EndUserUnit='$Branch2' AND Status = 'Requested'  AND BO_PPMP_Status = 'Approved' AND user_id = '$user_id2' GROUP BY Year")or die(mysql_error());
-					$query4 = mysql_query("SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year = '$Year' AND EndUserUnit='$Branch2' AND BO_PPMP_Status = 'Approved' AND user_id = '$user_id2' GROUP BY Year")or die(mysql_error());
-					$count4 = mysql_num_rows($query4);
+					//$query4 = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year = '$Year' AND EndUserUnit='$Branch2' AND Status = 'Requested'  AND BO_PPMP_Status = 'Approved' AND user_id = '$user_id2' GROUP BY Year");
+					$query4 = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year = '$Year' AND EndUserUnit='$Branch2' AND BO_PPMP_Status = 'Approved' AND user_id = '$user_id2' GROUP BY Year");
+					$count4 = mysqli_num_rows($query4);
 					
-					$query5 = mysql_query("SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year < '$Year' AND EndUserUnit='$Branch2' AND Status = 'Completed'  AND BO_PPMP_Status = 'Approved' AND user_id = '$user_id2' GROUP BY Year")or die(mysql_error());
-					$count5 = mysql_num_rows($query5);
+					$query5 = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year < '$Year' AND EndUserUnit='$Branch2' AND Status = 'Completed'  AND BO_PPMP_Status = 'Approved' AND user_id = '$user_id2' GROUP BY Year");
+					$count5 = mysqli_num_rows($query5);
 				?>
 				<tr>
 					<td width="10%" style="text-align:center;"><?php echo $Year2; ?></td>

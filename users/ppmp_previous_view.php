@@ -12,8 +12,8 @@
                         <!-- block -->
                         <div  id="block_bg" class="block">
 						<?php
-							$query= mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $YearID AND user_id='$session_id' AND Status = 'Completed'")or die(mysql_error());
-							$count = mysql_num_rows($query);
+							$query= mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $YearID AND user_id='$session_id' AND Status = 'Completed'");
+							$count = mysqli_num_rows($query);
 						?>
                             <div class="navbar navbar-inner block-header">
                                 <div class="muted pull-left"><img src="../images/buttons/ppmp-previous.png" width="5%"> PREVIOUS Project Procurement Management Plan - <span class="badge badge-warning">YEAR <?php echo $YearID; ?></span></div>

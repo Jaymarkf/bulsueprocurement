@@ -14,8 +14,8 @@
                         <div id="block_bg" class="block">
                             <div class="navbar navbar-inner block-header">
 							<?php 
-							$query = mysql_query("select * from tbl_item_details")or die(mysql_error());
-							$count = mysql_num_rows($query);
+							$query = mysqli_query($conn,"select * from tbl_item_details");
+							$count = mysqli_num_rows($query);
 							?>
                                 <div class="muted pull-left"><i class="icon-tags icon-large"></i> Items Detail List</div>
                                 <div class="muted pull-right">
@@ -45,8 +45,8 @@
 										</thead>
 										<tbody>
 												<?php
-													$query1 = mysql_query("select * from tbl_item_details ORDER BY itemdetailID DESC")or die(mysql_error());
-													while($row1 = mysql_fetch_array($query1)){
+													$query1 = mysqli_query($conn,"select * from tbl_item_details ORDER BY itemdetailID DESC");
+													while($row1 = mysqli_fetch_array($query1)){
 														$id = $row1['itemdetailID'];
 														$itemcategoryID = $row1['itemcategoryID'];												
 												?>
@@ -65,8 +65,8 @@
 														</script>
 												</td>
 												<?php
-													$query2 = mysql_query("select * from tbl_item_category where itemcategoryID='$itemcategoryID'")or die(mysql_error());
-													while($row2= mysql_fetch_array($query2)){
+													$query2 = mysqli_query($conn,"select * from tbl_item_category where itemcategoryID='$itemcategoryID'");
+													while($row2= mysqli_fetch_array($query2)){
 														$itemCatDesc = $row2['ItemCatDesc'];	
 												?>
 												<td><?php echo $itemCatDesc; ?> </td>

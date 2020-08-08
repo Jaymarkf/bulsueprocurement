@@ -2,8 +2,8 @@
 include('../dbcon.php');
 include('session.php');
 
-	$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-		while($row = mysql_fetch_array($query)) {
+	$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+		while($row = mysqli_fetch_array($query)) {
 			$Year = $row['Year'];
 	}
 	
@@ -11,9 +11,9 @@ include('session.php');
 			
 	//if found reject saving of IAR
 	$query = "SELECT * FROM tbl_iar WHERE Year = $Year AND iar_No = '$ciIARno'";
-	$result = mysql_query($query)or die(mysql_error());
-	$row = mysql_fetch_array($result);
-	$num_row = mysql_num_rows($result);
+	$result = mysqli_query($conn,$query);
+	$row = mysqli_fetch_array($result);
+	$num_row = mysqli_num_rows($result);
 	
 if( $num_row > 0 ) {
 	
@@ -32,9 +32,9 @@ if( $num_row > 0 ) {
 	$ciRCC = $_POST['ciRCC'];
 	
 	//items save from PO tbl_iar JOIN tbl_iar_items USING (POno)
-	$query1 = mysql_query("SELECT * FROM tbl_po JOIN tbl_po_items USING (POno) WHERE POno = '$ciPOno'")or die(mysql_error());
+	$query1 = mysqli_query($conn,"SELECT * FROM tbl_po JOIN tbl_po_items USING (POno) WHERE POno = '$ciPOno'");
 
-	while($row1 = mysql_fetch_array($query1)) {
+	while($row1 = mysqli_fetch_array($query1)) {
 		$Year = $row1['Year'];
 		$supplier = $row1['supplier'];
 		$poDate = $row1['PO_Date'];
@@ -44,19 +44,19 @@ if( $num_row > 0 ) {
 		$ItemDescription = $row1['ItemDescription'];
 		$Quantity = $row1['Quantity'];
 		
-		mysql_query("insert into tbl_iar_items (Year,POno,SPno,Unit,ItemDescription,Quantity)
-		   values('$Year','$POno','$SPno','$Unit','$ItemDescription','$Quantity')")or die(mysql_error());
+		mysqli_query($conn,"insert into tbl_iar_items (Year,POno,SPno,Unit,ItemDescription,Quantity)
+		   values('$Year','$POno','$SPno','$Unit','$ItemDescription','$Quantity')");
 	}
 	
 	//iar records
-	mysql_query("insert into tbl_iar (iar_No,iar_Date,Year,supplier,POno,po_Date,rod,rcc)
-			   values('$ciIARno','$ciIARDate','$Year','$supplier','$ciPOno','$poDate','$ciROD','$ciRCC')")or die(mysql_error());
+	mysqli_query($conn,"insert into tbl_iar (iar_No,iar_Date,Year,supplier,POno,po_Date,rod,rcc)
+			   values('$ciIARno','$ciIARDate','$Year','$supplier','$ciPOno','$poDate','$ciROD','$ciRCC')");
 
 	$fname = $row['firstname'];
 	$lname = $row['lastname'];
 	$uname = $fname.' '.$lname;
 	
-//	mysql_query("insert into activity_log (date,username,action) values(NOW(),'$user_username','Add new BACreso by $uname')")or die(mysql_error());
+//	mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Add new BACreso by $uname')");
 	
 	$result='<div class="alert alert-success">Thank You! I will be in touch</div>';
 	

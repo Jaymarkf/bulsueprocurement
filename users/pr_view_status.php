@@ -5,8 +5,8 @@
 ?>
 
 <?php					
-	$qry = mysql_query("SELECT * FROM tbl_pr WHERE PRno = '$PR'")or die(mysql_error());
-	$row = mysql_fetch_array($qry)
+	$qry = mysqli_query($conn,"SELECT * FROM tbl_pr WHERE PRno = '$PR'");
+	$row = mysqli_fetch_array($qry)
 ?>
 <body>
 <div class="container-fluid">
@@ -26,8 +26,8 @@
 						</tr>
 					</thead>
 					<?php
-					$qry1 = mysql_query("SELECT * FROM tbl_pr_items WHERE PRno = '$PR'")or die(mysql_error());
-							while($row1 = mysql_fetch_array($qry1)){
+					$qry1 = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE PRno = '$PR'");
+							while($row1 = mysqli_fetch_array($qry1)){
 							$items = $row1['ItemDescription'];
 					?>
 					<tbody>
@@ -41,9 +41,9 @@
 							<td style="text-align: center;">
 							<?php
 							
-							$query2 = mysql_query("SELECT * FROM tbl_quotation WHERE itemDescription = '$items' AND Year = '$Year'")or die(mysql_error());
-							$row2 = mysql_fetch_array($query2);
-							$count2 = mysql_num_rows($query2);
+							$query2 = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE itemDescription = '$items' AND Year = '$Year'");
+							$row2 = mysqli_fetch_array($query2);
+							$count2 = mysqli_num_rows($query2);
 							
 							if ($count2 == 0){
 							?>
@@ -55,9 +55,9 @@
 							<?php
 							}
 							
-							$query3 = mysql_query("SELECT * FROM tbl_po_items WHERE ItemDescription = '$items' AND Year = '$Year'")or die(mysql_error());
-							$row3 = mysql_fetch_array($query3);
-							$count3 = mysql_num_rows($query3);
+							$query3 = mysqli_query($conn,"SELECT * FROM tbl_po_items WHERE ItemDescription = '$items' AND Year = '$Year'");
+							$row3 = mysqli_fetch_array($query3);
+							$count3 = mysqli_num_rows($query3);
 							
 							if ($count3 > 0){
 							?>
@@ -65,9 +65,9 @@
 							<?php
 							}
 							
-							$query4 = mysql_query("SELECT * FROM tbl_iar_items WHERE ItemDescription = '$items' AND Year = '$Year'")or die(mysql_error());
-							$row4 = mysql_fetch_array($query4);
-							$count4 = mysql_num_rows($query4);
+							$query4 = mysqli_query($conn,"SELECT * FROM tbl_iar_items WHERE ItemDescription = '$items' AND Year = '$Year'");
+							$row4 = mysqli_fetch_array($query4);
+							$count4 = mysqli_num_rows($query4);
 							
 							if ($count4 > 0){
 							?>

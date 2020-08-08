@@ -12,9 +12,9 @@
 	$coB = $_GET['coB'];
 	$coC = $_GET['coC'];
 					
-	$qry = mysql_query("SELECT *, sum(Quantity) as Quantity FROM tbl_pr_items WHERE ItemDescription = '$item' AND Year = '$year' GROUP BY ItemDescription")or die(mysql_error());
-	while($row = mysql_fetch_array($qry)) {
-		//$row = mysql_fetch_array($qry)
+	$qry = mysqli_query($conn,"SELECT *, sum(Quantity) as Quantity FROM tbl_pr_items WHERE ItemDescription = '$item' AND Year = '$year' GROUP BY ItemDescription");
+	while($row = mysqli_fetch_array($qry)) {
+		//$row = mysqli_fetch_array($qry)
 	
 	$year = $row['Year'];
 	$item = $row['ItemDescription'];
@@ -27,9 +27,9 @@
 	}
 	
 	//to fetch the company
-	$qry1 = mysql_query("SELECT * FROM tbl_bac_resolution WHERE itemDescription = '$item' AND Year = '$year'")or die(mysql_error());
-	while($row1 = mysql_fetch_array($qry1)) {
-		//$row = mysql_fetch_array($qry)
+	$qry1 = mysqli_query($conn,"SELECT * FROM tbl_bac_resolution WHERE itemDescription = '$item' AND Year = '$year'");
+	while($row1 = mysqli_fetch_array($qry1)) {
+		//$row = mysqli_fetch_array($qry)
 	
 	$coA = $row1['companyA'];
 	$coB = $row1['companyB'];
@@ -37,41 +37,41 @@
 	}
 	
 	//to fetch the company A price
-	$qry2 = mysql_query("SELECT * FROM tbl_quotation WHERE itemDescription = '$item' AND Year = '$year' AND Company = '$coA'")or die(mysql_error());
-	while($row2 = mysql_fetch_array($qry2)) {
-		//$row = mysql_fetch_array($qry)
+	$qry2 = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE itemDescription = '$item' AND Year = '$year' AND Company = '$coA'");
+	while($row2 = mysqli_fetch_array($qry2)) {
+		//$row = mysqli_fetch_array($qry)
 	
 	$unitPriceA = $row2['unitPrice'];
 	$extPriceA = $row2['extPrice'];
 	}
 	
 	//to fetch the company B price
-	$qry3 = mysql_query("SELECT * FROM tbl_quotation WHERE itemDescription = '$item' AND Year = '$year' AND Company = '$coB'")or die(mysql_error());
-	while($row3 = mysql_fetch_array($qry3)) {
-		//$row = mysql_fetch_array($qry)
+	$qry3 = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE itemDescription = '$item' AND Year = '$year' AND Company = '$coB'");
+	while($row3 = mysqli_fetch_array($qry3)) {
+		//$row = mysqli_fetch_array($qry)
 	
 	$unitPriceB = $row3['unitPrice'];
 	$extPriceB = $row3['extPrice'];
 	}
 	
 	//to fetch the company C price
-	$qry4 = mysql_query("SELECT * FROM tbl_quotation WHERE itemDescription = '$item' AND Year = '$year' AND Company = '$coC'")or die(mysql_error());
-	while($row4 = mysql_fetch_array($qry4)) {
-		//$row = mysql_fetch_array($qry)
+	$qry4 = mysqli_query($conn,"SELECT * FROM tbl_quotation WHERE itemDescription = '$item' AND Year = '$year' AND Company = '$coC'");
+	while($row4 = mysqli_fetch_array($qry4)) {
+		//$row = mysqli_fetch_array($qry)
 	
 	$unitPriceC = $row4['unitPrice'];
 	$extPriceC = $row4['extPrice'];
 	}
 	
 	//to fetch the company name who got the nearest price
-	$qry5 = mysql_query("SELECT min(extPrice) as ePrice FROM tbl_quotation WHERE itemDescription = '$item' AND Year = '$year'")or die(mysql_error());
-	while($row5 = mysql_fetch_array($qry5)) {
+	$qry5 = mysqli_query($conn,"SELECT min(extPrice) as ePrice FROM tbl_quotation WHERE itemDescription = '$item' AND Year = '$year'");
+	while($row5 = mysqli_fetch_array($qry5)) {
 		$unitPrice_win = $row5['ePrice'];
 	}
 	
 	//to fetch the company name who got the nearest price
-	$qry6 = mysql_query("SELECT Company FROM tbl_quotation WHERE itemDescription = '$item' AND Year = '$year' AND extPrice ='$unitPrice_win'")or die(mysql_error());
-	while($row6 = mysql_fetch_array($qry6)) {
+	$qry6 = mysqli_query($conn,"SELECT Company FROM tbl_quotation WHERE itemDescription = '$item' AND Year = '$year' AND extPrice ='$unitPrice_win'");
+	while($row6 = mysqli_fetch_array($qry6)) {
 		$company_win = $row6['Company'];
 	}
 	

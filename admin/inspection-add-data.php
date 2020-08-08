@@ -1,6 +1,6 @@
 <?php
-	$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-		while($row = mysql_fetch_array($query)) {
+	$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+		while($row = mysqli_fetch_array($query)) {
 			$Year = $row['Year'];
 		}
 ?>
@@ -58,8 +58,8 @@
 							<select name="ciPOno" placeholder = "Branch" class="span12" required>
 								<option></option>
 								<?php
-									$qry = mysql_query("SELECT * FROM tbl_po WHERE POno <> '' AND POno <> 0 AND POno NOT IN (SELECT Pono FROM tbl_iar WHERE POno is not null)") or die(mysql_error());
-										while($rows = mysql_fetch_array($qry)){
+									$qry = mysqli_query($conn,"SELECT * FROM tbl_po WHERE POno <> '' AND POno <> 0 AND POno NOT IN (SELECT Pono FROM tbl_iar WHERE POno is not null)") ;
+										while($rows = mysqli_fetch_array($qry)){
 											echo "<option>".$rows['POno']."</option>";
 										}
 								?>

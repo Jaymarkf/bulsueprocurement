@@ -20,8 +20,8 @@
 								
 								<?php
 									//use for admin year
-									$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-										while($row = mysql_fetch_array($query)) {
+									$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+										while($row = mysqli_fetch_array($query)) {
 										$Year = $row['Year'];
 									}
 								?>
@@ -38,13 +38,13 @@
 						<?php
 							$id = $_GET['id'];
 							
-							$query1 = mysql_query("SELECT * FROM users WHERE Branch='$id'")or die(mysql_error());
-							while($row1 = mysql_fetch_array($query1)) {
+							$query1 = mysqli_query($conn,"SELECT * FROM users WHERE Branch='$id'");
+							while($row1 = mysqli_fetch_array($query1)) {
 							$Year1 = $row1['Year'];
 							}
-							
-							$query1 = mysql_query("SELECT *,COUNT(Year) FROM tbl_ppmp WHERE EndUserUnit='$id'  AND Status = 'Completed' AND Year < '$Year' GROUP BY Year")or die(mysql_error());
-							$count1 = mysql_num_rows($query1);
+							$Year1 = $Year1 + 1;
+							$query1 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE EndUserUnit='$id'  AND BO_PPMP_Status = 'Approved' AND Year <= '$Year';");
+							$count1 = mysqli_num_rows($query1);
 						?>
                             <div class="navbar navbar-inner block-header">
                                 <div class="muted pull-left"><img src="../images/buttons/ppmp.png" width="5%"> PPMP Historical Records</div>
@@ -52,6 +52,7 @@
 									Total Record(s): <span class="badge badge-info"><?php  echo $count1;  ?></span>
 								</div>
                             </div>
+
                             <div class="block-content collapse in">
 								<div class="span12" id="studentTableDiv">
 								<h2 id="noch">Project Procurement Management Plan</h2>

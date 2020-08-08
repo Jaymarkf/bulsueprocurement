@@ -15,8 +15,8 @@
                         <div id="block_bg" class="block">
                             <div class="navbar navbar-inner block-header">
                              		<?php 
-							$user_query = mysql_query("SELECT * FROM users WHERE status='normal' OR status='administrator'")or die(mysql_error());
-							$count = mysql_num_rows($user_query);
+							$user_query = mysqli_query($conn,"SELECT * FROM users WHERE status='normal' OR status='administrator'");
+							$count = mysqli_num_rows($user_query);
 							?>
                                 <div class="muted pull-left"><i class="icon-user icon-large"></i> Users List</div>
                                 <div class="muted pull-right">
@@ -51,8 +51,8 @@
 										</thead>
 										<tbody>
 											<?php
-												$user_query1 = mysql_query("SELECT * FROM users WHERE status='normal' OR status='administrator' ORDER BY user_id DESC")or die(mysql_error());
-												while($row = mysql_fetch_array($user_query1)){
+												$user_query1 = mysqli_query($conn,"SELECT * FROM users WHERE status='normal' OR status='administrator' ORDER BY user_id DESC");
+												while($row = mysqli_fetch_array($user_query1)){
 												$id = $row['user_id'];
 											?>
 											<?php if($row['approved']=="yes") { ?>

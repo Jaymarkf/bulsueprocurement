@@ -4,8 +4,8 @@
 	$prodID = $_GET['prodid'];
 	
 	if(!empty($prodID)){
-		$sqlSelectSpecProd = mysql_query("select * from tbl_item_details where itemdetailID = '$prodID'") or die(mysql_error());
-		$getProdInfo = mysql_fetch_array($sqlSelectSpecProd);
+		$sqlSelectSpecProd = mysqli_query($conn,"select * from tbl_item_details where itemdetailID = '$prodID'") ;
+		$getProdInfo = mysqli_fetch_array($sqlSelectSpecProd);
 		
 		$prodprice = $getProdInfo["PriceCatalogue"];
 		$produom = $getProdInfo["UnitOfMeasurement"];
@@ -16,7 +16,8 @@
 ?>
 
     <body >
-		<?php include('navdisabled.php') ?>
+    <?php include('navbar.php');
+    ?>
         <div class="container-fluid" id="">
             <div class="row-fluid">
 			<div class="span12" id="content">
@@ -24,13 +25,13 @@
 				<div class="row-fluid">
 				
 				<?php
-					//$query = mysql_query("SELECT * FROM tbl_year")or die(mysql_error());
-					$query = mysql_query("SELECT * FROM users WHERE user_id='$session_id'")or die(mysql_error());
-					while($row = mysql_fetch_array($query)) {
+					//$query = mysqli_query($conn,"SELECT * FROM tbl_year");
+					$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id='$session_id'");
+					while($row = mysqli_fetch_array($query)) {
 					$Year = $row['Year'];
 					}
-					$query1= mysql_query("select * from tbl_ppmp WHERE Year = $Year AND user_id='$session_id' AND Status = 'Pending'")or die(mysql_error());
-					$count1 = mysql_num_rows($query1);
+					$query1= mysqli_query($conn,"select * from tbl_ppmp WHERE Year = $Year AND user_id='$session_id' AND Status = 'Pending'");
+					$count1 = mysqli_num_rows($query1);
 				?>
 				<div class="span12" id="content">
 					<div class="span5" id="content">
@@ -87,9 +88,9 @@
 										<div class="span6">
 											<?php
 												$session_id = $_SESSION['member_id'];
-												//$result = mysql_query("select * from tbl_year") or die(mysql_error());
-												$result = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'") or die(mysql_error());
-												$row = mysql_fetch_array($result);
+												//$result = mysqli_query($conn,"select * from tbl_year") ;
+												$result = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'") ;
+												$row = mysqli_fetch_array($result);
 												$year = $row["Year"];
 											?>
 											<div class="span12">
@@ -112,13 +113,13 @@
 											
 											
 											<?php
-												$sqlSelectSpecProd = mysql_query("select * from tbl_item_details where itemdetailID = '$prodID'") or die(mysql_error());
+												$sqlSelectSpecProd = mysqli_query($conn,"select * from tbl_item_details where itemdetailID = '$prodID'") ;
 												if($sqlSelectSpecProd){				
-													while($row=mysql_fetch_array($sqlSelectSpecProd)){
+													while($row=mysqli_fetch_array($sqlSelectSpecProd)){
 													$itemcategoryID = $row['itemcategoryID'];
 													
-													$query2 = mysql_query("select * from tbl_item_category where itemcategoryID='$itemcategoryID'")or die(mysql_error());
-													while($row1= mysql_fetch_array($query2)){
+													$query2 = mysqli_query($conn,"select * from tbl_item_category where itemcategoryID='$itemcategoryID'");
+													while($row1= mysqli_fetch_array($query2)){
 														$itemCatDesc = $row1['ItemCatDesc'];
 														}
 													}		
@@ -150,8 +151,8 @@
 													<?php
 														//Create query
 														$query = "select * from tbl_purpose ORDER BY purpose ASC";
-														$result=mysql_query($query) or die ("Query Failed: ".mysql_error());
-														while ($row=mysql_fetch_array($result)) {
+														$result=mysqli_query($conn,$query) or die ("Query Failed: ".mysql_error());
+														while ($row=mysqli_fetch_array($result)) {
 															$icPurpose=$row['purpose'];
 															//echo "<option value=". $icPurpose .">". $icPurpose ."</option>";
 															echo "<option>". $icPurpose ."</option>";
@@ -237,7 +238,7 @@
 										success: function(html){
 											$.jGrowl("Item successfully added to cart!", { header: 'SUCCESS' });
 											var delay = 1000;
-											setTimeout(function(){ window.location = 'dashboard.php'  }, delay);
+                                        setTimeout(function(){ window.location = 'dashboard.php'  }, delay);
 										}
 									});
 								});

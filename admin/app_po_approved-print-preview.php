@@ -53,8 +53,8 @@
 ?>
 <hr/>
 <?php					
-	$qry = mysql_query("SELECT * FROM tbl_po WHERE POno = '$PO'")or die(mysql_error());
-	$row = mysql_fetch_array($qry)
+	$qry = mysqli_query($conn,"SELECT * FROM tbl_po WHERE POno = '$PO'");
+	$row = mysqli_fetch_array($qry)
 ?>
 <body>
 <div class="container-fluid">
@@ -118,8 +118,8 @@
 						</tr>
 					</thead>
 					<?php
-					$qry1 = mysql_query("SELECT * FROM tbl_po_items WHERE POno = '$PO'")or die(mysql_error());
-							while($row1 = mysql_fetch_array($qry1)){
+					$qry1 = mysqli_query($conn,"SELECT * FROM tbl_po_items WHERE POno = '$PO'");
+							while($row1 = mysqli_fetch_array($qry1)){
 					?>
 					<tbody>
 						<tr>
@@ -134,8 +134,8 @@
 						}
 					?>
 					<?php
-					$qry2 = mysql_query("SELECT SUM(TotalCost) as Total FROM tbl_po_items WHERE POno = '$PO'")or die(mysql_error());
-					$row2 = mysql_fetch_array($qry2)
+					$qry2 = mysqli_query($conn,"SELECT SUM(TotalCost) as Total FROM tbl_po_items WHERE POno = '$PO'");
+					$row2 = mysqli_fetch_array($qry2)
 					?>
 						<tr>
 							<th colspan="5" style="text-align: right;"> TOTAL: </th>

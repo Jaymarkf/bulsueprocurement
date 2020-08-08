@@ -17,8 +17,8 @@
 					</li>
 					
 					<?php 
-						$query= mysql_query("select * from users where user_id = '$session_id'")or die(mysql_error());
-						$row = mysql_fetch_array($query);
+						$query= mysqli_query($conn,"select * from users where user_id = '$session_id'");
+						$row = mysqli_fetch_array($query);
 					?>
 					<li class="dropdown"> 
 						<a href="#" id="name123" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-user icon-large">

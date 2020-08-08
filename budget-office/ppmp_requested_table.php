@@ -1,42 +1,29 @@
 <?php include('../dbcon.php'); ?>
-
 <?php
 	//require_once 'config.php';
 	//if(isset($_GET['idsup'])) {
 	//	$update_id = $_GET['idsup'];
-
-	//	mysql_query("UPDATE tbl_ppmp SET BO_PPMP_Status = 'Supplemental' WHERE Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND EndUserUnit='$update_id'")or die(mysql_error());
-
+	//	mysqli_query($conn,"UPDATE tbl_ppmp SET BO_PPMP_Status = 'Supplemental' WHERE Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND EndUserUnit='$update_id'");
 	//	header('Location: ppmp_requested.php?id='.$update_id);
 	//}
-	
 	//if(isset($_GET['idrev'])) {
 	//	$update_id = $_GET['idrev'];
-
-	//	mysql_query("UPDATE tbl_ppmp SET BO_PPMP_Status = 'Revise' WHERE Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND EndUserUnit='$update_id'")or die(mysql_error());
-
+	//	mysqli_query($conn,"UPDATE tbl_ppmp SET BO_PPMP_Status = 'Revise' WHERE Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND EndUserUnit='$update_id'");
 	//	header('Location: ppmp_requested.php?id='.$update_id);
 	//}
-	
 	if(isset($_GET['idsendback'])) {
 		$update_id = $_GET['idsendback'];
-
-		mysql_query("UPDATE tbl_ppmp SET Status = 'Pending' WHERE Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND EndUserUnit='$update_id'")or die(mysql_error());
-
+		mysqli_query($conn,"UPDATE tbl_ppmp SET Status = 'Pending' WHERE Status = 'Requested' AND BO_PPMP_Status <> 'Approved' AND EndUserUnit = '$update_id'");
 		header('Location: ppmp_requested.php?id='.$update_id);
 	}
-	
 	if(isset($_GET['idapp'])) {
 		$update_id = $_GET['idapp'];
-
-		//mysql_query("UPDATE tbl_ppmp SET Status = 'Completed', BO_PPMP_Status = 'Approved' WHERE Status = 'Requested' AND EndUserUnit='$update_id'")or die(mysql_error());
-		mysql_query("UPDATE tbl_ppmp SET BO_PPMP_Status = 'Approved' WHERE Status = 'Requested' AND EndUserUnit='$update_id'")or die(mysql_error());
-
+		//mysqli_query($conn,"UPDATE tbl_ppmp SET Status = 'Completed', BO_PPMP_Status = 'Approved' WHERE Status = 'Requested' AND EndUserUnit='$update_id'");
+		mysqli_query($conn,"UPDATE tbl_ppmp SET BO_PPMP_Status = 'Approved' WHERE Status = 'Requested' AND EndUserUnit = '$update_id'");
 		header('Location: ppmp_requested.php?id='.$update_id);
 	}
 ?>
-
-<div class="">	
+<div class="">
 	<div class="span9">
 		<a data-placement="bottom" href="dashboard.php" title="Back to PPMP-Dashboard" id="back" class="btn btn-inverse"><i class="icon-undo icon-large"></i> Back </a>
 			<script type="text/javascript">
@@ -46,7 +33,6 @@
 				});
 			</script>
 		<!-- <th colspan="2" style="text-align:right;"> -->
-		
 			<a data-placement="bottom" title="Approved PPMP" id="previous" href="ppmp_requested_table.php<?php echo '?idapp='.$id; ?>" class="btn btn-success"><i class="icon-check icon-small"></i> Approved </a>
 				<script type="text/javascript">
 				$(document).ready(function(){
@@ -54,7 +40,6 @@
 					$('#previous').tooltip('hide');
 				});
 				</script>
-				
 			<a data-placement="bottom" title="Send Back" id="sendback" href="ppmp_requested_table.php<?php echo '?idsendback='.$id; ?>" class="btn btn-warning"><i class="icon-share icon-small"></i> Send Back </a>
 				<script type="text/javascript">
 				$(document).ready(function(){
@@ -88,14 +73,14 @@
 	</div>
 	<div class="span6">
 	<?php					
-	//	$query3a = mysql_query("SELECT * FROM users WHERE branch='$id'")or die(mysql_error());
-	//	while($row3a = mysql_fetch_array($query3a)) {
+	//	$query3a = mysqli_query($conn,"SELECT * FROM users WHERE branch='$id'");
+	//	while($row3a = mysqli_fetch_array($query3a)) {
 	//	$Year3a = $row3a['Year'];
 	//	$user_id3a = $row3a['user_id'];
 		
-		//$query4a = mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $Year3a AND user_id='$user_id3a'  AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved' GROUP BY BO_PPMP_Status")or die(mysql_error());
-	//	$query4a = mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $Year3a AND user_id='$user_id3a'  AND Status = 'Requested' GROUP BY BO_PPMP_Status")or die(mysql_error());
-	//	while($row4a = mysql_fetch_array($query4a)){
+		//$query4a = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year3a AND user_id='$user_id3a'  AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved' GROUP BY BO_PPMP_Status");
+	//	$query4a = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year3a AND user_id='$user_id3a'  AND Status = 'Requested' GROUP BY BO_PPMP_Status");
+	//	while($row4a = mysqli_fetch_array($query4a)){
 	//	$id4a = $row4a['ppmpID'];
 	?>
 	<!-- <h5 class="pull-right">New PPMP Status: 
@@ -147,13 +132,13 @@
 			
 			<tbody>
 				<?php					
-					$query3 = mysql_query("SELECT * FROM users WHERE branch='$id'")or die(mysql_error());
-					while($row3 = mysql_fetch_array($query3)) {
+					$query3 = mysqli_query($conn,"SELECT * FROM users WHERE branch='$id'");
+					while($row3 = mysqli_fetch_array($query3)) {
 					$Year3 = $row3['Year'];
 					$user_id3 = $row3['user_id'];
 					
-					$query4 = mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $Year3 AND user_id='$user_id3'  AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved'")or die(mysql_error());
-					while($row4 = mysql_fetch_array($query4)){
+					$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year3 AND user_id='$user_id3'  AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved'");
+					while($row4 = mysqli_fetch_array($query4)){
 					$id4 = $row4['ppmpID'];
 				?>
 				<tr>
@@ -206,9 +191,9 @@
 					<th colspan="16" align="right"><h4>TOTAL AMOUNT: </h4></th>
 					
 					<?php
-						$row5 = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year = $Year3 AND EndUserUnit='$id'  AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved'") or die(mysql_error());
+						$row5 = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year = $Year3 AND EndUserUnit='$id'  AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved'") ;
 						
-						while($result5 = mysql_fetch_array($row5)){
+						while($result5 = mysqli_fetch_array($row5)){
 							echo "<th style='text-align:right;'><h4>&#8369; " . number_format($result5['Totalx'],2, '.', ',') . "</h4></th>";
 							echo "<th></th>";
 							echo "<th></th>";

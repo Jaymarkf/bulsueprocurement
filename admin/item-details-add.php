@@ -15,8 +15,8 @@
 							<?php
 								//Create query
 								$query = "select * from tbl_item_category ORDER BY ItemCatDesc ASC";
-								$result=mysql_query($query) or die ("Query Failed: ".mysql_error());
-								while ($row=mysql_fetch_array($result)) {
+								$result=mysqli_query($conn,$query);
+								while ($row=mysqli_fetch_array($result)) {
 									$icitemcategoryID=$row['itemcategoryID'];
 									$icCatDesc=$row['ItemCatDesc'];
 									echo "<option value=". $icitemcategoryID .">". $icCatDesc ."</option>";
@@ -39,11 +39,18 @@
 						<input class="input focused span12"  name="idDesc" id="focusedInput" type="text" placeholder = "Description" required>
 					  </div>
 					</div>
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <label>Unit of Measurement</label>
+                            <input class="input focused span12"  name="UoM" id="focusedInput" type="text" placeholder = "Unit of Measurement" required>
+                        </div>
+                     </div>
 					
 					<div class="control-group">
 					  <div class="controls">
 					  <label>Price Catalogue</label>
-						<input class="input focused span12"  name="idPrice" id="focusedInput" type="text" placeholder = "Price" required>
+						<input class="input focused span12"  name="idPrice" id="focusedInput" type="number" placeholder = "Price" required>
 					  </div>
 					</div>
 					

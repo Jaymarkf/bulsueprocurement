@@ -7,9 +7,9 @@
 
 				/* student */
 				$query = "SELECT * FROM users WHERE username='$username' AND password='$password' AND approved='yes'";
-				$result = mysql_query($query)or die(mysql_error());
-				$row = mysql_fetch_array($result);
-				$num_row = mysql_num_rows($result);
+				$result = mysqli_query($conn,$query);
+				$row = mysqli_fetch_array($result);
+				$num_row = mysqli_num_rows($result);
 
 				//$pass=$row['password'];
 				$status =$row['status'];
@@ -24,7 +24,7 @@
 							header('location: admin/password-default.php');
 						}else{
 							header('location: admin/dashboard.php');				
-							mysql_query("insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")")or die(mysql_error());
+							mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
 						}
 					}elseif($status=='administrator' AND $department=='Main Office'){
 						$_SESSION['admin_id']=$row['user_id'];
@@ -32,7 +32,7 @@
 							header('location: admin/password-default.php');
 						}else{
 							header('location: admin/dashboard.php');				
-							mysql_query("insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")")or die(mysql_error());
+							mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
 						}
 					}elseif($status=='administrator' AND $department=='Budget Office'){
 						$_SESSION['bo_admin_id']=$row['user_id'];
@@ -40,7 +40,7 @@
 							header('location: budget-office/password-default.php');
 						}else{
 							header('location: budget-office/dashboard.php');				
-							mysql_query("insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")")or die(mysql_error());
+							mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
 						}
 					}elseif($status=='administrator' AND $department=='Procurement Unit'){
 						$_SESSION['admin_id']=$row['user_id'];
@@ -48,7 +48,7 @@
 							header('location: admin/password-default.php');
 						}else{
 							header('location: admin/dashboard.php');				
-							mysql_query("insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")")or die(mysql_error());
+							mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
 						}
 					}elseif($status=='user'){
 						$_SESSION['member_id']=$row['user_id'];
@@ -56,7 +56,7 @@
 							header('location: users/password-default.php');
 						}else{
 							header('location: users/dashboard.php');
-							mysql_query("insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")")or die(mysql_error());
+							mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
 						}
 					}
 					else{

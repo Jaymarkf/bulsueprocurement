@@ -42,14 +42,14 @@ $Year = $_SESSION['year_id'];
 			
 			<tbody>
 				<?php					
-					$query3 = mysql_query("SELECT * FROM users WHERE branch='$id'")or die(mysql_error());
-					while($row3 = mysql_fetch_array($query3)) {
+					$query3 = mysqli_query($conn,"SELECT * FROM users WHERE branch='$id'");
+					while($row3 = mysqli_fetch_array($query3)) {
 					$Year3 = $row3['Year'];
 					$user_id3 = $row3['user_id'];
 					
-					//$query4 = mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $Year3 AND user_id='$user_id3'  AND Status = 'Requested' AND BO_PPMP_Status = 'Approved'")or die(mysql_error());
-					$query4 = mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $Year3 AND user_id='$user_id3' AND BO_PPMP_Status = 'Approved' AND SourceOfFund = '$viewby'")or die(mysql_error());
-					while($row4 = mysql_fetch_array($query4)){
+					//$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year3 AND user_id='$user_id3'  AND Status = 'Requested' AND BO_PPMP_Status = 'Approved'");
+					$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year3 AND user_id='$user_id3' AND BO_PPMP_Status = 'Approved' AND SourceOfFund = '$viewby'");
+					while($row4 = mysqli_fetch_array($query4)){
 					$id4 = $row4['ppmpID'];
 				?>
 				<tr>				
@@ -125,9 +125,9 @@ $Year = $_SESSION['year_id'];
 					<th colspan="16" align="right"><h4>TOTAL AMOUNT: </h4></th>
 					
 					<?php
-						//$row5 = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year AND EndUserUnit='$id'  AND Status = 'Requested' AND BO_PPMP_Status = 'Approved'") or die(mysql_error());
-						$row5 = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year3 AND EndUserUnit='$id' AND BO_PPMP_Status = 'Approved' AND SourceOfFund = '$viewby'") or die(mysql_error());
-						while($result5 = mysql_fetch_array($row5)){
+						//$row5 = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year AND EndUserUnit='$id'  AND Status = 'Requested' AND BO_PPMP_Status = 'Approved'") ;
+						$row5 = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year3 AND EndUserUnit='$id' AND BO_PPMP_Status = 'Approved' AND SourceOfFund = '$viewby'") ;
+						while($result5 = mysqli_fetch_array($row5)){
 							echo "<th style='text-align:right;'><h4>&#8369; " . number_format($result5['Totalx'],2, '.', ',') . "</h4></th>";
 							echo "<th></th>";
 						}
@@ -177,14 +177,14 @@ $Year = $_SESSION['year_id'];
 			
 			<tbody>
 				<?php					
-					$query3 = mysql_query("SELECT * FROM users WHERE branch='$id'")or die(mysql_error());
-					while($row3 = mysql_fetch_array($query3)) {
+					$query3 = mysqli_query($conn,"SELECT * FROM users WHERE branch='$id'");
+					while($row3 = mysqli_fetch_array($query3)) {
 					$Year3 = $row3['Year'];
 					$user_id3 = $row3['user_id'];
 					
-					//$query4 = mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $Year3 AND user_id='$user_id3'  AND Status = 'Requested' AND BO_PPMP_Status = 'Approved'")or die(mysql_error());
-					$query4 = mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $Year3 AND user_id='$user_id3' AND BO_PPMP_Status = 'Approved'")or die(mysql_error());
-					while($row4 = mysql_fetch_array($query4)){
+					//$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year3 AND user_id='$user_id3'  AND Status = 'Requested' AND BO_PPMP_Status = 'Approved'");
+					$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year3 AND user_id='$user_id3' AND BO_PPMP_Status = 'Approved'");
+					while($row4 = mysqli_fetch_array($query4)){
 					$id4 = $row4['ppmpID'];
 				?>
 				<tr>				
@@ -260,9 +260,9 @@ $Year = $_SESSION['year_id'];
 					<th colspan="16" align="right"><h4>TOTAL AMOUNT: </h4></th>
 					
 					<?php
-						//$row5 = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year AND EndUserUnit='$id'  AND Status = 'Requested' AND BO_PPMP_Status = 'Approved'") or die(mysql_error());
-						$row5 = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year3 AND EndUserUnit='$id' AND BO_PPMP_Status = 'Approved'") or die(mysql_error());
-						while($result5 = mysql_fetch_array($row5)){
+						//$row5 = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year AND EndUserUnit='$id'  AND Status = 'Requested' AND BO_PPMP_Status = 'Approved'") ;
+						$row5 = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year3 AND EndUserUnit='$id' AND BO_PPMP_Status = 'Approved'") ;
+						while($result5 = mysqli_fetch_array($row5)){
 							echo "<th style='text-align:right;'><h4>&#8369; " . number_format($result5['Totalx'],2, '.', ',') . "</h4></th>";
 							echo "<th></th>";
 						}

@@ -19,8 +19,8 @@
 								</div>
 								<?php
 									//use for admin year
-									$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-										while($row = mysql_fetch_array($query)) {
+									$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+										while($row = mysqli_fetch_array($query)) {
 										$Year = $row['Year'];
 									}
 								?>
@@ -47,15 +47,15 @@
 							}
 							$id = $_GET['id'];
 							
-							$query1 = mysql_query("SELECT * FROM users WHERE branch='$id'")or die(mysql_error());
-							while($row1 = mysql_fetch_array($query1)) {
+							$query1 = mysqli_query($conn,"SELECT * FROM users WHERE branch='$id'");
+							while($row1 = mysqli_fetch_array($query1)) {
 								$Year1 = $row1['Year'];
 								$user_id1 = $row1['user_id'];
 							}
 							
-							//$query2= mysql_query("select * from tbl_ppmp WHERE Year = $Year AND EndUserUnit='$id' AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved'")or die(mysql_error());
-							$query2= mysql_query("select * from tbl_ppmp WHERE Year = $Year AND EndUserUnit='$id' AND Status = 'Requested' AND BO_PPMP_Status = 'Approved'")or die(mysql_error());
-							$count2 = mysql_num_rows($query2);
+							//$query2= mysqli_query($conn,"select * from tbl_ppmp WHERE Year = $Year AND EndUserUnit='$id' AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved'");
+							$query2= mysqli_query($conn,"select * from tbl_ppmp WHERE Year = $Year AND EndUserUnit='$id' AND Status = 'Requested' AND BO_PPMP_Status = 'Approved'");
+							$count2 = mysqli_num_rows($query2);
 						?>
                             <div class="navbar navbar-inner block-header">
                                 <div class="muted pull-left"><img src="../images/buttons/ppmp.png" width="5%"> NEW Project Procurement Management Plan Approval - <span class="badge badge-warning">YEAR <?php echo $Year; ?></span></div>

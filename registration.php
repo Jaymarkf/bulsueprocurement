@@ -15,8 +15,8 @@
 				<select name="branch" placeholder = "Branch" class="span3" required>
 					<option></option>
 					<?php
-						$query = mysql_query("SELECT * FROM tbl_branch WHERE branch<>'Main Office' AND branch<>'Budget Office' AND branch<>'Procurement Unit' ORDER BY branch ASC")or die(mysql_error());
-						while($row = mysql_fetch_array($query)){
+						$query = mysqli_query($conn,"SELECT * FROM tbl_branch WHERE branch<>'Main Office' AND branch<>'Budget Office' AND branch<>'Procurement Unit' ORDER BY branch ASC");
+						while($row = mysqli_fetch_array($query)){
 							$branch = $row['branch'];
 							echo "<option>".$branch."</option>";
 						}

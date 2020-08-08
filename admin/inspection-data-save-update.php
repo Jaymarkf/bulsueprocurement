@@ -5,8 +5,8 @@ include('session.php');
 
 $item_request = $_POST['item_request'];
 
-	$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-		while($row = mysql_fetch_array($query)) {
+	$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+		while($row = mysqli_fetch_array($query)) {
 			$Year = $row['Year'];
 	}
 						
@@ -19,10 +19,10 @@ $item_request = $_POST['item_request'];
 	$lname = $row['lastname'];
 	$uname = $fname.' '.$lname;
 
-//mysql_query("update users set branch= '$branch',username = '$uname',firstname ='$fname', lastname='$lname', email='$email', status='$status',approved='$approved' where user_id = '$get_id' ")or die(mysql_error());
-	mysql_query("UPDATE tbl_bac_resolution SET Year = '$Year',companyA='$companyA',companyB='$companyB',companyC='$companyC',itemDescription='$item_request' WHERE Year = '$Year' AND itemDescription = '$item_request' ")or die(mysql_error());
+//mysqli_query($conn,"update users set branch= '$branch',username = '$uname',firstname ='$fname', lastname='$lname', email='$email', status='$status',approved='$approved' where user_id = '$get_id' ");
+	mysqli_query($conn,"UPDATE tbl_bac_resolution SET Year = '$Year',companyA='$companyA',companyB='$companyB',companyC='$companyC',itemDescription='$item_request' WHERE Year = '$Year' AND itemDescription = '$item_request' ");
 				
-//	mysql_query("insert into activity_log (date,username,action) values(NOW(),'$user_username','Add new BACreso by $uname')")or die(mysql_error());
+//	mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Add new BACreso by $uname')");
 	
 	echo json_encode(array(
 		'status' => 'success',

@@ -1,6 +1,6 @@
 <?php
-	$query = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-		while($row = mysql_fetch_array($query)) {
+	$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+		while($row = mysqli_fetch_array($query)) {
 		$Year = $row['Year'];
 	}
 ?>
@@ -10,9 +10,9 @@
 require_once("dbcontroller.php");
 $db_handle = new DBController();
 
-//$query = "SELECT * FROM tbl_quotation WHERE itemDescription = '" . $_POST["country_id"] . "' AND itemDescription NOT IN (SELECT itemDescription FROM //tbl_bac_resolution WHERE itemDescription is not null)" or die(mysql_error());
+//$query = "SELECT * FROM tbl_quotation WHERE itemDescription = '" . $_POST["country_id"] . "' AND itemDescription NOT IN (SELECT itemDescription FROM //tbl_bac_resolution WHERE itemDescription is not null)" ;
 
-$query = "SELECT * FROM tbl_quotation WHERE Year = $Year AND extPrice <> 0 AND itemDescription NOT IN (SELECT itemDescription FROM tbl_bac_resolution WHERE Year = $Year AND itemDescription is not null) GROUP BY itemDescription" or die(mysql_error());
+$query = "SELECT * FROM tbl_quotation WHERE Year = $Year AND extPrice <> 0 AND itemDescription NOT IN (SELECT itemDescription FROM tbl_bac_resolution WHERE Year = $Year AND itemDescription is not null) GROUP BY itemDescription" ;
 
 //$query = "SELECT * FROM tbl_pr WHERE PRno <> '0000'";
 $results = $db_handle->runQuery($query);

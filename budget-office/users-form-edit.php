@@ -11,8 +11,8 @@
 						<div class="control-group">
 						  <div class="controls">
 							<?php
-								$query = mysql_query("select * from users where user_id = '$get_id'")or die(mysql_error());
-								$row = mysql_fetch_array($query);
+								$query = mysqli_query($conn,"select * from users where user_id = '$get_id'");
+								$row = mysqli_fetch_array($query);
 							?>
 							  <label>Access Level</label>
 								<select class="span12" name="status" placeholder = "Category" required>
@@ -29,8 +29,8 @@
 								<select class="span12" name="branch" placeholder = "Branch" required>
 									<option><?php echo $row['branch'];?></option>
 									<?php
-										$query = mysql_query("select * from tbl_branch")or die(mysql_error());
-										while($row = mysql_fetch_array($query)){
+										$query = mysqli_query($conn,"select * from tbl_branch");
+										while($row = mysqli_fetch_array($query)){
 										$id = $row['branchID'];
 									?>
 									<option value ="<?php echo $row['branch'];?>"><?php echo $row['branch'];?></option>
@@ -40,8 +40,8 @@
 						</div>
 						
 						<?php
-							$query = mysql_query("select * from users where user_id = '$get_id'")or die(mysql_error());
-							$row = mysql_fetch_array($query);
+							$query = mysqli_query($conn,"select * from users where user_id = '$get_id'");
+							$row = mysqli_fetch_array($query);
 						?>
 				
 						<div class="control-group">
@@ -112,7 +112,7 @@ if (isset($_POST['update'])){
 	$approved = $_POST['approved'];
 	$uname = $fname.'.'.$lname;
 
-mysql_query("update users set branch= '$branch',username = '$uname',firstname ='$fname', lastname='$lname', email='$email', status='$status',approved='$approved' where user_id = '$get_id' ")or die(mysql_error());
+mysqli_query($conn,"update users set branch= '$branch',username = '$uname',firstname ='$fname', lastname='$lname', email='$email', status='$status',approved='$approved' where user_id = '$get_id' ");
 ?>
 
 <script>

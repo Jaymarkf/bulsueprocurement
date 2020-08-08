@@ -6,13 +6,13 @@
 			</div>
 			
 			<?php
-				$query1 = mysql_query("select * from tbl_item_details where itemdetailID = '$get_id'")or die(mysql_error());
-				while($row1 = mysql_fetch_array($query1)) {
+				$query1 = mysqli_query($conn,"select * from tbl_item_details where itemdetailID = '$get_id'");
+				while($row1 = mysqli_fetch_array($query1)) {
 					$id = $row1['itemdetailID'];
 					$itemcategoryID = $row1['itemcategoryID'];
 				
-				$query2 = mysql_query("select * from tbl_item_category where itemcategoryID='$itemcategoryID'")or die(mysql_error());
-				while($row2= mysql_fetch_array($query2)){
+				$query2 = mysqli_query($conn,"select * from tbl_item_category where itemcategoryID='$itemcategoryID'");
+				while($row2= mysqli_fetch_array($query2)){
 					$itemCatCode = $row2['itemcategoryID'];
 					$itemCatDesc = $row2['ItemCatDesc'];
 					
@@ -30,8 +30,8 @@
 									<?php
 										//Create query
 										$query = "select * from tbl_item_category ORDER BY ItemCatDesc ASC";
-										$result=mysql_query($query) or die ("Query Failed: ".mysql_error());
-										while ($row=mysql_fetch_array($result)) {
+										$result=mysqli_query($conn,$query) or die ("Query Failed: ".mysql_error());
+										while ($row=mysqli_fetch_array($result)) {
 											$icitemcategoryID=$row['itemcategoryID'];
 											$icCatDesc=$row['ItemCatDesc'];
 											echo '<option value='. $icitemcategoryID .'>'. $icCatDesc .'</option>';
@@ -41,8 +41,8 @@
 							</div>
 						</div>
 						<?php
-							$query = mysql_query("select * from tbl_item_details where itemdetailID = '$get_id'")or die(mysql_error());
-							$row = mysql_fetch_array($query);
+							$query = mysqli_query($conn,"select * from tbl_item_details where itemdetailID = '$get_id'");
+							$row = mysqli_fetch_array($query);
 						?>
 					<!--	<div class="control-group">
 						  <div class="controls">
@@ -98,9 +98,9 @@ $idDesc = $_POST['idDesc'];
 $idPrice = $_POST['idPrice'];
 $uname = $idDesc;
 
-//mysql_query("update tbl_item_details set itemcategoryID = '$idCat',itemdetailCode = '$idCode',itemdetailDesc ='$idDesc',PriceCatalogue ='$idPrice' where itemdetailID = '$get_id' ")or die(mysql_error());
-mysql_query("update tbl_item_details set itemcategoryID = '$idCat',itemdetailDesc ='$idDesc',PriceCatalogue ='$idPrice' where itemdetailID = '$get_id' ")or die(mysql_error());
-//mysql_query("insert into activity_log (date,username,action) values(NOW(),'$user_username','Update item $uname')")or die(mysql_error());
+//mysqli_query($conn,"update tbl_item_details set itemcategoryID = '$idCat',itemdetailCode = '$idCode',itemdetailDesc ='$idDesc',PriceCatalogue ='$idPrice' where itemdetailID = '$get_id' ");
+mysqli_query($conn,"update tbl_item_details set itemcategoryID = '$idCat',itemdetailDesc ='$idDesc',PriceCatalogue ='$idPrice' where itemdetailID = '$get_id' ");
+//mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Update item $uname')");
 ?>
 
 <script>

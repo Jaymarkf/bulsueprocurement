@@ -4,11 +4,11 @@
 	if(isset($_GET['update_id'])) {
 		$update_id = $_GET['update_id'];
 
-		$query1 = mysql_query("SELECT * FROM users WHERE user_id = '$update_id'")or die(mysql_error());
-			while($row1 = mysql_fetch_array($query1)) {
+		$query1 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$update_id'");
+			while($row1 = mysqli_fetch_array($query1)) {
 				$Year = $row1['Year'];
 			}
-		mysql_query("UPDATE tbl_ppmp SET Status = 'Requested' WHERE Status = 'Pending' AND Year = $Year AND user_id='$update_id'")or die(mysql_error());
+		mysqli_query($conn,"UPDATE tbl_ppmp SET Status = 'Requested' WHERE Status = 'Pending' AND Year = $Year AND user_id='$update_id'");
 		
 		header('Location: ppmp_requested.php');
 	}
@@ -81,12 +81,12 @@
 			<tbody>
 				<?php
 					$session_id=$_SESSION['member_id'];
-					$query1 = mysql_query("SELECT * FROM users WHERE user_id = '$session_id'")or die(mysql_error());
-					while($row1 = mysql_fetch_array($query1)) {
+					$query1 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+					while($row1 = mysqli_fetch_array($query1)) {
 					$Year = $row1['Year'];
 					
-					$query2 = mysql_query("SELECT * FROM tbl_ppmp WHERE Year = $Year AND user_id='$session_id'  AND Status = 'Pending'")or die(mysql_error());
-					while($row2 = mysql_fetch_array($query2)){
+					$query2 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year AND user_id='$session_id'  AND Status = 'Pending'");
+					while($row2 = mysqli_fetch_array($query2)){
 					$id = $row2['ppmpID'];
 				?>
 				<tr>
@@ -139,8 +139,8 @@
 					<th colspan="16" align="right"><h4>TOTAL AMOUNT: </h4></th>
 					
 					<?php
-						$row = mysql_query("SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year AND user_id='$session_id'  AND Status = 'Pending'") or die(mysql_error());
-						while($result = mysql_fetch_array($row)){
+						$row = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year=$Year AND user_id='$session_id'  AND Status = 'Pending'") ;
+						while($result = mysqli_fetch_array($row)){
 							echo "<th style='text-align:right;'><h4>&#8369;" . number_format($result['Totalx'],2, '.', ',') . "</h4></th>";
 							echo "<th></th>";
 							echo "<th></th>";
