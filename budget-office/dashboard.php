@@ -16,7 +16,6 @@
 								echo $new;
 							?>
 						</div>
-
 						<?php
 							$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
 								while($row = mysqli_fetch_array($query)) {

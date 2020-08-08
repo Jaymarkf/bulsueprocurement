@@ -4,8 +4,9 @@
 <!--php starts here PART1-->
     <body >
 		<?php include('navbar.php');
+	
         ?>
-
+      
         <div class="container-fluid" id="">
             <div class="row-fluid">
 			<?php

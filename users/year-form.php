@@ -1,8 +1,9 @@
 <?php
+    
 	$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
 	$row = mysqli_fetch_array($query);
 ?>
-
+   
 <form class="form-pass" method="POST" style="color: #000;">
 	<?php include('sidebar_header.php'); ?>
 	<hr/>

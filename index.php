@@ -70,8 +70,7 @@
 				$result = mysqli_query($conn, $query);
 				$row = mysqli_fetch_array($result);
 				$num_row = mysqli_num_rows($result);
-
-
+              
 				//$pass=$row['password'];
 				$level =$row['level'];
 				$department =$row['branch'];
@@ -204,7 +203,7 @@
 						}
 					}elseif($level=='user'){
 						$_SESSION['member_id']=$row['user_id'];
-						
+				
 						if($password=='12345'){
 							//header('location: users/password-default');
 					?>
