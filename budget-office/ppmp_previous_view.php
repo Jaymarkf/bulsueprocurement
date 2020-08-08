@@ -41,7 +41,7 @@
                         <!-- block -->
                         <div  id="block_bg" class="block">
 						<?php
-							$query= mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = '$YearID' AND EndUserUnit ='$BranchID' AND Status = 'Completed' AND BO_PPMP_Status='Approved'");
+							$query= mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = '$YearID' AND EndUserUnit ='$BranchID' AND BO_PPMP_Status='Approved'");
 							$count = mysqli_num_rows($query);
 						?>
                             <div class="navbar navbar-inner block-header">

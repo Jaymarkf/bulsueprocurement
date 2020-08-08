@@ -26,7 +26,8 @@
 			
 			<tbody>
 				<?php
-					$query2 = mysqli_query($conn,"SELECT *,SUM(TotalAmount) as TAmt FROM tbl_ppmp WHERE EndUserUnit='$id' AND Status = 'Completed' AND Year < '$Year' GROUP BY Year");
+
+					$query2 = mysqli_query($conn,"SELECT SUM(TotalAmount) as TA,Year,EndUserUnit  FROM tbl_ppmp WHERE EndUserUnit='$id' AND BO_PPMP_Status = 'Approved' AND Year <= '$Year1' GROUP BY Year;");
 					while($row2 = mysqli_fetch_array($query2)){
 					$id = $row2['Year'];
 					$euu = $row2['EndUserUnit'];
@@ -35,7 +36,7 @@
 				<tr>				
 					<td width="300" style="text-align:center;"><?php echo $row2['Year']; ?></td> 
 				
-					<td width="300" style="text-align:center;">&#8369; <?php echo number_format($row2['TAmt'],2, '.', ','); ?></td>
+					<td width="300" style="text-align:center;">&#8369; <?php echo number_format($row2['TA'],2, '.', ','); ?></td>
 
 					<td class="empty" width="50" style="text-align:center;">
 						<div class="span12">

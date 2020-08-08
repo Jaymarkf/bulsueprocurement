@@ -46,7 +46,7 @@
 				
 				<tbody>
 					<?php				
-					$query2 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = '$YearID' AND EndUserUnit ='$BranchID' AND Status = 'Completed' AND BO_PPMP_Status='Approved'");
+					$query2 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = '$YearID' AND EndUserUnit ='$BranchID' AND BO_PPMP_Status='Approved'");
 					while($row2 = mysqli_fetch_array($query2)){
 					$id = $row2['ppmpID'];
 					
@@ -80,7 +80,7 @@
 						<th colspan="16" align="right"><h4>TOTAL AMOUNT: </h4></th>
 						
 						<?php
-							$row = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year = '$YearID' AND EndUserUnit ='$BranchID' AND Status = 'Completed' AND BO_PPMP_Status='Approved'") ;
+							$row = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year = '$YearID' AND EndUserUnit ='$BranchID' AND BO_PPMP_Status='Approved'") ;
 							while($result = mysqli_fetch_array($row)){
 								echo "<th style='text-align:right;'><h4>&#8369; " . number_format($result['Totalx'],2, '.', ',') . "</h4></th>";
 								echo "<th></th>";
