@@ -125,6 +125,7 @@
 					<th rowspan="2"><b>Price Catalogue</b></th>
 					<th rowspan="2"><b>Total Amount</b></th>
 					<th rowspan="2"><b>Remarks</b></th>
+					<th rowspan="2"><b>Actions</b></th>
 				</tr>
 				
 				<tr>
@@ -255,8 +256,24 @@
 					<td width="100" style="text-align:center;"><?php echo $row4['Remarks']; ?></td> 
 					<td class="empty" width="200" style="text-align:center;">
 						<div class="span12">
-								<a class="btn btn-success"><i class="icon-pencil icon-small"></i></a>
-								<a class="btn btn-danger"><i class="icon-trash icon-small"></i></a>
+                            <div class="span12">
+                                <!-- <a data-placement="left" title="Click to Edit" id="edit<?php echo $id; ?>" href="edit_stud.php<?php echo '?id='.$id; ?>" class="btn btn-success"><i class="icon-pencil icon-large"></i> Edit</a> -->
+                                <a data-placement="top" title="Click to edit the item" id="edit<?php echo $id; ?>" href="ppmp_requested_edit.php<?php echo '?id='.$id4.'&branchid='.$id; ?>" class="btn btn-success"><i class="icon-pencil icon-small"></i></a>
+                                <script type="text/javascript">
+                                    $(document).ready(function(){
+                                        $('#edit<?php echo $id; ?>').tooltip('show');
+                                        $('#edit<?php echo $id; ?>').tooltip('hide');
+                                    });
+                                </script>
+
+                                <a name="delete" data-placement="top" title="Click to remove the item" id="delete<?php echo $id; ?>" href="ppmp_requested_delete.php<?php echo '?id='.$id4; ?>" class="btn btn-danger"><i class="icon-trash icon-small"></i></a>
+                                <script type="text/javascript">
+                                    $(document).ready(function(){
+                                        $('#delete<?php echo $id; ?>').tooltip('show');
+                                        $('#delete<?php echo $id; ?>').tooltip('hide');
+                                    });
+                                </script>
+                            </div>
 						</div>
 					</td>
 					<?php } ?>
