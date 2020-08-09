@@ -1,13 +1,11 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
 <?php
-
 	if(isset($_POST['btn-save-item'])){
 		if(isset($_POST['itemDesc'])){
 			$item = $_POST['itemDesc'];
 			$year = $_POST['Year'];
 			$PR = $_POST['PR'];
-			
 				$count = sizeof($item);
 				for ($i=0;$i<$count;$i++){
 					$in_item = $item[$i];
@@ -20,9 +18,10 @@
 						$in_STQty = $row['TotalQty'];
 						$in_PriceCat = $row['PriceCatalogue'];
 						$in_TAmt = $row['TotalAmount'];
-					}	 
-						mysqli_query($conn,"INSERT INTO tbl_pr_items (Year,PRno,Unit,ItemDescription,Quantity,UnitCost,TotalCost)
-						values('$year','$PR','$in_UOM','$in_item','$in_STQty','$in_PriceCat','$in_TAmt')");
+					}
+				//	echo "INSERT INTO tbl_pr_items (Year,PRno,StockPropertyNo,Unit,ItemDescription,Quantity,UnitCost,TotalCost) values('".$year."','".$PR."','".$in_UOM."','".$in_item."','".$in_STQty."','".$in_PriceCat."','".$in_TAmt."')";
+	            	//die();
+	mysqli_query($conn,"INSERT INTO tbl_pr_items (Year,PRno,StockPropertyNo,Unit,ItemDescription,Quantity,UnitCost,TotalCost) values('$year','$PR','','$in_UOM','$in_item','$in_STQty','$in_PriceCat','$in_TAmt')");
 					//}
 					//mysqli_query($conn,"UPDATE tbl_ppmp_consolidated SET Requested = 'Yes' WHERE itemdetailDesc = '$in_item' ");
 				}
@@ -33,7 +32,6 @@
 		<?php include('navdisabled.php'); ?>					
         <div class="container-fluid">
             <div class="row-fluid">
-				
 				<!-- top content -->
 				<div class="span12" id="content">
 					<div class="row-fluid">
@@ -46,7 +44,6 @@
 								echo $new;
 							?>
 						</div>
-
 						<?php
 							$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
 								while($row = mysqli_fetch_array($query)) {
@@ -66,25 +63,20 @@
 					<br/>			
 				</div>
 				<!-- top content -->
-
 				<?php					
 					$query1 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
 					while($row1 = mysqli_fetch_array($query1)) {
 					$Year1 = $row1['Year'];
 					$EntityName1 = $row1['branch'];
-					
 						//$query2 = mysqli_query($conn,"SELECT * FROM tbl_pr WHERE Year = $Year1");
 						$query2 = mysqli_query($conn,"SELECT * FROM tbl_pr");
 						while($row2 = mysqli_fetch_array($query2)){
 						$id2 = $row2['prID'];
 						$PRno = $row2['PRno'];
-						
 						date_default_timezone_set("Asia/Manila");
 						$now=date('Y-m-d');
-						
 						$queryMax = mysqli_query($conn,"SELECT Max(PRno) as PR FROM tbl_pr WHERE (PRno != '' OR PRno IS NOT NULL)");
 						$rowMax = mysqli_fetch_array($queryMax);
-						
 						//if( $result['total']==0)
 						if ($rowMax['PR'] != ''  OR $rowMax['PR'] != NULL){
 							$temPR = $rowMax['PR']+1;

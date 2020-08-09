@@ -1,4 +1,4 @@
-<?php include('../dbcon.php'); ?>
+<?php include('header.php'); ?>
 
 <?php
 	if(isset($_GET['update_id'])) {
@@ -13,7 +13,9 @@
 		header('Location: ppmp_requested.php');
 	}
 ?>
+<?php include('navbar.php');
 
+?>
 <div class="">
 	<div class="span9" id="studentTableDiv">
 		<a href="dashboard.php" data-placement="right" title="Click to Add New Item Request" id="newPPMP" name="NewPPMP" class="btn btn-warning"><i class="icon-plus-sign icon-large"></i> Add New Item</a>
