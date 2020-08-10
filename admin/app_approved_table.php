@@ -91,7 +91,7 @@
 					$Year3 = $row3['Year'];
 					
 					$query4 = mysqli_query($conn,"select itemdetailDesc,
-                                                        UnitOfMeasurement,SUM(TOTALQty) as totalqty,PriceCatalogue,(COUNT(consolidatedID) * TotalAmount) as TotalAmount
+                                                        UnitOfMeasurement,SUM(TotalQty) as TotalQty,PriceCatalogue,(COUNT(consolidatedID) * TotalAmount) as TotalAmount
                                                         from tbl_ppmp_consolidated WHERE Year = '$Year3'
                                                         GROUP BY itemdetailDesc,
                                                         UnitOfMeasurement,PriceCatalogue,TotalAmount");

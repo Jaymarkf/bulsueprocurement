@@ -32,7 +32,16 @@
 		$update_id = $_GET['idapp'];
 
 		mysqli_query($conn,"UPDATE tbl_ppmp SET Status = 'Completed', PU_PPMP_Status = 'Approved' WHERE Status = 'Requested' AND EndUserUnit='$update_id'");
+		$dataquery = mysqli_query($conn,"select * from  tbl_ppmp WHERE Status = 'Completed' AND BO_PPMP_Status = 'Approved' AND PU_PPMP_Status = 'Approved' AND EndUserUnit='$update_id'");
+		//insert all data in ppmp consolidated after bo_ppmp and pu_ppmp is confirmed and completed status
+        while($datarow = $dataquery->fetch_assoc()){
+            $qry = "insert into tbl_ppmp_consolidated (Year,ItemCatDesc,itemdetailDesc,UnitOfMeasurement,PriceCatalogue,TotalQty,TotalAmount)
+                 values('".$datarow['Year']."','".$datarow['ItemCatDesc']."','".$datarow['itemdetailDesc']."','".$datarow['UnitOfMeasurement']."','".$datarow['PriceCatalogue']."','".$datarow['TotalQty']."','".$datarow['TotalAmount']."')";
+                mysqli_query($conn,$qry);
+        }
 
+
+		//mysqli_query($conn,$qry);
 		header('Location: ppmp_approved.php?id='.$update_id);
 	}
 ?>

@@ -21,11 +21,10 @@ if ($PRexist == $PRno){
 	$FundCluster = $_POST['ciFundCluster'];
 	$ResCenter = $_POST['ciResCenter'];
 	$ApprovedBy = $_POST['ciApprovedBy'];
-
 	$uname = $fname.'.'.$lname;
-
+    $fc = $_POST['fc'];
 	mysqli_query($conn,"INSERT INTO tbl_pr (Year,EntityName,FundCluster,OfficeSection,PRno,PR_Date,RequestedBy,ApprovedBy)
-							  VALUES('$Year','$EntityName','$FundCluster','$OfficeSection','$PRno','$PRDate','$RequestBy','$ApprovedBy')");
+							  VALUES('$Year','$EntityName','$fc','$OfficeSection','$PRno','$PRDate','$RequestBy','$ApprovedBy')");
 
 //	mysqli_query($conn,"INSERT INTO activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')");
 }

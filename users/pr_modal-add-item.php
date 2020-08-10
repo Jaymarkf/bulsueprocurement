@@ -38,11 +38,12 @@
 							<input id="Year" type="hidden" name="Year" value="<?php echo $Year3;?>"/>
 							<input id="PR" type="hidden" name="PR" value="<?php echo $PR;?>"/>
 							<td><input id="itemDesc" type="checkbox" name="itemDesc[]" value="<?php echo $row4['itemdetailDesc']; ?>"/></td>
-							<td><?php echo $row4['itemdetailDesc']; ?></td> 
+							<td><?php echo $row4['itemdetailDesc']; ?></td>
 							<td><input id="UOM" type="hidden" name="UOM" value="<?php echo $row4['UnitOfMeasurement']; ?>"/><?php echo $row4['UnitOfMeasurement']; ?></td>
 							<td><input id="STQty" type="hidden" name="STQty" value="<?php echo $row4['TotalQty']; ?>"/><?php echo $row4['TotalQty']; ?></td>
 							<td><input id="PriceCat" type="hidden" name="PriceCat" value="<?php echo $row4['PriceCatalogue']; ?>"/><?php echo $row4['PriceCatalogue']; ?></td>
 							<td><input id="TAmt" type="hidden" name="TAmt" value="<?php echo $row4['TotalAmount']; ?>"/><?php echo $row4['TotalAmount']; ?></td>
+                            <input type="hidden" name="fc" value="<?php echo $row4['SourceOfFund'];?>"/>
 						</tr>
 						<?php 
 							}

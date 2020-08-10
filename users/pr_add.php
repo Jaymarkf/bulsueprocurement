@@ -2,26 +2,30 @@
 <?php include('session.php'); ?>
 <?php
 	if(isset($_POST['btn-save-item'])){
+
 		if(isset($_POST['itemDesc'])){
 			$item = $_POST['itemDesc'];
 			$year = $_POST['Year'];
 			$PR = $_POST['PR'];
+			$fc = $_POST['fc'];
 				$count = sizeof($item);
 				for ($i=0;$i<$count;$i++){
 					$in_item = $item[$i];
 
 					//$qry = mysqli_query($conn,"SELECT * FROM tbl_ppmp_consolidated WHERE itemdetailDesc='$in_item'");
 					$qry = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE itemdetailDesc='$in_item' AND user_id = '$session_id'");
+
 					while($row = mysqli_fetch_array($qry)){
 						$euu = $row['EndUserUnit']; //para sa particular na user lang ang hahanapin nya
 						$in_UOM = $row['UnitOfMeasurement'];
 						$in_STQty = $row['TotalQty'];
 						$in_PriceCat = $row['PriceCatalogue'];
 						$in_TAmt = $row['TotalAmount'];
+
 					}
-				//	echo "INSERT INTO tbl_pr_items (Year,PRno,StockPropertyNo,Unit,ItemDescription,Quantity,UnitCost,TotalCost) values('".$year."','".$PR."','".$in_UOM."','".$in_item."','".$in_STQty."','".$in_PriceCat."','".$in_TAmt."')";
-	            	//die();
-	mysqli_query($conn,"INSERT INTO tbl_pr_items (Year,PRno,StockPropertyNo,Unit,ItemDescription,Quantity,UnitCost,TotalCost) values('$year','$PR','','$in_UOM','$in_item','$in_STQty','$in_PriceCat','$in_TAmt')");
+//					echo "INSERT INTO tbl_pr_items (Year,PRno,StockPropertyNo,Unit,ItemDescription,Quantity,UnitCost,TotalCost) values('".$year."','".$PR."','','".$in_UOM."','".$in_item."','".$in_STQty."','".$in_PriceCat."','".$in_TAmt."')";
+//	            	die();
+	mysqli_query($conn,"INSERT INTO tbl_pr_items (Year,PRno,FundCluster,StockPropertyNo,Unit,ItemDescription,Quantity,UnitCost,TotalCost) values('$year','$PR','$fc','','$in_UOM','$in_item','$in_STQty','$in_PriceCat','$in_TAmt')");
 					//}
 					//mysqli_query($conn,"UPDATE tbl_ppmp_consolidated SET Requested = 'Yes' WHERE itemdetailDesc = '$in_item' ");
 				}
@@ -89,6 +93,12 @@
 						}
 			
 						}
+						if($query2->num_rows < 1 ){
+						    $PR = '0001';
+						    $_POST['PR'] = $PR;
+                            date_default_timezone_set("Asia/Manila");
+                            $now=date('Y-m-d');
+                        }
 					}
 				?>
 				<!-- PR DETAILS -->
@@ -119,6 +129,9 @@
 												
 							<div class="span4">
 								<label class="span4"><b>Requested by:</b></label><input class="span8" type="text" name="ciRequestBy" value="<?php echo $username; ?>" Required />
+                                <?php
+
+                                ?>
 							</div>
 						</div>
 
@@ -128,8 +141,11 @@
 								<?php
 									$hanap = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE Year = '$Year' AND PRno = '$PR'");
 									$bilang = mysqli_num_rows($hanap);
+									$result = mysqli_fetch_assoc($hanap);
 									if ($bilang > 0 ){
+
 								?>
+                                        <input type="hidden" name="fc" value="<?=$result['FundCluster'];?>"/>
 									<button  data-placement="top" title="Click to Save" id="save" name="save" class="btn btn-success"><i class="icon-save icon-large"></i> Save</button>
 											<script type="text/javascript">
 											$(document).ready(function(){
