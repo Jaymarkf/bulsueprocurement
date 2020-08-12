@@ -101,8 +101,9 @@
 														$foundExistItem = mysqli_fetch_array($searchExistItem);
 														
 														if(!empty($foundExistItem)) {
-																echo '<a class="btn btn-default"><i class="icon-shopping-cart icon-large"></i> Item on Cart </a>';
-														} else {		
+//																echo '<a class="btn btn-default"><i class="icon-shopping-cart icon-large"></i> Item on Cart </a>';
+                                                            echo '<a href="product-details.php?prodid='.$prodID.'" class="btn btn-success"><i class="icon-shopping-cart icon-large"></i> Item Details </a>';
+                                                        } else {
 															echo '<a href="product-details.php?prodid='.$prodID.'" class="btn btn-success"><i class="icon-shopping-cart icon-large"></i> Item Details </a>';
 														}
 													
