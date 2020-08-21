@@ -1,5 +1,4 @@
 <?php include('../dbcon.php'); ?>
-
 <?php
 	//require_once 'config.php';
 	//if(isset($_GET['idsup'])) {
@@ -34,7 +33,7 @@
 		mysqli_query($conn,"UPDATE tbl_ppmp SET Status = 'Completed', PU_PPMP_Status = 'Approved' WHERE Status = 'Requested' AND EndUserUnit='$update_id'");
 		$dataquery = mysqli_query($conn,"select * from  tbl_ppmp WHERE Status = 'Completed' AND BO_PPMP_Status = 'Approved' AND PU_PPMP_Status = 'Approved' AND EndUserUnit='$update_id'");
 		//insert all data in ppmp consolidated after bo_ppmp and pu_ppmp is confirmed and completed status
-        while($datarow = $dataquery->fetch_assoc()){
+        while($datarow = $dataquery->fetch_array()){
             $qry = "insert into tbl_ppmp_consolidated (Year,ItemCatDesc,itemdetailDesc,UnitOfMeasurement,PriceCatalogue,TotalQty,TotalAmount)
                  values('".$datarow['Year']."','".$datarow['ItemCatDesc']."','".$datarow['itemdetailDesc']."','".$datarow['UnitOfMeasurement']."','".$datarow['PriceCatalogue']."','".$datarow['TotalQty']."','".$datarow['TotalAmount']."')";
                 mysqli_query($conn,$qry);
@@ -104,8 +103,8 @@
 		$user_id3a = $row3a['user_id'];
 		
 		//$query4a = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year3a AND user_id='$user_id3a'  AND Status = 'Requested' AND BO_PPMP_Status <> 'Approved' GROUP BY BO_PPMP_Status");
-		$query4a = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year3a AND user_id='$user_id3a'  AND Status = 'Requested' AND BO_PPMP_Status = 'Approved' GROUP BY BO_PPMP_Status");
-		while($row4a = mysqli_fetch_array($query4a)){
+		$query4a = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = '$Year3a' AND user_id = '$user_id3a'  AND Status = 'Requested' AND BO_PPMP_Status = 'Approved' GROUP BY BO_PPMP_Status");
+		while($row4a = mysqli_fetch_assoc($query4a)){
 		$id4a = $row4a['ppmpID'];
 	?>
 	<h5 class="pull-right">Budget Office: 

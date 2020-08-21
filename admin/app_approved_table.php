@@ -1,5 +1,4 @@
-
-<div class="">	
+<div class="">
 	<div class="">
 		<a href="dashboard.php" title="Back to PPMP-Dashboard" id="back" data-placement="right" class="btn btn-inverse"><i class="icon-undo icon-large"></i> Back </a>
 			<script type="text/javascript">
@@ -8,7 +7,6 @@
 					$('#back').tooltip('hide');
 				});
 			</script>
-		
 		<!-- CHECK IF ALREADY CONSOLIDATE THE PPMP YEAR -->	
 		<?php
 			//$query = mysqli_query($conn,"SELECT * FROM tbl_year");
@@ -16,7 +14,6 @@
 			while($row = mysqli_fetch_array($query)) {
 				$Year = $row['Year'];
 			}
-			
 			$query1= mysqli_query($conn,"select * from tbl_ppmp_consolidated WHERE Year = '$Year'");
 			$count1 = mysqli_num_rows($query1);
 		?>	
@@ -70,7 +67,6 @@
 		<?php } ?>	
 		<!-- RESET THE CONSOLIDATE PPMP YEAR -->		
 	</div>
-	
 	<br/>
 	<form method="POST">
 		<table cellpadding="0" cellspacing="0" border="0" id="example1" class="display" cellspacing="0" width="100%">
@@ -83,7 +79,6 @@
 					<th rowspan="2"><b>Total Amount</b></th>
 				</tr>
 			</thead>
-			
 			<tbody>
 				<?php					
 					$query3 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");

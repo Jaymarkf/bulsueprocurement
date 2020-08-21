@@ -1,4 +1,3 @@
-
 <div class="">
 	<div class="span3 pull-left">
 	<?php

@@ -1,8 +1,6 @@
-<?php include('header.php'); ?>
-<?php include('session.php'); ?>
-    <body >
-		<?php include('navbar.php'); ?>					
-        <div class="container-fluid">
+<?php include('header.php');
+      include('session.php');
+?><body><?php include('navbar.php');?><div class="container-fluid">
             <div class="row-fluid">
 				<div class="span12" id="content">
 					<div class="span6" id="content">
@@ -44,10 +42,7 @@
                             </div>
                             <div class="block-content collapse in">
 								<div class="span12" id="studentTableDiv">
-								<h2 id="noch">Project Procurement Management Plan</h2>
-									
-									<?php include('ppmp_requested_table.php'); ?>
-                                </div>
+								<h2 id="noch">Project Procurement Management Plan</h2><?php include('ppmp_requested_table.php'); ?></div>
                             </div>
                         </div>
                         <!-- /block -->

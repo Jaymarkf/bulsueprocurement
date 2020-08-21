@@ -39,10 +39,7 @@
                             </div>
                             <div class="block-content collapse in">
 								<div class="span12" id="studentTableDiv">
-								<h2 id="noch">Project Procurement Management Plan</h2>
-									
-									<?php include('ppmp_table.php'); ?>
-                                </div>
+								<h2 id="noch">Project Procurement Management Plan</h2><?php include('ppmp_table.php');?></div>
                             </div>
                         </div>
                         <!-- /block -->

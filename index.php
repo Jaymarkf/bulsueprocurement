@@ -1,6 +1,6 @@
 <?php
+    session_start();
 	include('header.php');
-	session_start();
  ?>
 <body id="login">
 	<div class="row-fluid">
@@ -68,18 +68,19 @@
 				/* student */
 				$query = "SELECT * FROM users WHERE username='$username' AND password='$password' AND approved='yes'";
 				$result = mysqli_query($conn, $query);
-				$row = mysqli_fetch_array($result);
+				$row = mysqli_fetch_assoc($result);
 				$num_row = mysqli_num_rows($result);
               
 				//$pass=$row['password'];
 				$level =$row['level'];
-				$department =$row['branch'];
+				$department = $row['branch'];
 
 				if( $num_row > 0 ) { 			
 					//session_start();
 					if($level=='default' AND $department=='Main Office'){
 						$_SESSION['admin_id']=$row['user_id'];
 						
+					
 						if($password=='12345'){
 							//header('location: admin/password-default.php');
 					?>
@@ -110,7 +111,6 @@
 						}
 					}elseif($level=='administrator' AND $department=='Main Office'){
 						$_SESSION['admin_id']=$row['user_id'];
-						
 						if($password=='12345'){
 							//header('location: admin/password-default');
 					?>
@@ -119,7 +119,7 @@
 									success: function(html){
 										$.jGrowl("ACCESS GRANTED! Wait for a moment while preparing the system for you... ", { header: 'LOGIN SUCCESS' });
 										var delay = 3000;
-										setTimeout(function(){ window.location = 'admin/password-default.php' }, delay);
+									setTimeout(function(){ window.location = 'admin/password-default.php' }, delay);
 									}
 								});
 							</script>
@@ -203,7 +203,6 @@
 						}
 					}elseif($level=='user'){
 						$_SESSION['member_id']=$row['user_id'];
-				
 						if($password=='12345'){
 							//header('location: users/password-default');
 					?>
@@ -218,8 +217,9 @@
 							</script>
 					<?php
 						}else{
-							//header('location: users/dashboard');
+							//header('location: users/dashboard')
 					?>
+					   
 							<script>
 							$.ajax({
 									success: function(html){

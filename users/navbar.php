@@ -1,5 +1,3 @@
-<!-- <?php //include('../dbcon.php'); ?> -->
-
 <?php
 	//$query1 = mysqli_query($conn,"SELECT * FROM tbl_year");
 	$query1 = mysqli_query($conn,"SELECT * FROM users WHERE user_id='$session_id'");
@@ -23,7 +21,6 @@
 	$query6 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE user_id = '$session_id' AND Year = '$Year' AND BO_PPMP_Status = 'Approved' ORDER BY Year");
 	$count6 = mysqli_num_rows($query6);
 ?>
-
 <div class="navbar navbar-fixed-top navbar-inverse">
 	<div class="navbar-inner">
 		<div class="container-fluid">

@@ -104,5 +104,4 @@
 					 $(document).on("keydown", disableF5);
 				});
 			</script>
-    </head>
-<?php include('../dbcon.php'); ?>
+    </head><?php include('../dbcon.php');?>

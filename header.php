@@ -106,6 +106,4 @@
 			document.onmousedown = mousehandler;
 			document.onmouseup = mousehandler;
 		</script>
-    </head>
-	
-<?php include('dbcon.php'); ?>
+    </head><?php include('dbcon.php');?>

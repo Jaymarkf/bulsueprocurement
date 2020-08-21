@@ -1,22 +1,19 @@
-<?php include('header.php'); ?>
-
-<?php
-	if(isset($_GET['update_id'])) {
+<?php 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+include('../dbcon.php');
+if(isset($_GET['update_id'])) {
 		$update_id = $_GET['update_id'];
-
 		$query1 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$update_id'");
-			while($row1 = mysqli_fetch_array($query1)) {
+			while($row1 = mysqli_fetch_assoc($query1)) {
 				$Year = $row1['Year'];
 			}
-		mysqli_query($conn,"UPDATE tbl_ppmp SET Status = 'Requested' WHERE Status = 'Pending' AND Year = $Year AND user_id='$update_id'");
-		
+		mysqli_query($conn,"UPDATE tbl_ppmp SET Status = 'Requested' WHERE Status = 'Pending' AND Year = '$Year' AND user_id='$update_id'");
 		header('Location: ppmp_requested.php');
+	    exit();
 	}
-?>
-<?php include('navbar.php');
-
-?>
-<div class="">
+?><div class="">
 	<div class="span9" id="studentTableDiv">
 		<a href="dashboard.php" data-placement="right" title="Click to Add New Item Request" id="newPPMP" name="NewPPMP" class="btn btn-warning"><i class="icon-plus-sign icon-large"></i> Add New Item</a>
 		<script type="text/javascript">
