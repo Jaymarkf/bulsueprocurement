@@ -1,7 +1,6 @@
 <?php
 include('../dbcon.php');
 include('session.php');
-
 $PRno = $_POST['ciPRno'];
 
 //search if the item exists before saving the purchase request
@@ -23,8 +22,8 @@ if ($PRexist == $PRno){
 	$ApprovedBy = $_POST['ciApprovedBy'];
 	$uname = $fname.'.'.$lname;
     $fc = $_POST['fc'];
-	mysqli_query($conn,"INSERT INTO tbl_pr (Year,EntityName,FundCluster,OfficeSection,PRno,PR_Date,RequestedBy,ApprovedBy)
-							  VALUES('$Year','$EntityName','$fc','$OfficeSection','$PRno','$PRDate','$RequestBy','$ApprovedBy')");
+	mysqli_query($conn,"INSERT INTO tbl_pr (user_id,Year,EntityName,FundCluster,OfficeSection,PRno,PR_Date,RequestedBy,ApprovedBy)
+							  VALUES('$session_id','$Year','$EntityName','$fc','$OfficeSection','$PRno','$PRDate','$RequestBy','$ApprovedBy')");
 
 //	mysqli_query($conn,"INSERT INTO activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')");
 }

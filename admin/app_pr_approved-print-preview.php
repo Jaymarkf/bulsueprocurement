@@ -10,7 +10,7 @@
 <hr/>
 <?php					
 	$qry = mysqli_query($conn,"SELECT * FROM tbl_pr WHERE PRno = '$PR'");
-	$row = mysqli_fetch_array($qry)
+	$row = mysqli_fetch_assoc($qry)
 ?>
 <body>
 <div class="container-fluid">
@@ -65,7 +65,7 @@
 						}
 					?>
 					<?php
-					$qry2 = mysqli_query($conn,"SELECT SUM(TotalCost) as Total FROM tbl_pr_items WHERE PRno = '$PR'");
+					$qry2 = mysqli_query($conn,"SELECT *,(TotalCost) as Total FROM tbl_pr_items WHERE PRno = '$PR'");
 					$row2 = mysqli_fetch_array($qry2)
 					?>
 						<tr>
@@ -76,7 +76,7 @@
 							<th colspan="6" height="10"></th>
 						</tr>
 						<tr>
-							<td colspan="6">Purpose:</td>
+							<td colspan="6">Purpose:&nbsp;<?php echo $row2['Purpose'];?></td>
 						</tr>
 						<tr>
 							<th colspan="6" height="10"></th>

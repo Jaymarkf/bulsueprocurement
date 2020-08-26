@@ -147,7 +147,7 @@ if (isset($_POST['update'])){
 <?php
 	}else{
 	
-		mysqli_query($conn,"update users set branch= '$branch',username = '$username',password = '$password',level='$level',approved='$approved' where user_id = '$get_id' ");
+		mysqli_query($conn,"update users set branch = '$branch',username = '$username',password = '$password',level='$level',approved='$approved' where user_id = '$get_id' ");
 ?>
 		<script>
 			$.ajax({

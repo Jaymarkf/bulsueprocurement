@@ -20,7 +20,7 @@
 					while($row3 = mysqli_fetch_array($query3)) {
 					$Year3 = $row3['Year'];
 					
-					$query4 = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE Year = $Year3 AND PRno = $PR ORDER BY prID DESC");
+					$query4 = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE Year = $Year3 AND PRno = $PR AND user_id = $session_id ORDER BY prID DESC");
 					while($row4 = mysqli_fetch_array($query4)){
 					$id4 = $row4['prID'];
 					$PRno4 = $row4['PRno']; 
@@ -28,7 +28,7 @@
 				<tr>
 					<td width="150" style="text-align:center;"><?php echo $row4['StockPropertyNo']; ?></td>
 					<td width="150" style="text-align:center;"><?php echo $row4['Unit']; ?></td>
-					<td width="500" style="text-align:left;"><?php echo $row4['ItemDescription']; ?></td>
+					<td width="500" style="text-align:center;"><?php echo $row4['ItemDescription']; ?></td>
 					<td width="100" style="text-align:center;"><?php echo $row4['Quantity']; ?></td>
 					<td width="100" style="text-align:right;"><?php echo "&#8369;" . number_format($row4['UnitCost'],2, '.', ','); ?></td>
 					<td width="100" style="text-align:right;"><?php echo "&#8369;" . number_format($row4['TotalCost'],2, '.', ','); ?></td>

@@ -2,7 +2,6 @@
 <?php include('session.php'); ?>
 <?php
 	$prodID = $_GET['prodid'];
-	
 	if(!empty($prodID)){
 		$sqlSelectSpecProd = mysqli_query($conn,"select * from tbl_item_details where itemdetailID = '$prodID'") ;
 		$getProdInfo = mysqli_fetch_array($sqlSelectSpecProd);
@@ -166,26 +165,29 @@
 											<label><b>Schedule/Milestones of Activities: </b></label>
 											<div class="span12" id="content">
 												<div class="span4">
-												<label class="pull-right"><b>Jan: </b><input class="span8 pull-right" name="ciJanQty" placeholder = "0" type="number" min="0" required></label>
-												<label class="pull-right"><b>Feb: </b><input class="span8 pull-right" name="ciFebQty" placeholder = "0" type="number" min="0" required></label>
-												<label class="pull-right"><b>Mar: </b><input class="span8 pull-right" name="ciMarQty" placeholder = "0" type="number" min="0"  required></label>
-												<label class="pull-right"><b>Apr: </b><input class="span8 pull-right" name="ciAprQty" placeholder = "0" type="number" min="0"  required></label>
+												<label class="pull-right"><b>Jan: </b><input class="span8 pull-right" name="ciJanQty" placeholder = "0" type="number" min="0" value="0"></label>
+												<label class="pull-right"><b>Feb: </b><input class="span8 pull-right" name="ciFebQty" placeholder = "0" type="number" min="0" value="0"></label>
+												<label class="pull-right"><b>Mar: </b><input class="span8 pull-right" name="ciMarQty" placeholder = "0" type="number" min="0" value="0"></label>
+												<label class="pull-right"><b>Apr: </b><input class="span8 pull-right" name="ciAprQty" placeholder = "0" type="number" min="0" value="0"></label>
 												</div>
 												<div class="span4">
-												<label class="pull-right"><b>May: </b><input class="span8 pull-right" name="ciMayQty" placeholder = "0" type="number" min="0"  required></label>
-												<label class="pull-right"><b>Jun: </b><input class="span8 pull-right" name="ciJunQty" placeholder = "0" type="number" min="0"  required></label>
-												<label class="pull-right"><b>Jul: </b><input class="span8 pull-right" name="ciJulQty" placeholder = "0" type="number" min="0"  required></label>
-												<label class="pull-right"><b>Aug: </b><input class="span8 pull-right" name="ciAugQty" placeholder = "0" type="number" min="0"  required></label>
+												<label class="pull-right"><b>May: </b><input class="span8 pull-right" name="ciMayQty" placeholder = "0" type="number" min="0" value="0"></label>
+												<label class="pull-right"><b>Jun: </b><input class="span8 pull-right" name="ciJunQty" placeholder = "0" type="number" min="0" value="0"></label>
+												<label class="pull-right"><b>Jul: </b><input class="span8 pull-right" name="ciJulQty" placeholder = "0" type="number" min="0" value="0"></label>
+												<label class="pull-right"><b>Aug: </b><input class="span8 pull-right" name="ciAugQty" placeholder = "0" type="number" min="0" value="0"></label>
 												</div>
 												<div class="span4">
-												<label class="pull-right"><b>Sep: </b><input class="span8 pull-right" name="ciSepQty" placeholder = "0" type="number" min="0"  required></label>
-												<label class="pull-right"><b>Oct: </b><input class="span8 pull-right" name="ciOctQty" placeholder = "0" type="number" min="0"  required></label>
-												<label class="pull-right"><b>Nov: </b><input class="span8 pull-right" name="ciNovQty" placeholder = "0" type="number" min="0"  required></label>
-												<label class="pull-right"><b>Dec: </b><input class="span8 pull-right" name="ciDecQty" placeholder = "0" type="number" min="0"  required></label>
+												<label class="pull-right"><b>Sep: </b><input class="span8 pull-right" name="ciSepQty" placeholder = "0" type="number" min="0" value="0"></label>
+												<label class="pull-right"><b>Oct: </b><input class="span8 pull-right" name="ciOctQty" placeholder = "0" type="number" min="0" value="0"></label>
+												<label class="pull-right"><b>Nov: </b><input class="span8 pull-right" name="ciNovQty" placeholder = "0" type="number" min="0" value="0"></label>
+												<label class="pull-right"><b>Dec: </b><input class="span8 pull-right" name="ciDecQty" placeholder = "0" type="number" min="0" value="0"></label>
 												</div>
 											</div>
 											</div>
-											
+											<div class="span12" id="content">
+                                                <label><b>Estimated Budget: </b></label>
+                                                <input class="span12" type="text" name="ebudget" placeholder="0" required>
+                                            </div>
 											<div class="span12" id="content">
 												<div class="span2">
 												<label><b>Priority: </b></label>

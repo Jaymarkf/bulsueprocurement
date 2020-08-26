@@ -1,13 +1,20 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
 <?php
+//echo '<pre>';
+//print_r($_POST);
+//echo '</pre>';
+//die();
 	if(isset($_POST['btn-save-item'])){
-
 		if(isset($_POST['itemDesc'])){
 			$item = $_POST['itemDesc'];
 			$year = $_POST['Year'];
 			$PR = $_POST['PR'];
 			$fc = $_POST['fc'];
+			$stqy = $_POST['STQty'];
+			$ta = $_POST['TAmt'];
+			$id = $_POST['user_id'];
+
 				$count = sizeof($item);
 				for ($i=0;$i<$count;$i++){
 					$in_item = $item[$i];
@@ -21,11 +28,13 @@
 						$in_STQty = $row['TotalQty'];
 						$in_PriceCat = $row['PriceCatalogue'];
 						$in_TAmt = $row['TotalAmount'];
+						$in_es = $row['EstimatedBudget'];
+						$in_purpose = $row['purpose'];
 
 					}
 //					echo "INSERT INTO tbl_pr_items (Year,PRno,StockPropertyNo,Unit,ItemDescription,Quantity,UnitCost,TotalCost) values('".$year."','".$PR."','','".$in_UOM."','".$in_item."','".$in_STQty."','".$in_PriceCat."','".$in_TAmt."')";
 //	            	die();
-	mysqli_query($conn,"INSERT INTO tbl_pr_items (Year,PRno,FundCluster,StockPropertyNo,Unit,ItemDescription,Quantity,UnitCost,TotalCost) values('$year','$PR','$fc','','$in_UOM','$in_item','$in_STQty','$in_PriceCat','$in_TAmt')");
+	mysqli_query($conn,"INSERT INTO tbl_pr_items (user_id,Year,PRno,FundCluster,StockPropertyNo,Unit,ItemDescription,Quantity,UnitCost,TotalCost,EstimatedBudget,Purpose) values('$id','$year','$PR','$fc','','$in_UOM','$in_item','$stqy','$in_PriceCat','$ta','$in_es','$in_purpose')");
 					//}
 					//mysqli_query($conn,"UPDATE tbl_ppmp_consolidated SET Requested = 'Yes' WHERE itemdetailDesc = '$in_item' ");
 				}
@@ -189,7 +198,6 @@
                      <div class="row-fluid">
                         <!-- block -->
                         <div  id="block_bg" class="block">
-						
 						<?php
 							if(isset($_GET['year'])){
 								$year = $_GET['year'];
@@ -200,11 +208,10 @@
 								$Year1 = $row1['Year'];
 								$user_id1 = $row1['user_id'];
 							}
-							
+
 							$query2 = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE Year = '$Year' AND PRno = '$PR'");
 							$count2 = mysqli_num_rows($query2);
 						?>
-						
                             <div class="navbar navbar-inner block-header">
 								<div class="muted pull-left"><i class="icon-save icon-large"></i> ITEMS </div>
                                 <div class="muted pull-right">
@@ -213,10 +220,8 @@
                             </div>
                             <div class="block-content collapse in">
 								<div class="span12" id="studentTableDiv">
-									
 									<?php //include('app_pr_approved-add_table.php'); ?>
 									<?php include('pr_approved-add_table.php'); ?>
-
                                 </div>
                             </div>
                         </div>

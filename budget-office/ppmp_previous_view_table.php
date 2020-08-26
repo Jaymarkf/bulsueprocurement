@@ -21,6 +21,7 @@
 					<tr>
 						<th rowspan="2"><b>Item Description</b></th>
 						<th rowspan="2"><b>Unit of Measurement</b></th>
+						<th rowspan="2"><b>Estimated Budget</b></th>
 						<th colspan="12"><b>Schedule/ Milestones of Activities:</b></th>
 						<th rowspan="2"><b>Total Qty</b></th>
 						<th rowspan="2"><b>Price Catalogue</b></th>
@@ -54,6 +55,7 @@
 					<tr>
 						<td width="300" style="text-align:center;"><?php echo $row2['itemdetailDesc']; ?></td> 
 						<td width="100" style="text-align:center;"><?php echo $row2['UnitOfMeasurement']; ?></td>
+                        <td width="100" style="text-align:center;"><?php echo "&#8369;" . number_format($row2['EstimatedBudget'],0,'',','); ?></td>
 						<td width="100" style="text-align:center;"><?php echo $row2['Jan']; ?></td>
 						<td width="100" style="text-align:center;"><?php echo $row2['Feb']; ?></td>
 						<td width="100" style="text-align:center;"><?php echo $row2['Mar']; ?></td>
@@ -82,7 +84,7 @@
 						<?php
 							$row = mysqli_query($conn,"SELECT SUM(TotalAmount) as Totalx FROM tbl_ppmp WHERE Year = '$YearID' AND EndUserUnit ='$BranchID' AND BO_PPMP_Status='Approved'") ;
 							while($result = mysqli_fetch_array($row)){
-								echo "<th style='text-align:right;'><h4>&#8369; " . number_format($result['Totalx'],2, '.', ',') . "</h4></th>";
+								echo "<th colspan='2' style='text-align:center;'><h4>&#8369; " . number_format($result['Totalx'],2, '.', ',') . "</h4></th>";
 								echo "<th></th>";
 							}
 						?>
