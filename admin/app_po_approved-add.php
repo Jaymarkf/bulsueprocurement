@@ -13,7 +13,14 @@
 			//$in_STQty = $STQty[$i];
 			//$in_PriceCat = $PriceCat[$i];
 			//$in_TAmt = $TAmt[$i];
-			$qry = mysqli_query($conn,"SELECT * FROM tbl_ppmp_consolidated WHERE itemdetailDesc='$in_item'");
+//			$qry = mysqli_query($conn,"SELECT * FROM tbl_ppmp_consolidated WHERE itemdetailDesc='$in_item'");
+
+            $qry = mysqli_query($conn,"select sum(".Date('M').") as TotalQty,Status,ItemCatDesc,itemdetailDesc
+                                                ,UnitOfMeasurement,
+                                                PriceCatalogue,(sum(".Date('M').") * PriceCatalogue) as TotalAmount
+                                                from tbl_ppmp
+                                                where itemdetailDesc = '$in_item' and Status = 'Completed'
+                                                group by Status,ItemCatDesc,itemdetailDesc,PriceCatalogue,UnitOfMeasurement");
 			while($row = mysqli_fetch_array($qry)){
 				$in_UOM = $row['UnitOfMeasurement'];
 				$in_STQty = $row['TotalQty'];

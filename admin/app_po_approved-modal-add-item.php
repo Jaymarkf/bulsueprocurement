@@ -1,7 +1,7 @@
 <!-- Bootstrap Modals -->
 <!-- Modal - Add New Record/User -->
 <form name="pritem" method="POST">
-<div class="modal fade" id="additems" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="additems" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display:none;">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -28,7 +28,13 @@
 							while($row3 = mysqli_fetch_array($query3)) {
 							$Year3 = $row3['Year'];
 							
-							$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp_consolidated WHERE Year = $Year3");
+//							$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp_consolidated WHERE Year = $Year3");
+                            $query4 =  mysqli_query($conn,"select sum(".Date('M').") as TotalQty,Status,ItemCatDesc,itemdetailDesc
+                                                                ,UnitOfMeasurement,
+                                                                PriceCatalogue,(sum(".Date('M').") * PriceCatalogue) as TotalAmount,Year
+                                                                from tbl_ppmp
+                                                                where Year = '2021' and Status = 'Completed'
+                                                                group by Status,ItemCatDesc,itemdetailDesc,PriceCatalogue,UnitOfMeasurement");
 							while($row4 = mysqli_fetch_array($query4)){
 							//$id4 = $row4['ppmpID'];
 						?>
