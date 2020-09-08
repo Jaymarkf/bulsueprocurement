@@ -32,6 +32,7 @@
 				<tr>
 					<th rowspan="2"><b>Item Description</b></th>
 					<th rowspan="2"><b>Unit of Measurement</b></th>
+					<th rowspan="2"><b>Estimated Budget</b></th>
 					<th colspan="12"><b>Schedule/ Milestones of Activities:</b></th>
 					<th rowspan="2"><b>Total Qty</b></th>
 					<th rowspan="2"><b>Price Catalogue</b></th>
@@ -70,6 +71,7 @@
 				<?php if ($row4['BO_PPMP_Status'] == "Supplemental") { ?>
 					<td width="300" style="text-align:center;"><?php echo $row4['itemdetailDesc']; ?></td> 
 					<td width="100" style="text-align:center;"><?php echo $row4['UnitOfMeasurement']; ?></td>
+					<td width="100" style="text-align:center;"><?php echo $row4['EstimatedBudget']; ?></td>
 					<td width="100" style="text-align:center;"><?php echo $row4['Jan']; ?></td>
 					<td width="100" style="text-align:center;"><?php echo $row4['Feb']; ?></td>
 					<td width="100" style="text-align:center;"><?php echo $row4['Mar']; ?></td>
@@ -90,6 +92,7 @@
 				<?php } elseif ($row4['BO_PPMP_Status'] == "Revise") { ?>
 					<td width="300" style="text-align:center;"><?php echo $row4['itemdetailDesc']; ?></td> 
 					<td width="100" style="text-align:center;"><?php echo $row4['UnitOfMeasurement']; ?></td>
+					<td width="100" style="text-align:center;"><?php echo $row4['EstimatedBudget']; ?></td>
 					<td width="100" style="text-align:center;"><?php echo $row4['Jan']; ?></td>
 					<td width="100" style="text-align:center;"><?php echo $row4['Feb']; ?></td>
 					<td width="100" style="text-align:center;"><?php echo $row4['Mar']; ?></td>
@@ -110,6 +113,7 @@
 				<?php } elseif ($row4['BO_PPMP_Status'] == "Approved"){ ?>
 					<td width="300" style="text-align:center;"><?php echo $row4['itemdetailDesc']; ?></td> 
 					<td width="50" style="text-align:center;"><?php echo $row4['UnitOfMeasurement']; ?></td>
+					<td width="50" style="text-align:center;"><?php echo $row4['EstimatedBudget']; ?></td>
 					<td width="50" style="text-align:center;"><?php echo $row4['Jan']; ?></td>
 					<td width="50" style="text-align:center;"><?php echo $row4['Feb']; ?></td>
 					<td width="50" style="text-align:center;"><?php echo $row4['Mar']; ?></td>

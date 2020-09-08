@@ -30,8 +30,8 @@
 							$EUU = $row3['branch'];
 							
 							//$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp_consolidated WHERE Year = $Year3");
-							$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = '$Year3' AND EndUserUnit = '$EUU'");
-
+//							$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = '$Year3' AND EndUserUnit = '$EUU'");
+                                $query4 = $conn->query("select * from tbl_ppmp where Year = '$Year3' and  pr_approved  = 'approved' and user_id = ".$session_id." and EndUserUnit = '$EUU'");
 							while($row4 = mysqli_fetch_array($query4)){
 							//$id4 = $row4['ppmpID'];
                                 $qty = $row4[Date('M')];

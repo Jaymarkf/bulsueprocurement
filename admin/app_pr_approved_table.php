@@ -1,7 +1,7 @@
 
 <div class="">
 	<form method="POST">
-		<table cellpadding="0" cellspacing="0" border="0" id="example" class="display" cellspacing="0" width="100%">
+		<table cellpadding="0" cellspacing="0" border="0" id="example" class="table table-bordered table-stripped" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th rowspan="1"><b>Entity Name</b></th>

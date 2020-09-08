@@ -39,8 +39,8 @@ $lname = $row['lname'];
 $user_username = $fname.' '.$lname;
 $uname = $fname.'.'.$lname;
 
-mysqli_query($conn,"insert into tbl_ppmp (`user_id`,`Year`,`EndUserUnit`,`SourceOfFund`,`Status`,`Priority`,`BO_PPMP_Status`,`PU_PPMP_Status`,`purpose`,`date_requested`,`ItemCatDesc`,`itemdetailDesc`,`UnitOfMeasurement`,`PriceCatalogue`,`Jan`,`Feb`,`Mar`,`Apr`,`May`,`Jun`,`Jul`,`Aug`,`Sep`,`Oct`,`Nov`,`Dec`,`EstimatedBudget`,`TotalQty`,`TotalAmount`,`Remarks`)
-         	          values($session_id, '$year', '$EndUserUnit', '$SOF', 'Pending', '$priority','','','$purpose', NOW(), '$itemCatDesc', '$itemDetailDesc', '$UnitOfMeasurement', '$PriceCatalogue', $Jan, $Feb, $Mar, $Apr, $May, $Jun, $Jul, $Aug, $Sep, $Oct, $Nov, $Dec,$budget, $TQtyMonth, $TotalAmount, '$rem')");
+mysqli_query($conn,"insert into tbl_ppmp (`user_id`,`Year`,`EndUserUnit`,`SourceOfFund`,`Status`,`Priority`,`BO_PPMP_Status`,`PU_PPMP_Status`,`purpose`,`date_requested`,`ItemCatDesc`,`itemdetailDesc`,`UnitOfMeasurement`,`PriceCatalogue`,`Jan`,`Feb`,`Mar`,`Apr`,`May`,`Jun`,`Jul`,`Aug`,`Sep`,`Oct`,`Nov`,`Dec`,`EstimatedBudget`,`TotalQty`,`TotalAmount`,`Remarks`,`pr_approved`)
+         	          values($session_id, '$year', '$EndUserUnit', '$SOF', 'Pending', '$priority','','','$purpose', NOW(), '$itemCatDesc', '$itemDetailDesc', '$UnitOfMeasurement', '$PriceCatalogue', $Jan, $Feb, $Mar, $Apr, $May, $Jun, $Jul, $Aug, $Sep, $Oct, $Nov, $Dec,$budget, $TQtyMonth, $TotalAmount, '$rem','pending')");
 
 //mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')");
 ?>

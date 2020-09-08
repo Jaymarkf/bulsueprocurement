@@ -110,6 +110,27 @@
                         }
 					}
 				?>
+                <?php
+                    $q = "select * from tbl_ppmp where Year > YEAR(CURDATE()) and  pr_approved  = 'approved' and user_id = ".$session_id;
+                    $r = $conn->query($q);
+                    if($r->num_rows < 1 ){
+                        ?>
+                        <div class="container-fluid">
+                            <div class="text-center">
+                                <h3 class="text-warning">Purchase request is disable, please ask procurement to enable this request</h3>
+                            </div>
+                            <hr>
+                            <hr>
+                            <div class="row-fluid">
+                                <div class="text-center">
+                                    <a href="pr.php" class="btn btn-info"><i class ="icon icon-circle-arrow-left"></i>&nbsp;&nbsp;Go back</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php
+                    }else{
+                ?>
 				<!-- PR DETAILS -->
 				<form name="prform" method="POST" id="savePR">
 					<div class="span12" id="content" style="background-color: #f9f9f9; padding:10px; border:5px solid #f1f1f1; box-shadow: 0px 0px 10px #000">
@@ -228,6 +249,7 @@
                         <!-- /block -->
                     </div>
                 </div>
+                <?php } ?>
             </div>
 		<?php include('footer.php'); ?>
         </div>

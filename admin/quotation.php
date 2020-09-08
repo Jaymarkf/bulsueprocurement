@@ -1,5 +1,12 @@
-<?php include('header.php'); ?>
+<?php
+session_start();
+include('header.php'); ?>
 <?php include('session.php'); ?>
+<?php
+if(isset($_GET['id'])){
+    header('Location: rfq_print_preview.php?id='.$_GET['id']);
+}
+?>
 <body>
 	<?php include('navbar.php'); ?>
 	
@@ -74,7 +81,10 @@
 								Number of Items for Quotation: <span class="badge badge-info"><?php echo $count; ?></span>
 							</div>
 						</div>
-						
+                        <div class="container-fluid">
+                            <a class="btn btn-success btn-lg" href="RFQ.php" style="margin-top:10px;">Add New Quotation</a>
+                        </div>
+
 						<div class="block-content collapse in">
 							<div class="span12">
 							<!-- <form action="quotation-delete.php" method="post" id="deleteForm"> -->
@@ -82,73 +92,35 @@
 								<table cellpadding="0" cellspacing="0" border="0" class="table" id="example1">
 									<thead>
 									  <tr>
-											<th>Name of Articles being Requisitioned</th>
-											<th>Approved Unit Price per Item</th>
-											<th>Quantity and Unit</th>
-											<th>ABC Price</th>
-											<th style="text-align: center;">Company Quotation</th>
+                                          <td>Quotation Number</td>
+                                          <td>Company Name</td>
+                                          <td>Total Price</td>
+                                          <td>Quotation Date Created</td>
+                                          <td>Actions</td>
 									   </tr>
 									</thead>
-									<tbody>
-										<?php
-											//$query = mysqli_query($conn,"SELECT * FROM tbl_quotation ORDER BY quotation_id DESC");
-											//$query = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE Year='2018'");
-											$query =  mysqli_query($conn,"SELECT *, sum(TotalCost) as TotalCost, sum(Quantity) as Quantity FROM tbl_pr_items WHERE Year = $Year GROUP BY ItemDescription");
-											while($row = mysqli_fetch_array($query)){
-											//$id = $row['quotation_id'];
-											$id = $row['prID'];
-										?>
-											<tr>
-												<td><?php echo $row['ItemDescription']; ?></td>
-												<td style="text-align:center;">&#8369;<?php echo number_format($row['UnitCost'],2, '.', ','); ?></td>
-												<td style="text-align:center;"><?php echo $row['Quantity'] . " " .$row['Unit']; ?></td>
-												<td style="text-align:center;">&#8369;<?php echo number_format($row['TotalCost'],2, '.', ','); ?></td>
-												<td style="text-align: center;">
-														<?php
-															$item = $row['ItemDescription'];
-															
-															$check = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_quotation WHERE Year = '$Year' AND itemDescription = '$item' GROUP BY itemDescription");
-															$bilang = mysqli_num_rows($check);
-															//$Year = $row['Year'];
-															
-															if ($bilang == "0") {
-																echo '<a title="View Company Quotation" id="back" data-placement="top" class="btn btn-default"><i class="icon-eye-close icon-large"></i> View </a>';
-															}else{
-																echo '<a href="quotation-view-main.php?item='.$item.'&year='.$Year.'" title="View Company Quotation" id="back" data-placement="top" class="btn btn-inverse"><i class="icon-eye-open icon-large"></i> View Supplier</a>';
-															}	
-														?>
-														<script type="text/javascript">
-															$(document).ready(function(){
-																$('#back').tooltip('show');
-																$('#back').tooltip('hide');
-															});
-														</script>
-														<!-- echo '<a href="product-details.php?prodid='.$prodID.'" class="btn btn-success"><i class="icon-shopping-cart icon-large"></i> Item Details </a>'; -->
-														
-														<?php
-														$item = $row['ItemDescription'];
-														echo '<a href="quotation-add-main.php?item='.$item.'" title="Add New Company Quotation" id="back" data-placement="top" class="btn btn-success"><i class="icon-plus-sign icon-large"></i> New Supplier</a>';
-														?>
-														<script type="text/javascript">
-															$(document).ready(function(){
-																$('#back').tooltip('show');
-																$('#back').tooltip('hide');
-															});
-														</script>
-														
-													<!--	<?php
-															echo '<a href="quotation-form-preview.php?item='.$item.'" title="Preview Quotation Form" id="back" data-placement="top" class="btn btn-information"><i class="icon-print icon-large"></i> Form </a>';
-														?>
-														<script type="text/javascript">
-															$(document).ready(function(){
-																$('#back').tooltip('show');
-																$('#back').tooltip('hide');
-															});
-														</script> -->
-												</td>
-											</tr>
-										<?php }; ?>
-									</tbody>
+                                    <tbody>
+                                    <?php
+                                        $qry = "select * from tbl_rfq";
+                                        $res = $conn->query($qry);
+                                        while($row = $res->fetch_assoc()){
+                                            $temp = "select SUM(total_price) as price from tbl_rfq_item_details where rfq_item_id = ".$row['id'].";";
+                                            $data = $conn->query($temp);
+                                            $price = $data->fetch_assoc();
+                                            ?>
+                                            <tr>
+                                                <td><?=$row['quotation_no']?></td>
+                                                <td><?=$row['company_name']?></td>
+                                                <td><?=$price['price'];?></td>
+                                                <td><?=$row['date_created']?></td>
+                                                <td>
+                                                <a href="?id=<?=$row['id']?>" class="btn btn-success btn-small"><i class="icon-eye-open icon-large"></i>&nbsp;View</a>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    ?>
+                                    </tbody>
 								</table>
 							</form>
 							</div>

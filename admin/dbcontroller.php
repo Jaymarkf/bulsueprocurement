@@ -1,8 +1,8 @@
 <?php
 class DBController {
-	private $host = "23.111.143.210"; //"23.111.143.210";
-	private $user = "bulsuepr_rommel"; //"bulsuepr_rommel";
-	private $password = "_adZ6@A~DO1i"; //"_adZ6@A~DO1i";
+	private $host = "localhost"; //"23.111.143.210";
+	private $user = "root"; //"bulsuepr_rommel";
+	private $password = "r00tb33r"; //"_adZ6@A~DO1i";
 	private $database = "bulsuepr_database"; //"bulsuepr_database";
 	private $conn;
 	
