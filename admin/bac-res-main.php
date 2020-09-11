@@ -78,76 +78,42 @@
 						<div class="block-content collapse in">
 							<div class="span12">
 							<!-- <form action="quotation-delete.php" method="post" id="deleteForm"> -->
+                                <div class="row-fluid">
+                                    <div class="text-center text-success">
+                                        <h5>BAC RESOLUTIONS RECORD</h5>
+                                    </div>
+                                </div>
 							<form action="" method="post" id="">
-								<table cellpadding="0" cellspacing="0" border="0" class="table" id="example1">
-									<thead>
-									  <tr>
-											<th>Date Created</th>
-											<th>Name of Articles being Requisitioned</th>
-											<th>Company A</th>
-											<th>Company B</th>
-											<th>Company C</th>
-											<th>Action</th>
-									   </tr>
-									</thead>
-									<tbody>
-										<?php
-											//$query = mysqli_query($conn,"SELECT * FROM tbl_quotation ORDER BY quotation_id DESC");
-											//$query = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE Year='2018'");
-											//$query =  mysqli_query($conn,"SELECT *, sum(TotalCost) as TotalCost, sum(Quantity) as Quantity FROM tbl_pr_items WHERE Year = $Year GROUP BY ItemDescription");
-											$query =  mysqli_query($conn,"SELECT * FROM tbl_bac_resolution WHERE Year = $Year GROUP BY itemDescription");
-											while($row = mysqli_fetch_array($query)){
-											//$id = $row['quotation_id'];
-											$id = $row['bacresID'];
-										?>
-											<tr>
-												<td width="5"><?php echo $row['Date_Created']; ?></th>
-												<td width="200"><?php echo $row['itemDescription']; ?></td>
-												<td width="5"><?php echo $row['companyA']; ?></td>
-												<td width="5"><?php echo $row['companyB']; ?></td>
-												<td width="5"><?php echo $row['companyC']; ?></td>
-												<td width="130">
-														<!-- echo '<a href="product-details.php?prodid='.$prodID.'" class="btn btn-success"><i class="icon-shopping-cart icon-large"></i> Item Details </a>'; -->
-														<?php
-														$item = $row['itemDescription'];
-														$coA = $row['companyA'];
-														$coB = $row['companyB'];
-														$coC = $row['companyC'];
-														//name1=value1&name2=value2
-														echo '<a href="bac-res-edit.php?item='.$item.'&coA='.$coA.'&coB='.$coB.'&coC='.$coC.'" title="Add New Company Quotation" id="back" data-placement="top" class="btn btn-success"><i class="icon-edit icon-large"></i> Update </a>';
-														?>
-														<script type="text/javascript">
-															$(document).ready(function(){
-																$('#back').tooltip('show');
-																$('#back').tooltip('hide');
-															});
-														</script>
-														
-														<?php
-															$item = $row['itemDescription'];
-															$year = $row['Year'];
-															$dateC = $row['Date_Created'];
-															
-															$check = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_quotation WHERE Year = '$Year' AND itemDescription = '$item' GROUP BY itemDescription");
-															$bilang = mysqli_num_rows($check);
-															
-															if ($bilang == "0") {
-																echo '<a title="View Company Quotation" id="back" data-placement="top" class="btn btn-default"><i class="icon-print icon-large"></i> Preview </a>';
-															}else{
-																echo '<a href="bac-res-preview.php?item='.$item.'&year='.$year.'&dateC='.$dateC.'&coA='.$coA.'&coB='.$coB.'&coC='.$coC.'" title="View Company Quotation" id="back" data-placement="top" class="btn btn-inverse"><i class="icon-print icon-large"></i> Preview </a>';
-															}	
-														?>
-														<script type="text/javascript">
-															$(document).ready(function(){
-																$('#back').tooltip('show');
-																$('#back').tooltip('hide');
-															});
-														</script>
-												</td>
-											</tr>
-										<?php }; ?>
-									</tbody>
-								</table>
+                                <table cellpadding="0" cellspacing="0" border="0" class="table" id="example1">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">Date Created</th>
+                                            <th>ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                        $qry = "select * from tbl_bac_reso";
+                                        $res = $conn->query($qry);
+                                        while($data = $res->fetch_array()){
+                                            ?>
+                                            <tr>
+                                                <td style="text-align:center;"><?=$data['date_created']?></td>
+                                                <td>
+                                                    <a class="btn btn-success" href="bac_reso_list.php?c_id=<?=$data['c_id_array']?>" title="view BAC RESOLUTIONS RECORD HERE">
+                                                        <i class="icon icon-print"></i>
+                                                        &nbsp;View
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                        }
+                                    ?>
+                                    </tbody>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
 							</form>
 							</div>
 						</div>

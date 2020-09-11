@@ -1,11 +1,11 @@
 TODO
-
 1. can edit the price of item in admin part
 2. can edit ppmp request even approved in bo and procurement
 3. consolidated regroup by GAA,fund, income, and dapat makita sa table
 4. consolidated display the gaa,fund or income
 5. sa procurement hintayin munang ma enable yung pr bago makapag pr si end user
 6. may form na panibago para sa revice sa ppmp pero yung amount pasok parin sa budget, and dapat ma delete.
+
 
 new sql 
 
@@ -44,3 +44,18 @@ CHANGE `rfq_item_id` `rfq_item_id` int(11) NOT NULL AFTER `id`;
 ALTER TABLE `tbl_ppmp`
 ADD `pr_approved` varchar(500) COLLATE 'latin1_swedish_ci' NOT NULL;
 
+ALTER TABLE `tbl_rfq_item_details`
+ADD `approved_by` varchar(255) COLLATE 'latin1_swedish_ci' NULL;
+
+ALTER TABLE `tbl_rfq_item_details`
+ADD `approved_item_price` varchar(255) COLLATE 'latin1_swedish_ci' NULL;
+
+ALTER TABLE `tbl_rfq_item_details`
+ADD `date_created` datetime NULL;
+
+
+CREATE TABLE `tbl_bac_reso` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `date_created` datetime NOT NULL,
+  `c_id_array` varchar(255) NOT NULL
+);

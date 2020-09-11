@@ -6,5 +6,11 @@
 	$password = "r00tb33r";
 	$database = "bulsuepr_database";
 	$conn = mysqli_connect($host,$username,$password,$database);
+
+	function dump($r){
+		echo '<pre>';
+		print_r($r);
+		echo '</pre>';
+	}
 ?>
 
