@@ -154,7 +154,7 @@ $pdf->SetFont('Courier','','9');
 $pdf->Cell($pdf->GetStringWidth('at the Bulacan State University, City of Malolos, Bulacan, this '),$body_row_height,'at the Bulacan State University, City of Malolos, Bulacan, this ');
 $pdf->SetTextColor('255','0','0');
 $pdf->SetFont('Courier','B','9');
-$pdf->Cell('',$body_row_height,'28th day of July 2020.');
+$pdf->Cell('',$body_row_height,date('d').'th of '.date('M'). ' '.date('Y'));
 $pdf->Ln(7);
 $pdf->SetFont('Courier','B','9');
 $pdf->SetTextColor('','0','0');
