@@ -59,3 +59,25 @@ CREATE TABLE `tbl_bac_reso` (
   `date_created` datetime NOT NULL,
   `c_id_array` varchar(255) NOT NULL
 );
+
+
+----------NOT INCLUDED-----------------------
+
+---------- pang four (4) WHEREAS ROWS----------
+WHEREAS, the University posted the Request for Quotation in the Philippine Government Electronic Procureme
+nt System (PhilGEPS) website on 23rd day of July 2020 with reference number 7129248, indicating the specification
+, quantity, ABC, and other terms and conditions of the item to be procured;
+----------------------------------------------------
+
+
+
+--------pang six (6) WHEREAS ROWS---------------
+WHEREAS, the opening of quotations was conducted at the Graduate School Library,
+Bulacan State University, City of Malolos, Bulacan on 28th day of July 2020;
+----------------------------------------------------------------------------
+
+
+
+
+
+----------NOT INCLUDED-----------------------
