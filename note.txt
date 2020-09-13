@@ -90,7 +90,8 @@ Bulacan State University, City of Malolos, Bulacan on 28th day of July 2020;
 
 
 
-----------NOT INCLUDED-----------------------\
+----------NOT INCLUDED------------------
+-----\
 
 PR merge same item<<
 retrieve data into database --->>> admin/RFQ.php
