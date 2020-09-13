@@ -1,4 +1,14 @@
 TODO
+http://bulsueprocurement.com/cpanel
+
+Cpanel and FTP Login Details
+
+Username: bulsuepr
+Password: &26auaUAHUsdfn121!
+
+
+
+
 1. can edit the price of item in admin part
 2. can edit ppmp request even approved in bo and procurement
 3. consolidated regroup by GAA,fund, income, and dapat makita sa table
@@ -80,4 +90,21 @@ Bulacan State University, City of Malolos, Bulacan on 28th day of July 2020;
 
 
 
-----------NOT INCLUDED-----------------------
+----------NOT INCLUDED-----------------------\
+
+PR merge same item<<
+retrieve data into database --->>> admin/RFQ.php
+http://localhost/bulsueprocurement/admin/app_po_approved-add.php   err
+APPROVED BUDGET CONTRACT ---->
+
+
+
+
+
+
+
+
+
+
+
+
