@@ -30,7 +30,7 @@
                                                          inner join tbl_pr_items on tbl_pr_items.PRno = tbl_pr.PRno
                                                          where tbl_pr.Year = '$Year3' and tbl_pr.PRno <> '0000' ORDER BY tbl_pr_items.itemDescription");
 					while($row4 = mysqli_fetch_array($query4)){
-					$PR = $row4['PRno'];
+					$PR = $row4['ItemDescription'];
 				?>
 
 				<tr>
@@ -64,7 +64,7 @@
 								$('#print').tooltip('hide');
 							});
 							</script> -->
-						<a data-placement="top" title="Print Purchase Request Detail" id="print" href="app_pr_approved-print-preview.php<?php echo '?pr='.$PR; ?>" class="btn btn-success"><i class="icon-print icon-large"></i><br/><span class="badge badge-primary"></a>
+						<a data-placement="top" title="Print Purchase Request Detail" id="print" href="app_pr_approved-print-preview.php?item=<?=$PR?>" class="btn btn-success"><i class="icon-print icon-large"></i><br/><span class="badge badge-primary"></a>
 							<script type="text/javascript">
 							$(document).ready(function(){
 								$('#print').tooltip('show');
