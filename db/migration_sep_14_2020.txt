@@ -1,0 +1,5 @@
+ALTER TABLE `tbl_pr_items`
+ADD `pr_num_merge` varchar(20) COLLATE 'latin1_swedish_ci' NULL AFTER `PRno`;
+
+ALTER TABLE `tbl_pr_items`
+ADD `order` varchar(255) COLLATE 'latin1_swedish_ci' NULL;

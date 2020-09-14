@@ -14,9 +14,9 @@ $pdf->Cell('',15,'PURCHASE REQUEST','','1','C');
 $pdf->SetFont('Arial','',10);
 $pdf->Cell($pdf->GetStringWidth("Entity Name:  BULACAN STATE UNIVERSITY")+35,10,'Entity Name:  BULACAN STATE UNIVERSITY','','0','L');
 $pdf->Cell(50,10,'FUND CLUSTER: _____________________','','1');
-$pdf->Cell($pdf->GetStringWidth("Office/Section")+25,10,'Office/Section: ','','0');
-$pdf->Cell($pdf->GetStringWidth("PR No.: ") +15,10,'PR No.: ','','0');
-$pdf->Cell($pdf->GetStringWidth("Responsibility Center Code: ") +25,10,'Responsibility Center Code: ','','0');
+$pdf->Cell($pdf->GetStringWidth("Office/Section")+25,10,'Office/Section: __________','','0');
+$pdf->Cell($pdf->GetStringWidth("PR No.: ") +29,10,'PR No.: '.$_GET['item'],'','0');
+$pdf->Cell($pdf->GetStringWidth("Responsibility Center Code: ") +25,10,'Responsibility Center Code:___________','','0');
 $pdf->Cell($pdf->GetStringWidth("".date('d M Y')."") +10,10,'Date: '.date('d M Y'),'','0');
 $pdf->Ln(15);
 $pdf->SetX(5);
@@ -32,7 +32,7 @@ $qry = "select a.Unit,a.ItemDescription,SUM(a.Quantity) as Quantity,
         SUM(a.UnitCost) as UnitCost,SUM(a.TotalCost) as TotalCost 
         from tbl_pr b
         inner join tbl_pr_items a on a.PRno = b.PRno
-        WHERE b.Year = YEAR(NOW()) + 1 and a.ItemDescription = '".$_GET['item']."'
+        WHERE b.Year = YEAR(NOW()) + 1 and a.pr_num_merge = '".$_GET['item']."'
         GROUP BY a.Unit,a.ItemDescription";
 
 
