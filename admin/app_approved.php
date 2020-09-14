@@ -49,7 +49,7 @@
 							}
 							
 							//$query2 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year AND Status = 'Completed' AND BO_PPMP_Status='Approved' AND PU_PPMP_Status='Approved' GROUP BY itemdetailDesc");
-							$query2 = mysqli_query($conn,"SELECT * FROM tbl_ppmp_consolidated WHERE Year = $Year");
+							$query2 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = $Year and Status = 'Completed'");
 							$count2 = mysqli_num_rows($query2);
 						?>
                             <div class="navbar navbar-inner block-header">

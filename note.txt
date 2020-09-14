@@ -99,12 +99,13 @@ http://localhost/bulsueprocurement/admin/app_po_approved-add.php   err
 APPROVED BUDGET CONTRACT ---->
 
 
-
+-------------PPMP------------------
 >>end user request item
 table tbl_ppmp
 1. id1 | College of Engineering |  Item A
 2. id2 | College of Nursing     |  Item A
 2. id3 | College of LAW         |  Item B
+
 
 >> bo and procurement will accept
 
@@ -112,22 +113,40 @@ table tbl_ppmp
 1. id1 | College of Engineering |  Item A | Accept
 2. id2 | College of Nursing     |  Item A | Accept
 2. id3 | College of LAW         |  Item B | Accept
-
+-------------END OF PPMP-------------
+========
+========
+========
+-----------CONSOLIDATE----------------------------------
 >> Consolidate merging all same items in  accept purchase request
 
 with pressing consolidate   'this is actual table
 
 table tbl_consolidate (save item) (pressing consolidate button again will delete * items in consolidate and generate it again)
-1. end user id array() | Item A  | Accept
-2. end user id array() | Item B  | Accept
+1. consolidate_id |  end user id array() | Item A  | Accept  |
+2. consolidate_id |  end user id array() | Item B  | Accept  |
 
 without pressing consolidate  query select * from tbl_ppmp
 1. id1 | College of Engineering |  Item A | Accept
 2. id2 | College of Nursing     |  Item A | Accept
 2. id3 | College of LAW         |  Item B | Accept
+----------END-OF-CONSOLIDATE----------------------------------
+========
+========
+========
+------------PR-------------------------------------------------
+purchase request process
 
 
-purchase request
+NOTE!:     BEFORE VIEWING PURCHASE REQUEST PROCESS
+           Remind or show to procurement user na
+           mag consolidate muna bago ma view ang table ng PR success request
+
+1. enable ni procurment yung request
+2. end user will input the form of purchase request
+        ^^^^^^^^^^END USER INPUT ^^^^^^^^^^^^^^^
+            alisin ang PR inputs dun sa table
+
 
 
 

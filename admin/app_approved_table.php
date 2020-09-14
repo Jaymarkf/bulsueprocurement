@@ -15,12 +15,12 @@
 			while($row = mysqli_fetch_array($query)) {
 				$Year = $row['Year'];
 			}
-			$query1= mysqli_query($conn,"select * from tbl_ppmp_consolidated WHERE Year = '$Year'");
+			$query1= mysqli_query($conn,"select * from tbl_ppmp WHERE Year = '$Year' and Status = 'Completed'");
 			$count1 = mysqli_num_rows($query1);
 		?>	
 		
-		<?php if ($count1 == "z" /* 0 instead of z */) { ?>
-			<a href="app_approved_consolidate.php?link=1" name="consolidate" title="Consolidate PPMP" id="back" data-placement="right" class="btn btn-warning"><i class="icon-inbox icon-large"></i> Consolidate </a>
+		<?php if ($count1 < 1  /* 0 instead of z */) { ?>
+			<a href="#" title="Consolidate not possible..." name="consolidate" title="Consolidate PPMP" id="back" data-placement="right" class="btn btn-warning"><i class="icon-inbox icon-large"></i> Consolidate </a>
 			<script type="text/javascript">
 				$(document).ready(function(){
 					$('#back').tooltip('show');
@@ -28,18 +28,6 @@
 				});
 			</script>
 		<?php }else{ ?>
-<!--			<a href="#" title="Consolidate not possible..." id="back" data-placement="right" class="btn btn-default"><i class="icon-inbox icon-large"></i> Consolidate </a>-->
-<!--			<script type="text/javascript">-->
-<!--				$(document).ready(function(){-->
-<!--					$('#back').tooltip('show');-->
-<!--					$('#back').tooltip('hide');-->
-<!--				});-->
-<!--			</script>-->
-
-
-<!--            /* modified code */-->
-
-
             <button type="submit" name="consolidate" value="true" title="Consolidate PPMP " id="back" data-placement="right" class="btn btn-success"><i class="icon-inbox icon-large"></i> Consolidate </button>
              <script type="text/javascript">
                 $(document).ready(function(){
@@ -48,40 +36,8 @@
                 });
             </script>
 <!--            end of code-->
-
-
 		<?php } ?>
 		<!-- CHECK IF ALREADY CONSOLIDATE THE PPMP YEAR -->
-		<!-- RESET THE CONSOLIDATE PPMP YEAR -->
-		<?php
-			//$query = mysqli_query($conn,"SELECT * FROM tbl_year");
-			$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id='$session_id'");
-			while($row = mysqli_fetch_array($query)) {
-				$Year = $row['Year'];
-			}
-			
-			$query2= mysqli_query($conn,"select * from tbl_ppmp_consolidated WHERE Year = '$Year'");
-			$count2 = mysqli_num_rows($query2);
-		?>	
-		
-		<?php if ($count2 == "z" /* 0 instead of z */) { ?>
-			<a title="Reset not possible..." id="back" data-placement="right" class="btn btn-alert"><i class="icon-undo icon-large"></i> Reset </a>
-			<script type="text/javascript">
-				$(document).ready(function(){
-					$('#back').tooltip('show');
-					$('#back').tooltip('hide');
-				});
-			</script>
-		<?php }else{ ?>
-			<button type="submit" name="consolidate" value="false" href="reset_app_approved_consolidate.php<?php echo '?id='.$Year; ?>" title="Reset the Consolidated PPMP Year" id="back" data-placement="right" class="btn btn-danger"><i class="icon-undo icon-large"></i> Reset </button>
-			<script type="text/javascript">
-				$(document).ready(function(){
-					$('#back').tooltip('show');
-					$('#back').tooltip('hide');
-				});
-			</script>
-		<?php } ?>	
-		<!-- RESET THE CONSOLIDATE PPMP YEAR -->		
 	</div>
 </form>
 	<br/>
@@ -97,7 +53,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php					
+				<?php
 					$query3 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
 					while($row3 = mysqli_fetch_array($query3)) {
 					$Year3 = $row3['Year'];
@@ -108,13 +64,20 @@
                                                             PriceCatalogue,SUM(TotalQty) as TotalQty,SUM(TotalAmount) as TotalAmount
                                                             from tbl_ppmp_consolidated where Year = '$Year3'
                                                             GROUP BY itemCatDesc,itemdetailDesc,UnitOfMeasurement,PriceCatalogue");
+
+                            $res = $conn->query("select * from tbl_ppmp where Year = '$Year' and Status = 'Completed'");
+                            while($data = $res->fetch_array()){
+                                $qd = $conn->query("");
+                            }
+
+
+
                         }else{
                             $qry = mysqli_query($conn,"select itemdetailDesc,
                                                         UnitOfMeasurement,SUM(TotalQty) as TotalQty,PriceCatalogue,(COUNT(consolidatedID) * TotalAmount) as TotalAmount
                                                         from tbl_ppmp_consolidated WHERE Year = '$Year3'
                                                         GROUP BY itemdetailDesc,
                                                         UnitOfMeasurement,PriceCatalogue,TotalAmount");
-
                         }
                     }else{
                         $qry = mysqli_query($conn,"select itemdetailDesc,
@@ -127,16 +90,16 @@
 					$id4 = $row4['consolidatedID'];
 				?>
 				<tr>
-					<td width="500" style="text-align:center;"><?php echo $row4['itemdetailDesc']; ?></td> 
+					<td width="500" style="text-align:center;"><?php echo $row4['itemdetailDesc']; ?></td>
 					<td width="50" style="text-align:center;"><?php echo $row4['UnitOfMeasurement']; ?></td>
 					<td width="100" style="text-align:center;"><?php echo $row4['TotalQty']; ?></td>
 					<td width="150" style="text-align:right;">&#8369;<?php echo number_format($row4['PriceCatalogue'],2, '.', ','); ?></td>
 					<td width="150" style="text-align:right;">&#8369;<?php echo number_format($row4['TotalAmount'],2, '.', ','); ?></td>
 				</tr>
-				<?php 
+				<?php
 					}
 				}
-				?>    		
+				?>
 			</tbody>
 			<tfooter>
 				<tr>
