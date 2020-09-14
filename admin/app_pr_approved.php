@@ -118,7 +118,7 @@ include('header.php'); ?>
                                             <div class="modal-body">
                                                 <div class="row-fluid">
                                                         <div class="text-right">
-                                                            <span class="text-left" style="color:red"><i class="icon-warning-sign"></i> &nbsp;&nbsp;Enabling action will grant end user to puchase request for this currently month</span>
+                                                            <span class="text-left" style="color:red"><i class="icon-warning-sign"></i> &nbsp;&nbsp;Enabling action will grant end user to puchase request for this currently month of (<?=date('M')?>)</span>
                                                         </div>
                                                 </div>
                                                 <hr>
