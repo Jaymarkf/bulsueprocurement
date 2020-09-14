@@ -45,25 +45,34 @@ while($data = $r->fetch_array()){
     $pdf->Cell($col,$colheight - 4,$data['UnitCost'],'1','0','C');
     $pdf->Cell($col,$colheight - 4,$data['TotalCost'],'1','1','C');
 }
+//Footer
+$pdf->Ln(5);
+$pdf->Cell('','','Purpose:   ________________________________________________________________________________________________________________');
 $pdf->Ln(10);
-$pdf->Cell('',15,'Purpose: ___________________','','1');
-$pdf->Ln(10);
-$pdf->SetX(15);
-$pdf->Cell(130,'','__________________________','','');
-$pdf->Cell($pdf->GetStringWidth('__________________________'),'','__________________________','','1');
-$pdf->SetX(26);
-$pdf->Cell(133,'9','Requested By','','');
-$pdf->Cell($pdf->GetStringWidth('Approved By'),'9','Approved By','','');
-$pdf->Ln(10);
-$pdf->Cell('','15','Signature:____________________','','1');
-$pdf->Cell(130,'15','Printed Name:____________________','','0');
-$pdf->SetFont('Arial','I',8);
-$pdf->Cell($pdf->GetStringWidth('CECILIA N. GASCON, Ph. D.'),'5','CECILIA N. GASCON, Ph. D.','','1');
-$pdf->SetX(141);
+$pdf->Cell(($p_width / 2)  - 10,'30','','1','0','');
+$pdf->Cell(($p_width / 2)  - 10,'30','','1','0','');
+$pdf->SetXY(53,$pdf->GetY()+5);
+$pdf->SetFont('Arial','B',8);
+$pdf->Cell('10','8','Requested By:','0','1','C');
+$pdf->SetX(20);
+$pdf->Cell('15','5','Signature: ','0','0','R');
 $pdf->SetFont('Arial','',8);
-$pdf->Cell($pdf->GetStringWidth("         University President         "),'5','         University President         ','T','','C');
-$pdf->Ln(15);
-$pdf->Cell($pdf->GetStringWidth("Designition: ______________________"),'10','Designition: ______________________','');
-
+$pdf->Cell('65','5','________________________________________','','1','R');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','B',8);
+$pdf->Cell('15','5','Printed Name: ','0','0','R');
+$pdf->SetFont('Arial','',8);
+$pdf->Cell('65','5','________________________________________','','1','R');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','B',8);
+$pdf->Cell('15','5','Disignation: ','0','0','R');
+$pdf->SetFont('Arial','I',8);
+$pdf->Cell('50','5','AO V, Procurement Officer','','1','R');
+$pdf->SetXY(147,$pdf->GetY() - 21);
+$pdf->SetFont('Arial','B',8);
+$pdf->Cell('','11','Approved','','1');
+$pdf->Cell(165,'5','CECILIA N. GASCON, Ph. D.','','1','R');
+$pdf->SetFont('Arial','I',8);
+$pdf->Cell(158,'5','University President','0','1','R');
 
 $pdf->Output();
