@@ -7,12 +7,11 @@ if(isset($_POST['sub'])){
     $companies = array();
     foreach ($_POST['id_rfq_'] as $index => $item) {
         $data_id = $item;
-        $ap_item_price = $_POST['a_price_'][$item - 1];
+        $ap_item_price = $_POST['a_price_'][$index];
         $qry = "update tbl_rfq_item_details set approved_by = 'approved', approved_item_price = '".$ap_item_price."',date_created = NOW() where id = ".$data_id;
         $conn->query($qry);
         $companies[] = $item;
     }
-
     $array_id = implode(",",$companies);
     $bq = "insert into tbl_bac_reso (`date_created`,`c_id_array`) values(NOW(),'$array_id')";
     $conn->query($bq);
@@ -64,7 +63,7 @@ if(isset($_POST['sub'])){
                                                 </td>
                                                 <td><?=$a['company_name']?></td>
                                                 <td><?=$a['item_and_specification']?></td>
-                                                <td><input type="text" name="a_price_[]" class="form-control" placeholder="input approved price.."/></td>
+                                                <td><input type="text" name="a_price_[]" class="form-control" placeholder="input approved price.." required disabled/></td>
                                                 <td><?=$a['quantity_and_unit']?></td>
                                                 <td>&#8369;<?=$a['unit_price']?></td>
                                                 <td>&#8369;<?=$a['total_price']?></td>
@@ -100,10 +99,14 @@ if(isset($_POST['sub'])){
                     $(this).parent().css('background-color','#c2b2a1');
                     $(this).parent().parent().css('background-color','#c2b2a1');
                   $(this).parent().parent().children().eq(3).children().attr('required',true);
+
+                    $(this).parent().parent().children().eq(3).children().removeAttr('disabled');
                 }else {
                     $(this).parent().css('background-color','');
                     $(this).parent().parent().css('background-color','');
                     $(this).parent().parent().children().eq(3).children().removeAttr('required');
+                    $(this).parent().parent().children().eq(3).children().prop('disabled',true);
+
                 }
             });
         });

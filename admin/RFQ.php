@@ -152,10 +152,10 @@
                     <input type="text" name="item_no_[]" class="form-control" placeholder="input here.."  required/>
                 </td>
                 <td>
-                    <input id="idesc" type="text" name="item_and_spec_[]"  class="form-control" placeholder="input here.." disabled required/>
+                    <input id="idesc" type="text" name="item_and_spec_[]"  class="form-control" placeholder="input here.." readonly required/>
                 </td>
                 <td>
-                    <input id='qty' type="text" name="quantity_and_unit_[]"  class="form-control" placeholder="input here.." disabled required/>
+                    <input id='qty' type="text" name="quantity_and_unit_[]"  class="form-control" placeholder="input here.." readonly required/>
                 </td>
                 <td>
                     <input type="text" name="brand_and_model_offered_[]"  class="form-control" placeholder="input here.."  required/>
@@ -164,7 +164,7 @@
                     <input id='price' type="text" name="unit_price_[]"  class="form-control" placeholder="input here.."  onchange="calculate(this.value)" onkeyup="calculate(this.value)" required/>
                 </td>
                 <td>
-                    <input id='tp' type="text" name="total_price_[]"  class="form-control" placeholder="input here.."  disabled required/>
+                    <input id='tp' type="text" name="total_price_[]"  class="form-control" placeholder="input here.."  readonly required/>
                 </td>
                 <td><a class="deleteRow"></a>
 
