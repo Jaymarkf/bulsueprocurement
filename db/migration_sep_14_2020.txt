@@ -3,3 +3,12 @@ ADD `pr_num_merge` varchar(20) COLLATE 'latin1_swedish_ci' NULL AFTER `PRno`;
 
 ALTER TABLE `tbl_pr_items`
 ADD `order` varchar(255) COLLATE 'latin1_swedish_ci' NULL;
+
+CREATE TABLE `tbl_company` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `tin` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `contact` varchar(255) NOT NULL
+);
