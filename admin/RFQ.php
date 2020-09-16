@@ -57,7 +57,18 @@
     <div class="row-fluid">
         <div class="span6 text-right">
             <span class="text-success">Company name
-            <input type="text" class="span8" name="post_company_name" placeholder="Input here..." required>
+                <select name="post_company_name" class="form-control span8" id="select_company">
+                    <option value="" style="display:none" disabled selected>Select Company name</option>
+                    <?php
+                    $g = "select * from tbl_company";
+                    $r = $conn->query($g);
+                    while($scom = $r->fetch_assoc()){
+                        ?>
+                        <option value="<?=$scom['id']?>"><?=$scom['name']?></option>
+                    <?php
+                    }
+                    ?>
+                </select>
             </span>
         </div>
         <div class="span6 text-right">
@@ -69,7 +80,7 @@
     <div class="row-fluid">
         <div class="span6 text-right">
             <span class="text-success">Address
-            <input type="text" class="span8" name="post_address" placeholder="Input here..." required>
+            <input id="paddress" type="text" class="span8" name="post_address" placeholder="Input here..." required readonly>
             </span>
         </div>
         <div class="span6 text-right">
@@ -92,7 +103,7 @@
     <div class="row-fluid">
         <div class="span6 text-right">
             <span class="text-success">Contact No
-            <input type="text" class="span8" name="post_contact_no" placeholder="Input here..." required>
+            <input id="pcontact" type="text" class="span8" name="post_contact_no" placeholder="Input here..." required readonly>
             </span>
         </div>
         <div class="span6 text-right">
@@ -104,7 +115,7 @@
     <div class="row-fluid">
         <div class="span6 text-right">
             <span class="text-success">TIN No
-            <input type="text" class="span8" name="post_TIN_no" placeholder="Input here..." required>
+            <input id="ptin" type="text" class="span8" name="post_TIN_no" placeholder="Input here..." required readonly>
             </span>
         </div>
         <div class="span6 text-right">
@@ -129,7 +140,7 @@
     <div class="row-fluid">
         <div class="span6 text-right">
                 <span class="text-success">Email Address
-                 <input type="text" class="span8" name="post_email_address" placeholder="Input here..." required>
+                 <input id="pemail" type="text" class="span8" name="post_email_address" placeholder="Input here..." required readonly>
                 </span>
         </div>
     </div>
@@ -191,7 +202,6 @@
     </div>
 </div>
 </form>
-
 <?php include('footer.php'); ?>
 <?php include('script.php'); ?>
 </body>
@@ -215,6 +225,23 @@ $(document).ready(function () {
         });
     });
 
+    $('#select_company').change(function(){
+        var idd = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "../ajaxPOST/post_data.php",
+            data: {idd:idd},
+            dataType:"json",
+            success:function(e){
+                $('#paddress').val(e.address);
+                $('#ptin').val(e.tin);
+                $('#pcontact').val(e.contact);
+                $('#pemail').val(e.email);
+            }
+        });
+    });
+
+
 
 
     $('#rfq_form').submit(function(e){
@@ -225,7 +252,6 @@ $(document).ready(function () {
             url: "rfq_save.php",
             data: formData,
             success: function(html){
-                console.log(html);
                 $.jGrowl("RFQ details was successfully created.", { header: 'SUCCESS' });
                 var delay = 3000;
                 setTimeout(function(){ window.location = 'quotation.php'  }, delay);

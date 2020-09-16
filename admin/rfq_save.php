@@ -1,7 +1,10 @@
 <?php
 include('../dbcon.php');
 include('session.php');
-$company = $_POST['post_company_name'];
+$gg = "select * from tbl_company where id = ". $_POST['post_company_name'];
+$res = $conn->query($gg);
+$data = $res->fetch_assoc();
+$company = $data['name'];
 $quotation_no = $_POST['post_quotation_no'];
 $address = $_POST['post_address'];
 $purchase_request_no = $_POST['post_purchase_request_no'];

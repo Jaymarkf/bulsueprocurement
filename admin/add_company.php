@@ -152,7 +152,7 @@ if(isset($_POST['edit_submit'])){
                                 <div class="span6" style="padding:5px;">
                                   <input type="text" class="form-control span12" placeholder="Contact No." name="contact_no" required/>
                                   <input type="email" class="form-control span12" placeholder="Email" name="email" required/>
-                                  <button type="submit" name="add_submit" class="btn btn-success btn-lg pull-right"><i class="icon icon-check"></i> Add New Company</button>
+                                  <button type="submit" name="add_submit" class="btn btn-success btn-lg pull-right"><i class="icon icon-check"></i> Submit</button>
                                 </div>
                             </div>
                             </form>
@@ -161,7 +161,12 @@ if(isset($_POST['edit_submit'])){
                     </div>
                     <div class="container-fluid">
                         <div class="row-fluid">
-                            <span class="pull-right text-primary">Number of Companies&nbsp;- <label class="label label-info" style="border-radius: 50%">test</label></span>
+                            <?php
+                                $qry = "select * from tbl_company";
+                                $count = $conn->query($qry);
+                                $n  = $count->num_rows;
+                            ?>
+                            <span class="pull-right text-primary">Number of Companies&nbsp;- <label class="label label-info" style="border-radius: 50%"><?=$n?></label></span>
                         </div>
                     </div>
                     <div class="block-content collapse in">
