@@ -138,27 +138,39 @@
 							<div>
 								<label class="span2"><b>Supplier:</b></label>
 								<!-- <input class="span10" type="text" name="ciPRno" value="<?php echo $PO; ?>" Required /> -->
-								<input class="span10" type="text" name="ciSupplier" Required />
+                                <select id="selsupplier" class="span10" type="text" name="ciSupplier" Required>
+                                    <option style="display:none" disabled selected>Please Select Company</option>
+                                    <?php
+                                        $qry = "select * from tbl_company";
+                                        $dd = $conn->query($qry);
+                                        while($d = $dd->fetch_array()){
+                                            ?>
+                                            <option value="<?=$d['id']?>"><?=$d['name']?></option>
+                                            <?php
+                                        }
+
+                                    ?>
+                                </select>
 							</div>
 							
 							<div>
 								<label class="span2"><b>Address:</b></label>
-								<input class="span10" type="text" name="ciAddress" Required />
+								<input id="iaddress" class="span10" type="text" name="ciAddress" Required readonly/>
 							</div>
 
 							<div>
 								<label class="span2"><b>E-Mail:</b></label>
-								<input class="span10" type="text" name="ciEmail" Required />
+								<input id="iemail" class="span10" type="text" name="ciEmail" Required readonly/>
 							</div>
 							
 							<div>
 								<label class="span2"><b>Tel/Cell No.:</b></label>
-								<input class="span10" type="text" name="ciContactNo" Required />
+								<input id="icontact" class="span10" type="text" name="ciContactNo" Required readonly/>
 							</div>
 							
 							<div>
 								<label class="span2"><b>TIN:</b></label>
-								<input class="span10" type="text" name="ciTIN" Required />
+								<input id="itin" class="span10" type="text" name="ciTIN" Required readonly/>
 							</div>
 						</div>
 						
@@ -253,6 +265,27 @@
 				}
 			});
 		});
+
+		//automate supplier info
+        $('#selsupplier').change(function(){
+            var id = $(this).val();
+            console.log(id);
+            $.ajax({
+                type: "POST",
+                url: '../ajaxPOST/post_data.php',
+                data: {id:id},
+                dataType:'json',
+                success:function(e){
+                    $('#iaddress').val(e.address);
+                    $('#iemail').val(e.email);
+                    $('#icontact').val(e.contact);
+                    $('#itin').val(e.tin);
+                }
+            });
+
+
+        });
+
 	});
 </script>
 	

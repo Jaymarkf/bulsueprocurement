@@ -107,6 +107,12 @@ ssh pwd
            pr_group_print  pr_one_print
 
 
+end user pr -> edit
+procurement pr- > edit
+////////////
+bac reso manual input
+BAC reso multi drop down per item in per company
+retrieve data of company even item is null
 
 
 
