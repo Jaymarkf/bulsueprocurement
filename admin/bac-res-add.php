@@ -3,111 +3,118 @@ session_start();
 include('header.php'); ?>
 <?php include('session.php');?>
 <?php
-if(isset($_POST['sub'])){
-    $companies = array();
-    foreach ($_POST['id_rfq_'] as $index => $item) {
-        $data_id = $item;
-        $ap_item_price = $_POST['a_price_'][$index];
-        $qry = "update tbl_rfq_item_details set approved_by = 'approved', approved_item_price = '".$ap_item_price."',date_created = NOW() where id = ".$data_id;
+if(isset($_POST['submit'])){
+    $company_id = $_POST['company_name'];
+    $item_name  = $_POST['item_name'];
+    $unit_price = $_POST['item_val'];
+    foreach ($item_name as $index => $item) {
+        $qry = "update tbl_company a
+            inner join tbl_rfq b on a.id = b.id_company
+            inner join tbl_rfq_item_details c on b.id = c.rfq_item_id
+            set approved_by = 'approved'
+            where YEAR(b.date_created) = YEAR(NOW()) and a.id = ".$company_id." and item_and_specification = '$item' and unit_price = '".$unit_price[$index]."'";
         $conn->query($qry);
-        $companies[] = $item;
     }
-    $array_id = implode(",",$companies);
-    $bq = "insert into tbl_bac_reso (`date_created`,`c_id_array`) values(NOW(),'$array_id')";
-    $conn->query($bq);
-    ?>
-    <script>
-        $.jGrowl("BAC RESOLUTION has been  successfully created", { header: 'SUCCESS' });
-        var delay = 3000;
-        setTimeout(function(){ window.location = 'bac-res-main.php'  }, delay);
-    </script>
-    <?php
+
+
+
 }
 ?>
+<style>
+    #iprice{
+        width:500px;
+        position:relative;
+        margin:10px auto;
+        border:1px solid #c2bebe;
+        box-shadow: 2px 1px 4px 1px #988f8f;
+    }
+    #iheader{
+        height:40px;
+        postion:relative;
+        width:100%;
+        background-color: #873f31;
+        text-align:center;
+        line-height:40px;
+        color:white;
+        font-weight: bold;
+        font-family: "Courier New", Courier, monospace;
+
+    }
+    #ibody{
+        padding:40px;
+    }
+</style>
 <body>
 	<?php include('navbar.php'); ?>
 	<h4 class="span12">BAC Resolution</h4>
-	
-	<div class="container-fluid">
-		<div class="row-fluid">
-            <form method="POST" id="forms">
-			    <div class="span12" id="content">
-				<hr>
-                <div class="row-fluid">
-                    <div class="text-left">
-                        <a href="bac-res-main.php" class="btn btn-info"><i class="icon icon-circle-arrow-left"></i> &nbsp;&nbsp;Back</a>
-                        <hr><hr>
-                         <div class="">
-                                <table cellpadding="0" cellspacing="0" border="0" id="example1" class="display" cellspacing="0" width="100%">
-                                    <thead>
-                                    <tr>
-                                        <th rowspan="1"><b>Select company</b></th>
-                                        <th rowspan="1"><b>COMPANY</b></th>
-                                        <th rowspan="1"><b>NAME AND DESCRIPTION OF ARTICLES BEING REQUISITIONED</b></th>
-                                        <th rowspan="1"><b>Approved Unit Price per item</b></th>
-                                        <th rowspan="1"><b>Quantity and Unit</b></th>
-                                        <th rowspan="1"><b>Unit Price</b></th>
-                                        <th rowspan="1"><b>Extended Amount</b></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                        $qry = "select a.id,(b.id) as item_id,a.company_name,b.item_and_specification,b.quantity_and_unit,b.unit_price,b.total_price from tbl_rfq_item_details b
-                                                inner join tbl_rfq a on b.rfq_item_id = a.id where YEAR(a.date_created) = YEAR(NOW())";
-                                        $res = $conn->query($qry);
-                                        while($a = $res->fetch_array()){
-                                            ?>
-                                            <tr>
-                                                <td style="text-align:center;">
-                                                    <input class="flag" type="checkbox" name="id_rfq_[]" value="<?=$a['item_id']?>"/>
-                                                </td>
-                                                <td><?=$a['company_name']?></td>
-                                                <td><?=$a['item_and_specification']?></td>
-                                                <td><input type="text" name="a_price_[]" class="form-control" placeholder="input approved price.." required disabled/></td>
-                                                <td><?=$a['quantity_and_unit']?></td>
-                                                <td>&#8369;<?=$a['unit_price']?></td>
-                                                <td>&#8369;<?=$a['total_price']?></td>
-                                            </tr>
-                                            <?php
-                                        }
+	<div class="span12">
+        <div class="text-left">
+            <a href="bac-res-main.php" class="btn btn-info"><i class="icon icon-circle-arrow-left"></i> Back</a>
+        </div>
+    </div>
+    <form method="POST">
+	    <div class="container-fluid">
+            <div class="row-fluid">
+                     <div class="text-center">
+                    <div class="span5">
+                        <h5 class="pull-right">Select Supplier/Company name</h5>
+                    </div>
+                    <div class="span7">
+                        <select name="company_name" id="id_company_name" class="form-control text-success pull-left">
+                            <option value="" style="display:none" selected disabled>Select Company</option>
+                            <?php
+                                $qry ="select * from tbl_company";
+                                $res = $conn->query($qry);
+                                while($data = $res->fetch_assoc()){
                                     ?>
-                                    </tbody>
-                                </table>
-                        </div>
+                                    <option value="<?=$data['id']?>"><?=$data['name']?></option>
+                                 <?php
+                                }
+                            ?>
+
+                        </select>
                     </div>
                 </div>
-                <div class="row-fluid">
-                    <div class="text-right">
-
-                            <button class="btn btn-success" type="submit" name="sub">Submit Selected</button>
-
-
-
+            </div>
+            <div class="row-fluid">
+                <div id="iprice">
+                    <div id="iheader">
+                        Company Item List
                     </div>
-                </div>
-			</div>
-            </form>
-		</div>
+                   <div id="ibody">
+                      <div class="row-fluid text-center">
+                          <span class="text-center text-info" style="font-weight: bold">Available Item</span>
+                      </div>
+                           <div id="ajax-container">
+
+                           </div>
+                   </div>
+               </div>
+
+            </div>
+        </div>
+    </form>
+
 	<?php include('footer.php'); ?>
-	</div>
+
+
 	<?php include('script.php'); ?>
 </body>
 <script>
-        $(document).ready(function(){
-            jQuery('.flag').change(function() {
-                if ($(this).prop('checked')) {
-                    $(this).parent().css('background-color','#c2b2a1');
-                    $(this).parent().parent().css('background-color','#c2b2a1');
-                  $(this).parent().parent().children().eq(3).children().attr('required',true);
-
-                    $(this).parent().parent().children().eq(3).children().removeAttr('disabled');
-                }else {
-                    $(this).parent().css('background-color','');
-                    $(this).parent().parent().css('background-color','');
-                    $(this).parent().parent().children().eq(3).children().removeAttr('required');
-                    $(this).parent().parent().children().eq(3).children().prop('disabled',true);
+    $(document).ready(function(){
+        $('#id_company_name').change(function(){
+            var id = $(this).val();
+            $.ajax({
+                type: 'POST',
+                url: '../ajaxPOST/get_company_item.php',
+                data: {id:id},
+                success: function(e){
+                    $('#ajax-container').html(e);
 
                 }
             });
+
+
         });
+    });
 </script>

@@ -1,14 +1,40 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
+<style>
+    .myButton {
+        box-shadow:inset 0px 1px 0px 0px #fff6af;
+        background:linear-gradient(to bottom, #ffec64 5%, #e3af5b 100%);
+        background-color:#ffec64;
+        border-radius:6px;
+        border:1px solid #ffaa22;
+        display:inline-block;
+        cursor:pointer;
+        color:#333333;
+        font-family:Arial;
+        font-size:14px;
+        font-weight:bold;
+        padding:6px 24px;
+        text-decoration:none;
+        text-shadow:0px 1px 0px #ffee66;
+    }
+    .myButton:hover {
+        background:linear-gradient(to bottom, #e3af5b 5%, #ffec64 100%);
+        background-color:#e3af5b;
+    }
+    .myButton:active {
+        position:relative;
+        top:1px;
+    }
+</style>
 <body>
 	<?php include('navbar.php'); ?>
-	
+
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<!-- <div class="span3" id="content">
 				<?php  //include('quotation-add.php');  ?>		   			
 			</div> -->
-			
+
 					<div class="span12" id="content">
 						<div class="row-fluid">
 							<div class="pull-left">
@@ -20,7 +46,7 @@
 									echo $new;
 								?>
 							</div>
-							
+
 							<?php
 								$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
 									while($row = mysqli_fetch_array($query)) {
@@ -36,7 +62,7 @@
 								</script>
 						</div>
 					</div>
-						
+
 						<div class="span12" id="content">
 							<div class="row-fluid">
 								<br/>
@@ -57,26 +83,32 @@
 								$Year = $row['Year'];
 							}
 						?>
-						
+
 			<div class="span12" id="content">
 				 <div class="row-fluid">
 					<!-- block -->
 					<div id="block_bg" class="block">
 						<div class="navbar navbar-inner block-header">
-						<?php 
+						<?php
 						//$query = mysqli_query($conn,"SELECT * FROM tbl_quotation");
 						$query = mysqli_query($conn,"SELECT * FROM tbl_bac_resolution WHERE Year = $Year GROUP BY itemDescription");
 						$count = mysqli_num_rows($query);
-						
+
 						?>
 							<div class="muted pull-left"><img src="../images/buttons/app.png" width="10%"> BAC Resolution List</div>
 							<div class="muted pull-right">
 								Number of BAC Resolution: <span class="badge badge-info"><?php echo $count; ?></span>
 							</div>
 						</div>
-						
+
 						<div class="block-content collapse in">
-							<div class="span12">
+                            <div class="span12">
+                                <div class="text-left">
+                                    <a href="bac_res_generate_report.php" class="myButton">Generate BAC Report</a>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+							    <div class="span12">
 							<!-- <form action="quotation-delete.php" method="post" id="deleteForm"> -->
                                 <div class="row-fluid">
                                     <div class="text-center text-success">
@@ -116,6 +148,7 @@
                                 </table>
 							</form>
 							</div>
+                            </div>
 						</div>
 					</div>
 					<!-- /block -->

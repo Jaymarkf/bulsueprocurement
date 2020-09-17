@@ -12,3 +12,10 @@ CREATE TABLE `tbl_company` (
   `email` varchar(255) NOT NULL,
   `contact` varchar(255) NOT NULL
 );
+ALTER TABLE `tbl_rfq`
+ADD `id_company` int(11) NOT NULL AFTER `id`;
+
+CREATE TABLE `tbl_bac_filter_item` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `selected_item` varchar(255) NOT NULL
+);
