@@ -1,103 +1,82 @@
-<?php include('header.php'); ?>
-<?php include('session.php'); ?>
-<div class="span12">
-	<a class = "btn btn-success" onclick="window.print()" style="font-size:20px";><i class="icon-print icon-large"></i> Print</a>
-	<a class = "btn btn-inverse" href="app_pr_approved.php" style="font-size:20px";>Back</a>
-</div>
 <?php
-	$PR = $_GET['pr'];
-?>
-<hr/>
-<?php					
-	$qry = mysqli_query($conn,"SELECT * FROM tbl_pr WHERE PRno = '$PR'");
-	$row = mysqli_fetch_assoc($qry)
-?>
-<body>
-<div class="container-fluid">
-    <div class="row-fluid">
-		<div class="span12" id="studentTableDiv">
-			<div class="row-fluid">
-				<div id="block_bg" class="block span12">
-				<table cellpadding="0" id="" cellspacing="0" border="1" class="display" cellspacing="0" style="background-color: #fff; width:100%;">
-					<thead>
-						<tr>
-							<th colspan="6" style="text-align: center;"><img src="../images/printlogo.png" width="50%"><h3>PURCHASE REQUEST</h3></th>
-						</tr>
-						<tr></tr>
-						<tr>
-							<th colspan="3" style="text-align: left;">PR No.: <?php echo $row['PRno']; ?></th>
-							<th colspan="3" style="text-align: left;">Date: <?php echo $row['PR_Date']; ?></th>
-						</tr>
-						<tr>
-							<th colspan="3" style="text-align: left;">Entity Name: <?php echo $row['EntityName']; ?></th>
-							<th colspan="3" style="text-align: left;">Fund Cluster: <?php echo $row['FundCluster']; ?></th>
-						</tr>
-						<tr>
-							<th colspan="3" style="text-align: left;">Office Section: <?php echo $row['OfficeSection']; ?></th>
-							<th colspan="3" style="text-align: left;">Responsibility Center Code: <?php echo $row['ResponsibilityCenter']; ?></th>
-						</tr>
-						<tr>
-							<th colspan="6" height="10"></th>
-						</tr>
-						<tr>
-							<th width="100" style="text-align: center;">Stock/ Property No.</th>
-							<th width="100" style="text-align: center;">Unit</th>
-							<th width="300" style="text-align: center;">Item Description</th>
-							<th width="100" style="text-align: center;">Quantity</th>
-							<th width="200" style="text-align: center;">Unit Cost</th>
-							<th width="200" style="text-align: center;">Total Cost</th>
-						</tr>
-					</thead>
-					<?php
-					$qry1 = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE PRno = '$PR'");
-							while($row1 = mysqli_fetch_array($qry1)){
-					?>
-					<tbody>
-						<tr>
-							<td><?php echo $row1['StockPropertyNo']; ?></td>
-							<td><?php echo $row1['Unit']; ?></td>
-							<td><?php echo $row1['ItemDescription']; ?></td>
-							<td style="text-align: center;"><?php echo $row1['Quantity']; ?></td>
-							<td style="text-align: right;">&#8369; <?php echo number_format($row1['UnitCost'],2, '.', ','); ?></td>
-							<td style="text-align: right;">&#8369; <?php echo number_format($row1['TotalCost'],2, '.', ','); ?></td>
-						</tr>
-					<?php 
-						}
-					?>
-					<?php
-					$qry2 = mysqli_query($conn,"SELECT *,(TotalCost) as Total FROM tbl_pr_items WHERE PRno = '$PR'");
-					$row2 = mysqli_fetch_array($qry2)
-					?>
-						<tr>
-							<th colspan="5" style="text-align: right;"> GRAND TOTAL COST </th>
-							<th style="text-align: right;">&#8369; <?php echo number_format($row2['Total'],2, '.', ','); ?></th>
-						</tr>
-						<tr>
-							<th colspan="6" height="10"></th>
-						</tr>
-						<tr>
-							<td colspan="6">Purpose:&nbsp;<?php echo $row2['Purpose'];?></td>
-						</tr>
-						<tr>
-							<th colspan="6" height="10"></th>
-						</tr>
-						<tr>
-							<td colspan="3">Requested by: </td>
-							<td colspan="3">Approved by: </td>
-						</tr>
-						<tr>
-							<td height="50" colspan="3" style="text-align: center; vertical-align: bottom;"><?php echo $row['RequestedBy']; ?></td>
-							<td  height="50" colspan="3" style="text-align: center; vertical-align: bottom;"><?php echo $row['ApprovedBy']; ?></td>
-						</tr>
-						<tr>
-							<td colspan="3" style="text-align: center;"><?php echo $row['RequestingDesignation']; ?></td>
-							<td colspan="3" style="text-align: center;"><?php echo $row['ApprovingDesignation']; ?></td>
-						</tr>
-					</tbody>
-				</table>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-</body>
+session_start();
+include('session.php');
+include('../dbcon.php');
+require('../fpdf/fpdf.php');
+$pdf = new FPDF('P','mm','A4');
+$p_width = $pdf->GetPageWidth();
+$p_height = $pdf->GetPageHeight();
+$col = $p_width / 6.3;
+$colheight = 15;
+$pdf->AddPage();
+$pdf->SetFont('Arial','B',11);
+$pdf->Cell('',15,'PURCHASE REQUEST','','1','C');
+$pdf->SetFont('Arial','',10);
+$pdf->Cell($pdf->GetStringWidth("Entity Name:  BULACAN STATE UNIVERSITY")+35,10,'Entity Name:  BULACAN STATE UNIVERSITY','','0','L');
+$pdf->Cell(50,10,'FUND CLUSTER: _____________________','','1');
+$pdf->Cell($pdf->GetStringWidth("Office/Section")+25,10,'Office/Section: __________','','0');
+$pdf->Cell($pdf->GetStringWidth("PR No.: ") +29,10,'PR No.: '.$_GET['item'],'','0');
+$pdf->Cell($pdf->GetStringWidth("Responsibility Center Code: ") +25,10,'Responsibility Center Code:___________','','0');
+$pdf->Cell($pdf->GetStringWidth("".date('d M Y')."") +10,10,'Date: '.date('d M Y'),'','0');
+$pdf->Ln(15);
+$pdf->SetX(5);
+$pdf->SetFont('Arial','B',9);
+$pdf->Cell($col, $colheight,'Stock / Property No.','1','0','C');
+$pdf->Cell($col, $colheight,'Unit','1','0','C');
+$pdf->Cell($col, $colheight,'Item Description','1','0','C');
+$pdf->Cell($col, $colheight,'Quantity','1','0','C');
+$pdf->Cell($col, $colheight,'Unit Cost','1','0','C');
+$pdf->Cell($col, $colheight,'Total Cost','1','1','C');
+
+$qry = "select a.Unit,a.ItemDescription,SUM(a.Quantity) as Quantity,
+        SUM(a.UnitCost) as UnitCost,SUM(a.TotalCost) as TotalCost 
+        from tbl_pr b
+        inner join tbl_pr_items a on a.PRno = b.PRno
+        WHERE b.Year = YEAR(NOW()) + 1 and a.pr_num_merge = '".$_GET['item']."'
+        GROUP BY a.Unit,a.ItemDescription";
+
+
+$r = $conn->query($qry);
+$pdf->SetFont('Arial','',8);
+while($data = $r->fetch_array()){
+    $pdf->SetX(5);
+    $pdf->Cell($col,$colheight - 4,'..','1','0','C');
+    $pdf->Cell($col,$colheight - 4,$data['Unit'],'1','0','C');
+    $pdf->Cell($col,$colheight - 4,$data['ItemDescription'],'1','0','C');
+    $pdf->Cell($col,$colheight - 4,$data['Quantity'],'1','0','C');
+    $pdf->Cell($col,$colheight - 4,$data['UnitCost'],'1','0','C');
+    $pdf->Cell($col,$colheight - 4,$data['TotalCost'],'1','1','C');
+}
+//Footer
+//Footer
+$pdf->Ln(5);
+$pdf->Cell('','','Purpose:   ________________________________________________________________________________________________________________');
+$pdf->Ln(10);
+$pdf->Cell(($p_width / 2)  - 10,'30','','1','0','');
+$pdf->Cell(($p_width / 2)  - 10,'30','','1','0','');
+$pdf->SetXY(53,$pdf->GetY()+5);
+$pdf->SetFont('Arial','B',8);
+$pdf->Cell('10','8','Requested By:','0','1','C');
+$pdf->SetX(20);
+$pdf->Cell('15','5','Signature: ','0','0','R');
+$pdf->SetFont('Arial','',8);
+$pdf->Cell('65','5','________________________________________','','1','R');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','B',8);
+$pdf->Cell('15','5','Printed Name: ','0','0','R');
+$pdf->SetFont('Arial','',8);
+$pdf->Cell('65','5','________________________________________','','1','R');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','B',8);
+$pdf->Cell('15','5','Disignation: ','0','0','R');
+$pdf->SetFont('Arial','I',8);
+$pdf->Cell('50','5','AO V, Procurement Officer','','1','R');
+$pdf->SetXY(147,$pdf->GetY() - 21);
+$pdf->SetFont('Arial','B',8);
+$pdf->Cell('','11','Approved','','1');
+$pdf->Cell(165,'5','CECILIA N. GASCON, Ph. D.','','1','R');
+$pdf->SetFont('Arial','I',8);
+$pdf->Cell(158,'5','University President','0','1','R');
+
+
+$pdf->Output();

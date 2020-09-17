@@ -34,7 +34,7 @@
 					}
 //					echo "INSERT INTO tbl_pr_items (Year,PRno,StockPropertyNo,Unit,ItemDescription,Quantity,UnitCost,TotalCost) values('".$year."','".$PR."','','".$in_UOM."','".$in_item."','".$in_STQty."','".$in_PriceCat."','".$in_TAmt."')";
 //	            	die();
-	mysqli_query($conn,"INSERT INTO tbl_pr_items (user_id,Year,PRno,FundCluster,StockPropertyNo,Unit,ItemDescription,Quantity,UnitCost,TotalCost,EstimatedBudget,Purpose) values('$id','$year','$PR','$fc','','$in_UOM','$in_item','$stqy','$in_PriceCat','$ta','$in_es','$in_purpose')");
+	mysqli_query($conn,"INSERT INTO tbl_pr_items (user_id,Year,PRno,pr_num_merge,FundCluster,StockPropertyNo,Unit,ItemDescription,Quantity,UnitCost,TotalCost,EstimatedBudget,Purpose) values('$id','$year','$PR',UCASE(LEFT(md5('$in_item'),8)),'$fc','','$in_UOM','$in_item','$stqy','$in_PriceCat','$ta','$in_es','$in_purpose')");
 					//}
 					//mysqli_query($conn,"UPDATE tbl_ppmp_consolidated SET Requested = 'Yes' WHERE itemdetailDesc = '$in_item' ");
 				}

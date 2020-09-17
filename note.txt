@@ -100,6 +100,10 @@ APPROVED BUDGET CONTRACT ---->
 
 
 
+price_quo_under_pr_group_print
+ssh pwd
+1gRMNMI8GRe@
+=======
 >>end user request item
 table tbl_ppmp
 1. id1 | College of Engineering |  Item A
@@ -136,7 +140,18 @@ purchase request
 
 
 
+ master
 
+                        master  ------------master_v2
+           pr_group_print  pr_one_print
+
+
+end user pr -> edit
+procurement pr- > edit
+////////////
+bac reso manual input
+BAC reso multi drop down per item in per company
+retrieve data of company even item is null
 
 
 

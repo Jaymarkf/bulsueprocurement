@@ -57,7 +57,18 @@
     <div class="row-fluid">
         <div class="span6 text-right">
             <span class="text-success">Company name
-            <input type="text" class="span8" name="post_company_name" placeholder="Input here..." required>
+                <select name="post_company_name" class="form-control span8" id="select_company">
+                    <option value="" style="display:none" disabled selected>Select Company name</option>
+                    <?php
+                    $g = "select * from tbl_company";
+                    $r = $conn->query($g);
+                    while($scom = $r->fetch_assoc()){
+                        ?>
+                        <option value="<?=$scom['id']?>"><?=$scom['name']?></option>
+                    <?php
+                    }
+                    ?>
+                </select>
             </span>
         </div>
         <div class="span6 text-right">
@@ -69,19 +80,30 @@
     <div class="row-fluid">
         <div class="span6 text-right">
             <span class="text-success">Address
-            <input type="text" class="span8" name="post_address" placeholder="Input here..." required>
+            <input id="paddress" type="text" class="span8" name="post_address" placeholder="Input here..." required readonly>
             </span>
         </div>
         <div class="span6 text-right">
             <span class="text-success">Purchase Request No
-            <input type="text" class="span8" name="post_purchase_request_no" placeholder="Input here..." required>
+            <select id="pr_select" class="form-control span8" name="post_purchase_request_no" required>
+                <option style="display:none" selected disabled>Select PR#</option>
+                   <?php
+                   $a = "select pr_num_merge from tbl_pr_items group by pr_num_merge";
+                   $b = $conn->query($a);
+                   while($c = $b->fetch_assoc()){
+                       ?>
+                       <option value="<?=$c['pr_num_merge']?>"><?=$c['pr_num_merge']?></option>
+                    <?php
+                   }
+                   ?>
+            </select>
             </span>
         </div>
     </div>
     <div class="row-fluid">
         <div class="span6 text-right">
             <span class="text-success">Contact No
-            <input type="text" class="span8" name="post_contact_no" placeholder="Input here..." required>
+            <input id="pcontact" type="text" class="span8" name="post_contact_no" placeholder="Input here..." required readonly>
             </span>
         </div>
         <div class="span6 text-right">
@@ -93,7 +115,7 @@
     <div class="row-fluid">
         <div class="span6 text-right">
             <span class="text-success">TIN No
-            <input type="text" class="span8" name="post_TIN_no" placeholder="Input here..." required>
+            <input id="ptin" type="text" class="span8" name="post_TIN_no" placeholder="Input here..." required readonly>
             </span>
         </div>
         <div class="span6 text-right">
@@ -118,7 +140,7 @@
     <div class="row-fluid">
         <div class="span6 text-right">
                 <span class="text-success">Email Address
-                 <input type="text" class="span8" name="post_email_address" placeholder="Input here..." required>
+                 <input id="pemail" type="text" class="span8" name="post_email_address" placeholder="Input here..." required readonly>
                 </span>
         </div>
     </div>
@@ -141,19 +163,19 @@
                     <input type="text" name="item_no_[]" class="form-control" placeholder="input here.."  required/>
                 </td>
                 <td>
-                    <input type="text" name="item_and_spec_[]"  class="form-control" placeholder="input here.."  required/>
+                    <input id="idesc" type="text" name="item_and_spec_[]"  class="form-control" placeholder="input here.." readonly required/>
                 </td>
                 <td>
-                    <input type="text" name="quantity_and_unit_[]"  class="form-control" placeholder="input here.."  required/>
+                    <input id='qty' type="text" name="quantity_and_unit_[]"  class="form-control" placeholder="input here.." readonly required/>
                 </td>
                 <td>
                     <input type="text" name="brand_and_model_offered_[]"  class="form-control" placeholder="input here.."  required/>
                 </td>
                 <td>
-                    <input type="text" name="unit_price_[]"  class="form-control" placeholder="input here.."  required/>
+                    <input id='price' type="text" name="unit_price_[]"  class="form-control" placeholder="input here.."  onchange="calculate(this.value)" onkeyup="calculate(this.value)" required/>
                 </td>
                 <td>
-                    <input type="text" name="total_price_[]"  class="form-control" placeholder="input here.."  required/>
+                    <input id='tp' type="text" name="total_price_[]"  class="form-control" placeholder="input here.."  readonly required/>
                 </td>
                 <td><a class="deleteRow"></a>
 
@@ -180,13 +202,48 @@
     </div>
 </div>
 </form>
-
 <?php include('footer.php'); ?>
 <?php include('script.php'); ?>
 </body>
 </html>
 <script>
 $(document).ready(function () {
+    $('#pr_select').change(function(){
+        var id = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "../ajaxPOST/get_pr_request_items.php",
+            data: {id:id},
+            dataType:"json",
+            success: function(html){
+                var item_and_spec = html.itemdesc;
+                var quantity = html.quantity;
+                $('#idesc').val(item_and_spec);
+                $('#qty').val(quantity);
+
+            }
+        });
+    });
+
+    $('#select_company').change(function(){
+        var idd = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: "../ajaxPOST/post_data.php",
+            data: {idd:idd},
+            dataType:"json",
+            success:function(e){
+                $('#paddress').val(e.address);
+                $('#ptin').val(e.tin);
+                $('#pcontact').val(e.contact);
+                $('#pemail').val(e.email);
+            }
+        });
+    });
+
+
+
+
     $('#rfq_form').submit(function(e){
         e.preventDefault();
         var formData = jQuery(this).serialize();
@@ -195,7 +252,6 @@ $(document).ready(function () {
             url: "rfq_save.php",
             data: formData,
             success: function(html){
-                console.log(html);
                 $.jGrowl("RFQ details was successfully created.", { header: 'SUCCESS' });
                 var delay = 3000;
                 setTimeout(function(){ window.location = 'quotation.php'  }, delay);
@@ -238,12 +294,12 @@ var newRow = $("<tr>");
     var price = +row.find('input[name^="price"]').val();
 
     }
+    function calculate(v){
+        var price = parseInt(v);
+        var qty = parseInt($('#qty').val());
+        var result = price * qty;
 
-    function calculateGrandTotal() {
-    var grandTotal = 0;
-    $("table.order-list").find('input[name^="price"]').each(function () {
-    grandTotal += +$(this).val();
-    });
-    $("#grandtotal").text(grandTotal.toFixed(2));
+        $('#tp').val(result);
     }
+
 </script>

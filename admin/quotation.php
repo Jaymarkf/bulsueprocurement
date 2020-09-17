@@ -15,7 +15,6 @@ if(isset($_GET['id'])){
 			<!-- <div class="span3" id="content">
 				<?php  //include('quotation-add.php');  ?>		   			
 			</div> -->
-			
 					<div class="span12" id="content">
 						<div class="row-fluid">
 							<div class="pull-left">
@@ -83,7 +82,9 @@ if(isset($_GET['id'])){
 						</div>
                         <div class="container-fluid">
                             <a class="btn btn-success btn-lg" href="RFQ.php" style="margin-top:10px;">Add New Quotation</a>
+                            <a class="btn btn-warning btn-lg" href="add_company.php" style="margin-top:10px;">Add New Company Information</a>
                         </div>
+
 
 						<div class="block-content collapse in">
 							<div class="span12">
