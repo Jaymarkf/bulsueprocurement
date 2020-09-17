@@ -17,7 +17,7 @@ Password: &26auaUAHUsdfn121!
 6. may form na panibago para sa revice sa ppmp pero yung amount pasok parin sa budget, and dapat ma delete.
 
 
-new sql 
+new sql
 
 
 
@@ -100,8 +100,47 @@ APPROVED BUDGET CONTRACT ---->
 
 
 
+<<<<<<< HEAD
 ssh pwd
 1gRMNMI8GRe@
+=======
+>>end user request item
+table tbl_ppmp
+1. id1 | College of Engineering |  Item A
+2. id2 | College of Nursing     |  Item A
+2. id3 | College of LAW         |  Item B
+
+>> bo and procurement will accept
+
+table tbl_ppmp
+1. id1 | College of Engineering |  Item A | Accept
+2. id2 | College of Nursing     |  Item A | Accept
+2. id3 | College of LAW         |  Item B | Accept
+
+>> Consolidate merging all same items in  accept purchase request
+
+with pressing consolidate   'this is actual table
+
+table tbl_consolidate (save item) (pressing consolidate button again will delete * items in consolidate and generate it again)
+1. end user id array() | Item A  | Accept
+2. end user id array() | Item B  | Accept
+
+without pressing consolidate  query select * from tbl_ppmp
+1. id1 | College of Engineering |  Item A | Accept
+2. id2 | College of Nursing     |  Item A | Accept
+2. id3 | College of LAW         |  Item B | Accept
+
+
+purchase request
+
+
+
+
+
+
+
+
+>>>>>>> note
 
                         master  ------------master_v2
            pr_group_print  pr_one_print
