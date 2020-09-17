@@ -269,7 +269,6 @@
 		//automate supplier info
         $('#selsupplier').change(function(){
             var id = $(this).val();
-            console.log(id);
             $.ajax({
                 type: "POST",
                 url: '../ajaxPOST/post_data.php',
