@@ -4,6 +4,7 @@ include('session.php');
 $gg = "select * from tbl_company where id = ". $_POST['post_company_name'];
 $res = $conn->query($gg);
 $data = $res->fetch_assoc();
+$id_company = $data['id'];
 $company = $data['name'];
 $quotation_no = $_POST['post_quotation_no'];
 $address = $_POST['post_address'];
@@ -16,8 +17,8 @@ $pgeps = $_POST['post_PHILGEPS_registration_no'];
 $email = $_POST['post_email_address'];
 
 
-$query = "insert into tbl_rfq (company_name,quotation_no,address,purchase_request_no,contact_no,purpose,TIN,ABC,philgeps,email,date_created)
-          values('$company','$quotation_no','$address','$purchase_request_no','$contact_no','$purpose','$TIN','$ABC','$pgeps','$email',NOW())";
+$query = "insert into tbl_rfq (company_name,id_company,quotation_no,address,purchase_request_no,contact_no,purpose,TIN,ABC,philgeps,email,date_created)
+          values('$company','$id_company','$quotation_no','$address','$purchase_request_no','$contact_no','$purpose','$TIN','$ABC','$pgeps','$email',NOW())";
 if($conn->query($query) === TRUE){
     $getid = $conn->insert_id;
 

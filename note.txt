@@ -191,8 +191,30 @@ BAC reso multi drop down per item in per company
 retrieve data of company even item is null
 
 
+/unfinished query
+
+select company.name,details.item_and_specification,details.unit_price,details.approved_by
+from tbl_company company
+left join tbl_rfq rfq on company.id = rfq.id_company
+left join tbl_rfq_item_details details on rfq.id = details.rfq_item_id
+
+todo consolidated data
+todo purchase order and inspect to be finished on monday
 
 
+Gasolina LCD Printer
+Facebook
+|---- Gasolina Price 00
+|---- LCD  PRice 00
+|---- Printer --- 00
+Google
+|-----Gasolina Price 00
+|-----LCD Price 00
+|-----NULL
+GITHUB
+|---- Gasolina Price 00
+|---- LCD  PRice 00
+|---- Printer --- 00
 
 
 

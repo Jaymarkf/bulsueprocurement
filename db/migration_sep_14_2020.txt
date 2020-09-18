@@ -12,3 +12,19 @@ CREATE TABLE `tbl_company` (
   `email` varchar(255) NOT NULL,
   `contact` varchar(255) NOT NULL
 );
+ALTER TABLE `tbl_rfq`
+ADD `id_company` int(11) NOT NULL AFTER `id`;
+
+CREATE TABLE `tbl_generate_bac_report` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `company_id` int(11) NOT NULL,
+  `item_details_id_array` varchar(22) NOT NULL,
+  `price` int(22) NOT NULL,
+  `total_price` int NOT NULL
+);
+
+ALTER TABLE `tbl_generate_bac_report`
+DROP `price`;
+
+ALTER TABLE `tbl_generate_bac_report`
+ADD `date_generated` datetime NOT NULL;
