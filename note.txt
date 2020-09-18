@@ -202,5 +202,20 @@ todo consolidated data
 todo purchase order and inspect to be finished on monday
 
 
+Gasolina LCD Printer
+Facebook
+|---- Gasolina Price 00
+|---- LCD  PRice 00
+|---- Printer --- 00
+Google
+|-----Gasolina Price 00
+|-----LCD Price 00
+|-----NULL
+GITHUB
+|---- Gasolina Price 00
+|---- LCD  PRice 00
+|---- Printer --- 00
+
+
 
 

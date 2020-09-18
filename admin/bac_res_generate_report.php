@@ -12,9 +12,16 @@ $conn->query($delete_qry);
         $qry = "insert into tbl_bac_filter_item (selected_item) values('$item')";
         $conn->query($qry);
     }
-
-
 }
+
+
+
+//
+//echo '<pre>';
+//print_r($name);
+//echo '</pre>';
+
+
 
 ?>
 <div class="container-fluid">

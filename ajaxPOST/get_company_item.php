@@ -20,8 +20,7 @@ if(isset($_POST['id'])){
         while($data = $res->fetch_array()){
             ?>
             <div class="row-fluid text-center">
-                <input type="hidden" name="item_name[]" value="<?=$data['item_and_specification']?>"/>
-                <input type="checkbox" class="form-control ckbox" name="item_val[]" value="<?=$data['unit_price']?>">
+                <input type="checkbox" class="form-control ckbox" name="item_val[<?=$data['item_and_specification']?>]" value="<?=$data['unit_price']?>">
                <span class="text-left">&nbsp;&nbsp; <?=$data['item_and_specification']?> | Unit Price: Php <span class="unit_price" class="text-info" style="font-weight:bold"><?=$data['unit_price']?></span></span>
             </div>
             <br>

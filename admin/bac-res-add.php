@@ -5,19 +5,17 @@ include('header.php'); ?>
 <?php
 if(isset($_POST['submit'])){
     $company_id = $_POST['company_name'];
-    $item_name  = $_POST['item_name'];
     $unit_price = $_POST['item_val'];
-    foreach ($item_name as $index => $item) {
+    foreach ($unit_price as $index => $item) {
         $qry = "update tbl_company a
             inner join tbl_rfq b on a.id = b.id_company
             inner join tbl_rfq_item_details c on b.id = c.rfq_item_id
             set approved_by = 'approved'
-            where YEAR(b.date_created) = YEAR(NOW()) and a.id = ".$company_id." and item_and_specification = '$item' and unit_price = '".$unit_price[$index]."'";
+            where YEAR(b.date_created) = YEAR(NOW()) and a.id = ".$company_id." and item_and_specification = '$index' and unit_price = '".$item."'";
         $conn->query($qry);
+
+
     }
-
-
-
 }
 ?>
 <style>

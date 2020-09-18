@@ -26,6 +26,55 @@
         top:1px;
     }
 </style>
+<?php
+if(isset($_GET['delete'])){
+    $id = $_GET['delete'];
+    $qq = "delete from tbl_generate_bac_report where date_generated = '$id'";
+    /** @var TYPE_NAME $conn */
+    $conn->query($qq);
+
+
+}
+if(isset($_POST['generate_submit'])){
+$qc = "select * from tbl_company";
+    /** @var TYPE_NAME $conn */
+    $rc = $conn->query($qc);
+$ac = array();
+$aname = array();
+while($dc = $rc->fetch_array()){
+
+    $ac[] = $dc['id']; //data of company id's
+    $aname[] = $dc['name'];
+}
+//loop company list
+    $data = array();
+    foreach ($ac as $index => $item) {
+
+        $qr = "select a.*,b.* from tbl_rfq a inner join tbl_rfq_item_details b on a.id = b.id where b.approved_by = 'approved' and a.id_company= '$item'";
+        $qrc  = $conn->query($qr);
+
+        while($qres = $qrc->fetch_array()){
+            $data[$qres['company_name']]['total_amount'] = $data[$qres['company_name']]['total_amount'] + $qres['unit_price'] ;
+            $data[$qres['company_name']]['array_id'] = $data[$qres['company_name']]['array_id'] .",".$qres['rfq_item_id'];
+            $data[$qres['company_name']]['array_id'] = substr($data[$qres['company_name']]['array_id'],1);
+            $data[$qres['company_name']]['company_id'] = $qres['id_company'];
+        }
+
+
+    }
+
+    foreach ($data as $index => $datum) {
+        $squery = "insert into tbl_generate_bac_report (`company_id`,`item_details_id_array`,`total_price`,`date_generated`)
+                    values('".$datum['company_id']."','".$datum['array_id']."','".$datum['total_amount']."',NOW())";
+        $conn->query($squery);
+    }
+//    echo '<pre>';
+//    print_r($data);
+//    echo '</pre>';
+}
+
+?>
+
 <body>
 	<?php include('navbar.php'); ?>
 
@@ -104,7 +153,9 @@
 						<div class="block-content collapse in">
                             <div class="span12">
                                 <div class="text-left">
-                                    <a href="bac_res_generate_report.php" class="myButton">Generate BAC Report</a>
+                                    <form method="POST">
+                                        <button type="submit" name="generate_submit" class="myButton">Generate BAC Report</button>
+                                    </form>
                                 </div>
                             </div>
                             <div class="row-fluid">
@@ -125,16 +176,20 @@
                                     </thead>
                                     <tbody>
                                     <?php
-                                        $qry = "select * from tbl_bac_reso";
+                                        $qry = "select sum(date_generated) as dummy,date_generated from tbl_generate_bac_report group by date_generated";
                                         $res = $conn->query($qry);
                                         while($data = $res->fetch_array()){
                                             ?>
                                             <tr>
-                                                <td style="text-align:center;"><?=$data['date_created']?></td>
+                                                <td style="text-align:center;"><?=$data['date_generated']?></td>
                                                 <td>
-                                                    <a class="btn btn-success" href="bac_reso_list.php?c_id=<?=$data['c_id_array']?>" title="view BAC RESOLUTIONS RECORD HERE">
+                                                    <a class="btn btn-success" href="bac_reso_list.php?c_id=<?=$data['date_generated']?>" title="view BAC RESOLUTIONS RECORD HERE">
                                                         <i class="icon icon-print"></i>
                                                         &nbsp;View
+                                                    </a>
+                                                    <a class="btn btn-danger" href="?delete=<?=$data['date_generated']?>" title="view BAC RESOLUTIONS RECORD HERE">
+                                                        <i class="icon icon-trash"></i>
+                                                        &nbsp;Delete
                                                     </a>
                                                 </td>
                                             </tr>
