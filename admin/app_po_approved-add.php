@@ -71,44 +71,25 @@
 					</div>
 					<br/>			
 				</div>
-				<!-- top content -->
-
-				<?php					
-					$query1 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
-					while($row1 = mysqli_fetch_array($query1)) {
-					$Year1 = $row1['Year'];
-					
-						//$query2 = mysqli_query($conn,"SELECT * FROM tbl_po WHERE Year = $Year1");
-						$query2 = mysqli_query($conn,"SELECT * FROM tbl_po");
-						while($row2 = mysqli_fetch_array($query2)){
-						$id2 = $row2['poID'];
-						$POno = $row2['POno'];
-						//$now=date('m/d/Y');
-						
-						$queryMax = mysqli_query($conn,"SELECT Max(POno) as PO FROM tbl_po WHERE (POno != '' OR POno IS NOT NULL)");
-						$rowMax = mysqli_fetch_array($queryMax);
-						
-						//if( $result['total']==0)
-						if ($rowMax['PO'] != ''  OR $rowMax['PO'] != NULL){
-							$temPO = $rowMax['PO']+1;
-							$PO = sprintf("%04d", $temPO);
-						//	break;
-						//}else{
-						//	$PO = 0001;
-						//	//$PO = sprintf("%04d", $temPR);
-						//	break;
-						}
-			
-						}
-					}
-				?>
 				<!-- PR DETAILS -->
 				<form name="prform" method="POST" id="savePO">
 					<div class="span12" id="content" style="background-color: #f9f9f9; padding:10px; border:5px solid #f1f1f1; box-shadow: 0px 0px 10px #000">
 						<div class="row-fluid span4">
 							<h4 class="badge-warning" style="padding:5px;">Add an item first before filling up this portion...</h4>
 							<div>
-								<label class="span4"><b>P.O. No.:</b></label><input class="span6" type="text" name="ciPOno" value="<?php echo $PO; ?>" Required />
+                                <label class="span4"><b>P.O. No.:</b></label>
+                                <select class="span6 form-control"  name="ciPOno">
+                                    <option style="display:none" hidden selected>Select  Purchase No#</option>
+                                    <?php
+                                        $qq  = "select pr_num_merge as g from tbl_pr_items group by pr_num_merge";
+                                        $d = $conn->query($qq);
+                                        while($row = $d->fetch_assoc()){
+                                            ?>
+                                            <option value="<?=$row['g']?>"><?=$row['g']?></option>
+                                            <?php
+                                        }
+                                    ?>
+                                </select>
 							</div>
 							
 							<div>
@@ -128,52 +109,34 @@
 									<option value="Government Terms">Government Terms</option>
 								</select>
 							</div>
-							
 							<div class="span4">
 								<input type="hidden" name="ciYear" value="<?php echo $Year1;?>"/>
 							</div>							
 						</div>
-						
+
 						<div class="row-fluid span8">
 							<div>
 								<label class="span2"><b>Supplier:</b></label>
-								<!-- <input class="span10" type="text" name="ciPRno" value="<?php echo $PO; ?>" Required /> -->
-                                <select id="selsupplier" class="span10" type="text" name="ciSupplier" Required>
-                                    <option style="display:none" disabled selected>Please Select Company</option>
-                                    <?php
-                                        $qry = "select * from tbl_company";
-                                        $dd = $conn->query($qry);
-                                        while($d = $dd->fetch_array()){
-                                            ?>
-                                            <option value="<?=$d['id']?>"><?=$d['name']?></option>
-                                            <?php
-                                        }
-
-                                    ?>
+								 <input class="span10" type="text" name="ciPRno" value=""  disabled Required />
                                 </select>
 							</div>
-							
 							<div>
 								<label class="span2"><b>Address:</b></label>
 								<input id="iaddress" class="span10" type="text" name="ciAddress" Required readonly/>
 							</div>
-
 							<div>
 								<label class="span2"><b>E-Mail:</b></label>
 								<input id="iemail" class="span10" type="text" name="ciEmail" Required readonly/>
 							</div>
-							
 							<div>
 								<label class="span2"><b>Tel/Cell No.:</b></label>
 								<input id="icontact" class="span10" type="text" name="ciContactNo" Required readonly/>
 							</div>
-							
 							<div>
 								<label class="span2"><b>TIN:</b></label>
 								<input id="itin" class="span10" type="text" name="ciTIN" Required readonly/>
 							</div>
 						</div>
-						
 						<div class="row-fluid span12" id="content">
 							<div class="pull-left">
 								<button  data-placement="top" title="Click to Save" id="save" name="save" class="btn btn-success"><i class="icon-save icon-large"></i> Save</button>
@@ -199,32 +162,26 @@
 						</div>
 					</div>
 				</form>
-				<!-- PR DETAILS -->	
-				
+				<!-- PR DETAILS -->
 				<!-- PR ITEMS MODAL ADD -->
 				<?php include('app_po_approved-modal-add-item.php'); ?>
 				<!-- PR ITEMS MODAL ADD -->
-				
                 <div class="span12" id="content">
                      <div class="row-fluid">
                         <!-- block -->
                         <div  id="block_bg" class="block">
-						
 						<?php
 							if(isset($_GET['year'])){
 								$year = $_GET['year'];
 							}
-							
 							$query1 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
 							while($row1 = mysqli_fetch_array($query1)) {
 								$Year1 = $row1['Year'];
 								$user_id1 = $row1['user_id'];
 							}
-							
 							$query2 = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE Year = '$Year' AND PRno = '$PO'");
 							$count2 = mysqli_num_rows($query2);
 						?>
-						
                             <div class="navbar navbar-inner block-header">
 								<div class="muted pull-left"><i class="icon-save icon-large"></i> ITEMS </div>
                                 <div class="muted pull-right">
@@ -233,9 +190,7 @@
                             </div>
                             <div class="block-content collapse in">
 								<div class="span12" id="studentTableDiv">
-									
 									<?php include('app_po_approved-add_table.php'); ?>
-
                                 </div>
                             </div>
                         </div>

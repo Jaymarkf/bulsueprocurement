@@ -28,3 +28,30 @@ DROP `price`;
 
 ALTER TABLE `tbl_generate_bac_report`
 ADD `date_generated` datetime NOT NULL;
+
+ALTER TABLE `tbl_rfq_item_details`
+CHANGE `unit_price` `unit_price` int(50) NOT NULL AFTER `brand_and_model_offered`;
+
+ALTER TABLE `tbl_rfq_item_details`
+CHANGE `quantity_and_unit` `quantity_and_unit` int(11) NOT NULL AFTER `item_and_specification`;
+
+
+
+select
+b.pr_num_merge as pr_no,
+a.name as company_name,a.address,a.email,
+a.contact as tel_no,
+a.tin,
+b.Unit as unit,
+b.ItemDescription as item_description,
+d.quantity_and_unit as quantity,
+MIN(d.unit_price) as unit_cost,
+d.total_price as total_cost
+from tbl_company a
+inner join tbl_rfq c on a.id = c.id_company
+inner join tbl_pr_items b on c.purchase_request_no = b.pr_num_merge
+inner join tbl_rfq_item_details d on c.id = d.rfq_item_id
+where b.Year = YEAR(NOW()) + 1 and d.approved_by = 'approved' and  b.pr_num_merge = 'EFD7343B'
+GROUP BY b.pr_num_merge,a.name,a.address,a.email,a.contact,a.tin,b.Unit,b.ItemDescription,d.quantity_and_unit,d.total_price LIMIT 1
+
+
