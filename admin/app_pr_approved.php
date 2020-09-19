@@ -2,6 +2,69 @@
 session_start();
 include('header.php'); ?>
 <?php include('session.php'); ?>
+<?php
+if(isset($_POST['submit_'])){
+//    //check the items where to update
+    $get_unit_cost = "select * from tbl_pr_items where prID = ".$_POST['prID'];
+    /** @var TYPE_NAME $conn */
+    $res = $conn->query($get_unit_cost);
+    $val = $res->fetch_assoc();
+    $unit_cost = $val['UnitCost']; //stock as number
+
+    $fund_cluster_stock = $val['FundCluster'];
+
+    //get the fundcluster name/descirption depends on id
+    $get_fund_qry = "select * from tbl_fund where fund_id = ".$_POST['edit_fund_cluster'];
+    $e = $conn->query($get_fund_qry);
+    $ff = $e->fetch_assoc();
+    $fund_cluster = $ff['fund_description']; //fund cluster in form
+
+    $qty = $_POST['edit_quantity']; //form post
+    $totalcost = $qty * $unit_cost;
+
+////update ppmp changes
+    $get_user_id = $val['user_id'];
+//    $get_stock_fund_cluster = $val['FundCluster'];
+
+    $get_item_description = $val['ItemDescription'];
+    $get_stock_quantity = $val['Quantity'];
+    $updateqry = "update tbl_pr_items set FundCluster = '$fund_cluster',Quantity = '$qty', TotalCost ='$totalcost' where prID = ".$_POST['prID'];
+    $conn->query($updateqry);
+
+//    //update source of fund and quantity in month of table ppmp
+    $update_ppmp = "update tbl_ppmp set SourceOfFund = '$fund_cluster',".date('M')." = '$qty' where
+                    user_id = '$get_user_id' and SourceOfFund = '$fund_cluster' and itemdetailDesc = '$get_item_description' and ".date('M')." = '$get_stock_quantity'";
+    $pexec = $conn->query($update_ppmp);
+
+
+    //select the id that we want to change the data
+    $qry_t = "select * from tbl_ppmp where
+             user_id = '$get_user_id' and SourceOfFund = '$fund_cluster' and itemdetailDesc = '$get_item_description' and ".date('M')." = '$qty'";
+    $exec = $conn->query($qry_t);
+    $p = $exec->fetch_assoc();
+
+    //get total count of quantity and total cost
+    $total_quantity_ppmp = $p['Jan'] + $p['Feb'] + $p['Mar'] + $p['Apr'] + $p['May'] + $p['Jun'] + $p['Jul'] + $p['Aug'] + $p['Sep'] + $p['Oct'] + $p['Nov'] + $p['Dec'];
+    $total_cost_ppmp = $total_quantity_ppmp * $p['PriceCatalogue'];
+
+    //update the result into tbl_ppmp
+    $final_update = "update tbl_ppmp set TotalQty = '$total_quantity_ppmp',TotalAmount = '$total_cost_ppmp' where
+                    user_id = '$get_user_id' and SourceOfFund = '$fund_cluster' and itemdetailDesc = '$get_item_description' and ".date('M')." = '$qty'";
+    $conn->query($final_update);
+//
+//
+//    //update pr_items
+
+
+
+
+//    echo print_r($_POST);
+
+}
+
+
+
+?>
 <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <style>
@@ -114,7 +177,7 @@ include('header.php'); ?>
                                         <div class="modal-header" style="border-bottom-right-radius: 0px !important;border-bottom-left-radius: 0px !important;">
                                             <h5 class="modal-title" id="exampleModalLongTitle">End user list ( Approved by Budget offce and Procurement )</h5>
                                         </div>
-                                        <form method="post" id="forms">
+                                        <form method="POST" id="forms">
                                             <div class="modal-body">
                                                 <div class="row-fluid">
                                                         <div class="text-right">

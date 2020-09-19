@@ -22,3 +22,18 @@ if(isset($_POST['idd']) || isset($_POST['id'])){
     echo json_encode($data);
 
 }
+
+if(isset($_POST['e'])){
+    $id = $_POST['e'];
+    $qry = "select fund.*, items.* from tbl_fund fund
+            inner join tbl_pr_items items on fund.fund_description = items.FundCluster where prID = ".$id;
+    $res = $conn->query($qry);
+    $data = $res->fetch_assoc();
+
+    $r['fundcluster'] = $data['fund_id'];
+    $r['quantity'] = $data['Quantity'];
+    $r['prID'] = $data['prID'];
+    echo json_encode($r);
+
+
+}
