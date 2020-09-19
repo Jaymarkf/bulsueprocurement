@@ -19,13 +19,11 @@ if(isset($_POST['id'])){
         echo '<input type="hidden" id="flag" value="havedata"/>';
         while($data = $res->fetch_array()){
             ?>
-            <div class="row-fluid text-center">
+            <div class="row-fluid text-left" style="position:relative;margin-left:90px;">
                 <input type="checkbox" class="form-control ckbox" name="item_val[<?=$data['item_and_specification']?>]" value="<?=$data['unit_price']?>">
                <span class="text-left">&nbsp;&nbsp; <?=$data['item_and_specification']?> | Unit Price: Php <span class="unit_price" class="text-info" style="font-weight:bold"><?=$data['unit_price']?></span></span>
             </div>
             <br>
-
-
             <?php
         }
         ?>

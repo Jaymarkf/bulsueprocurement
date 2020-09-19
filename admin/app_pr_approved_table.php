@@ -26,7 +26,7 @@
 					$Year3 = $row3['Year'];
 					
 				  //$query4 = mysqli_query($conn,       "SELECT * FROM tbl_pr WHERE Year = $Year3 AND PRno <> '0000' ORDER BY PRno DESC");
-					$query4 = mysqli_query($conn,"select tbl_pr_items.Quantity,tbl_pr_items.pr_num_merge,tbl_pr.*,tbl_pr_items.EstimatedBudget,tbl_pr_items.ItemDescription,tbl_pr_items.TotalCost from tbl_pr
+					$query4 = mysqli_query($conn,"select tbl_pr_items.prID as id_item,tbl_pr_items.Quantity,tbl_pr_items.pr_num_merge,tbl_pr.*,tbl_pr_items.EstimatedBudget,tbl_pr_items.ItemDescription,tbl_pr_items.TotalCost from tbl_pr
                                                          inner join tbl_pr_items on tbl_pr_items.PRno = tbl_pr.PRno
                                                          where tbl_pr.Year = '$Year3' and tbl_pr.PRno <> '0000' ORDER BY tbl_pr_items.itemDescription");
 					while($row4 = mysqli_fetch_array($query4)){
@@ -46,8 +46,8 @@
 					<td width="150" style="text-align:right;"><?php echo $row4['ResponsibilityCenter']; ?></td>
 					<td width="150" style="text-align:right;"><?php echo $row4['PR_Date']; ?></td>
 					<td width="150" style="text-align:center;"><?php echo $row4['RequestedBy']; ?></td>
-					<td width="150" style="text-align:right;"><?php echo $row4['ApprovedBy']; ?></td>
-					<td width="150" style="text-align:center;vertical-align: middle">
+					<td width="150" style="text-align:center;vertical-align: middle"><button data-id="<?=$row4['id_item']?>" data-toggle="modal" data-target="#modalFrame" class="edit_btn btn btn-info" style="text-align:center;"><i class="icon icon-edit text-warning"></i> Edit</button></td>
+                    <td width="150" style="text-align:center;vertical-align: middle">
 
 					<!--	<a data-placement="top" title="View Purchase Request Detail" id="view" href="app_pr_approved-view.php<?php echo '?pr='.$PR; ?>" class="btn btn-inverse"><i class="icon-eye-open icon-large"></i><br/><span class="badge badge-primary"></a>
 							<script type="text/javascript">
@@ -82,9 +82,75 @@
 		</table>
 	</form>
 </div>
+
+<!-- Modal -->
+<div style="display:none" class="modal fade" id="modalFrame" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form method="POST">
+            <div class="modal-content">
+            <div class="modal-header" style="background-color:#f36161 !important;border-bottom-right-radius: 0px !important;border-bottom-left-radius: 0px !important;">
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="icon icon-edit"></i> &nbsp;&nbsp;Edit Purchase Request</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row-fluid">
+                    <div class="span2 text-right">
+                        Fund Cluster:
+                    </div>
+                    <div class="span10 text-left">
+                        <select id="sel" class="form-control span10" name="edit_fund_cluster">
+                            <?php
+                            $q = "select * from tbl_fund";
+                            $d = $conn->query($q);
+                            while($x = $d->fetch_assoc()){
+                                ?>
+                                <option value="<?=$x['fund_id'];?>"><?=$x['fund_description'];?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row-fluid">
+                    <div class="span2 text-right">
+                        Quantity :
+                    </div>
+                    <div class="span10 text-left">
+                        <input id="qty" type="text" class="form-control span10" name="edit_quantity" />
+                    </div>
+                </div>
+                <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <input type="hidden" name="prID" id="prID"/>
+                <button type="submit" name="submit_" class="btn btn-success"><i class="icon icon-save"> Update Changes</i></button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
 <script>
     $('#tbl').margetable({
         type: 2,
         colindex: [1,6,11] // column 1, 2
+    });
+
+    $(document).on("click",'.edit_btn',function(){
+        var e = $(this).attr('data-id');
+        $.ajax({
+            type: "POST",
+            url: "../ajaxPOST/post_data.php",
+            data: {e:e},
+            dataType: 'json',
+            success:function(x) {
+
+                $('#sel').val(x.fundcluster);
+                $('#qty').val(x.quantity);
+                $('#prID').val(x.prID);
+
+            }
+            });
+
     });
 </script>
