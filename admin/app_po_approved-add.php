@@ -1,5 +1,35 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
+<style>
+    #container-bottom{
+        width:calc(100% - 10px);
+        margin:0px auto;
+        position:relative;
+        border:1px solid red;
+
+    }
+    #header{
+        width:100%;
+        position:relative;
+        height:40px;
+        background-color: darkslateblue;
+        color:white;
+        line-height:40px;
+        font-weight: bold;
+        font-size:20px;
+        font-family: "Courier New", Courier, monospace;
+    }
+    .fonts{
+        font-size:19px;
+        font-family:   'Microsoft Sans Serif', Tahoma, Arial, Verdana, Sans-Serif;
+        font-weight: bold;
+        color: #898888;
+    }
+    .pads{
+        padding:10px;
+        padding-left:20px;
+    }
+</style>
 <?php
 //	if(isset($_POST['btn-save-item'])){
 //		$item = $_POST['itemDesc'];
@@ -33,14 +63,11 @@
 //			 //mysqli_query($conn,"UPDATE tbl_ppmp_consolidated SET Requested = 'Yes' WHERE itemdetailDesc = '$in_item' ");
 //		}
 //	}
-
-
 ?>
-    <body >
+    <body>
 		<?php include('navbar.php'); ?>					
         <div class="container-fluid">
             <div class="row-fluid">
-				
 				<!-- top content -->
 				<div class="span12" id="content">
 					<div class="row-fluid">
@@ -53,7 +80,6 @@
 								echo $new;
 							?>
 						</div>
-
 						<?php
 							$query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
 								while($row = mysqli_fetch_array($query)) {
@@ -73,50 +99,10 @@
 					</div>
 					<br/>			
 				</div>
-				<!-- PR DETAILS -->
 				<form name="prform" method="POST" id="savePO">
-<!--				<div class="span12" id="content" style="background-color: #f9f9f9; padding:10px; border:5px solid #f1f1f1; box-shadow: 0px 0px 10px #000;position:relative;width:300px;margin:0px auto;">-->
-<!--						<div class="row-fluid span4">-->
-<!--							<div>-->
-<!--                                <label class="span4"><b>P.O. No.:</b></label>-->
-<!--                                <select class="span6 form-control"  name="ciPOno">-->
-<!--                                    <option style="display:none" hidden selected>Select  Purchase No#</option>-->
-<!--                                    --><?php
-//                                        $qq  = "select pr_num_merge as g from tbl_pr_items group by pr_num_merge";
-//                                        $d = $conn->query($qq);
-//                                        while($row = $d->fetch_assoc()){
-//                                            ?>
-<!--                                            <option value="--><?//=$row['g']?><!--">--><?//=$row['g']?><!--</option>-->
-<!--                                            --><?php
-//                                        }
-//                                    ?>
-<!--                                </select>-->
-<!--							</div>-->
-<!--							-->
-<!--							<div>-->
-<!--							--><?php
-//								date_default_timezone_set("Asia/Manila");
-//								$now=date('Y-m-d');
-//							?>
-<!--								<label class="span4"><b>Date:</b></label><input class="span6" type="date" name="ciPODate" value="--><?php //echo $now; ?><!--" Required />-->
-<!--							</div>-->
-<!---->
-<!--							<div>-->
-<!--								<label class="span4"><b>Mode of Payment:</b></label>-->
-<!--								<!-- <input class="span8" type="text" name="ciMOP" Required /> -->-->
-<!--								<select name="ciMOP" placeholder = "Select Mode of Payment" class="span6" required>-->
-<!--									<option value="" disabled selected>Select your option</option>-->
-<!--									<option value="Check and Carry">Check and Carry</option>-->
-<!--									<option value="Government Terms">Government Terms</option>-->
-<!--								</select>-->
-<!--							</div>-->
-<!--							<div class="span4">-->
-<!--
-<!--							</div>							-->
-<!--						</div>-->
-<!---->
-<!--					</div>-->
-<!--				</form>-->
+                    <hr>
+                    <hr>
+                    <hr>
                     <div class="row-fluid">
                         <div style="position:relative;padding:10px;width:350px;margin:10px auto;background-color: #f9f9f9;border:5px solid #f1f1f1; box-shadow: 0px 0px 10px #000">
                             <div class="row-fluid">
@@ -153,14 +139,71 @@
                                 </div>
                             </div>
                             <input type="hidden" name="ciYear" value="<?php echo $Year1;?>"/>
-                            
+                        </div>
+                    </div>
+                    <hr>
 
+                    <div class="row-fluid">
+                        <div class="container-fluid">
+                            <div id="container-bottom">
+                                <div id="header" class="text-center row-fluid">
+                                   Information of Orders
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="row-fluid">
+                                        <div class="span4">
+                                            <div class="pads">
+                                                <label class="fonts" >Supplier Name: </label>
+                                                <input type="text"  class="form-control" name="dummy" readonly required>
+                                            </div>
+                                        </div>
+                                        <div class="span4">
+                                            <div class="pads">
+                                                <label class="fonts" >Address : </label>
+                                                <input type="text"   class="form-control" name="dummy" readonly required>
+                                            </div>
+                                        </div>
+                                        <div class="span4">
+                                            <div class="pads">
+                                                <label class="fonts" >Email: </label>
+                                                <input type="text" class="form-control" name="dummy" readonly required >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="row-fluid">
+                                        <div class="span4">
+                                            <div class="pads">
+                                                <label class="fonts" >Supplier Name: </label>
+                                                <input type="text"  class="form-control" name="dummy" readonly required>
+                                            </div>
+                                        </div>
+                                        <div class="span4">
+                                            <div class="pads">
+                                                <label class="fonts" >Address : </label>
+                                                <input type="text"   class="form-control" name="dummy" readonly required>
+                                            </div>
+                                        </div>
+                                        <div class="span4">
+                                            <div class="pads">
+                                                <label class="fonts" >Email: </label>
+                                                <input type="text" class="form-control" name="dummy" readonly required >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
 		<?php include('footer.php'); ?>
         </div>
+<!--            end of container fluid-->
 		<?php include('script.php'); ?>
+
+
+
     </body>
 
 <script>

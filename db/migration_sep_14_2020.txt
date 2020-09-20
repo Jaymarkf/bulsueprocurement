@@ -55,3 +55,4 @@ where b.Year = YEAR(NOW()) + 1 and d.approved_by = 'approved' and  b.pr_num_merg
 GROUP BY b.pr_num_merge,a.name,a.address,a.email,a.contact,a.tin,b.Unit,b.ItemDescription,d.quantity_and_unit,d.total_price LIMIT 1
 
 
+
