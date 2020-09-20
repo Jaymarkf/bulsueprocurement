@@ -53,7 +53,7 @@
 ?>
 <hr/>
 <?php					
-	$qry = mysqli_query($conn,"SELECT * FROM tbl_po WHERE POno = '$PO'");
+	$qry = mysqli_query($conn,"SELECT po.*,com.* FROM tbl_po inner join tbl_company com on po.company_id = com.id WHERE po.id = '$PO'");
 	$row = mysqli_fetch_array($qry)
 ?>
 <body>
@@ -64,10 +64,10 @@
 				<div id="block_bg" class="block span12">
 				
 				<p colspan="6">
-					<h5>Standard Form Number: SF-GOOD-58</h5>
-					<!-- <h5>Revised on: <?php echo date("F j, Y",strtotime($row['PO_Date'])); ?></h5> -->
-					<h5>Revised on: May 24, 2004</h5>
-					<h5>Standard Form Title: Purchase Order</h5>
+					<h5>&nbsp;&nbsp;&nbsp;&nbsp;Standard Form Number: SF-GOOD-58</h5>
+					<!-- <h5>Revised on: <?php echo date("F j, Y",strtotime($row['date_generate'])); ?></h5> -->
+					<h5>&nbsp;&nbsp;&nbsp;&nbsp;Revised on: May 24, 2004</h5>
+					<h5>&nbsp;&nbsp;&nbsp;&nbsp;Standard Form Title: Purchase Order</h5>
 				</p>
 				
 				<p colspan="6"><h3  style="text-align: center;">PURCHASE ORDER</h3><h3  style="text-align: center;">BULACAN STATE UNIVERSITY</h3></p>
@@ -76,35 +76,35 @@
 					<thead>							
 						<tr>
 							<th colspan="3" style="text-align: left;">
-								Supplier: <?php echo $row['supplier']; ?><br/>
-								Address: <?php echo $row['address']; ?><br/>
-								E-Mail Add: <?php echo $row['email']; ?><br/>
-								Tel/Cell No.: <?php echo $row['contact_no']; ?><br/>
-								TIN: <?php echo $row['TIN']; ?><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;Supplier: <?php echo $row['name']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Address: <?php echo $row['address']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;E-Mail Add: <?php echo $row['email']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Tel/Cell No.: <?php echo $row['contact']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;TIN: <?php echo $row['tin']; ?><br/>
 							</th>
 						
 							<th colspan="3" style="text-align: left;">
-								PO No.: <?php echo $row['POno']; ?><br/>
-								Date: <?php echo $row['PO_Date']; ?><br/>
-								Mode of Procurement: <?php echo $row['MOP']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;PO No.: <?php echo $row['purchase_request_no']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Date: <?php echo $row['date_generate']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Mode of Procurement: <?php echo $row['mode_of_payment']; ?><br/>
 							</th>
 						</tr>
 						
 						<tr>
 							<th colspan="12" height="10" style="text-align:left;">
-								<h6>Gentlemen:</h6>
-								<h6>Please furnish this Office the following articles subject to the terms and conditions herein:</h6>
+								<h6>&nbsp;&nbsp;&nbsp;&nbsp;Gentlemen:</h6>
+								<h6>&nbsp;&nbsp;&nbsp;&nbsp;Please furnish this Office the following articles subject to the terms and conditions herein:</h6>
 							</th>
 						</tr>
 						
 						<tr>
 							<th colspan="3" height="10" style="text-align:left;">
-								<p>Place of delivery:  _________________________________________________________</p>
-								<p>Date of Delivery: ____________________________________</p>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;Place of delivery:  _________________________________________________________</p>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;Date of Delivery: ____________________________________</p>
 							</th>
 							<th colspan="3" height="10" style="text-align:left;">
-								<p>Delivery Term:  _________________________________________________________</p>
-								<p>Payment Term: ____________________________________</p>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;Delivery Term:  _________________________________________________________</p>
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;Payment Term: ____________________________________</p>
 							</th>
 						</tr>
 						
@@ -118,23 +118,23 @@
 						</tr>
 					</thead>
 					<?php
-					$qry1 = mysqli_query($conn,"SELECT * FROM tbl_po_items WHERE POno = '$PO'");
+					$qry1 = mysqli_query($conn,"SELECT * FROM tbl_po WHERE id = '$PO'");
 							while($row1 = mysqli_fetch_array($qry1)){
 					?>
 					<tbody>
 						<tr>
-							<td><?php echo $row1['StockPropertyNo']; ?></td>
-							<td><?php echo $row1['Unit']; ?></td>
-							<td><?php echo $row1['ItemDescription']; ?></td>
-							<td style="text-align: center;"><?php echo $row1['Quantity']; ?></td>
-							<td style="text-align: right;">&#8369; <?php echo number_format($row1['UnitCost'],2, '.', ','); ?></td>
-							<td style="text-align: right;">&#8369; <?php echo number_format($row1['TotalCost'],2, '.', ','); ?></td>
+							<td style="text-align:center"><?php echo $row1['stock_property_no']; ?></td>
+							<td style="text-align:center"><?php echo $row1['item_description']; ?></td>
+							<td style="text-align:center"><?php echo $row1['unit']; ?></td>
+							<td style="text-align: center;"><?php echo $row1['quantity']; ?></td>
+							<td style="text-align: right;">&#8369; <?php echo number_format($row1['unit_cost'],2, '.', ','); ?></td>
+							<td style="text-align: right;">&#8369; <?php echo number_format($row1['total_cost'],2, '.', ','); ?></td>
 						</tr>
 					<?php 
 						}
 					?>
 					<?php
-					$qry2 = mysqli_query($conn,"SELECT SUM(TotalCost) as Total FROM tbl_po_items WHERE POno = '$PO'");
+					$qry2 = mysqli_query($conn,"SELECT SUM(total_cost) as Total FROM tbl_po WHERE id = '$PO'");
 					$row2 = mysqli_fetch_array($qry2)
 					?>
 						<tr>
@@ -142,10 +142,10 @@
 							<td style="text-align: right;">&#8369; <?php echo number_format($row2['Total'],2, '.', ','); ?></td>
 						</tr>
 						<tr>
-							<td colspan="6"><b><?php echo strtoupper(convertNumberToWord($row2['Total'])); ?> PESOS</b></td>
+							<td colspan="6"><b>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strtoupper(convertNumberToWord($row2['Total'])); ?> PESOS</b></td>
 						</tr>
 						<tr>
-							<td colspan="6">In case of failure to make the full delivery within the time specified above, a penalty of one tenth((1/10) of one percent for every day of delivery shall be imposed on the undelivered items/s.</td>
+							<td colspan="6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In case of failure to make the full delivery within the time specified above, a penalty of one tenth((1/10) of one percent for every day of delivery shall be imposed on the undelivered items/s.</td>
 						</tr>
 						<tr style="text-align: center;">
 							<td colspan="3">
@@ -164,17 +164,17 @@
 						</tr>
 						<tr style="text-align: center;">
 							<td colspan="3">
-								<p style="text-align: left;">Fund Cluster: ________________________<br/>
-								 Funds Available: ________________________<br/><br/>
+								<p style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;Fund Cluster: ________________________<br/>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;Funds Available: ________________________<br/><br/>
 								</p>
 								
 								<h6>Signature over Printed Name of Supplier</h6>
 								<h6>Accounting Division Unit</h6>
 							</td>
 							<td colspan="3">
-								<p style="text-align: left;">ORS/BURS No.: ________________________<br/>
-								Date of the ORS/BURS: ________________________<br/>
-								Amount: ________________________
+								<p style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;ORS/BURS No.: ________________________<br/>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;Date of the ORS/BURS: ________________________<br/>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;Amount: ________________________
 								</p>
 							</td>
 						</tr>

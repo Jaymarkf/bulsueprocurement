@@ -99,7 +99,10 @@
 					</div>
 					<br/>			
 				</div>
-				<form name="prform" method="POST" id="savePO">
+                <div class="row-fluid">
+                    <a  href="app_po_approved.php" class="btn btn-medium btn-info"><i class="icon icon-circle-arrow-left"></i> Back</a>
+                </div>
+				<form method="POST" id="savePO">
                     <hr>
                     <hr>
                     <hr>
@@ -107,14 +110,14 @@
                         <div style="position:relative;padding:10px;width:350px;margin:10px auto;background-color: #f9f9f9;border:5px solid #f1f1f1; box-shadow: 0px 0px 10px #000">
                             <div class="row-fluid">
                                 <label style="float:left;line-height:40px;"><b>P.O. No.: &nbsp;&nbsp;</b></label>
-                                <select class="span8 text-left form-control"  name="ciPOno">-->
+                                <select class="span8 text-left form-control"  name="purchase_request_no" id="ipurchase_request_no" required>
                                     <option style="display:none" hidden selected>Select  Purchase No#</option>
                                     <?php
                                     $qq  = "select pr_num_merge as g from tbl_pr_items group by pr_num_merge";
                                     $d = $conn->query($qq);
                                     while($row = $d->fetch_assoc()){
                                         ?>
-                                        <option value="<?=$row['g']?>"><?=$row['g']?></option>
+                                        <option class="options" value="<?=$row['g']?>"><?=$row['g']?></option>
                                         <?php
                                     }
                                     ?>
@@ -138,11 +141,10 @@
                                     </select>
                                 </div>
                             </div>
-                            <input type="hidden" name="ciYear" value="<?php echo $Year1;?>"/>
+                            <input type="hidden" name="year" value="<?php echo $Year;?>"/>
                         </div>
                     </div>
                     <hr>
-
                     <div class="row-fluid">
                         <div class="container-fluid">
                             <div id="container-bottom">
@@ -154,19 +156,19 @@
                                         <div class="span4">
                                             <div class="pads">
                                                 <label class="fonts" >Supplier Name: </label>
-                                                <input type="text"  class="form-control" name="dummy" readonly required>
+                                                <input id="isupplier_name" type="text"  class="form-control" name="supplier_name" readonly required>
                                             </div>
                                         </div>
                                         <div class="span4">
                                             <div class="pads">
                                                 <label class="fonts" >Address : </label>
-                                                <input type="text"   class="form-control" name="dummy" readonly required>
+                                                <input type="text"   class="form-control" name="address" id="iaddress" readonly required>
                                             </div>
                                         </div>
                                         <div class="span4">
                                             <div class="pads">
                                                 <label class="fonts" >Email: </label>
-                                                <input type="text" class="form-control" name="dummy" readonly required >
+                                                <input type="text" class="form-control" name="email" id="iemail" readonly required>
                                             </div>
                                         </div>
                                     </div>
@@ -175,27 +177,56 @@
                                     <div class="row-fluid">
                                         <div class="span4">
                                             <div class="pads">
-                                                <label class="fonts" >Supplier Name: </label>
-                                                <input type="text"  class="form-control" name="dummy" readonly required>
+                                                <label class="fonts" >Stock Property No: </label>
+                                                <input type="text"  class="form-control" name="stock_property_no" id="istock_property_no" readonly required>
                                             </div>
                                         </div>
                                         <div class="span4">
                                             <div class="pads">
-                                                <label class="fonts" >Address : </label>
-                                                <input type="text"   class="form-control" name="dummy" readonly required>
+                                                <label class="fonts" >Unit: </label>
+                                                <input type="text"   class="form-control" name="unit" id="iunit" readonly required>
                                             </div>
                                         </div>
                                         <div class="span4">
                                             <div class="pads">
-                                                <label class="fonts" >Email: </label>
-                                                <input type="text" class="form-control" name="dummy" readonly required >
+                                                <label class="fonts" >Item Description: </label>
+                                                <input type="text" class="form-control" name="item_description" id="iitem_description" readonly required >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row-fluid">
+                                    <div class="row-fluid">
+                                        <div class="span4">
+                                            <div class="pads">
+                                                <label class="fonts" >Quantity: </label>
+                                                <input type="text"  class="form-control" name="quantity" id="iquantity" readonly required>
+                                            </div>
+                                        </div>
+                                        <div class="span4">
+                                            <div class="pads">
+                                                <label class="fonts" >Unit Cost: </label>
+                                                <input type="text"   class="form-control" name="unit_cost" id="iunit_cost" readonly required>
+                                            </div>
+                                        </div>
+                                        <div class="span4">
+                                            <div class="pads">
+                                                <label class="fonts" >Total Cost: </label>
+                                                <input type="text" class="form-control" name="total_cost" id="itotal_cost" readonly required >
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="row-fluid">
+                            <div class="text-right">
+                                <input type="hidden" id="hcompany_id" name="hcompany_id"/>
+                                <button type="submit" name="submit" class="btn btn-success" style="margin-right:20px;margin-top:20px;"><i class="icon icon-save text-info"></i>&nbsp; Submit</button>
+                            </div>
+                        </div>
                     </div>
+                </form>
 
 		<?php include('footer.php'); ?>
         </div>
@@ -217,33 +248,44 @@
 				url: "app_po_approved-save.php",
 				data: formData,
 				success: function(html){
-					$.jGrowl("New purchase request is successfully added", { header: 'SUCCESS' });
+				//     console.log(html);
+					$.jGrowl("New purchase order is successfully added", { header: 'SUCCESS' });
 					var delay = 3000;
 					setTimeout(function(){ window.location = 'app_po_approved.php'  }, delay);
 				}
 			});
 		});
-
-		//automate supplier info
-        $('#selsupplier').change(function(){
-            var id = $(this).val();
-            $.ajax({
-                type: "POST",
-                url: '../ajaxPOST/post_data.php',
-                data: {id:id},
-                dataType:'json',
-                success:function(e){
-                    $('#iaddress').val(e.address);
-                    $('#iemail').val(e.email);
-                    $('#icontact').val(e.contact);
-                    $('#itin').val(e.tin);
-                }
-            });
-
-
-        });
-
 	});
+	$(document).on("click","#ipurchase_request_no",function(){
+            var data = $(this).val();
+           $.ajax({
+               type: "POST",
+               url: "../ajaxPOST/post_data.php",
+               data: {data:data},
+               dataType: 'json',
+               success:function(e){
+                   $('#isupplier_name').val(e.company_name);
+                   $('#iaddress').val(e.address);
+                   $('#iemail').val(e.email);
+                   $('#iunit').val(e.unit);
+                   $('#iitem_description').val(e.item_description);
+                   $('#iquantity').val(e.quantity);
+                   $('#iunit_cost').val(e.unit_cost);
+                   $('#itotal_cost').val(e.total_cost);
+                   var stock_property_no = generateRandomString(5);
+                   $('#istock_property_no').val(stock_property_no);
+                   $('#hcompany_id').val(e.company_id);
+               }
+           });
+    });
+    function generateRandomString(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for (var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
 </script>
-	
 </html>

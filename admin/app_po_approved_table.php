@@ -17,25 +17,31 @@
 			</thead>
 			
 			<tbody>
-				<?php					
-					$query3 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
-					while($row3 = mysqli_fetch_array($query3)) {
-					$Year3 = $row3['Year'];
-					
-					$query4 = mysqli_query($conn,"SELECT * FROM tbl_po WHERE Year = $Year3 AND POno <> '0000' ORDER BY POno DESC");
-					//$query4 = mysqli_query($conn,"SELECT * FROM tbl_po WHERE Year = $Year3 AND (POno != '' OR POno IS NOT NULL)");
-					while($row4 = mysqli_fetch_array($query4)){
-					$PO = $row4['POno'];
+				<?php
+//					$query3 = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
+//					while($row3 = mysqli_fetch_array($query3)) {
+//					$Year3 = $row3['Year'];
+//
+//					$query4 = mysqli_query($conn,"SELECT * FROM tbl_po WHERE Year = $Year3 AND POno <> '0000' ORDER BY POno DESC");
+//					//$query4 = mysqli_query($conn,"SELECT * FROM tbl_po WHERE Year = $Year3 AND (POno != '' OR POno IS NOT NULL)");
+//					while($row4 = mysqli_fetch_array($query4)){
+//					$PO = $row4['POno'];
+
+                    $ex = $conn->query("SELECT * FROM users WHERE user_id = '$session_id'");
+                    $tempex = $ex->fetch_assoc();
+                    $Year3 = $tempex['Year'];
+                    $ex2 = $conn->query("select po.*,po.id as idd,company.* from tbl_po po inner join tbl_company company on po.company_id = company.id  where po.date_term = '$Year3'");
+                    while($row4 = $ex2->fetch_assoc()){
 				?>
 				<tr>
-					<td width="500" style="text-align:center;"><?php echo $row4['supplier']; ?></td> 
+					<td width="500" style="text-align:center;"><?php echo $row4['name']; ?></td>
 					<td width="50" style="text-align:center;"><?php echo $row4['address']; ?></td>
 					<td width="100" style="text-align:center;"><?php echo $row4['email']; ?></td>
-					<td width="150" style="text-align:right;"><?php echo $row4['contact_no']; ?></td>
-					<td width="150" style="text-align:right;"><?php echo $row4['TIN']; ?></td>
-					<td width="150" style="text-align:right;"><?php echo $row4['POno']; ?></td>
-					<td width="150" style="text-align:right;"><?php echo $row4['PO_Date']; ?></td>
-					<td width="150" style="text-align:right;"><?php echo $row4['MOP']; ?></td>
+					<td width="150" style="text-align:right;"><?php echo $row4['contact']; ?></td>
+					<td width="150" style="text-align:right;"><?php echo $row4['tin']; ?></td>
+					<td width="150" style="text-align:right;"><?php echo $row4['po_number']; ?></td>
+					<td width="150" style="text-align:right;"><?php echo $row4['date_generate']; ?></td>
+					<td width="150" style="text-align:right;"><?php echo $row4['mode_of_payment']; ?></td>
 					<td width="150" style="text-align:right;">
 					<!--	<a data-placement="top" title="View Purchase Request Detail" id="view" href="app_pr_approved-view.php<?php echo '?pr='.$PR; ?>" class="btn btn-inverse"><i class="icon-eye-open icon-large"></i><br/><span class="badge badge-primary"></a>
 							<script type="text/javascript">
@@ -52,7 +58,7 @@
 								$('#print').tooltip('hide');
 							});
 							</script> -->
-						<a data-placement="top" title="Print Purchase Order Detail" id="print" href="app_po_approved-print-preview.php<?php echo '?po='.$PO; ?>" class="btn btn-success"><i class="icon-print icon-large"></i><br/><span class="badge badge-primary"></a>
+						<a data-placement="top" title="Print Purchase Order Detail" id="print" href="app_po_approved-print-preview.php<?php echo '?po='.$row4['idd']; ?>" class="btn btn-success"><i class="icon-print icon-large"></i><br/><span class="badge badge-primary"></a>
 							<script type="text/javascript">
 							$(document).ready(function(){
 								$('#print').tooltip('show');
@@ -63,7 +69,7 @@
 					
 				</tr>
 				<?php 
-					}
+
 				}
 				?>    		
 			</tbody>
