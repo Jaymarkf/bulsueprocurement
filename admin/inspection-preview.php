@@ -7,7 +7,6 @@
 <?php
 	$iar_No = $_GET['iar_No'];
 	$POno = $_GET['POno'];
-	
 	$qry = mysqli_query($conn,"SELECT * FROM tbl_iar JOIN tbl_iar_items USING (POno) WHERE POno = '$POno'");	
 	//$qry = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE ItemDescription = '$item' AND Year = '$year' GROUP BY ItemDescription");
 	while($row = mysqli_fetch_array($qry)) {
@@ -36,12 +35,12 @@
 						<div style="display: block; page-break-after: always;">
 						<table cellpadding="0" id="" cellspacing="0" border="0" class="display" style="background-color: #fff; width:100%;">
 							<tr>
-								<th colspan="2" style="text-align:left;">Entity Name: <u><?php echo "Entity name here..."; ?></u></th>
+								<th colspan="2" style="text-align:left;">Entity Name: <u>________________________________</u></th>
 								<?php
 									//$Today=$dateC;
 									//$dateC=strtoupper(date('d F Y',strtotime($Today)));
 								?>
-								<th colspan="2" style="text-align:left;">Fund Cluster: <u><?php echo "Fund Cluster here..."; ?></u></th>
+								<th colspan="2" style="text-align:left;">Fund Cluster: <u>________________________________</u></th>
 							</tr>
 							</table><br/>
 							<table cellpadding="0" id="" cellspacing="0" border="1" class="display" style="background-color: #fff; width:100%;">
@@ -51,7 +50,7 @@
 										<th colspan="2" style="text-align:left;">IAR No.: <?php echo $iar_No; ?></th>
 									</tr>
 									<tr>
-										<th colspan="2" style="text-align:left;">PO No./Date: <?php echo $POno.' / '.$po_Date ; ?></th>
+										<th colspan="2" style="text-align:left;">PO No./ Date: <?php echo $POno.' / '.$po_Date ; ?></th>
 										<th colspan="2" style="text-align:left;">Date: <?php echo $iar_Date; ?></th>
 									</tr>
 									<tr>
@@ -60,7 +59,7 @@
 									</tr>
 									<tr>
 										<th colspan="2" style="text-align:left;">Responsibility Center Code: <?php echo $rcc; ?></th>
-										<th colspan="2" style="text-align:left;">Date: </th>
+
 									</tr>
 								</thead>
 								<tbody>

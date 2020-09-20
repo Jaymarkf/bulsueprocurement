@@ -70,3 +70,23 @@ ALTER TABLE `tbl_po`
 CHANGE `supplier_name` `company_id` int(11) NOT NULL AFTER `mode_of_payment`,
 DROP `address`,
 DROP `email`;
+
+DROP TABLE `tbl_iar_items`;
+
+CREATE TABLE `tbl_iar_items` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `entity_name` varchar(255) NOT NULL,
+  `fund_cluster` varchar(255) NOT NULL,
+  `supplier` varchar(255) NOT NULL,
+  `iar_no` varchar(255) NOT NULL,
+  `po_no` varchar(255) NOT NULL,
+  `date_generate` datetime NOT NULL,
+  `iar_date` datetime NOT NULL,
+  `requisition_office` varchar(255) NOT NULL,
+  `invoice_no` varchar(255) NOT NULL,
+  `responsibility_code_center` varchar(255) NOT NULL,
+  `stock_property_no` varchar(255) NOT NULL,
+  `item_description` varchar(255) NOT NULL,
+  `unit` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL
+);
