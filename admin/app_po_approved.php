@@ -90,3 +90,25 @@
 		<?php include('script.php'); ?>
     </body>	
 </html>
+<script>
+    $(document).ready(function(){
+        $('.delete_id').click(function(){
+            if(confirm("are you sure you want to delete this item?")){
+                var po_delete_id = $(this).attr('data-id');
+                // console.log(po_delete_id);
+                $.ajax({
+                    type: 'POST',
+                    url: '../ajaxPOST/post_data.php',
+                    data:{po_delete_id:po_delete_id},
+                    success:function(){
+                        // console.log(e);
+                        $.jGrowl("Selected item Purpose is successfully updated", { header: 'SUCCESS' });
+                        var delay =3000;
+                        setTimeout(function(){ window.location = 'app_po_approved.php'  }, delay);
+                    }
+                });
+
+            }
+        });
+    });
+</script>

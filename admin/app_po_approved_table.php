@@ -42,7 +42,7 @@
 					<td width="150" style="text-align:right;"><?php echo $row4['po_number']; ?></td>
 					<td width="150" style="text-align:right;"><?php echo $row4['date_generate']; ?></td>
 					<td width="150" style="text-align:right;"><?php echo $row4['mode_of_payment']; ?></td>
-					<td width="150" style="text-align:right;">
+					<td width="150" style="text-align:left;">
 					<!--	<a data-placement="top" title="View Purchase Request Detail" id="view" href="app_pr_approved-view.php<?php echo '?pr='.$PR; ?>" class="btn btn-inverse"><i class="icon-eye-open icon-large"></i><br/><span class="badge badge-primary"></a>
 							<script type="text/javascript">
 							$(document).ready(function(){
@@ -58,13 +58,9 @@
 								$('#print').tooltip('hide');
 							});
 							</script> -->
-						<a data-placement="top" title="Print Purchase Order Detail" id="print" href="app_po_approved-print-preview.php<?php echo '?po='.$row4['idd']; ?>" class="btn btn-success"><i class="icon-print icon-large"></i><br/><span class="badge badge-primary"></a>
-							<script type="text/javascript">
-							$(document).ready(function(){
-								$('#print').tooltip('show');
-								$('#print').tooltip('hide');
-							});
-							</script>
+						<a style="position:relative;display:block;width:100%;"data-placement="top" title="Print Purchase Order Detail" id="print" href="app_po_approved-print-preview.php<?php echo '?po='.$row4['idd']; ?>" class="btn btn-success"><i class="icon-print icon-large"></i><br/><span class="badge badge-primary"></a>
+						<div style="height:5px;display;block;"></div>
+                        <span style="position:relative;display:block;width:100%;"  data-id="<?=$row4['idd']?>"  class="btn btn-small btn-danger delete_id"><i class="icon icon-trash"></i> Delete</span>
 					</td>
 					
 				</tr>

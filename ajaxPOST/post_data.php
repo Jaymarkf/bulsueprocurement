@@ -71,3 +71,10 @@ $data['total_cost'] = $x['total_cost'];
 $data['company_id'] = $x['company_id'];
 echo json_encode($data);
 }
+
+if(isset($_POST['po_delete_id'])){
+    $id = $_POST['po_delete_id'];
+    $qry = "delete from tbl_po where id = ".$id;
+    $conn->query($qry);
+
+}
