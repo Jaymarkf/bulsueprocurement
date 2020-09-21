@@ -32,10 +32,6 @@
 					</div>
 				</div>
 
-			<!-- <div class="span3" id="content">
-				<?php  //include('quotation-add.php');  ?>
-			</div> -->
-
 						<div class="span12" id="content">
 							<div class="row-fluid">
 								<br/>
@@ -94,31 +90,19 @@
 										<?php
 											//$query =  mysqli_query($conn,"SELECT * FROM //tbl_po, tbl_po_items WHERE tbl_po.Year = //$Year GROUP BY tbl_po_items.POno")or //die(mysql_error());
 											//$query =  mysqli_query($conn,"SELECT * FROM tbl_po JOIN tbl_po_items USING (POno) WHERE tbl_po.Year = $Year AND tbl_po.POno <> '' GROUP BY tbl_po_items.POno");
-											$query =  mysqli_query($conn,"SELECT * FROM tbl_iar JOIN tbl_iar_items USING (POno) WHERE tbl_iar.Year = $Year AND tbl_iar.POno <> 0 GROUP BY tbl_iar_items.POno");
+											$query =  mysqli_query($conn,"select iar.id as iar_id,iar.*,po.* from tbl_iar_items iar 
+                                                                                 inner join tbl_po po on iar.poID = po.id 
+                                                                                 inner join tbl_company com on po.company_id = com.id");
 											while($row = mysqli_fetch_array($query)){
 										?>
 											<tr>
-												<td width="5"><?php echo $row['iar_No']; ?></th>
-												<td width="5"><?php echo $row['iar_Date']; ?></th>
-												<td width="150"><?php echo $row['supplier']; ?></td>
-												<td width="5"><?php echo $row['POno']; ?></td>
-												<td width="5"><?php echo $row['po_Date']; ?></td>
+												<td width="5"><?php echo $row['iar_no']; ?></th>
+												<td width="5"><?php echo $row['iar_date']; ?></th>
+												<td width="150"><?php echo $row['name']; ?></td>
+												<td width="5"><?php echo $row['po_number']; ?></td>
+												<td width="5"><?php echo $row['date_generate']; ?></td>
 												<td width="5">
-														<?php
-															$iar_No = $row['iar_No'];
-															$POno = $row['POno'];
-															$year = $row['Year'];
-															//$dateC = $row['Date_Created'];
-
-															$check = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_iar WHERE Year = '$Year' AND iar_No = '$iar_No'");
-															$bilang = mysqli_num_rows($check);
-
-															if ($bilang == "0") {
-																echo '<a title="Preview Inspection and Acceptance Report" id="back" data-placement="top" class="btn btn-default"><i class="icon-print icon-large"></i> Preview </a>';
-															}else{
-																echo '<a href="inspection-preview.php?iar_No='.$iar_No.'&POno='.$POno.'" title="Preview Inspection and Acceptance Report" id="back" data-placement="top" class="btn btn-inverse"><i class="icon-print icon-large"></i> Preview </a>';
-															}
-														?>
+																<a href="inspection-preview.php?iar_id=<?=$row['iar_id']?>" title="Preview Inspection and Acceptance Report" id="back" data-placement="top" class="btn btn-inverse"><i class="icon-print icon-large"></i> Preview </a>
 														<script type="text/javascript">
 															$(document).ready(function(){
 																$('#back').tooltip('show');

@@ -90,3 +90,20 @@ CREATE TABLE `tbl_iar_items` (
   `unit` varchar(255) NOT NULL,
   `quantity` int(11) NOT NULL
 );
+
+
+ALTER TABLE `tbl_iar_items`
+ADD `poID` int(11) NOT NULL AFTER `id`,
+DROP `fund_cluster`,
+DROP `supplier`,
+DROP `po_no`,
+DROP `date_generate`,
+DROP `stock_property_no`,
+DROP `item_description`,
+DROP `unit`,
+DROP `quantity`;
+
+ALTER TABLE `tbl_iar_items`
+DROP `entity_name`;
+ALTER TABLE `tbl_iar_items`
+DROP `invoice_no`;

@@ -5,20 +5,25 @@
 	<a class = "btn btn-inverse" href="inspection-main.php" style="font-size:20px";>Back</a>
 </div>
 <?php
-	$iar_No = $_GET['iar_No'];
-	$POno = $_GET['POno'];
-	$qry = mysqli_query($conn,"SELECT * FROM tbl_iar JOIN tbl_iar_items USING (POno) WHERE POno = '$POno'");	
-	//$qry = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE ItemDescription = '$item' AND Year = '$year' GROUP BY ItemDescription");
-	while($row = mysqli_fetch_array($qry)) {
-		$iar_No = $row['iar_No'];
-		$iar_Date = $row['iar_Date'];
-		$Year = $row['Year'];
-		$supplier = $row['supplier'];
-		$POno = $row['POno'];
-		$po_Date = $row['po_Date'];
-		$rod = $row['rod'];
-		$rcc = $row['rcc'];
-	}
+//	$iar_No = $_GET['iar_No'];
+//	$POno = $_GET['POno'];
+//	$qry = mysqli_query($conn,"SELECT * FROM tbl_iar JOIN tbl_iar_items USING (POno) WHERE POno = '$POno'");
+//	//$qry = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE ItemDescription = '$item' AND Year = '$year' GROUP BY ItemDescription");
+//	while($row = mysqli_fetch_array($qry)) {
+//		$iar_No = $row['iar_No'];
+//		$iar_Date = $row['iar_Date'];
+//		$Year = $row['Year'];
+//		$supplier = $row['supplier'];
+//		$POno = $row['POno'];
+//		$po_Date = $row['po_Date'];
+//		$rod = $row['rod'];
+//		$rcc = $row['rcc'];
+//	}
+$id = $_GET['iar_id'];
+$qry = $conn->query("select com.name,iar.*,po.* from tbl_iar_items iar
+                            inner join tbl_po po on iar.poID = po.id
+                            inner join tbl_company com on po.company_id = com.id where iar.id = '$id'");
+$data = $qry->fetch_assoc();
 ?>
 <body style="font-size:12pt;">
 <div class="container-fluid">
@@ -36,29 +41,30 @@
 						<table cellpadding="0" id="" cellspacing="0" border="0" class="display" style="background-color: #fff; width:100%;">
 							<tr>
 								<th colspan="2" style="text-align:left;">Entity Name: <u>________________________________</u></th>
-								<?php
-									//$Today=$dateC;
-									//$dateC=strtoupper(date('d F Y',strtotime($Today)));
-								?>
+
+
 								<th colspan="2" style="text-align:left;">Fund Cluster: <u>________________________________</u></th>
 							</tr>
 							</table><br/>
 							<table cellpadding="0" id="" cellspacing="0" border="1" class="display" style="background-color: #fff; width:100%;">
 								<thead>
 									<tr>
-										<th colspan="2" style="text-align:left;">Supplier: <?php echo $supplier; ?></th>
-										<th colspan="2" style="text-align:left;">IAR No.: <?php echo $iar_No; ?></th>
+										<th colspan="2" style="text-align:left;">Supplier: <?=$data['name']?></th>
+										<th colspan="2" style="text-align:left;">IAR No.: <?=$data['iar_no']?></th>
 									</tr>
 									<tr>
-										<th colspan="2" style="text-align:left;">PO No./ Date: <?php echo $POno.' / '.$po_Date ; ?></th>
-										<th colspan="2" style="text-align:left;">Date: <?php echo $iar_Date; ?></th>
+                                        <?php
+
+                                        ?>
+										<th colspan="2" style="text-align:left;">PO No / Date: (<?php echo $data['po_number'].' / '.date('M-d-Y',time($data['date_generate'])); ?>)</th>
+										<th colspan="2" style="text-align:left;">Date: <?=date('M-d-Y',time($data['iar_date']))?></th>
 									</tr>
 									<tr>
-										<th colspan="2" style="text-align:left;">Requisitioning Office/Dept.: <?php echo $rod; ?></th>
+										<th colspan="2" style="text-align:left;">Requisitioning Office/Dept.: <?=$data['requisition_office']?></th>
 										<th colspan="2" style="text-align:left;">Invoice No.: </th>
 									</tr>
 									<tr>
-										<th colspan="2" style="text-align:left;">Responsibility Center Code: <?php echo $rcc; ?></th>
+										<th colspan="2" style="text-align:left;">Responsibility Center Code: <?=$data['responsibility_code_center']?></th>
 
 									</tr>
 								</thead>
@@ -69,23 +75,14 @@
 										<td style="width:20%; text-align:center; background-color:lightgrey;"><i><b>Unit</b></i></td>
 										<td style="width:20%; text-align:center; background-color:lightgrey;"><i><b>Quantity</b></i></td>
 									</tr>
-									<?php
-										$qry1 = mysqli_query($conn,"SELECT *, SUM(Quantity) as Quantity FROM  tbl_iar_items WHERE POno = '$POno' GROUP BY ItemDescription");	
-										while($row = mysqli_fetch_array($qry1)) {
-											$SPno = $row['SPno'];
-											$Unit = $row['Unit'];
-											$ItemDescription = $row['ItemDescription'];
-											$Quantity = $row['Quantity'];
-									?>
+
 									<tr>
-										<td style="text-align:center;"><?php echo $SPno; ?></td>
-										<td style="text-align:center;"><?php echo $ItemDescription; ?></td>
-										<td style="text-align:center;"><?php echo $Unit; ?></td>
-										<td style="text-align:center;"><?php echo $Quantity; ?></td>
+										<td style="text-align:center;"><?=$data['stock_property_no']?></td>
+										<td style="text-align:center;"><?=$data['item_description']?></td>
+										<td style="text-align:center;"><?=$data['unit']?></td>
+										<td style="text-align:center;"><?=$data['quantity']?></td>
 									</tr>
-									<?php
-										}
-									?>
+
 								</tbody>
 								<thead>
 									<tr>
