@@ -10,7 +10,7 @@
 			$query = mysqli_query($conn,"select * from users where user_id = '$session_id'");
 			$row = mysqli_fetch_array($query);
 	?>		
-	<h3 style="color:#ffa500;background-color:rgba(295,235,215,0.8);padding:3px 20px;border-radius:50px;">Your need to change your default password to avoid hacking your account.  Thank you!</h3>		
+	<h3 style="color:#ffa500;background-color:rgba(295,235,215,0.8);padding:3px 20px;border-radius:50px;">Your need to change your default password. Thank you!</h3>
       <form id="change_password" class="form-pass" method="post">
 		<?php include('sidebar_header.php'); ?>
         <h3 class="form-signin-heading"><i class="icon-lock"></i> Change Password</h3>

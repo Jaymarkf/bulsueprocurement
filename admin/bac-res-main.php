@@ -55,22 +55,29 @@ while($dc = $rc->fetch_array()){
 
         while($qres = $qrc->fetch_array()){
             $data[$qres['company_name']]['total_amount'] = $data[$qres['company_name']]['total_amount'] + $qres['unit_price'] ;
+//            $data[$qres['company_name']]['array_id'] = $data[$qres['company_name']]['array_id'] .",".$qres['rfq_item_id'];
             $data[$qres['company_name']]['array_id'] = $data[$qres['company_name']]['array_id'] .",".$qres['rfq_item_id'];
-            $data[$qres['company_name']]['array_id'] = substr($data[$qres['company_name']]['array_id'],1);
+//            $data[$qres['company_name']]['array_id'] = substr($data[$qres['company_name']]['array_id'],1);
             $data[$qres['company_name']]['company_id'] = $qres['id_company'];
         }
 
 
     }
 
+
+
+
     foreach ($data as $index => $datum) {
+        $datum['array_id'] = substr($datum['array_id'],1);
         $squery = "insert into tbl_generate_bac_report (`company_id`,`item_details_id_array`,`total_price`,`date_generated`)
                     values('".$datum['company_id']."','".$datum['array_id']."','".$datum['total_amount']."',NOW())";
         $conn->query($squery);
     }
 //    echo '<pre>';
-//    print_r($data);
+//    print_r($datas);
 //    echo '</pre>';
+//    die();
+
 }
 
 ?>

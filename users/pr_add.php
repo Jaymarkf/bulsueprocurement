@@ -117,7 +117,7 @@
                         ?>
                         <div class="container-fluid">
                             <div class="text-center">
-                                <h3 class="text-warning">Purchase request is disable, please ask procurement to enable this request</h3>
+                                <h3 class="text-warning">Purchase request is disabled, please ask procurement to enable this request</h3>
                             </div>
                             <hr>
                             <hr>
