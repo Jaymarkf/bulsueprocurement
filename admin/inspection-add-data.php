@@ -53,13 +53,15 @@
                                 <div class="span4">
                                     <div class="control-group">
                                         <div class="controls">
-                                            <label>P.O. / Stock Property No. :</label>
+                                            <label>P.O. </label>
                                             <select  name="ciPO" placeholder = "Branch" class="span12" required>
-                                                <option style="display:none" disabled selected></option>
+                                                <option style="display:none" disabled selected>Select P.O. No. :</option>
                                                 <?php
-                                                    $qry = mysqli_query($conn,"select po.id as idd,po.*,com.* from tbl_po po inner join tbl_company com on po.company_id = com.id");
+                                                    $qry = mysqli_query($conn,"select * from tbl_po");
                                                     while($rows = $qry->fetch_assoc()){
-                                                            echo "<option value='".$rows['idd']."'> ".$rows['po_number']." / Stock Property : " .$rows['stock_property_no']. "</option>";
+                                                            ?>
+                                                        <option value="<?=$rows['id']?>"><?=$rows['id']?></option>
+                                                <?php
                                                         }
                                                 ?>
                                             </select>

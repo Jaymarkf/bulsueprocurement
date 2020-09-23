@@ -118,11 +118,6 @@
             <input id="ptin" type="text" class="span8" name="post_TIN_no" placeholder="Input here..." required readonly>
             </span>
         </div>
-        <div class="span6 text-right">
-            <span class="text-success">ABC
-            <input type="text" class="span8" name="post_ABC" placeholder="Input here..." required>
-            </span>
-        </div>
     </div>
     <div class="row-fluid">
         <div class="span6 text-right">

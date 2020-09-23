@@ -1,5 +1,10 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
+<?php
+if(isset($_POST['generate_report'])){
+    die();
+}
+?>
 <style>
     #container-bottom{
         width:calc(100% - 10px);
@@ -175,6 +180,12 @@
                     </tbody>
                 </table>
             </div>
+            <div class="row-fluid">
+                <div class="text-right">
+                    <button type="submit" name="btn_generate" class="btn btn-success"><i class="icon icon-file"></i> Generate Report</button>
+                </div>
+            </div>
+
         </form>
 
         <?php include('footer.php'); ?>
@@ -192,12 +203,13 @@
             e.preventDefault();
             var _this = $(e.target);
             var formData = $(this).serialize();
+            console.log(formData);
             $.ajax({
                 type: "POST",
                 url: "app_po_approved-save.php",
                 data: formData,
                 success: function(html){
-                    //     console.log(html);
+                        // console.log(html);
                     $.jGrowl("New purchase order is successfully added", { header: 'SUCCESS' });
                     var delay = 3000;
                     setTimeout(function(){ window.location = 'app_po_approved.php'  }, delay);

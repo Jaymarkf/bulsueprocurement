@@ -56,7 +56,7 @@ $data = $qry->fetch_assoc();
                                         <?php
 
                                         ?>
-										<th colspan="2" style="text-align:left;">PO No / Date: (<?php echo $data['po_number'].' / '.date('M-d-Y',time($data['date_generate'])); ?>)</th>
+										<th colspan="2" style="text-align:left;">PO No / Date: (<?php echo $data['poID'].' / '.date('M-d-Y',time($data['date_generate'])); ?>)</th>
 										<th colspan="2" style="text-align:left;">Date: <?=date('M-d-Y',time($data['iar_date']))?></th>
 									</tr>
 									<tr>
@@ -75,14 +75,31 @@ $data = $qry->fetch_assoc();
 										<td style="width:20%; text-align:center; background-color:lightgrey;"><i><b>Unit</b></i></td>
 										<td style="width:20%; text-align:center; background-color:lightgrey;"><i><b>Quantity</b></i></td>
 									</tr>
+                                    <?php
+                                    $dd = "select * from tbl_iar_items iar
+                                           inner join tbl_po po on iar.poID = po.id
+                                           inner join tbl_generate_bac_report bac on po.bac_id = bac.id
+                                           where iar.id = ".$_GET['iar_id'];
+                                        $ff = $conn->query($dd);
+                                        $ex = $ff->fetch_assoc();
+                                    //get item list
+                                    $items = explode(",",$ex['item_details_id_array']);
 
+                                    foreach ($items as $index => $item) {
+
+                                    $fa = "select d.*,de.* from tbl_rfq_item_details d inner join tbl_item_details de on d.item_and_specification = de.itemdetailDesc where d.id = '$item'";
+                                    $aa = $conn->query($fa);
+                                    $dat = $aa->fetch_array();
+                                    ?>
 									<tr>
-										<td style="text-align:center;"><?=$data['stock_property_no']?></td>
-										<td style="text-align:center;"><?=$data['item_description']?></td>
-										<td style="text-align:center;"><?=$data['unit']?></td>
-										<td style="text-align:center;"><?=$data['quantity']?></td>
+										<td style="text-align:center;"><?=$index?></td>
+										<td style="text-align:center;"><?=$dat['item_and_specification']?></td>
+										<td style="text-align:center;"><?=$dat['UnitOfMeasurement']?></td>
+										<td style="text-align:center;"><?=$dat['quantity_and_unit']?></td>
 									</tr>
-
+                                    <?php
+                                    }
+                                    ?>
 								</tbody>
 								<thead>
 									<tr>

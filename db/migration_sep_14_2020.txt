@@ -107,3 +107,23 @@ ALTER TABLE `tbl_iar_items`
 DROP `entity_name`;
 ALTER TABLE `tbl_iar_items`
 DROP `invoice_no`;
+
+
+
+
+ALTER TABLE `tbl_rfq`
+CHANGE `ABC` `ABC` varchar(255) COLLATE 'latin1_swedish_ci' NULL AFTER `TIN`
+
+ALTER TABLE `tbl_generate_bac_report`
+ADD `abc_input` int(11) NOT NULL;
+
+
+
+ALTER TABLE `tbl_po`
+CHANGE `po_number` `bac_id` int(11) NOT NULL AFTER `id`,
+DROP `stock_property_no`,
+DROP `unit`,
+DROP `item_description`,
+DROP `quantity`,
+DROP `unit_cost`,
+DROP `total_cost`;

@@ -23,14 +23,13 @@ foreach ($ac as $index => $item) {
             inner join tbl_generate_bac_report c on a.id_company = c.company_id
             where
             b.approved_by = 'approved' and a.id_company= '$item' and c.date_generated = '$time_filter'";
-
     $qrc  = $conn->query($qr);
     while($qres = $qrc->fetch_array()){
 //        $data[$qres['company_name']]['item_no']  = $qres['item_no'];
         $data[$qres['company_name']]['company_name'] = $qres['company_name'] ;
         $data[$qres['company_name']]['total_amount'] = $data[$qres['company_name']]['total_amount'] + $qres['unit_price'] ;
         $data[$qres['company_name']]['items'][] = $qres['item_and_specification']."[".$qres['quantity_and_unit']."]"."|" . $qres['unit_price'];
-
+        $abc_input = $qres['abc_input'];
     }
 }
 //
@@ -61,7 +60,9 @@ $pdf->Cell($p_width,$textHeightY,'City of Malolos, Bulacan','','2','C','','');
 $pdf->SetFont('Arial','B',10);
 $pdf->Cell($p_width,$textHeightY,'ABSTRACT OF CANVASS AND BAC RESOLUTION','','2','C','','');
 $pdf->Cell($p_width,$textHeightY,'RESOLUTION RECOMMENDING TO AWARD OF THE PROCUREMENT OF MEDICAL & DENTAL SUPPLY ','','2','C','','');
-$pdf->Cell($p_width,$textHeightY,'FOR COVID-19 PREVENTIVE MEASURE THROUGH SMALL VALUE PROCUREMENT-BY LOT','','2','C','','');
+$pdf->Cell($p_width,$textHeightY,'FOR COVID-19 PREVENTIVE MEASURE THROUGH SMALL VALUE PROCUREMENT-BY LOT','','1','C','','');
+$pdf->Ln(10);
+$pdf->Cell($p_width,$textHeightY-14,"ABC: Php: ".number_format($abc_input,2),"","1");
 $pdf->Ln(4);
 $pdf->SetFont('Arial','',10);
 $pdf->Cell($p_width-50,$textHeightY,'Date: '.date("d M Y"),'','2','R','','');
@@ -120,7 +121,7 @@ $pdf->SetFont('Courier','','9');
 $pdf->Cell('',$body_row_height,'  the items to be procured are included in the Annual Procurement Plan for the year 2020 of the Bulacan State University with an Approved','','1','C');
 $pdf->Cell(52,$body_row_height - 5,'Budget for the Contract of ','','0');
 $pdf->SetFont('Courier','B','9');
-$pdf->Cell($pdf->GetStringWidth(numberTowords($price)),$body_row_height - 5,numberTowords($price).' PESOS (Php '.$price.'.00).');
+$pdf->Cell($pdf->GetStringWidth(numberTowords($abc_input)),$body_row_height - 5,numberTowords($abc_input).' PESOS (Php '.$abc_input.'.00).');
 $pdf->Ln(5);
 $pdf->Cell($pdf->GetStringWidth('WHEREAS, Section 10 '),$body_row_height,'WHEREAS, Section 10');
 $pdf->SetFont('Courier','','9');

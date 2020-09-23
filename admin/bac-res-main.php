@@ -36,6 +36,7 @@ if(isset($_GET['delete'])){
 
 }
 if(isset($_POST['generate_submit'])){
+    $abc = $_POST['ABC_input'];
 $qc = "select * from tbl_company";
     /** @var TYPE_NAME $conn */
     $rc = $conn->query($qc);
@@ -69,8 +70,8 @@ while($dc = $rc->fetch_array()){
 
     foreach ($data as $index => $datum) {
         $datum['array_id'] = substr($datum['array_id'],1);
-        $squery = "insert into tbl_generate_bac_report (`company_id`,`item_details_id_array`,`total_price`,`date_generated`)
-                    values('".$datum['company_id']."','".$datum['array_id']."','".$datum['total_amount']."',NOW())";
+        $squery = "insert into tbl_generate_bac_report (`company_id`,`item_details_id_array`,`total_price`,`date_generated`,`abc_input`)
+                    values('".$datum['company_id']."','".$datum['array_id']."','".$datum['total_amount']."',NOW(),'$abc')";
         $conn->query($squery);
     }
 //    echo '<pre>';
@@ -158,12 +159,23 @@ while($dc = $rc->fetch_array()){
 						</div>
 
 						<div class="block-content collapse in">
-                            <div class="span12">
-                                <div class="text-left">
-                                    <form method="POST">
-                                        <button type="submit" name="generate_submit" class="myButton">Generate BAC Report</button>
-                                    </form>
-                                </div>
+<!--                            <div class="span12">-->
+<!--                                <form method="POST">-->
+<!--                                    <div class="text-left">-->
+<!--                                         <button type="submit" name="generate_submit" class="myButton">Generate BAC Report</button>-->
+<!--                                    </div>-->
+<!--                                    <div class="text-left">-->
+<!--                                        <label>ABC:</label>-->
+<!--                                        <input name ="ABC_input" type="text" class="form-control" placeholder="Input Approved Budget Contract..."/>-->
+<!--                                    </div>-->
+<!--                                </form>-->
+<!--                            </div>-->
+                            <div class="row-fluid">
+                                <form method="POST">
+                                        <button style="float:left;margin-right:40px;" type="submit" name="generate_submit" class="myButton">Generate BAC Report</button>
+                                        <span style="margin-right:15px;position:relative;float:left;line-height:35px;font-weight: bold;font-size:20px;color:gray">ABC: </span>
+                                        <input style="position:relative;" name ="ABC_input" type="text" class="form-control" placeholder="Input Approved Budget Contract..." required/>
+                                </form>
                             </div>
                             <div class="row-fluid">
 							    <div class="span12">

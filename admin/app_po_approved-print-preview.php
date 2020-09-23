@@ -53,8 +53,33 @@
 ?>
 <hr/>
 <?php					
-	$qry = mysqli_query($conn,"SELECT po.*,com.* FROM tbl_po inner join tbl_company com on po.company_id = com.id WHERE po.id = '$PO'");
-	$row = mysqli_fetch_array($qry)
+	$qry = mysqli_query($conn,"select 
+                                        po.bac_id as po_bac_id,
+                                        po.date_generate as po_date_generate,
+                                        po.date_term as po_date_term,
+                                        po.mode_of_payment as po_mode_of_payment,
+                                        po.company_id as po_company_id,
+                                        
+                                        bac.id as bac_id,
+                                        bac.company_id as bac_company_id,
+                                        bac.item_details_id_array as bac_item_array,
+                                        bac.total_price as bac_total_price,
+                                        bac.date_generated as bac_date_generate,
+                                        
+                                        com.name as com_name,
+                                        com.address as com_address,
+                                        com.tin as com_tin,
+                                        com.email as com_email,
+                                        com.contact as com_contact
+                                        
+                                        from tbl_po po 
+                                        inner join tbl_generate_bac_report bac on po.bac_id = bac.id
+                                        inner join tbl_company com on po.company_id = com.id
+                                        where po.id = '$PO'");
+	$row = mysqli_fetch_array($qry);
+    $item_list = array();
+    $item_list = explode(",",$row['bac_item_array']); // get all item list and explode it into html
+
 ?>
 <body>
 <div class="container-fluid">
@@ -76,17 +101,17 @@
 					<thead>							
 						<tr>
 							<th colspan="3" style="text-align: left;">
-								&nbsp;&nbsp;&nbsp;&nbsp;Supplier: <?php echo $row['name']; ?><br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;Address: <?php echo $row['address']; ?><br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;E-Mail Add: <?php echo $row['email']; ?><br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;Tel/Cell No.: <?php echo $row['contact']; ?><br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;TIN: <?php echo $row['tin']; ?><br/>
+								&nbsp;&nbsp;&nbsp;&nbsp;Supplier: <?php echo $row['com_name']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Address: <?php echo $row['com_address']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;E-Mail Add: <?php echo $row['com_email']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Tel/Cell No.: <?php echo $row['com_contact']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;TIN: <?php echo $row['com_tin']; ?><br/>
 							</th>
 						
 							<th colspan="3" style="text-align: left;">
-                                &nbsp;&nbsp;&nbsp;&nbsp;PO No.: <?php echo $row['purchase_request_no']; ?><br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;Date: <?php echo $row['date_generate']; ?><br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;Mode of Procurement: <?php echo $row['mode_of_payment']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;PO No.: <?php echo $row['bac_id']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Date: <?php echo $row['bac_date_generate']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;Mode of Procurement: <?php echo $row['po_mode_of_payment']; ?><br/>
 							</th>
 						</tr>
 						
@@ -118,31 +143,33 @@
 						</tr>
 					</thead>
 					<?php
-					$qry1 = mysqli_query($conn,"SELECT * FROM tbl_po WHERE id = '$PO'");
-							while($row1 = mysqli_fetch_array($qry1)){
-					?>
-					<tbody>
-						<tr>
-							<td style="text-align:center"><?php echo $row1['stock_property_no']; ?></td>
-							<td style="text-align:center"><?php echo $row1['item_description']; ?></td>
-							<td style="text-align:center"><?php echo $row1['unit']; ?></td>
-							<td style="text-align: center;"><?php echo $row1['quantity']; ?></td>
-							<td style="text-align: right;">&#8369; <?php echo number_format($row1['unit_cost'],2, '.', ','); ?></td>
-							<td style="text-align: right;">&#8369; <?php echo number_format($row1['total_cost'],2, '.', ','); ?></td>
-						</tr>
-					<?php 
-						}
-					?>
-					<?php
-					$qry2 = mysqli_query($conn,"SELECT SUM(total_cost) as Total FROM tbl_po WHERE id = '$PO'");
-					$row2 = mysqli_fetch_array($qry2)
+                    $total_cost = 0;
+                    foreach ($item_list as $index => $item) {
+
+                            $qry1 = mysqli_query($conn,"SELECT  r.*,d.* from tbl_rfq_item_details r inner join tbl_item_details d on r.item_and_specification = d.itemdetailDesc where r.id = '$item'");
+                                $row1 = $qry1->fetch_assoc();
+                            ?>
+                            <tbody>
+                            <tr>
+                                <td style="text-align:center"><?=$index?></td>
+                                <td style="text-align:center"><?php echo $row1['item_and_specification']; ?></td>
+                                <td style="text-align:center"><?php echo $row1['UnitOfMeasurement']; ?></td>
+                                <td style="text-align: center;"><?php echo $row1['quantity_and_unit']; ?></td>
+                                <td style="text-align: right;">&#8369; <?php echo number_format($row1['unit_price'],2, '.', ','); ?></td>
+                                <td style="text-align: right;">&#8369; <?php echo number_format($row1['total_price'],2, '.', ','); ?></td>
+                            </tr>
+                            <?php
+                            $total_cost = $total_cost + $row1['total_price'];
+
+                    }
+
 					?>
 						<tr>
 							<th colspan="5" style="text-align: right;"> TOTAL: </th>
-							<td style="text-align: right;">&#8369; <?php echo number_format($row2['Total'],2, '.', ','); ?></td>
+							<td style="text-align: right;">&#8369; <?php echo number_format($total_cost,2, '.', ','); ?></td>
 						</tr>
 						<tr>
-							<td colspan="6"><b>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strtoupper(convertNumberToWord($row2['Total'])); ?> PESOS</b></td>
+							<td colspan="6"><b>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo strtoupper(convertNumberToWord($total_cost)); ?> PESOS</b></td>
 						</tr>
 						<tr>
 							<td colspan="6">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In case of failure to make the full delivery within the time specified above, a penalty of one tenth((1/10) of one percent for every day of delivery shall be imposed on the undelivered items/s.</td>
