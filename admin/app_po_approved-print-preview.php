@@ -54,6 +54,7 @@
 <hr/>
 <?php					
 	$qry = mysqli_query($conn,"select 
+                                        po.id as po_id,
                                         po.bac_id as po_bac_id,
                                         po.date_generate as po_date_generate,
                                         po.date_term as po_date_term,
@@ -109,7 +110,7 @@
 							</th>
 						
 							<th colspan="3" style="text-align: left;">
-                                &nbsp;&nbsp;&nbsp;&nbsp;PO No.: <?php echo $row['bac_id']; ?><br/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;PO No.: <?php echo $row['po_id']; ?><br/>
                                 &nbsp;&nbsp;&nbsp;&nbsp;Date: <?php echo $row['bac_date_generate']; ?><br/>
                                 &nbsp;&nbsp;&nbsp;&nbsp;Mode of Procurement: <?php echo $row['po_mode_of_payment']; ?><br/>
 							</th>
@@ -160,7 +161,6 @@
                             </tr>
                             <?php
                             $total_cost = $total_cost + $row1['total_price'];
-
                     }
 
 					?>

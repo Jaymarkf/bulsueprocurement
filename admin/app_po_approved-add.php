@@ -115,6 +115,18 @@ if(isset($_POST['generate_report'])){
                 <div style="position:relative;padding:10px;width:450px;margin:10px auto;background-color: #f9f9f9;border:5px solid #f1f1f1; box-shadow: 0px 0px 10px #000">
                     <div class="row-fluid">
                         <div class="span5">
+                            <label class="text-right" style="line-height:32px;"><b>Date: &nbsp;&nbsp;</b></label>
+                        </div>
+                        <?php
+                        date_default_timezone_set("Asia/Manila");
+                        $now=date('Y-m-d');
+                        ?>
+                        <div class="span7">
+                            <input id="ciPODATE" class="form-control" style="min-width:95%;" type="date" name="ciPODate" value="<?php echo $now; ?>" Required />
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span5">
                             <label class="text-right" style="line-height:32px;"><b>BAC reso generated #: &nbsp;&nbsp;</b></label>
                         </div>
                         <div class="span7">
@@ -132,18 +144,6 @@ if(isset($_POST['generate_report'])){
                                 }
                                 ?>
                             </select>
-                        </div>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span5">
-                            <label class="text-right" style="line-height:32px;"><b>Date: &nbsp;&nbsp;</b></label>
-                        </div>
-                        <?php
-                        date_default_timezone_set("Asia/Manila");
-                        $now=date('Y-m-d');
-                        ?>
-                        <div class="span7">
-                            <input id="ciPODATE" class="form-control" style="min-width:95%;" type="date" name="ciPODate" value="<?php echo $now; ?>" Required />
                         </div>
                     </div>
                     <div class="row-fluid">

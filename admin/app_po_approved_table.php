@@ -4,12 +4,12 @@
 		<table cellpadding="0" cellspacing="0" border="0" id="example1" class="display" cellspacing="0" width="100%">
 			<thead>
 				<tr>
+                    <th rowspan="1"><b>PONo</b></th>
 					<th rowspan="1"><b>Supplier</b></th>
 					<th rowspan="1"><b>Address</b></th>
 					<th rowspan="1"><b>E-mail</b></th>
 					<th rowspan="1"><b>Contact No.</b></th>
 					<th rowspan="1"><b>TIN</b></th>
-					<th rowspan="1"><b>PONo</b></th>
 					<th rowspan="1"><b>PO_Date</b></th>
 					<th rowspan="1"><b>MOP</b></th>
 					<th rowspan="1"><b>Action</b></th>
@@ -34,12 +34,12 @@
                     while($row4 = $ex2->fetch_assoc()){
 				?>
 				<tr>
+                    <td width="150" style="text-align:right;"><?=$row4['idd']?></td>
 					<td width="500" style="text-align:center;"><?php echo $row4['name']; ?></td>
 					<td width="50" style="text-align:center;"><?php echo $row4['address']; ?></td>
 					<td width="100" style="text-align:center;"><?php echo $row4['email']; ?></td>
 					<td width="150" style="text-align:right;"><?php echo $row4['contact']; ?></td>
 					<td width="150" style="text-align:right;"><?php echo $row4['tin']; ?></td>
-					<td width="150" style="text-align:right;"><?php echo $row4['po_number']; ?></td>
 					<td width="150" style="text-align:right;"><?php echo $row4['date_generate']; ?></td>
 					<td width="150" style="text-align:right;"><?php echo $row4['mode_of_payment']; ?></td>
 					<td width="150" style="text-align:left;">
