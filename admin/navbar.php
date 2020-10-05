@@ -80,6 +80,9 @@
 							<li>
 								<a tabindex="-1" href="inspection-main.php" class="jkl"><img src="../images/buttons/iaa.png" width="10%"> Inspection and Accept...</a>
 							</li>
+                            <li>
+                                <a tabindex="-1" href="property_transfer.php" class="jkl"><img src="../images/buttons/transfer.png" width="10%" style="background-color: #f6bb9a;border-radius: 50%;padding:1px;left:0px;"> Property Transfer</a>
+                            </li>
 						</ul>
 					</li>
 				</ul>

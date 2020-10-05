@@ -73,8 +73,18 @@
                                     <div class="control-group">
                                       <div class="controls">
                                         <label>Requesitioning Office/Dept.:</label>
-                                        <input class="span12" type="text" name="ciROD" Required />
-
+                                          <select class="span12"  name="ciROD" required>
+                                              <option style="display:none" selected>Select Office / Dept. </option>
+                                          <?php
+                                          $sql = "select * from tbl_branch where  level <> 'administrator'";
+                                          $d = $conn->query($sql);
+                                            while($row = $d->fetch_assoc()){
+                                                ?>
+                                                <option value="<?=$row['branchID']?>"><?=$row['branch']?></option>
+                                              <?php
+                                            }
+                                          ?>
+                                          </select>
                                       </div>
                                     </div>
                                 </div>
