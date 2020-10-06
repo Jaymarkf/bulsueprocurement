@@ -20,10 +20,14 @@
 //		$rcc = $row['rcc'];
 //	}
 $id = $_GET['iar_id'];
-$qry = $conn->query("select com.name,iar.*,po.* from tbl_iar_items iar
+$qry = $conn->query("select DATE(po.date_generate) as pd,iar.iar_date as i, com.name,iar.*,po.* from tbl_iar_items iar
                             inner join tbl_po po on iar.poID = po.id
                             inner join tbl_company com on po.company_id = com.id where iar.id = '$id'");
 $data = $qry->fetch_assoc();
+//echo '<pre>';
+//print_r($data);
+//echo '</pre>';
+//die()
 ?>
 <body style="font-size:12pt;">
 <div class="container-fluid">
@@ -56,8 +60,8 @@ $data = $qry->fetch_assoc();
                                         <?php
 
                                         ?>
-										<th colspan="2" style="text-align:left;">PO No / Date: (<?php echo $data['poID'].' / '.date('M-d-Y',time($data['date_generate'])); ?>)</th>
-										<th colspan="2" style="text-align:left;">Date: <?=date('M-d-Y',time($data['iar_date']))?></th>
+										<th colspan="2" style="text-align:left;">PO No / Date: (<?php echo $data['poID'].' / '.$data['pd']; ?>)</th>
+										<th colspan="2" style="text-align:left;">Date: <?=$data['i']?></th>
 									</tr>
 									<tr>
 										<th colspan="2" style="text-align:left;">Requisitioning Office/Dept.: <?=$data['requisition_office']?></th>

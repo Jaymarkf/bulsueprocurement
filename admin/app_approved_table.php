@@ -124,7 +124,6 @@
                                                         UnitOfMeasurement,PriceCatalogue,TotalAmount");
                     }
 	    while($row4 = mysqli_fetch_array($qry)){
-					$id4 = $row4['consolidatedID'];
 				?>
 				<tr>
 					<td width="500" style="text-align:center;"><?php echo $row4['itemdetailDesc']; ?></td> 

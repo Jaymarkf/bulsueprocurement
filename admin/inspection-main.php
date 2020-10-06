@@ -90,7 +90,7 @@
 										<?php
 											//$query =  mysqli_query($conn,"SELECT * FROM //tbl_po, tbl_po_items WHERE tbl_po.Year = //$Year GROUP BY tbl_po_items.POno")or //die(mysql_error());
 											//$query =  mysqli_query($conn,"SELECT * FROM tbl_po JOIN tbl_po_items USING (POno) WHERE tbl_po.Year = $Year AND tbl_po.POno <> '' GROUP BY tbl_po_items.POno");
-											$query =  mysqli_query($conn,"select iar.id as iar_id,iar.*,po.* from tbl_iar_items iar 
+											$query =  mysqli_query($conn,"select com.name,iar.id as iar_id,iar.*,po.* from tbl_iar_items iar 
                                                                                  inner join tbl_po po on iar.poID = po.id 
                                                                                  inner join tbl_company com on po.company_id = com.id");
 											while($row = mysqli_fetch_array($query)){
@@ -99,7 +99,7 @@
 												<td width="5"><?php echo $row['iar_no']; ?></th>
 												<td width="5"><?php echo $row['iar_date']; ?></th>
 												<td width="150"><?php echo $row['name']; ?></td>
-												<td width="5"><?php echo $row['po_number']; ?></td>
+												<td width="5"><?php echo $row['poID']; ?></td>
 												<td width="5"><?php echo $row['date_generate']; ?></td>
 												<td width="5">
 																<a href="inspection-preview.php?iar_id=<?=$row['iar_id']?>" title="Preview Inspection and Acceptance Report" id="back" data-placement="top" class="btn btn-inverse"><i class="icon-print icon-large"></i> Preview </a>

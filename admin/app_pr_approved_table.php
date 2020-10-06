@@ -26,56 +26,58 @@
 					$Year3 = $row3['Year'];
 					
 				  //$query4 = mysqli_query($conn,       "SELECT * FROM tbl_pr WHERE Year = $Year3 AND PRno <> '0000' ORDER BY PRno DESC");
-					$query4 = mysqli_query($conn,"select tbl_pr_items.prID as id_item,tbl_pr_items.Quantity,tbl_pr_items.pr_num_merge,tbl_pr.*,tbl_pr_items.EstimatedBudget,tbl_pr_items.ItemDescription,tbl_pr_items.TotalCost from tbl_pr
+                        $query4 = $conn->query("select tbl_pr_items.prID as id_item,tbl_pr_items.Quantity,tbl_pr_items.pr_num_merge,tbl_pr.*,tbl_pr_items.EstimatedBudget,tbl_pr_items.ItemDescription,tbl_pr_items.TotalCost from tbl_pr
                                                          inner join tbl_pr_items on tbl_pr_items.PRno = tbl_pr.PRno
                                                          where tbl_pr.Year = '$Year3' and tbl_pr.PRno <> '0000' ORDER BY tbl_pr_items.itemDescription");
-					while($row4 = mysqli_fetch_array($query4)){
-					$PR = $row4['pr_num_merge'];
-				?>
 
-				<tr>
+                        while($row4 = mysqli_fetch_array($query4)){
+                            $PR = $row4['pr_num_merge'];
+                            ?>
 
-					<td width="500" style="text-align:center;"><?php echo $row4['EntityName']; ?></td>
+                            <tr>
 
-					<td width="500"  style="text-align:center;vertical-align: middle;text-shadow: 1px 1px 2px #b75252;"><?php echo $row4['ItemDescription']; ?></td>
-					<td width="500" style="text-align:center;"><?=$row4['EstimatedBudget'];?></td>
-					<td width="500" style="text-align:center;"><?=$row4['TotalCost'];?></td>
-					<td width="50" style="text-align:center;"><?php echo $row4['FundCluster']; ?></td>
-					<td width="100" style="text-align:center;"><?php echo $row4['Quantity']; ?></td>
-					<td width="150" style="text-align:center;vertical-align: middle;"><?php echo $row4['pr_num_merge']; ?></td>
-					<td width="150" style="text-align:right;"><?php echo $row4['ResponsibilityCenter']; ?></td>
-					<td width="150" style="text-align:right;"><?php echo $row4['PR_Date']; ?></td>
-					<td width="150" style="text-align:center;"><?php echo $row4['RequestedBy']; ?></td>
-					<td width="150" style="text-align:center;vertical-align: middle"><button data-id="<?=$row4['id_item']?>" data-toggle="modal" data-target="#modalFrame" class="edit_btn btn btn-info" style="text-align:center;"><i class="icon icon-edit text-warning"></i> Edit</button></td>
-                    <td width="150" style="text-align:center;vertical-align: middle">
+                                <td width="500" style="text-align:center;"><?php echo $row4['EntityName']; ?></td>
+                                <td width="500"  style="text-align:center;vertical-align: middle;text-shadow: 1px 1px 2px #b75252;"><?php echo $row4['ItemDescription']; ?></td>
+                                <td width="500" style="text-align:center;"><?=$row4['EstimatedBudget'];?></td>
+                                <td width="500" style="text-align:center;"><?=$row4['TotalCost'];?></td>
+                                <td width="50" style="text-align:center;"><?php echo $row4['FundCluster']; ?></td>
+                                <td width="100" style="text-align:center;"><?php echo $row4['Quantity']; ?></td>
+                                <td width="150" style="text-align:center;vertical-align: middle;"><?php echo $row4['pr_num_merge']; ?></td>
+                                <td width="150" style="text-align:right;"><?php echo $row4['ResponsibilityCenter']; ?></td>
+                                <td width="150" style="text-align:right;"><?php echo $row4['PR_Date']; ?></td>
+                                <td width="150" style="text-align:center;"><?php echo $row4['RequestedBy']; ?></td>
+                                <td width="150" style="text-align:center;vertical-align: middle"><button data-id="<?=$row4['id_item']?>" data-toggle="modal" data-target="#modalFrame" class="edit_btn btn btn-info" style="text-align:center;"><i class="icon icon-edit text-warning"></i> Edit</button></td>
+                                <td width="150" style="text-align:center;vertical-align: middle">
 
-					<!--	<a data-placement="top" title="View Purchase Request Detail" id="view" href="app_pr_approved-view.php<?php echo '?pr='.$PR; ?>" class="btn btn-inverse"><i class="icon-eye-open icon-large"></i><br/><span class="badge badge-primary"></a>
+                                    <!--	<a data-placement="top" title="View Purchase Request Detail" id="view" href="app_pr_approved-view.php<?php echo '?pr='.$PR; ?>" class="btn btn-inverse"><i class="icon-eye-open icon-large"></i><br/><span class="badge badge-primary"></a>
 							<script type="text/javascript">
 							$(document).ready(function(){
 								$('#view').tooltip('show');
 								$('#view').tooltip('hide');
 							});
 							</script> -->
-							
-						<!-- <a target="_blank" data-placement="top" title="Print Purchase Request Detail" id="print" href="app_pr_approved-print.php<?php echo '?pr='.$PR; ?>" class="btn btn-success"><i class="icon-print icon-large"></i><br/><span class="badge badge-primary"></a>
+
+                                    <!-- <a target="_blank" data-placement="top" title="Print Purchase Request Detail" id="print" href="app_pr_approved-print.php<?php echo '?pr='.$PR; ?>" class="btn btn-success"><i class="icon-print icon-large"></i><br/><span class="badge badge-primary"></a>
 							<script type="text/javascript">
 							$(document).ready(function(){
 								$('#print').tooltip('show');
 								$('#print').tooltip('hide');
 							});
 							</script> -->
-						<a data-placement="top" title="Print Purchase Request Detail" id="print" href="app_pr_approved-print-preview.php?item=<?=$PR?>" class="btn btn-success"><i class="icon-print icon-large"></i><br/><span class="badge badge-primary"></a>
-							<script type="text/javascript">
-							$(document).ready(function(){
-								$('#print').tooltip('show');
-								$('#print').tooltip('hide');
-							});
-							</script>
-					</td>
-					
-				</tr>
-				<?php 
-					}
+                                    <a data-placement="top" title="Print Purchase Request Detail" id="print" href="app_pr_approved-print-preview.php?item=<?=$PR?>" class="btn btn-success"><i class="icon-print icon-large"></i><br/><span class="badge badge-primary"></a>
+                                    <script type="text/javascript">
+                                        $(document).ready(function(){
+                                            $('#print').tooltip('show');
+                                            $('#print').tooltip('hide');
+                                        });
+                                    </script>
+                                </td>
+
+                            </tr>
+                            <?php
+                        }
+
+
 				}
 				?>    		
 			</tbody>

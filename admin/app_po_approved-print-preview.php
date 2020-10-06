@@ -52,8 +52,9 @@
 	}
 ?>
 <hr/>
-<?php					
-	$qry = mysqli_query($conn,"select 
+<?php
+/** @var TYPE_NAME $conn */
+$qry = $conn->query("select 
                                         po.id as po_id,
                                         po.bac_id as po_bac_id,
                                         po.date_generate as po_date_generate,
@@ -77,10 +78,13 @@
                                         inner join tbl_generate_bac_report bac on po.bac_id = bac.id
                                         inner join tbl_company com on po.company_id = com.id
                                         where po.id = '$PO'");
-	$row = mysqli_fetch_array($qry);
+	$row = $qry->fetch_assoc();
     $item_list = array();
     $item_list = explode(",",$row['bac_item_array']); // get all item list and explode it into html
-
+//echo '<pre>';
+//print_r($PO);
+//echo '</pre>';
+//die();
 ?>
 <body>
 <div class="container-fluid">

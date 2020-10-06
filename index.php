@@ -74,8 +74,7 @@
 				//$pass=$row['password'];
 				$level =$row['level'];
 				$department = $row['branch'];
-
-				if( $num_row > 0 ) { 			
+				if( $num_row > 0 ) {
 					//session_start();
 					if($level=='default' AND $department=='Main Office'){
 						$_SESSION['admin_id']=$row['user_id'];
@@ -170,7 +169,38 @@
 					<?php
 							//mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
 						}
-					}elseif($level=='administrator' AND $department=='Procurement Unit'){
+					}elseif($level =='supplier' AND $department == 'Supplier'){
+                            $_SESSION['supplier_id']=$row['user_id'];
+                            if($password=='12345'){
+                            //header('location: budget-office/password-default');
+                            ?>
+                            <script>
+                                $.ajax({
+                                    success: function(html){
+                                        $.jGrowl("ACCESS GRANTED! Wait for a moment while preparing the system for you... ", { header: 'LOGIN SUCCESS' });
+                                        var delay = 3000;
+                                        setTimeout(function(){ window.location = 'supplier/password-default.php' }, delay);
+                                    }
+                                });
+                            </script>
+                        <?php
+                        }else{
+                        //header('location: budget-office/dashboard');
+                        ?>
+                            <script>
+                                $.ajax({
+                                    success: function(html){
+                                        $.jGrowl("ACCESS GRANTED! Wait for a moment while preparing the system for you... ", { header: 'LOGIN SUCCESS' });
+                                        var delay = 3000;
+                                        setTimeout(function(){ window.location = 'supplier/dashboard.php' }, delay);
+                                    }
+                                });
+                            </script>
+                        <?php
+                        //mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
+                        }
+
+                    }elseif($level=='administrator' AND $department=='Procurement Unit'){
 						$_SESSION['admin_id']=$row['user_id'];
 						
 						if($password=='12345'){

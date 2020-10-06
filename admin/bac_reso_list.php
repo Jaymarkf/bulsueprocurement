@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(E_WARNING);
 include('session.php');
 include('../dbcon.php');
 require('../fpdf/fpdf.php');
@@ -17,6 +18,11 @@ while($dc = $rc->fetch_array()){
 }
 //loop company list
 $data = array();
+//echo '<pre>';
+//print_r($ac);
+//echo '</pre>';
+//die();
+
 foreach ($ac as $index => $item) {
     $qr = "select a.*,b.*,c.* from tbl_rfq a 
             inner join tbl_rfq_item_details b on a.id = b.id 
@@ -24,18 +30,24 @@ foreach ($ac as $index => $item) {
             where
             b.approved_by = 'approved' and a.id_company= '$item' and c.date_generated = '$time_filter'";
     $qrc  = $conn->query($qr);
-    while($qres = $qrc->fetch_array()){
-//        $data[$qres['company_name']]['item_no']  = $qres['item_no'];
-        $data[$qres['company_name']]['company_name'] = $qres['company_name'] ;
-        $data[$qres['company_name']]['total_amount'] = $data[$qres['company_name']]['total_amount'] + $qres['unit_price'] ;
-        $data[$qres['company_name']]['items'][] = $qres['item_and_specification']."[".$qres['quantity_and_unit']."]"."|" . $qres['unit_price'];
-        $abc_input = $qres['abc_input'];
+    if($qrc->num_rows > 0){
+        while($qres = $qrc->fetch_array()){
+//            $data[$qres['company_name']]['item_no']  = $qres['item_no'];
+            $data[$qres['company_name']]['company_name'] = $qres['company_name'] ;
+            $data[$qres['company_name']]['total_amount'] =   ($data[$qres['company_name']]['total_amount']) + ($qres['unit_price']);
+            $data[$qres['company_name']]['items'][] = $qres['item_and_specification']."[".$qres['quantity_and_unit']."]"."|" . $qres['unit_price'];
+            $abc_input = $qres['abc_input'];
+        }
     }
+
+
+
 }
 //
 //echo '<pre>';
 //print_r($data);
 //echo '</pre>';
+
 $textHeightY = 4;
 $margin_left = 10;
 $header_height = 13;
@@ -161,7 +173,7 @@ $pdf->SetFont('Courier','','9');
 $pdf->Cell('',$body_row_height+6,'the BAC decided to procure the said items on a lot basis;');
 $pdf->Ln(7);
 $pdf->SetFont('Courier','B','9');
-$pdf->Cell($pdf->GetStringWidth('WHEREAS, '.count(count(explode(",",$_GET['c_id']))).' ('.numberTowords(count(explode(",",$_GET['c_id']))).') suppliers'),$body_row_height,'WHEREAS, '.numberTowords(count(explode(",",$_GET['c_id']))).' ('.count(explode(",",$_GET['c_id'])).') suppliers');
+//$pdf->Cell($pdf->GetStringWidth('WHEREAS, '.count(count(explode(",",$_GET['c_id']))).' ('.numberTowords(count(explode(",",$_GET['c_id']))).') suppliers'),$body_row_height,'WHEREAS, '.numberTowords(count(explode(",",$_GET['c_id']))).' ('.count(explode(",",$_GET['c_id'])).') suppliers');
 $pdf->SetFont('Courier','','9');
 $pdf->Cell('',$body_row_height,' secured Request for Quotations and submitted their respective proposals to the Bids and Awards Committee, to wit: ','','1');
 $pdf->SetFont('Courier','B','9');
@@ -203,7 +215,7 @@ $pdf->SetFont('Courier','B','9');
 $pdf->Cell('',$body_row_height,date('d').'th of '.date('M'). ' '.date('Y'));
 $pdf->Ln(7);
 $pdf->SetFont('Courier','B','9');
-$pdf->SetTextColor('','0','0');
+$pdf->SetTextColor('0','0','0');
 $pdf->SetXY(50,$pdf->GetY());
 $pdf->Cell($pdf->GetStringWidth('JOSEPH ROY F. CELESTINO')+7,$body_row_height+7,'JOSEPH ROY F. CELESTINO','1','','C');
 $pdf->Cell($pdf->GetStringWidth('Dr. DOLLY P. MAROMA')+7,$body_row_height+7,'Dr. DOLLY P. MAROMA','1','','C');

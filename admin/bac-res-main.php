@@ -74,10 +74,10 @@ while($dc = $rc->fetch_array()){
                     values('".$datum['company_id']."','".$datum['array_id']."','".$datum['total_amount']."',NOW(),'$abc')";
         $conn->query($squery);
     }
-//    echo '<pre>';
-//    print_r($datas);
-//    echo '</pre>';
-//    die();
+    echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+    die();
 
 }
 

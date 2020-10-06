@@ -1,4 +1,4 @@
-<?php include('header.php'); ?>
+<?php error_reporting(E_ALL ^ E_NOTICE);  include('header.php'); ?>
 <?php include('session.php'); ?>
     <body >
 		<?php include('navbar.php'); ?>					
@@ -63,8 +63,13 @@
 								$user_id1 = $row1['user_id'];
 							}
 							
-							$query2 = mysqli_query($conn,"SELECT * FROM tbl_po WHERE Year = $Year  AND (POno != '' OR POno IS NOT NULL)");
-							$count2 = mysqli_num_rows($query2);
+							$query2 = $conn->query("SELECT * FROM tbl_po WHERE Year = ".$Year."  AND (POno != '' OR POno IS NOT NULL)");
+//							$count2 = $query2->num_rows();
+							if($query2->num_rows > 0){
+							    $count2 = $query2->num_rows;
+                            }else{
+							    $count2 = 0;
+                            }
 						?>
                             <div class="navbar navbar-inner block-header">
                                 <div class="muted pull-left"><img src="../images/buttons/po.png" width="5%"> Purchase Order - <span class="badge badge-warning">YEAR <?php echo $Year; ?></span></div>

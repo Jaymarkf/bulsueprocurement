@@ -112,7 +112,7 @@ DROP `invoice_no`;
 
 
 ALTER TABLE `tbl_rfq`
-CHANGE `ABC` `ABC` varchar(255) COLLATE 'latin1_swedish_ci' NULL AFTER `TIN`
+CHANGE `ABC` `ABC` varchar(255) COLLATE 'latin1_swedish_ci' NULL AFTER `TIN`;
 
 ALTER TABLE `tbl_generate_bac_report`
 ADD `abc_input` int(11) NOT NULL;
@@ -127,3 +127,6 @@ DROP `item_description`,
 DROP `quantity`,
 DROP `unit_cost`,
 DROP `total_cost`;
+
+INSERT INTO `tbl_branch` (`branch`, `level`)
+VALUES ('Supplier', 'supplier');
