@@ -15,13 +15,13 @@
                         <a href="#" id="name123" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-tasks icon-large"></i> MENU <i class="caret"></i></a>
                         <ul class="dropdown-menu">
                             <!--  <li><a class="jkl" tabindex="-1" href="#">Profile</a></li> -->
-
+                            <li>
+                                <a tab-index="-1" href="ics.php" class="jkl"><img src="../images/buttons/app.png" width="10%"> Inventory Custodian Form</a>
+                            </li>
                             <li>
                                 <a tabindex="-1" href="dashboard.php" class="jkl"><img src="../images/buttons/ppmp.png" width="10%"> Property Acknowledgement<br/>&nbsp;Receipt</a>
                             </li>
-                            <li>
-                                <a tab-index="-1" href="#" class="jkl"><img src="../images/buttons/app.png" width="10%"> Inventory Custodian Form</a>
-                            </li>
+
 <!--                            <li class="divider"></li>-->
 <!--                            <li>-->
 <!--                                <a tabindex="-1" href="app_approved.php--><?php //echo '?year='.$row['Year']; ?><!--" class="jkl"><img src="../images/buttons/app.png" width="10%"> CONSOLIDATED<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Annual Procurement<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Plan </a>-->
