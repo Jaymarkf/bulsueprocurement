@@ -50,6 +50,22 @@
                     </li>
                 </ul>
             </div>
+            <div id="coll" class="nav-collapse collapse">
+                <ul class="nav pull-left">
+                    <li class="dropdown">
+                        <a href="#" id="name123" role="button" class="dropdown-toggle" data-toggle="dropdown"> <i class="icon-cogs icon-large"></i> Settings<i class="caret"></i></a>
+                        <ul class="dropdown-menu">
+                            <!--  <li><a class="jkl" tabindex="-1" href="#">Profile</a></li> -->
+                            <li>
+                                <a tab-index="-1" href="manage_employee.php" class="jkl"><i class="icon icon-user"></i> Manage Employee</a>
+                            </li>
+                            <li>
+                                    <a tabindex="-1" href="manage_position.php" class="jkl"><i class="icon icon-user-md"></i> Manage Position</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
             <!--/.nav-collapse -->
 
             <!-- <div id="coll" class="nav-collapse collapse">

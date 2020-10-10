@@ -130,3 +130,40 @@ DROP `total_cost`;
 
 INSERT INTO `tbl_branch` (`branch`, `level`)
 VALUES ('Supplier', 'supplier');
+
+
+
+CREATE TABLE `tbl_ics` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `ics_num` varchar(20) NOT NULL,
+  `date_acquired` date NOT NULL,
+  `item_desc` varchar(50) NOT NULL,
+  `quantity` int(10) NOT NULL,
+  `unit` varchar(50) NOT NULL,
+  `unit_cost` int(50) NOT NULL,
+  `total` int(50) NOT NULL,
+  `received_from` varchar(50) NOT NULL,
+  `received_from_position` varchar(50) NOT NULL,
+  `purchase_order_num` varchar(20) NOT NULL,
+  `received_by` varchar(50) NOT NULL,
+  `college` varchar(50) NOT NULL,
+  `position` varchar(50) NOT NULL,
+  `date_issued` date NOT NULL,
+  `delivered_by` varchar(50) NOT NULL,
+  `fundcluster_code` varchar(50) NOT NULL
+);
+
+
+CREATE TABLE `tbl_supplier_employee` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `first_name` varchar(22) NOT NULL,
+  `middle_name` varchar(22) NOT NULL,
+  `last_name` varchar(22) NOT NULL,
+  `college` varchar(22) NOT NULL,
+  `position` varchar(22) NOT NULL
+);
+
+CREATE TABLE `tbl_supplier_position` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(50) NOT NULL
+);
