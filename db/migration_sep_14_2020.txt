@@ -167,3 +167,9 @@ CREATE TABLE `tbl_supplier_position` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` varchar(50) NOT NULL
 );
+
+ALTER TABLE `tbl_ics`
+DROP `received_from_position`;
+
+ALTER TABLE `tbl_ics`
+ADD `iar_id` int(11) NOT NULL AFTER `ics_num`;

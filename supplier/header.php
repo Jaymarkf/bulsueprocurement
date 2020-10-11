@@ -34,6 +34,10 @@
                 "scrollY": 200,
                 "scrollX": true
             } );
+            $('.example').dataTable( {
+                "scrollY": 200,
+                "scrollX": true
+            } );
         } );
     </script>
 

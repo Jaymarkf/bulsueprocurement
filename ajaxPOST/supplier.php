@@ -26,7 +26,49 @@ if(isset($_POST['x'])){
     $xb['item_desc'] = $item_descs;
     echo json_encode($xb);
 
-}elseif(isset($_POST['b'])){
+}elseif(isset($_POST['ics_edit'])){
+
+    $ics_num_year = $_POST['ics_num_year'];
+    $ics_num_month = $_POST['ics_num_month'];
+    $ics_num_series = $_POST['ics_num_series'];
+    $iar_idd = $_POST['iar_id'];
+    $date_acquired = $_POST['date_acquired'];
+    $item_desc = $_POST['item_desc'];
+    $quantity = $_POST['quantity'];
+    $unit = $_POST['unit'];
+    $unit_cost = $_POST['unit_cost'];
+    $total_cost = $_POST['total_cost'];
+    $received_from = $_POST['received_from'];
+//    $sender_position = $_POST['sender_position'];
+    $purchase_num_month = $_POST['purchase_num_month'];
+    $purchase_num_series = $_POST['purchase_num_series'];
+    $purchase_num_year = $_POST['purchase_num_year'];
+    $received_by = $_POST['received_by'];
+    $college = $_POST['college'];
+    $received_position  = $_POST['received_position'];  //position column name in table
+    $date_issued = $_POST['date_issued'];
+    $delivered_by = $_POST['delivered_by'];
+    $fundcluster_name = $_POST['fundcluster_name'];
+    $fundcluster_year = $_POST['fundcluster_year'];
+    $fundcluster_month = $_POST['fundcluster_month'];
+    $fundcluster_series = $_POST['fundcluster_series'];
+
+
+    $ics_num_merge = $ics_num_year. ','. $ics_num_month. ','.$ics_num_series;
+    $purchase_num_merge = $purchase_num_month . ','. $purchase_num_series. ','. $purchase_num_year;
+    $fundcluster_num_merge = $fundcluster_name. ','. $fundcluster_year. ','. $fundcluster_month. ','. $fundcluster_series;
+
+
+    $qry = "update tbl_ics set ics_num='$ics_num_merge', iar_id='$iar_idd',date_acquired='$date_acquired',item_desc='$item_desc',quantity='$quantity',unit='$unit',unit_cost='$unit_cost',total='$total_cost',
+                              received_from = '$received_from', purchase_order_num = '$purchase_num_merge', received_by = '$received_by',college = '$college', `position` = '$received_position', date_issued = '$date_issued',
+                              delivered_by = '$delivered_by', fundcluster_code = '$fundcluster_num_merge' where id =".$_POST['ics_edit'];
+
+
+    /** @var TYPE_NAME $conn */
+    $conn->query($qry);
+
+}
+elseif(isset($_POST['b'])){
 
      $bb = "select * from tbl_rfq_item_details where id = ".$_POST['b'];
      $z = $conn->query($bb);
@@ -153,12 +195,23 @@ $id = $_POST['xx'];
 
 }elseif(isset($_POST['delete_employee_id'])){
     $conn->query("delete from tbl_supplier_employee where id =".$_POST['delete_employee_id']);
+}elseif(isset($_POST['sender_id'])){
+    $qx = $conn->query("select * from tbl_supplier_employee where id = ". $_POST['sender_id']);
+//    //get position
+    $fetch_employee = $qx->fetch_assoc();
+    $position_sender_id = $fetch_employee['position'];
+    $pos_query = $conn->query("select * from tbl_supplier_position where id = ".$position_sender_id);
+    $pos_fetch = $pos_query->fetch_assoc();
+    $val['pos'] = $pos_fetch['name'];
+
+    echo json_encode($val);
 }
 elseif(isset($_POST['ics_save'])){
 
     $ics_num_year = $_POST['ics_num_year'];
     $ics_num_month = $_POST['ics_num_month'];
     $ics_num_series = $_POST['ics_num_series'];
+    $iar_idd = $_POST['iar_id'];
     $date_acquired = $_POST['date_acquired'];
     $item_desc = $_POST['item_desc'];
     $quantity = $_POST['quantity'];
@@ -166,7 +219,7 @@ elseif(isset($_POST['ics_save'])){
     $unit_cost = $_POST['unit_cost'];
     $total_cost = $_POST['total_cost'];
     $received_from = $_POST['received_from'];
-    $sender_position = $_POST['sender_position'];
+//    $sender_position = $_POST['sender_position'];
     $purchase_num_month = $_POST['purchase_num_month'];
     $purchase_num_series = $_POST['purchase_num_series'];
     $purchase_num_year = $_POST['purchase_num_year'];
@@ -187,6 +240,7 @@ elseif(isset($_POST['ics_save'])){
 
 
     $qry = "insert into tbl_ics(`ics_num`,
+                            `iar_id`,
                             `date_acquired`,
                             `item_desc`,
                             `quantity`,
@@ -194,7 +248,6 @@ elseif(isset($_POST['ics_save'])){
                             `unit_cost`,
                             `total`,
                             `received_from`,
-                            `received_from_position`,
                             `purchase_order_num`,
                             `received_by`,
                             `college`,
@@ -202,7 +255,8 @@ elseif(isset($_POST['ics_save'])){
                             `date_issued`,
                             `delivered_by`,
                             `fundcluster_code`) 
-                            VALUES('$ics_num_series',
+                            VALUES('$ics_num_merge',
+                                   '$iar_idd',
                                    '$date_acquired',
                                    '$item_desc',
                                    '$quantity',
@@ -210,7 +264,6 @@ elseif(isset($_POST['ics_save'])){
                                    '$unit_cost',
                                    '$total_cost',
                                    '$received_from',
-                                   '$received_position',
                                    '$purchase_num_merge',
                                    '$received_by',
                                    '$college',
@@ -221,6 +274,7 @@ elseif(isset($_POST['ics_save'])){
 
     /** @var TYPE_NAME $conn */
     $conn->query($qry);
+
 
 }
 
