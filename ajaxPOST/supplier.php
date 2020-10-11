@@ -205,6 +205,10 @@ $id = $_POST['xx'];
     $val['pos'] = $pos_fetch['name'];
 
     echo json_encode($val);
+}elseif(isset($_POST['data_id_delete_ics'])){
+    $conn->query("delete from tbl_ics where id = ". $_POST['data_id_delete_ics']);
+
+
 }
 elseif(isset($_POST['ics_save'])){
 

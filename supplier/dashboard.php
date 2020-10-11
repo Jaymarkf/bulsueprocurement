@@ -100,7 +100,7 @@
                                                     <td style="text-align:center;"><?=str_replace(",","-",$data_ics['fundcluster_code'])?></td>
                                                     <td style="text-align:center;">
                                                         <a href="ics.php?edit=<?=$data_ics['id']?>" class="btn btn-primary"><i class="icon icon-edit"></i> Edit</a>
-                                                        <a href="#" class="btn btn-danger"><i class="icon icon-trash"></i> Delete</a>
+                                                        <button class="delete_dashboard_btn btn btn-danger" data-id="<?=$data_ics['id']?>"><i class="icon icon-trash"></i> Delete</button>
                                                         <a href="#" class="btn btn-success"><i class="icon icon-print"></i> Print</a>
                                                     </td>
                                                 </tr>
@@ -123,5 +123,26 @@
 </body>
 </html>
 <script>
+    $(document).ready(function(){
+        $('.delete_dashboard_btn').click(function(){
+            if(confirm("are you sure you want to delete this selected item?? this could not be undone")){
+                var data_id_delete_ics = $(this).attr('data-id');
 
+                $.ajax({
+                    url: '../ajaxPOST/supplier.php',
+                    type: 'post',
+                    data:{data_id_delete_ics:data_id_delete_ics},
+                    success:function(){
+                        $.jGrowl("ICS was successfully deleted!", { header: 'SUCCESS' });
+                        var delay = 3000;
+                        setTimeout(function(){ window.location = 'dashboard.php'  }, delay);
+
+                    }
+
+                });
+
+
+            }
+        });
+    });
 </script>
