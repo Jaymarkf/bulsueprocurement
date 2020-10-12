@@ -101,7 +101,7 @@
                                                     <td style="text-align:center;">
                                                         <a href="ics.php?edit=<?=$data_ics['id']?>" class="btn btn-primary"><i class="icon icon-edit"></i> Edit</a>
                                                         <button class="delete_dashboard_btn btn btn-danger" data-id="<?=$data_ics['id']?>"><i class="icon icon-trash"></i> Delete</button>
-                                                        <a href="#" class="btn btn-success"><i class="icon icon-print"></i> Print</a>
+                                                        <a href="ics-print-preview.php?preview=<?=$data_ics['id']?>" class="btn btn-success"><i class="icon icon-print"></i> Print</a>
                                                     </td>
                                                 </tr>
                                             <?php
