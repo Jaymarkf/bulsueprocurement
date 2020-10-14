@@ -19,7 +19,7 @@
                                 <a tab-index="-1" href="ics.php" class="jkl"><img src="../images/buttons/app.png" width="10%"> Inventory Custodian Form</a>
                             </li>
                             <li>
-                                <a tabindex="-1" href="dashboard.php" class="jkl"><img src="../images/buttons/ppmp.png" width="10%"> Property Acknowledgement<br/>&nbsp;Receipt</a>
+                                <a tabindex="-1" href="par.php" class="jkl"><img src="../images/buttons/ppmp.png" width="10%"> Property Acknowledgement<br/>&nbsp;Receipt</a>
                             </li>
 
 <!--                            <li class="divider"></li>-->
@@ -62,12 +62,15 @@
                             <li>
                                     <a tabindex="-1" href="manage_position.php" class="jkl"><i class="icon icon-user-md"></i> Manage Position</a>
                             </li>
+                            <li>
+                                <a tabindex="-1" href="equipment_code.php" class="jkl"><i class="icon icon-cog"></i> Manage Equipment Code</a>
+                            </li>
+
                         </ul>
                     </li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
-
             <!-- <div id="coll" class="nav-collapse collapse">
                 <ul class="nav pull-left">
                     <li class="dropdown">

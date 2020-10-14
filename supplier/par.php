@@ -3,12 +3,17 @@
 <?php include('session.php'); ?>
 <body >
 <?php include('navbar.php'); ?>
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+    }
+</style>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12" id="content">
             <div class="row-fluid">
                 <div class="pull-left">
-                    <h3><img src="../images/buttons/ppmp.png" width="5%"> Supplier  - Dashboard</h3>
+                    <h3><img src="../images/buttons/app.png" width="5%"> PAR - Property Acknowledgement Report</h3>
                     <i class="icon-calendar icon-large"></i>
                     <?php
                     $Today=date('y:m:d');
@@ -35,31 +40,14 @@
     </div>
 </div>
 <div class="container-fluid">
-    <!--    <div class="row-fluid">-->
-    <!--        <div class="span12" id="content">-->
-    <!--            <div class="row-fluid">-->
-    <!--                 block -->
-    <!--                <div  id="block_bg" class="block">-->
-    <!--                    --><?php
-    //                    $query1= mysqli_query($conn,"select * from users WHERE Year<> '0' AND Year='$Year' AND level='user' AND approved='yes'");
-    //                    $count1 = mysqli_num_rows($query1);
-    //
-    //                    ?>
-    <!--                    <div class="navbar navbar-inner block-header">-->
-    <!--                        <div class="muted pull-left"><img src="../images/buttons/ppmp.png" width="5%"><a href="dashboard.php" class="muted"> Project Procurement Managemen Plan - Dashboard</a></div>-->
-    <!--                        <div class="muted pull-right">-->
-    <!--                            Total Record(s): <span class="badge badge-info">--><?php // echo $count1;  ?><!--</span>-->
-    <!--                        </div>-->
-    <!--                    </div>-->
-    <!---->
-    <!--                   --><?php ////include('dashboard_table.php'); ?>
-    <!---->
-    <!--                </div>-->
-    <!--                 /block -->
-    <!--            </div>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <?php include('footer.php'); ?>
+    <hr>
+    <div class="text-center">
+        <h4>Add New PAR</h4>
+    </div>
+    <?php
+    include('par-form-input.php');
+    include('footer.php');
+    ?>
 </div>
 <?php include('script.php'); ?>
 </body>

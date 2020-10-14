@@ -20,7 +20,7 @@ if(isset($_POST['x'])){
         $fa = "select d.*,de.* from tbl_rfq_item_details d inner join tbl_item_details de on d.item_and_specification = de.itemdetailDesc where d.id = '$item'";
         $aa = $conn->query($fa);
         $dat = $aa->fetch_assoc();
-        $item_descs = $item_descs . '<option style="display:none" selected hidden disabled>select Item Description...</option><option value="'.$item.'">'.$dat['item_and_specification'].'</option>';
+        $item_descs = $item_descs . '<option value="'.$item.'">'.$dat['item_and_specification'].'</option>';
 
     }
     $xb['item_desc'] = $item_descs;
