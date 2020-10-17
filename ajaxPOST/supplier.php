@@ -194,7 +194,7 @@ $id = $_POST['xx'];
 
 
 }elseif(isset($_POST['delete_employee_id'])){
-    $conn->query("delete from tbl_supplier_employee where id =".$_POST['delete_employee_id']);
+    $conn->query("delete from tbl_supplier_employee where id = ".$_POST['delete_employee_id']);
 }elseif(isset($_POST['sender_id'])){
     $qx = $conn->query("select * from tbl_supplier_employee where id = ". $_POST['sender_id']);
 //    //get position
@@ -279,6 +279,14 @@ elseif(isset($_POST['ics_save'])){
     /** @var TYPE_NAME $conn */
     $conn->query($qry);
 
+
+}
+elseif(isset($_POST['idd_received_by'])){
+    $users_q = $conn->query("select * from users where user_id = ". $_POST['idd_received_by']);
+    $data = $users_q->fetch_assoc();
+    $db['college'] = $data['branch'];
+    $db['position'] = $data['position'];
+    echo json_encode($db);
 
 }
 

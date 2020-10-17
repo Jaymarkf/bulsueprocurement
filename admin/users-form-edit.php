@@ -68,7 +68,25 @@
 							<input name="username" value="<?php echo $row['username']; ?>" class="input focused span12" id="focusedInput" type="text" required>
 						  </div>
 						</div>
-						
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <label>First name</label>
+                            <input name="f_name" value="<?php echo $row['first_name']; ?>" class="input focused span12" id="focusedInput" type="text" required>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <label>Last name</label>
+                            <input name="l_name" value="<?php echo $row['last_name']; ?>" class="input focused span12" id="focusedInput" type="text" required>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <label>Position</label>
+                            <input name="position" value="<?php echo $row['position']; ?>" class="input focused span12" id="focusedInput" type="text" required>
+                        </div>
+                    </div>
 						<div class="control-group">
 						  <div class="controls">
 							<label>Password</label>
@@ -120,6 +138,9 @@ if (isset($_POST['update'])){
 	$username = $_POST['username'];
 	$password = trim($_POST['password']);
 	$approved = $_POST['approved'];
+	$f_name = $_POST['f_name'];
+	$l_name = $_POST['l_name'];
+	$position = $_POST['position'];
 	//ECHO $get_id;
 	//ECHO $branch;
 	//ECHO $level;
@@ -147,7 +168,7 @@ if (isset($_POST['update'])){
 <?php
 	}else{
 	
-		mysqli_query($conn,"update users set branch = '$branch',username = '$username',password = '$password',level='$level',approved='$approved' where user_id = '$get_id' ");
+		mysqli_query($conn,"update users set branch = '$branch',username = '$username',first_name='$f_name',last_name='$l_name',position='$position',password = '$password',level='$level',approved='$approved' where user_id = '$get_id' ");
 ?>
 		<script>
 			$.ajax({

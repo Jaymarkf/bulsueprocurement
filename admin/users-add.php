@@ -42,7 +42,6 @@
 						<label>College/Department</label>
 						<select id="new_select" name="branch" placeholder = "Branch" class="span12" required>
 							<option value="" disabled selected>Select your option</option>
-							
 						</select>
 					  </div>
 					</div>
@@ -53,6 +52,26 @@
 					   <input class="input focused span12"  name="username" id="focusedInput" type="text" placeholder = "Username" required>
 					  </div>
 					</div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <label>First name</label>
+                        <input class="input focused span12"  name="f_name" id="focusedInput" type="text" placeholder = "First name" required>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <label>Last name</label>
+                        <input class="input focused span12"  name="l_name" id="focusedInput" type="text" placeholder = "Last name" required>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <div class="controls">
+                        <label>Position</label>
+                        <input class="input focused span12"  name="position" id="focusedInput" type="text" placeholder = "Position" required>
+                    </div>
+                </div>
 
 					<div class="control-group">
 					  <div class="controls">
@@ -116,7 +135,9 @@ if( $num_row > 0 ) {
 } else {
 	$level= $_POST['level'];
 	$branch= $_POST['branch'];
-	
+	$f_name = $_POST['f_name'];
+	$l_name = $_POST['l_name'];
+	$position = $_POST['position'];
 	function generatePasswd($numAlphaUPPER=2,$numAlphaLOWER=2,$numnumeric=2,$numsymbol=2){
 		$AlphaUPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 		$AlphaLOWER = 'abcdefghijklmnopqrstuvwxyz';
@@ -133,7 +154,7 @@ if( $num_row > 0 ) {
 	
 	$password = generatePasswd();
 	
-	mysqli_query($conn,"insert into users (Year,branch,username,password,level,registered_date,approved,Remarks) values(YEAR(NOW()),'$branch','$username','$password','$level',NOW(),'yes','Registered by Admin')");
+	mysqli_query($conn,"insert into users (Year,branch,username,first_name,last_name,position,password,level,registered_date,approved,Remarks) values(YEAR(NOW()),'$branch','$username','$f_name','$l_name','$position','$password','$level',NOW(),'yes','Registered by Admin')");
 	//mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')");
 ?>
 	<script>

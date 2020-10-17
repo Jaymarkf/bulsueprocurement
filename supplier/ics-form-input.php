@@ -232,20 +232,45 @@
                 <div class="text-center padd-bottom" style="font-weight: bold;color:gray;font-family: 'Courier New', Courier, monospace">Received By</div>
             </div>
             <div class="row-fluid">
-                <input  class="span12" name="received_by" type="text"  placeholder="input your name and last name here.." value="<?php if(isset($_GET['edit'])){ echo $d['received_by']; }?>"/>
+<!--                <input  class="span12" name="received_by" type="text"  placeholder="input your name and last name here.." value="--><?php //if(isset($_GET['edit'])){ echo $d['received_by']; }?><!--"/>-->
+                <select name="received_by" class="form-control span12" id="id_received_by" required>
+                    <option style="display:none" selected hidden disabled>Select Received By</option>
+                    <?php
+
+                        $cc = $conn->query("select * from users where level = 'user' and (first_name <> '' or last_name <> '')");
+                        while($dd = $cc->fetch_assoc()){
+                            ?>
+                            <option value="<?=$dd['user_id']?>"
+                                <?php
+                                    if(isset($_GET['edit'])){
+                                        $get_id = $conn->query("select * from tbl_ics where id = ".$_GET['edit']);
+                                        $df = $get_id->fetch_assoc();
+                                        if($dd['user_id'] == $df['received_by']){
+                                            echo 'selected';
+                                        }
+                                    }
+                                ?>
+
+                            ><?php echo $dd['first_name']. ' ' . $dd['last_name']?></option>
+                    <?php
+
+                        }
+
+                    ?>
+                </select>
             </div>
             <div class="row-fluid">
                 <div class="text-center padd-bottom" style="font-weight: bold;color:gray;font-family: 'Courier New', Courier, monospace">College</div>
             </div>
             <div class="row-fluid">
-                <input  class="span12" type="text" name="college" placeholder="input college here.." value="<?php if(isset($_GET['edit'])){ echo $d['college']; }?>" required/>
+                <input  class="span12" type="text" name="college" id="id_college" placeholder="input college here.." value="<?php if(isset($_GET['edit'])){ echo $d['college']; }?>" readonly required/>
             </div>
 <!--            automate end-->
             <div class="row-fluid">
                 <div class="text-center padd-bottom" style="font-weight: bold;color:gray;font-family: 'Courier New', Courier, monospace">Position</div>
             </div>
             <div class="row-fluid">
-                <input  class="span12"  name="received_position" type="text" placeholder="input position here.." value="<?php if(isset($_GET['edit'])){ echo $d['position']; }?>" required/>
+                <input  class="span12"  name="received_position" id="id_received_position" type="text" placeholder="input position here.." value="<?php if(isset($_GET['edit'])){ echo $d['position']; }?>" readonly required/>
             </div>
             <div class="row-fluid">
                 <div class="text-center padd-bottom" style="font-weight: bold;color:gray;font-family: 'Courier New', Courier, monospace">Date Issued</div>
@@ -466,6 +491,24 @@
                 }
             });
         });
+        $('#id_received_by').change(function(){
+            var idd_received_by = $(this).val();
+            $.ajax({
+                url: '../ajaxPOST/supplier.php',
+                type: 'post',
+                data: {idd_received_by:idd_received_by},
+                dataType: 'json',
+                success:function(data){
+                    $('#id_college').val(data.college);
+                    $('#id_received_position').val(data.position);
+
+                }
+            });
+
+
+
+        });
+
 
 
 

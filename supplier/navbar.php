@@ -16,6 +16,9 @@
                         <ul class="dropdown-menu">
                             <!--  <li><a class="jkl" tabindex="-1" href="#">Profile</a></li> -->
                             <li>
+                                <a tabindex="-1" href="dashboard.php" class="jkl"><i class="icon icon-hdd"></i> Dashboard</a>
+                            </li>
+                            <li>
                                 <a tab-index="-1" href="ics.php" class="jkl"><img src="../images/buttons/app.png" width="10%"> Inventory Custodian Form</a>
                             </li>
                             <li>

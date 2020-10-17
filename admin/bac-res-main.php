@@ -32,7 +32,11 @@ if(isset($_GET['delete'])){
     $qq = "delete from tbl_generate_bac_report where date_generated = '$id'";
     /** @var TYPE_NAME $conn */
     $conn->query($qq);
-
+   ?>
+    <script>
+        window.location = "bac-res-main.php";
+    </script>
+<?php
 
 }
 if(isset($_POST['generate_submit'])){
@@ -64,20 +68,18 @@ while($dc = $rc->fetch_array()){
 
 
     }
-
-
-
-
     foreach ($data as $index => $datum) {
         $datum['array_id'] = substr($datum['array_id'],1);
         $squery = "insert into tbl_generate_bac_report (`company_id`,`item_details_id_array`,`total_price`,`date_generated`,`abc_input`)
                     values('".$datum['company_id']."','".$datum['array_id']."','".$datum['total_amount']."',NOW(),'$abc')";
         $conn->query($squery);
     }
-    echo '<pre>';
-    print_r($data);
-    echo '</pre>';
-    die();
+
+    ?>
+    <script>
+        window.location = "bac-res-main.php";
+    </script>
+    <?php
 
 }
 

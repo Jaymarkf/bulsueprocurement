@@ -164,7 +164,7 @@
                                 <td><?=$f_data['name']?></td>
                                 <td>
                                     <a href="#"  class="init_btn btn btn-primary btn-small" data-toggle="modal" data-target="#exampleModal" data-id="<?=$data['id']?>"><i class="icon icon-edit"></i>  Edit</a>
-                                    <button type="button" id="btn_delete" data-id="<?=$data['id']?>" class="btn btn-danger"><i class="icon icon-trash"></i> Delete</button>
+                                    <button type="button"  data-id="<?=$data['id']?>" class="btn_delete btn btn-danger"><i class="icon icon-trash"></i> Delete</button>
                                 </td>
                             </tr>
                     <?php
@@ -266,7 +266,7 @@
             });
         });
 
-        $('.init_btn').click(function(){
+       $('#example1').on('click','.init_btn',function(){
             var xx = $(this).attr('data-id');
             console.log(xx);
             $.ajax({
@@ -308,7 +308,7 @@
             });
         });
 
-        $('#btn_delete').click(function(){
+        $('#example1').on('click','.btn_delete',function(){
            if(confirm("are you sure you want to delete this employee?")){
                var delete_employee_id = $(this).attr('data-id');
                $.ajax({

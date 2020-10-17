@@ -197,3 +197,22 @@ INSERT INTO `equipment_code` (`id`, `code`, `description`) VALUES
 (22,	'1-08-01-020',	'COMPUTER SOFTWARE'),
 (23,	'1-06-05-140',	'TECHNICAL & SCIENTIFIC EQUIPMENT'),
 (24,	'1-06-07-010',	'FURNITURES & FIXTURES');
+
+
+CREATE TABLE `tbl_par` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `ics_num` varchar(20) NOT NULL,
+  `iar_id` int(11) NOT NULL,
+  `date_acquired` date NOT NULL,
+  `received_from` varchar(50) NOT NULL,
+  `purchase_order_num` varchar(50) NOT NULL,
+  `received_by_ids` varchar(100) NOT NULL,
+  `date_issued` date NOT NULL,
+  `delivered_by` varchar(50) NOT NULL,
+  `fundcluster_code` varchar(50) NOT NULL
+);
+
+ALTER TABLE `tbl_par`
+ADD `e_code` varchar(50) NOT NULL AFTER `iar_id`;
+
+

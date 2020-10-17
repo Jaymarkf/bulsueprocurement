@@ -129,6 +129,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 
 
@@ -173,7 +174,7 @@
 
         });
 
-        $('.edit_id').click(function(){
+        $('#example1').on('click','.edit_id',function(){
             $('#save').attr('flag','update');
             $('#save').removeClass('btn-success');
             $('#save').addClass('btn-warning');
@@ -185,7 +186,8 @@
                 '<a href="equipment_code.php" style="margin-top:10px;" class="btn btn-danger"><i class="icon icon-remove-circle"></i> Cancel</a>' +
                 '');
         });
-        $('.delete_id').click(function(e){
+
+        $("#example1").on("click", ".delete_id", function(){
             if(confirm('are you sure you want to delete this equipment?')){
                 var delete_id = $(this).attr('data-id');
                 $.ajax({
@@ -193,7 +195,6 @@
                     type: 'post',
                     data:{delete_id:delete_id},
                     success:function(){
-                        e.preventDefault();
                         $.jGrowl("Equipment was successfully deleted", { header: 'SUCCESS' });
                         var delay = 3000;
                         setTimeout(function(){ window.location = 'equipment_code.php'  }, delay);
@@ -202,6 +203,8 @@
                 });
             }
         });
+
+
 
     });
 

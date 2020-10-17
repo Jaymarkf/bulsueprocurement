@@ -167,7 +167,7 @@
 
             });
 
-            $('.edit_id').click(function(){
+            $('#example1').on('click','.edit_id',function(){
                     $('#save').attr('flag','update');
                     $('#save').removeClass('btn-success');
                     $('#save').addClass('btn-warning');
@@ -178,7 +178,9 @@
                         '<a href="manage_position.php" style="margin-top:10px;" class="btn btn-danger"><i class="icon icon-remove-circle"></i> Cancel</a>' +
                         '');
             });
-            $('.delete_id').click(function(e){
+
+
+        $('#example1').on('click','.delete_id',function(e){
                 if(confirm('are you sure you want to delete this position?')){
                     var delete_id = $(this).attr('data-id');
                     $.ajax({

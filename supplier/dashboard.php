@@ -62,56 +62,11 @@
 
     <hr>
     <div class="row-fluid">
-            <div class="block">
-
-
-                        <div class="row-fluid" style="margin-top:15px;background-color:#7d5c5c;">
-                            <div class="span12" style="color:white;font-weight: bold;padding:5px;"> <img src="../images/buttons/app.png" style="width:30px;height:30px;"/>&nbsp;&nbsp;Inventory Custodian Report</div>
-                        </div>
-                        <div class="block-content collapse in">
-                                <table cellpadding="0" cellspacing="0" border="0" class="" id="example1">
-                                    <thead>
-                                        <tr>
-                                            <th>ICS No. :</th>
-                                            <th>Item Description </th>
-                                            <th>Quantity</th>
-                                            <th>Unit Cost</th>
-                                            <th>Total Cost</th>
-                                            <th>Fund Cluster Code</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                        //get ics table data
-                                        $qics = $conn->query("select * from tbl_ics");
-                                        while($data_ics = $qics->fetch_assoc()){
-                                            //get item
-                                            $item_query = $conn->query("select * from tbl_rfq_item_details where id =" . $data_ics['item_desc']);
-                                            //fetch
-                                            $f_item  = $item_query->fetch_assoc();
-                                            ?>
-                                                <tr>
-                                                    <td style="text-align:center;"><?php echo str_replace(",","-",$data_ics['ics_num'])?></td>
-                                                    <td style="text-align:center;"><?=$f_item['item_and_specification']?></td>
-                                                    <td style="text-align:center;"><?=$f_item['quantity_and_unit']?></td>
-                                                    <td style="text-align:center;"><?=$f_item['unit_price']?></td>
-                                                    <td style="text-align:center;"><?=$f_item['total_price']?></td>
-                                                    <td style="text-align:center;"><?=str_replace(",","-",$data_ics['fundcluster_code'])?></td>
-                                                    <td style="text-align:center;">
-                                                        <a href="ics.php?edit=<?=$data_ics['id']?>" class="btn btn-primary"><i class="icon icon-edit"></i> Edit</a>
-                                                        <button class="delete_dashboard_btn btn btn-danger" data-id="<?=$data_ics['id']?>"><i class="icon icon-trash"></i> Delete</button>
-                                                        <a href="ics-print-preview.php?preview=<?=$data_ics['id']?>" class="btn btn-success"><i class="icon icon-print"></i> Print</a>
-                                                    </td>
-                                                </tr>
-                                            <?php
-                                        }
-                                    ?>
-                                    </tbody>
-                                </table>
-                        </div>
-
-            </div>
+            <?php include('ics_dashboard_table.php'); ?>
+    </div>
+    <hr>
+    <div class="row-fluid">
+        <?php include('par_dashboard_table.php'); ?>
     </div>
 
 
@@ -144,5 +99,29 @@
 
             }
         });
+
+        $('.delete_dashboard_btn_par').click(function(){
+            if(confirm("are you sure you want to delete this selected item?? this could not be undone")){
+                var data_id_delete_par = $(this).attr('data-id');
+
+                $.ajax({
+                    url: '../ajaxPOST/supplier_2.php',
+                    type: 'post',
+                    data:{data_id_delete_par:data_id_delete_par},
+                    success:function(){
+                        $.jGrowl("PAR was successfully deleted!", { header: 'SUCCESS' });
+                        var delay = 3000;
+                        setTimeout(function(){ window.location = 'dashboard.php'  }, delay);
+
+                    }
+
+                });
+
+
+            }
+        });
+
+
+
     });
 </script>
