@@ -17,16 +17,59 @@ if(isset($_POST['x'])){
 
     foreach ($items as $index => $item) {
 
-        $fa = "select d.*,de.* from tbl_rfq_item_details d inner join tbl_item_details de on d.item_and_specification = de.itemdetailDesc where d.id = '$item'";
+        $fa =  "select d.*,de.* from tbl_rfq_item_details d 
+                inner join tbl_item_details de on d.item_and_specification = de.itemdetailDesc  
+                where  d.id = '$item'";
         $aa = $conn->query($fa);
         $dat = $aa->fetch_assoc();
-        $item_descs = $item_descs . '<option value="'.$item.'">'.$dat['item_and_specification'].'</option>';
+
+            if($dat['unit_price'] < 15000){
+                $item_descs = $item_descs . '<option value="'.$item.'">'.$dat['item_and_specification'].'</option>';
+            }
 
     }
     $xb['item_desc'] = $item_descs;
+//    $xb['item_desc'] = $fa;
     echo json_encode($xb);
 
-}elseif(isset($_POST['ics_edit'])){
+} elseif(isset($_POST['xpar'])){
+
+    $dds = "select * from tbl_iar_items iar
+           inner join tbl_po po on iar.poID = po.id
+           inner join tbl_generate_bac_report bac on po.bac_id = bac.id
+           where iar.id = ".$_POST['xpar'];
+    $ffs = $conn->query($dds);
+    $exs = $ffs->fetch_assoc();
+    //get item list
+    $itemss = explode(",",$exs['item_details_id_array']);
+    $xbs = array();
+    $item_descss = '<option style="display:none" selected hidden disabled>select Item Description...</option>';
+
+    foreach ($itemss as $indexs => $items) {
+
+        $fas =  "select d.*,de.* from tbl_rfq_item_details d 
+                inner join tbl_item_details de on d.item_and_specification = de.itemdetailDesc  
+                where  d.id = '$items'";
+        $aas = $conn->query($fas);
+        $dats = $aas->fetch_assoc();
+
+        if($dats['unit_price'] > 14999){
+            $item_descss = $item_descss . '<option value="'.$items.'">'.$dats['item_and_specification'].'</option>';
+        }
+
+    }
+    $xb['item_desc'] = $item_descss;
+//    $xb['item_desc'] = $fa;
+    echo json_encode($xb);
+
+}
+
+
+
+
+
+
+elseif(isset($_POST['ics_edit'])){
 
     $ics_num_year = $_POST['ics_num_year'];
     $ics_num_month = $_POST['ics_num_month'];
@@ -192,23 +235,20 @@ $id = $_POST['xx'];
     $position = $_POST['edit_position'];
     $conn->query("update tbl_supplier_employee set first_name = '$fname', middle_name = '$mname', last_name = '$lname', college='$college', position='$position' where id= '$id'");
 
-
 }elseif(isset($_POST['delete_employee_id'])){
     $conn->query("delete from tbl_supplier_employee where id = ".$_POST['delete_employee_id']);
 }elseif(isset($_POST['sender_id'])){
-    $qx = $conn->query("select * from tbl_supplier_employee where id = ". $_POST['sender_id']);
+    $qx = $conn->query("select * from tbl_supply_office_employee where id = ". $_POST['sender_id']);
 //    //get position
     $fetch_employee = $qx->fetch_assoc();
     $position_sender_id = $fetch_employee['position'];
-    $pos_query = $conn->query("select * from tbl_supplier_position where id = ".$position_sender_id);
+    $pos_query = $conn->query("select * from tbl_supply_office_employee_position where id = ".$position_sender_id);
     $pos_fetch = $pos_query->fetch_assoc();
     $val['pos'] = $pos_fetch['name'];
 
     echo json_encode($val);
 }elseif(isset($_POST['data_id_delete_ics'])){
     $conn->query("delete from tbl_ics where id = ". $_POST['data_id_delete_ics']);
-
-
 }
 elseif(isset($_POST['ics_save'])){
 
@@ -282,10 +322,18 @@ elseif(isset($_POST['ics_save'])){
 
 }
 elseif(isset($_POST['idd_received_by'])){
-    $users_q = $conn->query("select * from users where user_id = ". $_POST['idd_received_by']);
+    $users_q = $conn->query("select * from tbl_supplier_employee where id = ". $_POST['idd_received_by']);
     $data = $users_q->fetch_assoc();
-    $db['college'] = $data['branch'];
-    $db['position'] = $data['position'];
+    $college_id = $data['college'];
+    $position_id = $data['position'];
+    $x = $conn->query("select * from tbl_supplier_position where id = ". $position_id);
+    $xf = $x->fetch_assoc();
+    $db['position'] = $xf['name'];
+
+    $cf = $conn->query("select * from tbl_branch where level <> 'administrator' and level <> 'supplier' and branchID = ". $college_id);
+    $cff = $cf->fetch_assoc();
+    $db['college'] = $cff['branch'];
+
     echo json_encode($db);
 
 }

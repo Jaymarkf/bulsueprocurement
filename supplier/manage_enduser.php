@@ -14,7 +14,7 @@
         <div class="span12" id="content">
             <div class="row-fluid">
                 <div class="pull-left">
-                    <h3><i class="icon icon-large icon-user"></i> &nbsp;&nbsp;Manage Employee</h3>
+                    <h3><i class="icon icon-large icon-user"></i> &nbsp;&nbsp;Manage End User</h3>
                     <i class="icon-calendar icon-large"></i>
                     <?php
                     $Today=date('y:m:d');
@@ -48,7 +48,7 @@
                 <!-- block -->
                 <div class="block">
                     <div class="navbar navbar-inner block-header">
-                        <div class="muted pull-left"><i class="icon-plus-sign icon-large"></i> Add Employee</div>
+                        <div class="muted pull-left"><i class="icon-plus-sign icon-large"></i> Add End User</div>
                     </div>
                     <div class="block-content collapse in">
                         <div class="span12">
@@ -131,7 +131,7 @@
         <div class="span9">
             <div class="block">
                 <div class="row-fluid" style="margin-top:15px;background-color:#7d5c5c;">
-                    <div class="span12" style="color:white;font-weight: bold;padding:5px;"> <i class="icon icon-large icon-user" style="color:white;"></i>&nbsp;&nbsp;Employee</div>
+                    <div class="span12" style="color:white;font-weight: bold;padding:5px;"> <i class="icon icon-large icon-user" style="color:white;"></i>&nbsp;&nbsp;End User</div>
                 </div>
                 <div class="block-content collapse in">
                     <table cellpadding="0" cellspacing="0" border="0" class="table" id="example1">
@@ -190,7 +190,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Employee</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edit End User</h5>
             </div>
             <div class="modal-body">
                 <div class="row-fluid">
@@ -257,9 +257,9 @@
                     // console.log(ss);
                     // console.log(data);
                     e.preventDefault();
-                    $.jGrowl("New Employee was successfully added!.", { header: 'SUCCESS' });
+                    $.jGrowl("New End User was successfully added!.", { header: 'SUCCESS' });
                     var delay = 3000;
-                    setTimeout(function(){ window.location = 'manage_employee.php'  }, delay);
+                    setTimeout(function(){ window.location = 'manage_enduser.php'  }, delay);
 
                 }
 
@@ -301,24 +301,24 @@
                 success:function(){
                     $('.modal').hide();
                     e.preventDefault();
-                    $.jGrowl("Employee was successfully Edited!.", { header: 'SUCCESS' });
+                    $.jGrowl("End User was successfully Edited!.", { header: 'SUCCESS' });
                     var delay = 3000;
-                    setTimeout(function(){ window.location = 'manage_employee.php'  }, delay);
+                    setTimeout(function(){ window.location = 'manage_enduser.php'  }, delay);
                 }
             });
         });
 
         $('#example1').on('click','.btn_delete',function(){
-           if(confirm("are you sure you want to delete this employee?")){
+           if(confirm("are you sure you want to delete this End User?")){
                var delete_employee_id = $(this).attr('data-id');
                $.ajax({
                    url: '../ajaxPOST/supplier.php',
                    type: 'post',
                    data:{delete_employee_id:delete_employee_id},
                    success:function(){
-                       $.jGrowl("Employee was successfully Deleted!.", { header: 'SUCCESS' });
+                       $.jGrowl("End User was successfully Deleted!.", { header: 'SUCCESS' });
                        var delay = 3000;
-                       setTimeout(function(){ window.location = 'manage_employee.php'  }, delay);
+                       setTimeout(function(){ window.location = 'manage_enduser.php'  }, delay);
                    }
                });
            }

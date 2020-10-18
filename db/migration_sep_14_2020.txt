@@ -216,3 +216,15 @@ ALTER TABLE `tbl_par`
 ADD `e_code` varchar(50) NOT NULL AFTER `iar_id`;
 
 
+CREATE TABLE `tbl_supply_office_employee_position` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(50) NOT NULL
+);
+
+CREATE TABLE `tbl_supply_office_employee` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `first_name` varchar(50) NOT NULL,
+  `middle_name` varchar(50) NOT NULL,
+  `last_name` varchar(50) NOT NULL,
+  `position` int(11) NOT NULL
+);

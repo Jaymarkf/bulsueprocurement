@@ -60,14 +60,21 @@
                         <ul class="dropdown-menu">
                             <!--  <li><a class="jkl" tabindex="-1" href="#">Profile</a></li> -->
                             <li>
-                                <a tab-index="-1" href="manage_employee.php" class="jkl"><i class="icon icon-user"></i> Manage Employee</a>
+                                <a tab-index="-1" href="manage_enduser.php" class="jkl"><i class="icon icon-user text-warning"></i> Manage End User</a>
                             </li>
                             <li>
-                                    <a tabindex="-1" href="manage_position.php" class="jkl"><i class="icon icon-user-md"></i> Manage Position</a>
+                                    <a tabindex="-1" href="enduser_position.php" class="jkl"><i class="icon icon-user-md  text-success"></i> Manage End User Position</a>
                             </li>
                             <li>
-                                <a tabindex="-1" href="equipment_code.php" class="jkl"><i class="icon icon-cog"></i> Manage Equipment Code</a>
+                                <a tabindex="-1" href="equipment_code.php" class="jkl"><i class="icon icon-cog" style="color:#702828;"></i> Manage Equipment Code</a>
                             </li>
+                            <li>
+                                <a tabindex="-1" href="manage_supply_office_employee.php" class="jkl"><i class="icon icon-user text-warning" style="color:#fdf900;"></i> Manage Supply Employee</a>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="manage_supply_office_employee_position.php" class="jkl"><i class="icon icon-user-md text-warning" style="color:#070707;"></i> Manage Supply Position</a>
+                            </li>
+
 
                         </ul>
                     </li>

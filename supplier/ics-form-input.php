@@ -33,16 +33,18 @@
                 }
             //check if edit and select the selected data indatabase
 
-            $html = $html . '<option value="'.$val.'" '.$selected.'>'.$fetch_desc['item_and_specification'].'</option>';
+            if($fetch_desc['unit_price'] < 15000){
+                $html = $html . '<option value="'.$val.'" '.$selected.'>'.$fetch_desc['item_and_specification'].'</option>';
+            }
+
 
         }
 
 //        print_r($ics_num);
 //        die();
         //get position and college of employee
-        $emp = $conn->query("select emp.*,pos.*,col.* from tbl_supplier_employee emp 
-                                    inner join tbl_supplier_position pos on emp.position = pos.id
-                                    inner join tbl_branch col on emp.college = col.branchID
+        $emp = $conn->query("select emp.*,pos.* from tbl_supply_office_employee emp 
+                                    inner join tbl_supply_office_employee_position pos on emp.position = pos.id                              
                                     where emp.id=".$d['received_from']);
 
         $emp_ex = $emp->fetch_assoc();
@@ -60,6 +62,9 @@
 
 
 ?>
+
+
+
 <form id="ff" method="POST" onsubmit="this.preventDefault(); x()">
 <div class="container-fluid">
     <div class="row-fluid">
@@ -70,7 +75,9 @@
                 </div>
                 <div class="row-fluid">
                     <div class="span4">
-                        <input type="text" id="ics_num_year" name="ics_num_year" value="<?php if(isset($_GET['edit'])){ echo $ics_num[0]; }?>" class="flag" style="display:block;margin-bottom:0;"placeholder="input year here..."/ required>
+                        <input type="text" id="ics_num_year" name="ics_num_year" value="<?php if(isset($_GET['edit'])){ echo $ics_num[0]; }?>"
+                               maxlength="4"
+                               class="flag" style="display:block;margin-bottom:0;"placeholder="input year here..."   required/>
                         <div class="text-left" style="margin:0;padding:0;">
                             <small class="js_number_only" style="color:red"></small>
                         </div>
@@ -82,7 +89,7 @@
                         </div>
                     </div>
                     <div class="span4">
-                        <input type="text" name="ics_num_series" class="flag" placeholder="input No. Series here..." value="<?php if(isset($_GET['edit'])){ echo $ics_num[2]; }?>" required/>
+                        <input type="text" name="ics_num_series" class="flag" placeholder="input No. Series here..." value="<?php if(isset($_GET['edit'])){ echo $ics_num[2]; }?>" maxlength="3" required/>
                         <div class="text-left" style="margin:0;padding:0;">
                             <small class="js_number_only" style="color:red"></small>
                         </div>
@@ -172,7 +179,7 @@
                         <select class="span12 form-control" name="received_from" id="sender_id" required>
                             <option style="display:none" selected hidden>Select Sender</option>
                             <?php
-                                $qq = $conn->query("select * from tbl_supplier_employee");
+                                $qq = $conn->query("select * from tbl_supply_office_employee");
                                 while($dc = $qq->fetch_assoc()){
                                     $name = $dc['first_name']. ' ' . $dc['middle_name'] . ' ' . $dc['last_name'];
 
@@ -215,13 +222,13 @@
                     </div>
                 </div>
                 <div class="span4">
-                    <input type="text" class="flag" name="purchase_num_series" placeholder="input no. Series here" value="<?php if(isset($_GET['edit'])){ echo $p_order[1]; }?>"required/>
+                    <input type="text" class="flag" name="purchase_num_series" placeholder="input no. Series here" value="<?php if(isset($_GET['edit'])){ echo $p_order[1]; }?>"maxlength="3" required/>
                     <div class="text-left" style="margin:0;padding:0;">
                         <small class="js_number_only" style="color:red"></small>
                     </div>
                 </div>
                 <div class="span4">
-                    <input type="text" class="flag" name="purchase_num_year" placeholder="input year here..." value="<?php if(isset($_GET['edit'])){ echo $p_order[2]; }?>" required/>
+                    <input type="text" class="flag" name="purchase_num_year" placeholder="input year here..." value="<?php if(isset($_GET['edit'])){ echo $p_order[2]; }?>" maxlength="4" required/>
                     <div class="text-left" style="margin:0;padding:0;">
                         <small class="js_number_only" style="color:red"></small>
                     </div>
@@ -237,15 +244,15 @@
                     <option style="display:none" selected hidden disabled>Select Received By</option>
                     <?php
 
-                        $cc = $conn->query("select * from users where level = 'user' and (first_name <> '' or last_name <> '')");
+                        $cc = $conn->query("select * from tbl_supplier_employee");
                         while($dd = $cc->fetch_assoc()){
                             ?>
-                            <option value="<?=$dd['user_id']?>"
+                            <option value="<?=$dd['id']?>"
                                 <?php
                                     if(isset($_GET['edit'])){
                                         $get_id = $conn->query("select * from tbl_ics where id = ".$_GET['edit']);
                                         $df = $get_id->fetch_assoc();
-                                        if($dd['user_id'] == $df['received_by']){
+                                        if($dd['id'] == $df['received_by']){
                                             echo 'selected';
                                         }
                                     }
@@ -310,7 +317,7 @@
                     </select>
                 </div>
                 <div class="span3">
-                    <input type="text" class="text-center  flag" name="fundcluster_year" style="width:70%" placeholder="input year here..."  value="<?php if(isset($_GET['edit'])){ echo $fundcluster[1]; }?>" required/>
+                    <input type="text" class="text-center  flag" name="fundcluster_year" style="width:70%" placeholder="input year here..."  value="<?php if(isset($_GET['edit'])){ echo $fundcluster[1]; }?>" maxlength="4" required/>
                     <div class="text-left" style="margin:0;padding:0;">
                         <small class="js_number_only" style="color:red"></small>
                     </div>
@@ -322,7 +329,7 @@
                     </div>
                 </div>
                 <div class="span3 text-right">
-                    <input type="text" class="text-center flag" name="fundcluster_series" style="width:70%" placeholder="No. Series"  value="<?php if(isset($_GET['edit'])){ echo $fundcluster[3]; }?>" required/>
+                    <input type="text" class="text-center flag" name="fundcluster_series" style="width:70%" placeholder="No. Series"  value="<?php if(isset($_GET['edit'])){ echo $fundcluster[3]; }?>"maxlength="3" required/>
                     <div class="text-left" style="margin:0;padding:0;">
                         <small class="js_number_only" style="color:red"></small>
                     </div>
@@ -486,7 +493,6 @@
                 data:{sender_id:sender_id},
                 dataType: 'json',
                 success:function(e){
-
                     $('#sender_pisition').val(e.pos);
                 }
             });

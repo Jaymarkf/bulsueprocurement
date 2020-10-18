@@ -22,7 +22,7 @@
             $qics = $conn->query("select * from tbl_par");
             while($data_ics = $qics->fetch_assoc()){
                 //get full name of supplier
-                $ss = $conn->query("select * from tbl_supplier_employee where id = ". $data_ics['received_from']);
+                $ss = $conn->query("select * from tbl_supply_office_employee where id = ". $data_ics['received_from']);
                 $fetch_full_name = $ss->fetch_assoc();
 
                 //get total price of item

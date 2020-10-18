@@ -156,3 +156,98 @@ if(isset($_POST['data_id_delete_par'])){
     $conn->query("delete from tbl_par_items where par_id = " . $_POST['data_id_delete_par']);
 }
 
+if(isset($_POST['p_name'])){
+    //    echo 'aaa';
+    //check if exist
+    if(isset($_POST['update_id_supply']) && strlen($_POST['update_id_supply']) != 0){
+
+
+        $cqry = "select * from tbl_supply_office_employee_position where name = '" . $_POST['p_name'] . "'";
+        $ex = $conn->query($cqry);
+        if ($ex->num_rows > 0) {
+            $res['flag'] = 'false';
+        } else {
+            $res['flag'] = 'true';
+            $qry = $conn->query("update tbl_supply_office_employee_position set name='".$_POST['p_name']."' where id = " .$_POST['update_id_supply'].";");
+        }
+        echo json_encode($res);
+
+    }else{
+
+        $cqry = "select * from tbl_supply_office_employee_position where name = '" . $_POST['p_name'] . "'";
+        $ex = $conn->query($cqry);
+        if ($ex->num_rows > 0) {
+            $res['flag'] = 'false';
+        } else {
+            $res['flag'] = 'true';
+            $qry = $conn->query("insert into tbl_supply_office_employee_position (`name`) values('" . $_POST['p_name'] . "')");
+        }
+
+        echo json_encode($res);
+    }
+
+}
+
+if(isset($_POST['delete_id_position_supply_employee'])){
+    $conn->query("delete from tbl_supply_office_employee_position where id = ".$_POST['delete_id_position_supply_employee']);
+}
+
+
+//supply office employee add new
+if(isset($_POST['e_fname_supply'])){
+    $fname = $_POST['e_fname_supply'];
+    $mname = $_POST['e_middle_initial_supply'];
+    $lname = $_POST['e_lname_supply'];
+    $position = $_POST['e_position_supply'];
+    $conn->query("insert into tbl_supply_office_employee (`first_name`,`middle_name`,`last_name`,`position`) values('$fname','$mname','$lname','$position')");
+    echo mysqli_error($conn);
+}
+
+//show modal edit office employee
+if(isset($_POST['xx'])){
+
+    $id = $_POST['xx'];
+    $val['e_id'] = $id;
+    //retrieve  employee
+    $v = $conn->query("select * from tbl_supply_office_employee where id = " .$id);
+    $e = $v->fetch_assoc();
+    $val['fname'] = $e['first_name'];
+    $val['mname'] = $e['middle_name'];
+    $val['lname'] = $e['last_name'];
+    $position_id = $e['position']; //position id
+
+    $get_position = $conn->query("select * from tbl_supply_office_employee_position");
+
+    $val['positions'] = '';
+
+    while($position_data = $get_position->fetch_assoc()){
+
+        if($position_data['id'] == $position_id){
+            $pcheck = 'selected';
+        }else{
+            $pcheck = '';
+        }
+
+        $val['positions'] = $val['positions'] . '<option value="'.$position_data['id'].'" '.$pcheck.'>'.$position_data['name'].'</option>' ;
+
+    }
+
+
+
+    echo json_encode($val);
+
+}
+//save edit employee supply office
+if(isset($_POST['e_id_supply'])){
+    $id = $_POST['e_id_supply'];
+    $fname = $_POST['edit_fname_supply'];
+    $mname = $_POST['edit_mname_supply'];
+    $lname = $_POST['edit_lname_supply'];
+    $position = $_POST['edit_position_supply'];
+    $conn->query("update tbl_supply_office_employee set first_name = '$fname', middle_name = '$mname', last_name = '$lname', position='$position' where id= '$id'");
+
+//echo "update tbl_supply_office_employee set first_name = '$fname', middle_name = '$mname', last_name = '$lname', position='$position' where id= '$id'";
+}
+
+
+

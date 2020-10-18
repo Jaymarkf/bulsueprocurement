@@ -16,7 +16,7 @@
         <div class="span12" id="content">
             <div class="row-fluid">
                 <div class="pull-left">
-                    <h3><i class="icon icon-large icon-user-md"></i> &nbsp;&nbsp;Manage Position</h3>
+                    <h3><i class="icon icon-large icon-user-md"></i> &nbsp;&nbsp;Manage Supply Office Employee Position</h3>
                     <i class="icon-calendar icon-large"></i>
                     <?php
                     $Today=date('y:m:d');
@@ -60,7 +60,7 @@
                                     <div class="controls">
                                         <label>Position Name</label>
                                         <input type="text" placeholder="position" name="p_name" id="p_name" required/>
-                                        <input type="hidden" id="update_id" name="update_id"/>
+                                        <input type="hidden" id="update_id_supply" name="update_id_supply"/>
                                     </div>
                                 </div>
 
@@ -101,20 +101,20 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            $q = $conn->query("select * from tbl_supplier_position");
-                                while($x = $q->fetch_assoc()){
-                                    ?>
-                                        <tr>
-                                            <td><?=$x['name']?></td>
-                                            <td>
-                                                <button class="edit_id btn btn-info" data-id="<?=$x['id']?>"> Edit</button>
-                                                <button class="delete_id btn btn-danger" data-id="<?=$x['id']?>"> Delete</button>
-                                            </td>
-                                        </tr>
-                                    <?php
-                                }
+                        <?php
+                        $q = $conn->query("select * from tbl_supply_office_employee_position");
+                        while($x = $q->fetch_assoc()){
                             ?>
+                            <tr>
+                                <td><?=$x['name']?></td>
+                                <td>
+                                    <button class="edit_id btn btn-info" data-id="<?=$x['id']?>"> Edit</button>
+                                    <button class="delete_id btn btn-danger" data-id="<?=$x['id']?>"> Delete</button>
+                                </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
                         </tbody>
                         <tfoot>
 
@@ -135,68 +135,69 @@
 <script>
     $(document).ready(function(){
 
-            $('#add_position').submit(function(e){
-                e.preventDefault();
-                var names = $(this).serialize();
-                $.ajax({
-                    url: '../ajaxPOST/supplier.php',
-                    type: 'POST',
-                    data: names,
-                    dataType:'json',
-                    success:function(x){
-                        e.preventDefault();
-                        console.log(x.flag);
-                        if(x.flag == 'false'){
-                            $('#d').fadeIn(500);
-                            $('#d').fadeOut(5000);
-                        }else if(x.flag == 'true' && $('#save').attr('flag') != 'update'){
-                            $.jGrowl("New Position was successfully added", { header: 'SUCCESS' });
-                            var delay = 3000;
-                            setTimeout(function(){ window.location = 'manage_position.php'  }, delay);
+        $('#add_position').submit(function(e){
+            e.preventDefault();
+            var names = $(this).serialize();
+            // console.log(names);
+            $.ajax({
+                url: '../ajaxPOST/supplier_2.php',
+                type: 'POST',
+                data: names,
+                dataType:'json',
+                success:function(x){
+                    e.preventDefault();
+                    // console.log(names);
+                    if(x.flag == 'false'){
+                        $('#d').fadeIn(500);
+                        $('#d').fadeOut(5000);
+                    }else if(x.flag == 'true' && $('#save').attr('flag') != 'update'){
+                        $.jGrowl("New Position was successfully added", { header: 'SUCCESS' });
+                        var delay = 3000;
+                        setTimeout(function(){ window.location = 'manage_supply_office_employee_position.php'  }, delay);
 
-                        }else if(x.flag == 'true' && $('#save').attr('flag') == 'update'){
-                            $.jGrowl("Position was successfully edited", { header: 'SUCCESS' });
-                            var delay = 3000;
-                            setTimeout(function(){ window.location = 'manage_position.php'  }, delay);
-
-                        }
+                    }else if(x.flag == 'true' && $('#save').attr('flag') == 'update'){
+                        $.jGrowl("Position was successfully edited", { header: 'SUCCESS' });
+                        var delay = 3000;
+                        setTimeout(function(){ window.location = 'manage_supply_office_employee_position.php'  }, delay);
 
                     }
-                });
 
-
+                }
             });
 
-            $('#example1').on('click','.edit_id',function(){
-                    $('#save').attr('flag','update');
-                    $('#save').removeClass('btn-success');
-                    $('#save').addClass('btn-warning');
-                    $('#save').html('<i class="icon icon-save"></i> Update');
-                    $('#p_name').val($(this).parent().prev().html());
-                    $('#update_id').val($(this).attr('data-id'));
-                    $('#cancel_btn').html('' +
-                        '<a href="manage_position.php" style="margin-top:10px;" class="btn btn-danger"><i class="icon icon-remove-circle"></i> Cancel</a>' +
-                        '');
-            });
+
+        });
+
+        $('#example1').on('click','.edit_id',function(){
+            $('#save').attr('flag','update');
+            $('#save').removeClass('btn-success');
+            $('#save').addClass('btn-warning');
+            $('#save').html('<i class="icon icon-save"></i> Update');
+            $('#p_name').val($(this).parent().prev().html());
+            $('#update_id_supply').val($(this).attr('data-id'));
+            $('#cancel_btn').html('' +
+                '<a href="manage_supply_office_employee_position.php" style="margin-top:10px;" class="btn btn-danger"><i class="icon icon-remove-circle"></i> Cancel</a>' +
+                '');
+        });
 
 
         $('#example1').on('click','.delete_id',function(e){
-                if(confirm('are you sure you want to delete this position?')){
-                    var delete_id = $(this).attr('data-id');
-                    $.ajax({
-                        url: '../ajaxPOST/supplier.php',
-                        type: 'post',
-                        data:{delete_id:delete_id},
-                        success:function(){
-                            e.preventDefault();
-                            $.jGrowl("Position was successfully deleted", { header: 'SUCCESS' });
-                            var delay = 3000;
-                            setTimeout(function(){ window.location = 'manage_position.php'  }, delay);
-                        }
+            if(confirm('are you sure you want to delete this position?')){
+                var delete_id_position_supply_employee = $(this).attr('data-id');
+                $.ajax({
+                    url: '../ajaxPOST/supplier_2.php',
+                    type: 'post',
+                    data:{delete_id_position_supply_employee:delete_id_position_supply_employee},
+                    success:function(){
+                        e.preventDefault();
+                        $.jGrowl("Position was successfully deleted", { header: 'SUCCESS' });
+                        var delay = 3000;
+                        setTimeout(function(){ window.location = 'manage_supply_office_employee_position.php'  }, delay);
+                    }
 
-                    });
-                }
-            });
+                });
+            }
+        });
 
     });
 </script>

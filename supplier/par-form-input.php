@@ -11,6 +11,7 @@ $res = $qry_par->fetch_assoc();
 $ics_num = explode(",",$res['ics_num']);
 $p_num = explode(",",$res['purchase_order_num']);
 $f_code = explode(",",$res['fundcluster_code']);
+$sender_position = '';
 }
 ?>
 <form id="ff" method="POST" onsubmit="this.preventDefault(); x()">
@@ -23,7 +24,7 @@ $f_code = explode(",",$res['fundcluster_code']);
                     </div>
                     <div class="row-fluid">
                         <div class="span4">
-                            <input type="text" id="ics_num_year" name="ics_num_year" value="<?php if(isset($_GET['edit'])){ echo $ics_num[0];  } ?>" class="flag" style="display:block;margin-bottom:0;" placeholder="input year here..."/ required>
+                            <input type="text" id="ics_num_year" maxlength="4" name="ics_num_year" value="<?php if(isset($_GET['edit'])){ echo $ics_num[0];  } ?>" class="flag" style="display:block;margin-bottom:0;" placeholder="input year here..."/ required>
                             <div class="text-left" style="margin:0;padding:0;">
                                 <small class="js_number_only" style="color:red"></small>
                             </div>
@@ -35,7 +36,7 @@ $f_code = explode(",",$res['fundcluster_code']);
                             </div>
                         </div>
                         <div class="span4">
-                            <input type="text" name="ics_num_series" value="<?php if(isset($_GET['edit'])){ echo $ics_num[2];  } ?>" class="flag" placeholder="input No. Series here..."  required/>
+                            <input type="text" name="ics_num_series" value="<?php if(isset($_GET['edit'])){ echo $ics_num[2];  } ?>" class="flag" placeholder="input No. Series here..." maxlength="3" required/>
                             <div class="text-left" style="margin:0;padding:0;">
                                 <small class="js_number_only" style="color:red"></small>
                             </div>
@@ -82,7 +83,7 @@ $f_code = explode(",",$res['fundcluster_code']);
                             <select class="span12 form-control" name="received_from" id="sender_id" required>
                                 <option style="display:none" selected hidden>Select Sender</option>
                                 <?php
-                                $qq = $conn->query("select * from tbl_supplier_employee");
+                                $qq = $conn->query("select * from tbl_supply_office_employee");
                                 while($dc = $qq->fetch_assoc()){
                                     $name = $dc['first_name']. ' ' . $dc['middle_name'] . ' ' . $dc['last_name'];
 
@@ -92,7 +93,7 @@ $f_code = explode(",",$res['fundcluster_code']);
                                         if(isset($_GET['edit'])){
                                             if($dc['id'] == $res['received_from']){
                                                 echo 'selected';
-                                                $c_pos = $conn->query("select * from tbl_supplier_position where id = ". $dc['position']);
+                                                $c_pos = $conn->query("select * from tbl_supply_office_employee_position where id = ". $dc['position']);
                                                 $res_post = $c_pos->fetch_assoc();
                                                 $sender_position = $res_post['name'];
                                             }
@@ -128,13 +129,13 @@ $f_code = explode(",",$res['fundcluster_code']);
                         </div>
                     </div>
                     <div class="span4">
-                        <input type="text" class="flag" name="purchase_num_series"  placeholder="input no. Series here" value="<?php if(isset($_GET['edit'])){ echo $p_num[1]; }?>"required/>
+                        <input type="text" class="flag" name="purchase_num_series"  placeholder="input no. Series here" value="<?php if(isset($_GET['edit'])){ echo $p_num[1]; }?>" maxlength="3" required/>
                         <div class="text-left" style="margin:0;padding:0;">
                             <small class="js_number_only" style="color:red"></small>
                         </div>
                     </div>
                     <div class="span4">
-                        <input type="text" class="flag" name="purchase_num_year" placeholder="input year here..." value="<?php if(isset($_GET['edit'])){ echo $p_num[2]; }?>" required/>
+                        <input type="text" class="flag" name="purchase_num_year" placeholder="input year here..." value="<?php if(isset($_GET['edit'])){ echo $p_num[2]; }?>" maxlength="4" required/>
                         <div class="text-left" style="margin:0;padding:0;">
                             <small class="js_number_only" style="color:red"></small>
                         </div>
@@ -179,7 +180,7 @@ $f_code = explode(",",$res['fundcluster_code']);
                         </select>
                     </div>
                     <div class="span3">
-                        <input type="text" class="text-center  flag" name="fundcluster_year" style="width:70%" placeholder="input year here..."  value="<?php if(isset($_GET['edit'])){ echo $f_code[1]; }?>" required/>
+                        <input type="text" class="text-center  flag" name="fundcluster_year" style="width:70%" placeholder="input year here..."  value="<?php if(isset($_GET['edit'])){ echo $f_code[1]; }?>" maxlength="4" required/>
                         <div class="text-left" style="margin:0;padding:0;">
                             <small class="js_number_only" style="color:red"></small>
                         </div>
@@ -191,7 +192,7 @@ $f_code = explode(",",$res['fundcluster_code']);
                         </div>
                     </div>
                     <div class="span3 text-right">
-                        <input type="text" class="text-center flag" name="fundcluster_series" style="width:70%" placeholder="No. Series"  value="<?php if(isset($_GET['edit'])){ echo $f_code[3]; }?>" required/>
+                        <input type="text" class="text-center flag" name="fundcluster_series" style="width:70%" placeholder="No. Series"  value="<?php if(isset($_GET['edit'])){ echo $f_code[3]; }?>" maxlength="3"  required/>
                         <div class="text-left" style="margin:0;padding:0;">
                             <small class="js_number_only" style="color:red"></small>
                         </div>
@@ -262,7 +263,9 @@ $f_code = explode(",",$res['fundcluster_code']);
                                 }else{
                                     $g = '';
                                 }
-                                $item_descs = $item_descs . '<option value="' . $item . '" '.$g.'>' . $dat['item_and_specification'] . '</option>';
+                                if($dat['unit_price'] > 14999) {
+                                    $item_descs = $item_descs . '<option value="' . $item . '" ' . $g . '>' . $dat['item_and_specification'] . '</option>';
+                                }
 
                             }
                             echo $item_descs;
@@ -328,11 +331,6 @@ $f_code = explode(",",$res['fundcluster_code']);
                     ?>
                     </tbody>
                 </table>
-                <div class="row-fluid">
-                    <div class="text-right" style="color:blue;font-weight: bold;font-size:19px;">
-                        Total Amount: <span id="value_total" style="color:lightseagreen"></span>
-                    </div>
-                </div>
             </div>
 
         </div>
@@ -456,12 +454,7 @@ $f_code = explode(",",$res['fundcluster_code']);
                 e.preventDefault();
                 console.log("errr");
             }else{
-                  if(colCount < 14999){
 
-                      e.preventDefault();
-                      alert("Cannot Proceed!. Total Amount must be more than Php: 14,999");
-                      return false;
-                  }else{
 
                       <?php
                       if(isset($_GET['edit'])){
@@ -502,23 +495,19 @@ $f_code = explode(",",$res['fundcluster_code']);
                       }
                       ?>
 
-
-                  }
-
-
             }
 
 
         });
         $('#iar_id').change(function(){
-            var x = $(this).val();
+            var xpar = $(this).val();
             $.ajax({
                 url: '../ajaxPOST/supplier.php',
                 type: 'post',
-                data:{x:x},
+                data:{xpar:xpar},
                 dataType: 'json',
                 success:function(e){
-                    // console.log(e);
+                    console.log(e);
                     $('#item_desc').html(e.item_desc);
                 }
             });
@@ -564,9 +553,6 @@ $f_code = explode(",",$res['fundcluster_code']);
             $fetch = $cc->fetch_assoc();
             $colcount = $fetch['t_c'];
             ?>
-            var colCount = parseInt('<?php echo $colcount ?>');
-
-            $('#value_total').html(colCount);
         <?php
         }else{
             ?>
@@ -603,16 +589,8 @@ $f_code = explode(",",$res['fundcluster_code']);
 
 
                     $('.t_cost').each(function(){
-                        colCount += + parseInt($(this).val());
                     });
-                    // console.log(colCount);
-                    $('#value_total').html(colCount);
-                    //
-                    // $('<input>').attr({
-                    //     type: 'hidden',
-                    //     value: tempx,
-                    //     name: 'item_id_rfq_details[]',
-                    // }).appendTo('#body_item');
+
 
 
                 }
@@ -630,9 +608,6 @@ $f_code = explode(",",$res['fundcluster_code']);
                     $(this).parents("tr").remove();
                     var elem = $(this).parents("tr").children('td:nth-child(6)').find('input');
                     var elem_data = parseInt(elem.val());
-                    colCount = colCount - elem_data;
-                    // console.log(colCount);
-                    $('#value_total').html(colCount);
 
                 }
             });
