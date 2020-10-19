@@ -1,3 +1,30 @@
+
+<style>
+    .pt_css{
+        background-color: #efefef;
+        width:200px;
+        height:20px;
+        list-style:none;
+        left:-24px;
+        position:relative;
+        padding:10px;
+        padding-left:30px;
+        font-weight: bold;
+        font-family: "Courier New", Courier, monospace;
+        box-shadow: 3px 1px 3px 0px #504f4f;
+        display:none;
+
+    }
+    .pt_css:hover,#flag_pt:hover{
+        background-color:#08c;
+        cursor: pointer;
+    }
+   #flag_pt:hover  .pt_css{
+       display:flex;
+   }
+
+</style>
+
 <div class="navbar navbar-fixed-top navbar-inverse">
     <div class="navbar-inner">
         <div class="container-fluid">
@@ -24,34 +51,20 @@
                             <li>
                                 <a tabindex="-1" href="par.php" class="jkl"><img src="../images/buttons/ppmp.png" width="10%"> Property Acknowledgement<br/>&nbsp;Receipt</a>
                             </li>
+                            <li class="text-left" style="position:relative;padding-left:20px;height:25px;" id="flag_pt">
+                                <i class="icon icon-external-link"></i>Property Transfer<i class="icon icon-angle-right" style="position:absolute;right:0px;top:5px;"></i>
+                                <ul style="position:absolute;left:100%;top:0px; height:0px;">
+                                    <li class="pt_css" style="font-size:11px !important;border-top-right-radius: 5px;"><img src="../images/buttons/app.png" width="10%"><a href="">Inventory Custodian Slip</a></li>
+                                    <li class="pt_css" style="font-size:9px !important; border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"><img src="../images/buttons/ppmp.png" width="10%"><a href="">Property Acknowledgement Receipt</a></li>
+                                </ul>
+                            </li>
 
-<!--                            <li class="divider"></li>-->
-<!--                            <li>-->
-<!--                                <a tabindex="-1" href="app_approved.php--><?php //echo '?year='.$row['Year']; ?><!--" class="jkl"><img src="../images/buttons/app.png" width="10%"> CONSOLIDATED<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Annual Procurement<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Plan </a>-->
-<!--                            </li>-->
-<!--                            <li class="divider"></li>-->
-<!--                            <li>-->
-<!--                                 <a tabindex="-1" href="app_pr_approved--><?php //echo '?year='.$row['Year']; ?><!--" class="jkl"><img src="../images/buttons/pr.png" width="10%"> Purchase Request </a> -->
-<!--                                <a tabindex="-1" href="app_pr_approved.php" class="jkl"><img src="../images/buttons/pr.png" width="10%"> Purchase Request </a>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <a tabindex="-1" href="quotation.php--><?php //echo '?year='.$row['Year']; ?><!--" class="jkl"><img src="../images/buttons/rfq.png" width="10%"> Price Quotation </a>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <a tabindex="-1" href="bac-res-main.php" class="jkl"><img src="../images/buttons/app.png" width="10%"></i> BAC Resolution </a>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <a tabindex="-1" href="app_po_approved.php" class="jkl"><img src="../images/buttons/po.png" width="10%"> Purchase Order </a>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <a tabindex="-1" href="inspection-main.php" class="jkl"><img src="../images/buttons/iaa.png" width="10%"> Inspection and Accept...</a>-->
-<!--                            </li>-->
-<!--                            <li>-->
-<!--                                <a tabindex="-1" href="property_transfer.php" class="jkl"><img src="../images/buttons/transfer.png" width="10%" style="background-color: #f6bb9a;border-radius: 50%;padding:1px;left:0px;"> Property Transfer</a>-->
-<!--                            </li>-->
                         </ul>
+
+
                     </li>
                 </ul>
+
             </div>
             <div id="coll" class="nav-collapse collapse">
                 <ul class="nav pull-left">
@@ -63,7 +76,7 @@
                                 <a tab-index="-1" href="manage_enduser.php" class="jkl"><i class="icon icon-user text-warning"></i> Manage End User</a>
                             </li>
                             <li>
-                                    <a tabindex="-1" href="enduser_position.php" class="jkl"><i class="icon icon-user-md  text-success"></i> Manage End User Position</a>
+                                <a tabindex="-1" href="enduser_position.php" class="jkl"><i class="icon icon-user-md  text-success"></i> Manage End User Position</a>
                             </li>
                             <li>
                                 <a tabindex="-1" href="equipment_code.php" class="jkl"><i class="icon icon-cog" style="color:#702828;"></i> Manage Equipment Code</a>
