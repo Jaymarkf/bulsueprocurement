@@ -54,8 +54,8 @@
                             <li class="text-left" style="position:relative;padding-left:20px;height:25px;" id="flag_pt">
                                 <i class="icon icon-external-link"></i>Property Transfer<i class="icon icon-angle-right" style="position:absolute;right:0px;top:5px;"></i>
                                 <ul style="position:absolute;left:100%;top:0px; height:0px;">
-                                    <li class="pt_css" style="font-size:11px !important;border-top-right-radius: 5px;"><img src="../images/buttons/app.png" width="10%"><a href="">Inventory Custodian Slip</a></li>
-                                    <li class="pt_css" style="font-size:9px !important; border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"><img src="../images/buttons/ppmp.png" width="10%"><a href="">Property Acknowledgement Receipt</a></li>
+                                    <li class="pt_css" style="font-size:11px !important;border-top-right-radius: 5px;" id="pt_ics"><img src="../images/buttons/app.png" width="10%"> Inventory Custodian Slip</li>
+                                    <li class="pt_css" style="font-size:9px !important; border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;" id="pt_par"><img src="../images/buttons/ppmp.png" width="10%"> Property Acknowledgement Receipt</li>
                                 </ul>
                             </li>
 
@@ -139,3 +139,14 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        $('#pt_ics').click(function(){
+            window.location = 'pt_ics.php';
+
+        });
+        $('#pt_par').click(function(){
+           window.location = '';
+        });
+    });
+</script>

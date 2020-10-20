@@ -228,3 +228,6 @@ CREATE TABLE `tbl_supply_office_employee` (
   `last_name` varchar(50) NOT NULL,
   `position` int(11) NOT NULL
 );
+
+ALTER TABLE `tbl_ics`
+CHANGE `college` `college` varchar(255) COLLATE 'latin1_swedish_ci' NOT NULL AFTER `received_by`;
