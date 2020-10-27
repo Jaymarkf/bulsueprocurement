@@ -53,7 +53,7 @@
                                                 </thead>
                                                 <tbody>
                                                 <?php
-                                                $user_query1 = mysqli_query($conn,"SELECT * FROM users WHERE level='user' OR level='administrator' or level='supplier' ORDER BY user_id DESC");
+                                                $user_query1 = mysqli_query($conn,"SELECT * FROM users WHERE level='user' OR level='administrator' or level='supplier' and branch <> 'Supplier' ORDER BY user_id DESC");
                                                 while($row = mysqli_fetch_array($user_query1)){
                                                     $id = $row['user_id'];
                                                     ?>
