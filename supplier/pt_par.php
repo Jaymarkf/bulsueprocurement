@@ -13,7 +13,7 @@
         <div class="span12" id="content">
             <div class="row-fluid">
                 <div class="pull-left">
-                    <h3><img src="../images/buttons/app.png" width="5%"> ICS - Inventory Custodian Form</h3>
+                    <h3><i class="icon icon-large icon-external-link"></i> Property Transfer</h3>
                     <i class="icon-calendar icon-large"></i>
                     <?php
                     $Today=date('y:m:d');
@@ -21,6 +21,7 @@
                     echo $new;
                     ?>
                 </div>
+
                 <?php
                 $query = mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
                 while($row = mysqli_fetch_array($query)) {
@@ -41,10 +42,10 @@
 <div class="container-fluid">
     <hr>
     <div class="text-center">
-        <h4>Add New ICS</h4>
+        <h4>Transaction Type - <span style="color:deepskyblue;font-family: 'Helvetica Neue', 'Helvetica'">Property Acknowledgement Receipt</span></h4>
     </div>
     <?php
-    include('ics-form-input.php');
+    include('pt_par-form-input.php');
     include('footer.php');
     ?>
 </div>

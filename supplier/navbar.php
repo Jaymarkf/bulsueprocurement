@@ -146,7 +146,7 @@
 
         });
         $('#pt_par').click(function(){
-           window.location = '';
+           window.location = 'pt_par.php';
         });
     });
 </script>

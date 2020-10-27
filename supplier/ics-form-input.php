@@ -341,7 +341,17 @@
                 </div>
                 <div class="span6 text-right">
                     <input type="hidden"   <?php if(isset($_GET['edit'])){ echo 'name="ics_edit" value="'.$_GET['edit'].'"'; }else{ echo 'name="ics_save" value="1"';   } ?>/>
-                    <button type="submit" class="btn btn-success"><i class="icon icon-save"></i> Save</button>
+                    <button type="submit" class="btn btn-success"
+                        <?php
+                        if(isset($_GET['edit'])){
+                            $sql_ics = $conn->query("select * from tbl_ics where id = ".$_GET['edit']);
+                            $ics = $sql_ics->fetch_assoc();
+                            if($ics['transfer_item_id'] != null){
+                                echo 'disabled  title="item cannot be edit,item was transfered"';
+                            }
+                        }
+                        ?>
+                    ><i class="icon icon-save"></i> Save</button>
                     <a href="dashboard.php" class="btn btn-info"><i class="icon icon-circle-arrow-left"></i> Back</a>
                 </div>
             </div>

@@ -254,3 +254,21 @@ PAR sort the unit cost of item greater than 14,999k
 
 todo filter ics items in ajax when below 14,999 unit cost of 1 item
 
+ics -> pede dalawa sa
+isang item
+
+
+
+
+`PO(data) -> supply account
+
+
+`add peso sign to value
+
+add user account of sub supplier
+
+task for tomorrow  oct 25 urgent
+show the dashboard of transfer property table
+
+>PAR design
+

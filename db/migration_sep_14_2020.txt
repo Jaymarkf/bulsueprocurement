@@ -231,3 +231,28 @@ CREATE TABLE `tbl_supply_office_employee` (
 
 ALTER TABLE `tbl_ics`
 CHANGE `college` `college` varchar(255) COLLATE 'latin1_swedish_ci' NOT NULL AFTER `received_by`;
+
+ALTER TABLE `tbl_ics`
+ADD `transfer_item_id` varchar(50) COLLATE 'latin1_swedish_ci' NOT NULL;
+
+CREATE TABLE `transfer_item` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `issued_by` int(11) NOT NULL,
+  `issued_to` int(11) NOT NULL,
+  `reason_for_transfer` varchar(255) NOT NULL,
+  `from_fundcluster` varchar(255) NOT NULL,
+  `to_fundcluster` varchar(255) NOT NULL,
+  `ptr_no` varchar(255) NOT NULL,
+  `ptr_date` date NOT NULL,
+  `ics_no` varchar(255) NOT NULL,
+  `date_acquired` date NOT NULL,
+  `item_desc` varchar(255) NOT NULL,
+  `college` varchar(255) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `unit` varchar(50) NOT NULL,
+  `unit_cost` int(50) NOT NULL,
+  `total_cost` int(50) NOT NULL
+);
+
+ALTER TABLE `tbl_ics`
+CHANGE `transfer_item_id` `transfer_item_id` varchar(50) COLLATE 'latin1_swedish_ci' NULL AFTER `fundcluster_code`;

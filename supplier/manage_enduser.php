@@ -256,10 +256,16 @@
                 success:function(ss){
                     // console.log(ss);
                     // console.log(data);
-                    e.preventDefault();
-                    $.jGrowl("New End User was successfully added!.", { header: 'SUCCESS' });
-                    var delay = 3000;
-                    setTimeout(function(){ window.location = 'manage_enduser.php'  }, delay);
+                    if(ss == 'err'){
+                        alert("end user already exist");
+                    }else{
+                        e.preventDefault();
+                        $.jGrowl("New End User was successfully added!.", { header: 'SUCCESS' });
+                        var delay = 3000;
+                        setTimeout(function(){ window.location = 'manage_enduser.php'  }, delay);
+
+                    }
+
 
                 }
 

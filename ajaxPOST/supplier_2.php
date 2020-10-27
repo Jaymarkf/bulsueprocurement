@@ -249,5 +249,87 @@ if(isset($_POST['e_id_supply'])){
 //echo "update tbl_supply_office_employee set first_name = '$fname', middle_name = '$mname', last_name = '$lname', position='$position' where id= '$id'";
 }
 
+if(isset($_POST['f_id_pt'])){
 
+    $sql = $conn->query("select * from tbl_ics where id = ". $_POST['f_id_pt']);
+    $ics_res = $sql->fetch_assoc();
+    if($ics_res['transfer_item_id'] != null){
+        $res['transfer_check'] = $ics_res['transfer_item_id'];
+        $res['is_transfer'] = '1';
+
+
+        $get_fund = $conn->query("select * from transfer_item where id = ".$ics_res['transfer_item_id']);
+        $fund = $get_fund->fetch_assoc();
+        $res['fund_name'] = $fund['to_fundcluster'];
+
+
+
+    }else{
+        $res['is_transfer'] = '0';
+        $fundcode = explode(",",$ics_res['fundcluster_code']);
+        $get_fund = $conn->query("select * from tbl_fund where fund_id  = " . $fundcode[0]);
+        $fund = $get_fund->fetch_assoc();
+        $res['fund_name'] = $fund['fund_description'];
+    }
+
+    $res['ics_num'] = str_replace(",","-",$ics_res['ics_num']);
+    $res['college'] = $ics_res['college'];
+    $res['quantity'] = $ics_res['quantity'];
+    $res['unitz'] = $ics_res['unit'];
+    $res['date_acquired'] = $ics_res['date_acquired'];
+    $res['unit_cost'] = $ics_res['unit_cost'];
+    $res['total_cost'] = $ics_res['total'];
+    //item description
+    $sql_item = $conn->query("select * from tbl_rfq_item_details where id = ".$ics_res['item_desc']);
+    //execute and show result
+    $items = $sql_item->fetch_assoc();
+    $res['item_description'] = $items['item_and_specification'];
+
+
+    $ss = $conn->query("select * from tbl_fund");
+    $res['fund_all'] = '<option style="display:none" selected hidden disabled>select fund cluster ...</option>';
+
+    while($xx  = $ss->fetch_assoc()){
+        $res['fund_all'] .= '<option value="'.$xx['fund_id'].'">'.$xx['fund_description'].'</option>';
+    }
+
+
+    echo json_encode($res);
+
+}
+if(isset($_POST['id_transfer'])){
+    if($_POST['is_transfer'] == '1'){
+        $ss = $conn->query("select * from transfer_item where id = ".$_POST['id_transfer']);
+        $ff = $ss->fetch_assoc();
+        $employee = $conn->query("select * from tbl_supplier_employee where id = ". $ff['issued_to']);
+        $emp_ex = $employee->fetch_assoc();
+
+    }else{
+        $ics_tbl = $conn->query("select * from tbl_ics where id = ". $_POST['id_transfer']);
+        $ics_ex = $ics_tbl->fetch_assoc();
+
+        $employee = $conn->query("select * from tbl_supplier_employee where id = ". $ics_ex['received_by']);
+        $emp_ex = $employee->fetch_assoc();
+
+    }
+
+
+    $current_emp = $emp_ex['first_name']. ' ' . $emp_ex['middle_name']. ' ' .$emp_ex['last_name'];
+    $current_emp_id = $emp_ex['id'];
+
+    //get all employee and render to option html
+    $emp = $conn->query("select * from tbl_supplier_employee");
+    $data['all_employee'] = '<option value="default" style="display:none" selected disabled hidden>Please select end user ...</option>';
+    while($all_emp = $emp->fetch_assoc()){
+        $data['all_employee'] .= '<option value="'.$all_emp['id'].'">'.$all_emp['first_name'].' '.$all_emp['middle_name'].' '.$all_emp['last_name'].'</option>';
+    }
+    $data['current_receiver']    = $current_emp;
+    $data['current_receiver_id'] = $current_emp_id;
+
+
+    echo json_encode($data);
+
+
+
+}
 

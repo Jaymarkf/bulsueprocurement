@@ -161,14 +161,23 @@ elseif(isset($_POST['b'])){
 }elseif(isset($_POST['delete_id'])){
 $conn->query("delete from tbl_supplier_position where id = ".$_POST['delete_id']);
 }elseif(isset($_POST['e_fname'])) {
-
+ //add new end user
     $fname = $_POST['e_fname'];
     $mname = $_POST['e_middle_initial'];
     $lname = $_POST['e_lname'];
     $college = $_POST['e_college'];
     $position = $_POST['e_position'];
-    $conn->query("insert into tbl_supplier_employee (`first_name`,`middle_name`,`last_name`,`college`,`position`) values('$fname','$mname','$lname','$college','$position')");
-    echo mysqli_error($conn);
+
+    //check if exist
+    $s = $conn->query("select * from tbl_supplier_employee where first_name = '$fname' and middle_name = '$mname' and last_name = '$lname'");
+    $rows = $s->num_rows;
+    if($rows > 0 ){
+        echo 'err';
+    }else{
+        $conn->query("insert into tbl_supplier_employee (`first_name`,`middle_name`,`last_name`,`college`,`position`) values('$fname','$mname','$lname','$college','$position')");
+    }
+
+
 
 }elseif(isset($_POST['xx'])){
 $id = $_POST['xx'];
