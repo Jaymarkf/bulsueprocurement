@@ -256,3 +256,7 @@ CREATE TABLE `transfer_item` (
 
 ALTER TABLE `tbl_ics`
 CHANGE `transfer_item_id` `transfer_item_id` varchar(50) COLLATE 'latin1_swedish_ci' NULL AFTER `fundcluster_code`;
+
+
+==================================================================================================================  done updated database online here
+

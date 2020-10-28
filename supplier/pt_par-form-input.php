@@ -8,7 +8,8 @@
             <thead>
             <tr>
                 <th>Select</th>
-                <th>ICS No.</th>
+                <th>PAR No.</th>
+                <th>Code</th>
                 <th>College</th>
                 <th>Quantity</th>
                 <th>Unit</th>
@@ -17,27 +18,20 @@
             </thead>
             <tbody>
             <?php
-            $sql_ics = $conn->query("select * from tbl_ics");
-            while( $res = $sql_ics->fetch_assoc()) {
-                $ics_num = str_replace(",", "-", $res['ics_num']);
-                $college = $res['college'];
-                $qty = $res['quantity'];
-                $unit = $res['unit'];
-                if($res['transfer_item_id'] == null){
-                    $status = '<span style="background-color:lightseagreen;padding:5px;border-radius: 10px;font-size:11px;color:white;">Item not transfered</span>';
-                }else{
-                    $status = '<span style="background-color:lawngreen;padding:5px;border-radius: 10px;font-size:11px;color:black;">Item is transfered</span>';
-                }
+            $ff = $conn->query("select * from tbl_par");
+            while($row = $ff->fetch_assoc()){
+                //get the equipment code
+                $aa = $conn->query("select * from equipment_code where id = ". $row['e_code']);
+                $data_code = $aa->fetch_assoc();
+                $e_code  = $data_code['description']. '-' . '('.$data_code['code'].')';
                 ?>
-                <tr>
-                    <td><button type="button" class="btn btn-small btn-success flag" data-id="<?=$res['id'];?>"><i class="icon icon-plus"></i> Add to Transfer</button></td>
-                    <td><?=$ics_num?></td>
-                    <td><?=$college?></td>
-                    <td><?=$qty?></td>
-                    <td><?=$unit?></td>
-                    <td><?=$status?></td>
-                </tr>
-                <?php
+            <tr>
+                <td><button type="button" class="btn btn-small btn-success flag" data-id="<?=$row['id'];?>"><i class="icon icon-plus"></i> Add to Transfer</button></td>
+                <td><?=$row['ics_num']?></td>
+
+            </tr>
+            <?php
+
             }
             ?>
             </tbody>
