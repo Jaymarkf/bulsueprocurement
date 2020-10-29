@@ -31,13 +31,40 @@
 		$update_id = $_GET['idapp'];
 
 		mysqli_query($conn,"UPDATE tbl_ppmp SET Status = 'Completed', PU_PPMP_Status = 'Approved' WHERE Status = 'Requested' AND EndUserUnit='$update_id'");
-		$dataquery = mysqli_query($conn,"select * from  tbl_ppmp WHERE Status = 'Completed' AND BO_PPMP_Status = 'Approved' AND PU_PPMP_Status = 'Approved' AND EndUserUnit='$update_id'");
+//		$dataquery = mysqli_query($conn,"select * from  tbl_ppmp WHERE Status = 'Completed' AND BO_PPMP_Status = 'Approved' AND PU_PPMP_Status = 'Approved' AND EndUserUnit='$update_id'");
 		//insert all data in ppmp consolidated after bo_ppmp and pu_ppmp is confirmed and completed status
-        while($datarow = $dataquery->fetch_array()){
-            $qry = "insert into tbl_ppmp_consolidated (Year,ItemCatDesc,itemdetailDesc,UnitOfMeasurement,PriceCatalogue,TotalQty,TotalAmount)
-                 values('".$datarow['Year']."','".$datarow['ItemCatDesc']."','".$datarow['itemdetailDesc']."','".$datarow['UnitOfMeasurement']."','".$datarow['PriceCatalogue']."','".$datarow['TotalQty']."','".$datarow['TotalAmount']."')";
-                mysqli_query($conn,$qry);
+//        while($datarow = $dataquery->fetch_array()){
+//            $qry = "insert into tbl_ppmp_consolidated (Year,ItemCatDesc,itemdetailDesc,UnitOfMeasurement,PriceCatalogue,TotalQty,TotalAmount)
+//                 values('".$datarow['Year']."','".$datarow['ItemCatDesc']."','".$datarow['itemdetailDesc']."','".$datarow['UnitOfMeasurement']."','".$datarow['PriceCatalogue']."','".$datarow['TotalQty']."','".$datarow['TotalAmount']."')";
+//                mysqli_query($conn,$qry);
+//        }
+
+        //now after adding data to ppmp check if the data is on consolidated if not then add to notification table
+        $cc = $conn->query("select * from tbl_ppmp where EndUserUnit = '$update_id'");
+        $id_ppmp = $cc->fetch_assoc();
+
+        //check if have rows in consolidated table
+        $rr = $conn->query("select * from tbl_ppmp_consolidated");
+        if($rr->num_rows > 0 ){
+            //then its already consolidated;
+            //now check if not exist the ppmp of new added
+            $ss = $conn->query("select * from tbl_ppmp_consolidated where consolidate_id = ".$id_ppmp['ppmpID']);
+            //if not exist then add to notification table
+            if($ss->num_rows > 0 ){
+                //exist
+
+            }else{
+               //not exist
+                $college = $id_ppmp['EndUserUnit'];
+                $item = $id_ppmp['itemdetailDesc'];
+                $status = 0; // 0 == unseen
+                $conn->query("insert into consolidated_notification (`college`,`item`,`status`) values('$college','$item','$status')");
+
+            }
+
         }
+
+
 
 
 		//mysqli_query($conn,$qry);

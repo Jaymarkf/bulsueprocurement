@@ -1,6 +1,24 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
     <body >
+    <style>
+        .nav li a{
+            color: black !important;
+        }
+        .navbar .nav>li>a {
+            text-shadow: none;
+        }
+       #notification_a:hover{
+           font-size:15px;
+       }
+        .navbar .nav li.dropdown.open>.dropdown-toggle, .navbar .nav li.dropdown.active>.dropdown-toggle, .navbar .nav li.dropdown.open.active>.dropdown-toggle{
+            background-color:#796687;
+        }
+        .navbar-collapse.collapse {
+            display: block!important;
+        }
+
+    </style>
 		<?php include('navbar.php'); ?>					
         <div class="container-fluid">
             <div class="row-fluid">
@@ -23,12 +41,6 @@
 							}
 						?>
 						<a href="year.php" class="pull-right" data-placement="left" title="Click to Change the year" id="yearbtn"><div class="pull-right" style="color:#ffa500;background-color:rgba(295,235,215,0.8);padding:3px 20px;border-radius:50px;"><h3> APP <?php echo 'Year: '.$Year; ?></h3></div></a>
-							<script type="text/javascript">
-								$(document).ready(function(){
-									$('#yearbtn').tooltip('show');
-									$('#yearbtn').tooltip('hide');
-								});
-							</script>
 					</div>
 				</div>
 			
@@ -57,6 +69,20 @@
                                 <div class="muted pull-right">
 									Total Record(s): <span class="badge badge-info"><?php  echo $count2;  ?></span>
 								</div>
+
+                                    <ul class="nav navbar-nav" id="coll">
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true" id="notification_a">
+                                                <span class="nav-label" style="color:white !important;">Notification</span>
+                                                <i class="icon icon-bell-alt" style="color:red;"></i>
+                                                <span class="badge" style="color:white;background-color:blue;" id="badger"></span>
+                                            </a>
+                                            <ul class="dropdown-menu" id="content-data">
+<!--                                                <li><a href="#"></a></li>-->
+<!--                                                <li><a href="#"></a></li>-->
+                                            </ul>
+                                        </li>
+                                    </ul>
                             </div>
                             <div class="block-content collapse in">
 								<div class="span12" id="studentTableDiv">
@@ -74,5 +100,41 @@
 		<?php include('footer.php'); ?>
         </div>
 		<?php include('script.php'); ?>
-    </body>	
+    </body>
+<script>
+    load_notification();
+  function load_notification(view = '',datax = ''){
+      $.ajax({
+          url: '../ajaxPOST/supplier_2.php',
+          data:{view:view,datax:datax},
+          type: 'post',
+          dataType: 'json',
+          success:function(data){
+                $('#badger').html(''+data.count.toString());
+                $('#content-data').html(data.html);
+
+          }
+      });
+
+  }
+
+
+ $(document).on('click','#closebtn',function(){
+     var id = $(this).attr('data-id');
+     load_notification('rem',id);
+    var current = $('#badger').html();
+    var c_int = parseInt(current);
+    c_int = c_int - 1;
+    $('#badger').html(c_int);
+     
+ });
+
+
+  setInterval(function(){
+      load_notification();
+  },3000);
+
+
+
+</script>
 </html>

@@ -156,3 +156,38 @@ if(isset($_POST['data_id_delete_par'])){
     $conn->query("delete from tbl_par_items where par_id = " . $_POST['data_id_delete_par']);
 }
 
+//notification
+if(isset($_POST['view'])){
+    if($_POST['view'] == 'yes'){
+        $conn->query("update consolidated_notification SET status = '1' where status = '0'");
+    }else if($_POST['view'] == 'rem'){
+        $id = $_POST['datax'];
+        $conn->query('update consolidated_notification SET status = "1" where id = '.$id);
+    }else {
+
+        //check the notification table
+        $ff = $conn->query("select * from consolidated_notification where status = '0'");
+        $count = '';
+        $data = '';
+        if ($ff->num_rows > 0) {
+            $count = $ff->num_rows;
+            while ($row = $ff->fetch_assoc()) {
+                $data .= '<li style="padding:3px;">Branch: ' . $row['college'] . '<span id="closebtn" class="btn btn-danger btn-small pull-right" style="font-size:9px;padding:5px;padding-top:0px;padding-bottom:0px;" data-id="' . $row['id'] . '">X</span><br>Item: ' . $row['item'] . '<br> Status: Late Submitted</li><li class="divider"></li>';
+            }
+        } else {
+            $data = '<li style="padding:4px;font-size:12px;">No notification found!</li>';
+            $count = '';
+        }
+
+
+        $res = array(
+            'count' => $count,
+            'html' => $data
+        );
+
+        echo json_encode($res);
+    }
+
+
+
+}
