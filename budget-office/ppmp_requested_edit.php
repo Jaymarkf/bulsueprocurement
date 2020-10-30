@@ -26,6 +26,8 @@
 		$prodDec = $getProdInfo["Dec"];
 		$prodPrio = $getProdInfo["Priority"];
 		$prodRem = $getProdInfo["Remarks"];
+		$prodRem = str_replace('<span class="badge badge-warning">','',$prodRem);
+		$prodRem = str_replace("</span>","",$prodRem);
 	} else{
 		header('location:dashboard.php'); 
 	}
@@ -231,8 +233,7 @@ if (isset($_POST['saveUPDATE'])){
 	$Nov = $_POST['ciNovQty'];
 	$Dec = $_POST['ciDecQty'];
 	$Prio = $_POST['ciPriority'];
-	$Rem = $_POST['ciRemarks'];
-
+	$Rem = '<span class="badge badge-warning">'.$_POST['ciRemarks'].'</span>';
 	$TQtyMonth = ($Jan+$Feb+$Mar+$Apr+$May+$Jun+$Jul+$Aug+$Sep+$Oct+$Nov+$Dec);
 	$TotalAmount = ($PriceCatalogue * $TQtyMonth);
 	
