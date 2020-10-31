@@ -1,5 +1,7 @@
 <?php
-	session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
 	//Check whether the session variable SESS_MEMBER_ID is present or not
 	if (!isset($_SESSION['member_id']) || (trim($_SESSION['member_id']) == '')) {
 		header('Location: ../index.php');

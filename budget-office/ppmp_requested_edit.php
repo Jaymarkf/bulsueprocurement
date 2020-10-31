@@ -26,6 +26,8 @@
 		$prodDec = $getProdInfo["Dec"];
 		$prodPrio = $getProdInfo["Priority"];
 		$prodRem = $getProdInfo["Remarks"];
+		$prodRem = str_replace('<span class="badge badge-warning">','',$prodRem);
+		$prodRem = str_replace("</span>","",$prodRem);
 	} else{
 		header('location:dashboard.php'); 
 	}
@@ -231,10 +233,72 @@ if (isset($_POST['saveUPDATE'])){
 	$Nov = $_POST['ciNovQty'];
 	$Dec = $_POST['ciDecQty'];
 	$Prio = $_POST['ciPriority'];
-	$Rem = $_POST['ciRemarks'];
-
+	$Rem = '<span class="badge badge-warning">'.$_POST['ciRemarks'].'</span>';
 	$TQtyMonth = ($Jan+$Feb+$Mar+$Apr+$May+$Jun+$Jul+$Aug+$Sep+$Oct+$Nov+$Dec);
 	$TotalAmount = ($PriceCatalogue * $TQtyMonth);
+
+
+
+    //tract ppmp before update
+    $ck = $conn->query("select * from tbl_ppmp where ppmpID = '$prodID'");
+    $data = $ck->fetch_assoc();
+    $activity = '';
+    if($data['SourceOfFund'] != $SOF){
+        $activity .= 'Source of FundChanges from '. $data['SourceofFund']. ' to '. $SOF. ';';
+    }
+
+    if($data['Jan'] != $Jan ){
+        $activity .= 'Quantity of Jan Changed from '. $data['Jan']. ' to '. $Jan. ';';
+    }
+    if($data['Feb'] != $Feb ){
+        $activity .= 'Quantity of Feb Changed from '. $data['Feb']. ' to '. $Feb. ';';
+    }
+    if($data['Mar'] != $Mar){
+        $activity .= 'Quantity of Mar Changed from '. $data['Mar']. ' to '. $Mar. ';';
+    }
+    if($data['Apr'] != $Apr){
+        $activity .= 'Quantity of Apr Changed from '. $data['Apr']. ' to '. $Apr. ';';
+    }
+    if($data['May'] != $May){
+        $activity .= 'Quantity of May Changed from '. $data['May']. ' to '. $May. ';';
+    }
+    if($data['Jun'] != $Jun){
+        $activity .= 'Quantity of Jun Changed from '. $data['Jun']. ' to '. $Jun. ';';
+    }
+    if($data['Jul'] != $Jul){
+        $activity .= 'Quantity of Jul Changed from '. $data['Jul']. ' to '. $Jul. ';';
+    }
+    if($data['Aug'] != $Aug){
+        $activity .= 'Quantity of Aug Changed from '. $data['Aug']. ' to '. $Aug. ';';
+    }
+    if($data['Sep'] != $Sep){
+        $activity .= 'Quantity of Sep Changed from '. $data['Sep']. ' to '. $Sep. ';';
+    }
+    if($data['Oct'] != $Oct){
+        $activity .= 'Quantity of Oct Changed from '. $data['Oct']. ' to '. $Oct. ';';
+    }
+    if($data['Nov'] != $Nov){
+        $activity .= 'Quantity of Nov Changed from '. $data['Nov']. ' to '. $Nov. ';';
+    }
+    if($data['Dec'] != $Dec){
+        $activity .= 'Quantity of Dec Changed from '. $data['Dec']. ' to '. $Dec. ';';
+    }
+    if($data['purpose'] != $purpose){
+        $activity .= 'Purpose Changed from '. $data['purpose']. ' to '. $purpose. ';';
+    }
+    if($data['Priority'] != $Prio){
+        $activity .= 'Priority Changed from '. $data['Priority']. ' to '. $Prio. ';';
+    }
+    if($data['Remarks'] != $Rem){
+        $activity .= 'Remarks Changed from '. $data['Remarks']. ' to '. $Rem. ';';
+    }
+    //save logs
+    $today = new DateTime();
+    $dt = $today->format('Y-m-d H:i:s');
+    $user_id = $data['user_id'];
+    $conn->query("insert into tbl_activity_log (`ppmp_ID`,`user_id`,`activity`,`date_time`) values('$prodID','$user_id','$activity','$dt')");
+
+
 	
 	mysqli_query($conn,"UPDATE tbl_ppmp SET `SourceOfFund`='$SOF',`purpose`='$purpose',`Jan`='$Jan',`Feb`='$Feb',`Mar`='$Mar',
 	`Apr`='$Apr',`May`='$May',`Jun`='$Jun',`Jul`='$Jul',`Aug`='$Aug',`Sep`='$Sep',`Oct`='$Oct',
@@ -246,6 +310,9 @@ if (isset($_POST['saveUPDATE'])){
 	$lname = $row['lastname'];
 	$user_username = $fname.' '.$lname;
 	$itemDetails = $prodcode.' '.$proddesc;
+
+
+
 	
 //	mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Update item details $itemDetails')");
 ?>

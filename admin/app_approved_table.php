@@ -1,13 +1,18 @@
+<style>
+    #closebtnspan:hover{
+    background-color:red !important;
+        cursor:pointer;
+    }
+    #bell:hover{
+        color:red !important;
+    }
+</style>
 <div class="">
+
     <form method="get">
 	<div class="">
 		<a href="dashboard.php" title="Back to PPMP-Dashboard" id="back" data-placement="right" class="btn btn-inverse"><i class="icon-undo icon-large"></i> Back </a>
-			<script type="text/javascript">
-				$(document).ready(function(){
-					$('#back').tooltip('show');
-					$('#back').tooltip('hide');
-				});
-			</script>
+
 		<!-- CHECK IF ALREADY CONSOLIDATE THE PPMP YEAR -->	
 		<?php
 			//$query = mysqli_query($conn,"SELECT * FROM tbl_year");
@@ -20,13 +25,7 @@
 		?>	
 		
 		<?php if ($count1 == "z" /* 0 instead of z */) { ?>
-			<a href="app_approved_consolidate.php?link=1" name="consolidate" title="Consolidate PPMP" id="back" data-placement="right" class="btn btn-warning"><i class="icon-inbox icon-large"></i> Consolidate </a>
-			<script type="text/javascript">
-				$(document).ready(function(){
-					$('#back').tooltip('show');
-					$('#back').tooltip('hide');
-				});
-			</script>
+            <button type="submit" name="consolidate" value="true" title="Consolidate PPMP " id="back" data-placement="right" class="btn btn-success"><i class="icon-inbox icon-large"></i> Consolidate </button>
 		<?php }else{ ?>
 <!--			<a href="#" title="Consolidate not possible..." id="back" data-placement="right" class="btn btn-default"><i class="icon-inbox icon-large"></i> Consolidate </a>-->
 <!--			<script type="text/javascript">-->
@@ -41,12 +40,6 @@
 
 
             <button type="submit" name="consolidate" value="true" title="Consolidate PPMP " id="back" data-placement="right" class="btn btn-success"><i class="icon-inbox icon-large"></i> Consolidate </button>
-             <script type="text/javascript">
-                $(document).ready(function(){
-                    $('#back').tooltip('show');
-                    $('#back').tooltip('hide');
-                });
-            </script>
 <!--            end of code-->
 
 
@@ -66,23 +59,15 @@
 		
 		<?php if ($count2 == "z" /* 0 instead of z */) { ?>
 			<a title="Reset not possible..." id="back" data-placement="right" class="btn btn-alert"><i class="icon-undo icon-large"></i> Reset </a>
-			<script type="text/javascript">
-				$(document).ready(function(){
-					$('#back').tooltip('show');
-					$('#back').tooltip('hide');
-				});
-			</script>
 		<?php }else{ ?>
-			<button type="submit" name="consolidate" value="false" href="reset_app_approved_consolidate.php<?php echo '?id='.$Year; ?>" title="Reset the Consolidated PPMP Year" id="back" data-placement="right" class="btn btn-danger"><i class="icon-undo icon-large"></i> Reset </button>
-			<script type="text/javascript">
-				$(document).ready(function(){
-					$('#back').tooltip('show');
-					$('#back').tooltip('hide');
-				});
-			</script>
+			<a type="submit" href="reset_app_approved_consolidate.php<?php echo '?id='.$Year; ?>" title="Reset the Consolidated PPMP Year" id="back" data-placement="right" class="btn btn-danger"><i class="icon-undo icon-large"></i> Reset </a>
+
 		<?php } ?>	
-		<!-- RESET THE CONSOLIDATE PPMP YEAR -->		
+		<!-- RESET THE CONSOLIDATE PPMP YEAR -->
+
+<!--        notification unfinished-->
 	</div>
+
 </form>
 	<br/>
 	<form method="POST">
@@ -104,24 +89,61 @@
 
                     if(isset($_GET['consolidate'])){
                         if($_GET['consolidate'] == 'true'){
+
+                            $arr['key'][] = "`consolidate_id`";
+                            $arr['key'][] = "`Year`";
+                            $arr['key'][] = "`ItemCatDesc`";
+                            $arr['key'][] = "`itemdetailDesc`";
+                            $arr['key'][] = "`UnitOfMeasurement`";
+                            $arr['key'][] = "`PriceCatalogue`";
+                            $arr['key'][] = "`TotalAmount`";
+                            $key = implode(",",$arr['key']);
+                            //if consolidate then insert consolidated information
+                            $qryc = $conn->query("select * from tbl_ppmp where Status = 'Completed'");
+                            $conn->query('delete from tbl_ppmp_consolidated');
+                            while($dataq = $qryc->fetch_assoc()){
+                            //arr values
+                                $arr['values'][] = "'".$dataq['ppmpID']."'";
+                                $arr['values'][] = "'".$dataq['Year']."'";
+                                $arr['values'][] = "'".$dataq['ItemCatDesc']."'";
+                                $arr['values'][] = "'".$dataq['itemdetailDesc']."'";
+                                $arr['values'][] = "'".$dataq['UnitOfMeasurement']."'";
+                                $arr['values'][] = "'".$dataq['PriceCatalogue']."'";
+                                $arr['values'][] = "'".$dataq['TotalAmount']."'";
+                                $values = implode(",",$arr['values']);
+                                $conn->query("insert into tbl_ppmp_consolidated(".$key.")VALUES(".$values.")");
+                                unset($arr['values']);
+                                unset($arr['key']);
+                            }
                             $qry = mysqli_query($conn,"select itemCatDesc,itemdetailDesc,UnitOfMeasurement,
                                                             PriceCatalogue,SUM(TotalQty) as TotalQty,SUM(TotalAmount) as TotalAmount
                                                             from tbl_ppmp_consolidated where Year = '$Year3'
                                                             GROUP BY itemCatDesc,itemdetailDesc,UnitOfMeasurement,PriceCatalogue");
+
                         }else{
                             $qry = mysqli_query($conn,"select itemdetailDesc,
-                                                        UnitOfMeasurement,SUM(TotalQty) as TotalQty,PriceCatalogue,(COUNT(consolidatedID) * TotalAmount) as TotalAmount
+                                                        UnitOfMeasurement,SUM(TotalQty) as TotalQty,PriceCatalogue,(COUNT(id) * TotalAmount) as TotalAmount
                                                         from tbl_ppmp_consolidated WHERE Year = '$Year3'
                                                         GROUP BY itemdetailDesc,
                                                         UnitOfMeasurement,PriceCatalogue,TotalAmount");
 
                         }
                     }else{
-                        $qry = mysqli_query($conn,"select itemdetailDesc,
-                                                        UnitOfMeasurement,SUM(TotalQty) as TotalQty,PriceCatalogue,(COUNT(consolidatedID) * TotalAmount) as TotalAmount
-                                                        from tbl_ppmp_consolidated WHERE Year = '$Year3'
+                        $dss = $conn->query("select * from tbl_ppmp_consolidated");
+                        if($dss->num_rows > 0){
+                            $qry = mysqli_query($conn,"select itemCatDesc,itemdetailDesc,UnitOfMeasurement,
+                                                            PriceCatalogue,SUM(TotalQty) as TotalQty,SUM(TotalAmount) as TotalAmount
+                                                            from tbl_ppmp_consolidated where Year = '$Year3'
+                                                            GROUP BY itemCatDesc,itemdetailDesc,UnitOfMeasurement,PriceCatalogue");
+
+                        }else {
+                            $qry = mysqli_query($conn, "select itemdetailDesc,
+                                                        UnitOfMeasurement,SUM(TotalQty) as TotalQty,PriceCatalogue,(COUNT(ppmpID) * TotalAmount) as TotalAmount
+                                                        from tbl_ppmp WHERE Year = '$Year3' and Status = 'Completed'
                                                         GROUP BY itemdetailDesc,
                                                         UnitOfMeasurement,PriceCatalogue,TotalAmount");
+                        }
+
                     }
 	    while($row4 = mysqli_fetch_array($qry)){
 				?>
@@ -154,11 +176,6 @@
 	</form>
 	<div class="">
 		<a href="dashboard.php" title="Back to PPMP-Dashboard" id="back" data-placement="right" class="btn btn-inverse"><i class="icon-undo icon-large"></i> Back </a>
-			<script type="text/javascript">
-				$(document).ready(function(){
-					$('#back').tooltip('show');
-					$('#back').tooltip('hide');
-				});
-			</script>
+
 	</div>
 </div>

@@ -25,6 +25,8 @@
 		$prodDec = $getProdInfo["Dec"];
 		$priority = $getProdInfo["Priority"];
 		$prodRem = $getProdInfo["Remarks"];
+        $prodRem = str_replace('<span class="badge badge-warning">','',$prodRem);
+        $prodRem = str_replace("</span>","",$prodRem);
 	} else{
 		header('location:dashboard.php'); 
 	}

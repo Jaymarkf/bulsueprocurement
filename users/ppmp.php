@@ -32,7 +32,9 @@
 							$count = mysqli_num_rows($query1);
 						?>					
                             <div class="navbar navbar-inner block-header">
-                                <div class="muted pull-left"><i class="icon-shopping-cart icon-large"></i> PPMP CART Lists - <span class="badge badge-warning">YEAR <?php echo $Year; ?></span></div>
+                                <div class="muted pull-left"><i class="icon-shopping-cart icon-large"></i> PPMP CART Lists - <span class="badge badge-warning">YEAR <?php echo $Year; ?></span>
+                                <a href="activity_log.php" class="btn btn-inverse" style="bottom:5px;position:relative;margin-left:24px;"><i class="icon icon-time"></i> Changes History of Budget office</a>
+                                </div>
                                 <div class="muted pull-right">
 									Total Item(s): <span class="badge badge-info"><?php  echo $count;  ?></span>
 								</div>

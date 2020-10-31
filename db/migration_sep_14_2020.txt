@@ -216,6 +216,12 @@ ALTER TABLE `tbl_par`
 ADD `e_code` varchar(50) NOT NULL AFTER `iar_id`;
 
 
+================================================== oct 28 2020
+changing consolidate database
+
+ALTER TABLE `tbl_ppmp_consolidated`
+CHANGE `consolidatedID` `id` int(11) NOT NULL AUTO_INCREMENT FIRST,
+CHANGE `enduser_arr_id` `consolidate_id` int(11) NULL AFTER `id`;
 CREATE TABLE `tbl_supply_office_employee_position` (
   `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `name` varchar(50) NOT NULL
@@ -260,3 +266,17 @@ CHANGE `transfer_item_id` `transfer_item_id` varchar(50) COLLATE 'latin1_swedish
 
 ==================================================================================================================  done updated database online here
 
+
+
+CREATE TABLE `consolidated_notification` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `college` varchar(255) NOT NULL,
+  `item` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL
+);
+
+CREATE TABLE `tbl_activity_log` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `activity` varchar(255) NOT NULL,
+  `date_time` datetime NOT NULL
+);

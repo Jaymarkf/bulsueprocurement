@@ -76,7 +76,7 @@
 			{
 			if(e.which == 17)
 			isCtrl=true;
-			if((e.which == 85) || (e.which == 67) &amp;&amp; isCtrl == true)
+			if((e.which == 85) || (e.which == 67) isCtrl == true)
 			{
 			// alert(&#8216;Keyboard shortcuts are cool!&#8217;);
 			return false;
