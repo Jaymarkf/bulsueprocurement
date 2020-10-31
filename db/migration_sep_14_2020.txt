@@ -230,3 +230,9 @@ CREATE TABLE `consolidated_notification` (
   `item` varchar(255) NOT NULL,
   `status` varchar(255) NOT NULL
 );
+
+CREATE TABLE `tbl_activity_log` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `activity` varchar(255) NOT NULL,
+  `date_time` datetime NOT NULL
+);

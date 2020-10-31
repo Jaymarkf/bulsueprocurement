@@ -37,7 +37,7 @@
 					$query4 = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year = '$Year' AND EndUserUnit='$Branch2' AND BO_PPMP_Status = 'Approved' AND user_id = '$user_id2' GROUP BY Year");
 					$count4 = mysqli_num_rows($query4);
 					
-					$query5 = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year < '$Year' AND EndUserUnit='$Branch2' AND Status = 'Completed'  AND BO_PPMP_Status = 'Approved' AND user_id = '$user_id2' GROUP BY Year");
+					$query5 = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year = '$Year' AND EndUserUnit='$Branch2' AND Status = 'Completed'  AND BO_PPMP_Status = 'Approved' AND user_id = '$user_id2' GROUP BY Year");
 					$count5 = mysqli_num_rows($query5);
 				?>
 				<tr>
@@ -48,58 +48,33 @@
 						
 						<?php if ($count3 == "0") { ?>
 							<a data-placement="top" title="VIEW Details" id="view" href="#" class="btn btn-default"><i class="icon-shopping-cart icon-large"></i> New PPMP <br/>Budget Request <br/><span class="badge badge-default"><?php  echo $count3;  ?></span></a>
-							<script type="text/javascript">
-							$(document).ready(function(){
-								$('#view').tooltip('show');
-								$('#view').tooltip('hide');
-							});
-							</script>
 						<?php }else{ ?>
 							<a data-placement="top" title="VIEW Details" id="view" href="ppmp_requested.php<?php echo '?id='.$Branch2; ?>" class="btn btn-warning"><i class="icon-shopping-cart icon-large"></i> New PPMP <br/>Budget Request <br/><span class="badge badge-inverse"><?php  echo $count3;  ?></span></a>
-							<script type="text/javascript">
-							$(document).ready(function(){
-								$('#view').tooltip('show');
-								$('#view').tooltip('hide');
-							});
-							</script>
 						<?php } ?>
 						
 						<?php if ($count4 == "0") { ?>
 							<a data-placement="top" title="APPROVED PPMP" id="approved" href="#" class="btn btn-default"><i class="icon-check icon-large"></i> Approved PPMP <br/>Budget Request<br/><span class="badge badge-default"><?php  echo $count4;  ?></a>
-							<script type="text/javascript">
-							$(document).ready(function(){
-								$('#approved').tooltip('show');
-								$('#approved').tooltip('hide');
-							});
-							</script>
 						<?php }else{ ?>
 							<a data-placement="top" title="APPROVED PPMP" id="approved" href="ppmp_approved.php<?php echo '?id='.$Branch2; ?>" class="btn btn-success"><i class="icon-check icon-large"></i> Approved PPMP <br/>Budget Request<br/><span class="badge badge-inverse"><?php  echo $count4;  ?></a>
-							<script type="text/javascript">
-							$(document).ready(function(){
-								$('#approved').tooltip('show');
-								$('#approved').tooltip('hide');
-							});
-							</script>
 						<?php } ?>
 						
 						<?php if ($count5 == "0") { ?>
 							<a data-placement="top" title="PREVIOUS PPMP" id="previous" href="#" class="btn btn-default"><i class="icon-eye-open icon-large"></i> PPMP <br/>Historical Records<br/><span class="badge badge-default"><?php  echo $count5;  ?></a>
-							<script type="text/javascript">
-							$(document).ready(function(){
-								$('#previous').tooltip('show');
-								$('#previous').tooltip('hide');
-							});
-							</script>
 						<?php }else{ ?>
 							<a data-placement="top" title="PREVIOUS PPMP" id="previous" href="ppmp_previous.php<?php echo '?id='.$Branch2; ?>" class="btn btn-inverse"><i class="icon-eye-open icon-large"></i> PPMP <br/>Historical Records<br/><span class="badge badge-primary"><?php  echo $count5;  ?></a>
-							<script type="text/javascript">
-							$(document).ready(function(){
-								$('#previous').tooltip('show');
-								$('#previous').tooltip('hide');
-							});
-							</script>
 						<?php } ?>
-					</td>
+
+                        <?php
+                        $cc = $conn->query('select * from tbl_ppmp where user_id = '. $user_id2);
+                        if($cc->num_rows > 0 ) {
+                            $ss = $conn->query("select * from tbl_activity_log where user_id = " . $user_id2);
+                        }
+
+                        ?>
+                        <a data-placement="top" title="PREVIOUS PPMP HISTORY" id="previous" href="activity_log.php?id=<?=$user_id2?>" class="btn btn-danger"><i class="icon-eye-open icon-large"></i> PREVIOUS PPMP<br>HISTORY<br><span class="badge badge-primary"><?php  echo $ss->num_rows ?></a>
+
+
+                    </td>
 				</tr>
 				<?php } ?>					
 			</tbody>
