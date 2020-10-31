@@ -11,11 +11,11 @@
 	$count3 = mysqli_num_rows($query3);
 	
 	//$query4= mysqli_query($conn,"select * from tbl_ppmp WHERE Year = $Year AND user_id='$session_id'");
-	$query4 = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year = '$Year' AND user_id='$session_id'  AND Status = 'Completed' ORDER BY Year");
+	$query4 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = '$Year' AND user_id='$session_id'  AND Status = 'Completed' ORDER BY Year");
 	$count4 = mysqli_num_rows($query4);
 	
 	//$query5= mysqli_query($conn,"select * from tbl_ppmp WHERE Year = $Year AND user_id='$session_id'");
-	$query5 = mysqli_query($conn,"SELECT *,COUNT(Year) FROM tbl_ppmp WHERE Year < '$Year' AND user_id='$session_id'  AND Status = 'Completed' ORDER BY Year");
+	$query5 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE Year = '$Year' AND user_id='$session_id'  AND Status = 'Completed' ORDER BY Year");
 	$count5 = mysqli_num_rows($query5);
 	
 	$query6 = mysqli_query($conn,"SELECT * FROM tbl_ppmp WHERE user_id = '$session_id' AND Year = '$Year' AND BO_PPMP_Status = 'Approved' ORDER BY Year");

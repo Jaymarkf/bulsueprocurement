@@ -63,7 +63,7 @@
 			</script>
 			
 			<script type='text/javascript'>
-				//disable CTRL+U,CTRL+C and right click
+				// disable CTRL+U,CTRL+C and right click
 				var isCtrl = false;
 				document.onkeyup=function(e)
 				{
@@ -81,10 +81,10 @@
 				}
 				}
 				var isNS = (navigator.appName == "Netscape") ? 1 : 0;
-				if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
-				function mischandler(){
-				return false;
-				}
+				// if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
+				// function mischandler(){
+				// return false;
+				// }
 				function mousehandler(e){
 				var myevent = (isNS) ? e : event;
 				var eventbutton = (isNS) ? myevent.which : myevent.button;
@@ -97,7 +97,7 @@
 
 			<script type="text/javascript">
 				function disableF5(e) {
-					if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 82) e.preventDefault(); };
+					if ((e.which || e.keyCode) == 116 || (e.which || e.keyCode) == 10000) e.preventDefault(); };
 
 				$(document).ready(function(){
 					 $(document).on("keydown", disableF5);

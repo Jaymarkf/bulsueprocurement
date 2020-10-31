@@ -60,7 +60,7 @@
 							
 							//para ipasa ang value sa ibang page
 							$_SESSION['branch_id']=$_GET['id'];
-							$_SESSION['year_id']=$row['Year'];							
+							$_SESSION['year_id']=$Year1;
 						?>
                             <div class="navbar navbar-inner block-header">
                                 <div class="muted pull-left"><img src="../images/buttons/ppmp.png" width="5%"> APPROVED Project Procurement Management Plan - Budget Request <span class="badge badge-warning">YEAR <?php echo $Year; ?></span></div>
