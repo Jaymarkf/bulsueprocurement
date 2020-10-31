@@ -288,8 +288,6 @@ $sender_position = '';
                         <label style="font-weight: bold;margin-right:5px;line-height: 30px;">Total Cost</label>
                         <input type="text" class="form-control t_cost" name="total_cost" value="<?php if(isset($_GET['edit'])){ echo $f_data['total_cost']; }?>" id="total_cost" placeholder="input total cost here..." readonly required>
                         <div style="margin-right:20px;"></div>
-
-
                     </div>
                     <div class="row-fluid">
                         <input type="button" class="btn btn-success add-row" value="Add Row">
@@ -297,7 +295,7 @@ $sender_position = '';
                     </div>
 
                 </form>
-                <table class="table">
+                <table style="position:relative;">
                     <thead>
                     <tr>
                         <th>Select</th>
@@ -352,10 +350,10 @@ $sender_position = '';
                                         <select id="rcv_id" required class="form-control">
                                             <option style="display:none" selected disabled hidden>Select End User ...
                                                 <?php
-                                                    $s = $conn->query("select * from users where level = 'user' and branch <> 'Main Office' and branch <> 'Procurement Unit' and branch <> 'Budget Office' and first_name <> ''");
+                                                    $s = $conn->query("select * from tbl_supplier_employee");
                                                     while($data = $s->fetch_assoc())    {
                                                         ?>
-                                                        <option value="<?=$data['user_id']?>"><?php echo $data['first_name'] . ' '. $data['last_name']; ?></option>
+                                                        <option value="<?=$data['id']?>"><?php echo $data['first_name'] . ' '. $data['last_name']; ?></option>
 
                                                 <?php
                                                 }
@@ -392,14 +390,23 @@ $sender_position = '';
                                if(isset($_GET['edit'])){
                                    $data_id = explode(",",$res['received_by_ids']);
                                    foreach ($data_id as $index => $item) {
-                                       $ix = $conn->query("select * from users where user_id = ".$item);
+                                       $ix = $conn->query("select * from tbl_supplier_employee where id = ".$item);
                                         $id_arr = $ix->fetch_assoc();
+                                        //get branch
+                                       $b = $conn->query("select * from tbl_branch where branchID = ". $id_arr['college']);
+                                       $dd = $b->fetch_assoc();
+                                       $ff = $conn->query("select * from tbl_supplier_position where id = ". $id_arr['position']);
+                                       $fs = $ff->fetch_assoc();
+
+
+
+
                                        ?>
                                         <tr>
                                             <td><input type='checkbox' name='info-record'></td>
                                             <td><input type="text" name="received_by[]" value="<?php echo $id_arr['first_name']. ' ' . $id_arr['last_name']?>" readonly/></td>
-                                            <td><input type="text" name="college[]" value="<?=$id_arr['branch']?>" readonly/></td>
-                                            <td><input type="text" name="position[]" value="<?=$id_arr['position']?>" readonly/></td>
+                                            <td><input type="text" name="college[]" value="<?=$dd['branch']?>" readonly/></td>
+                                            <td><input type="text" name="position[]" value="<?=$fs['name']?>" readonly/></td>
                                             <td><input type="text" name="received_by_id_hidden[]" value="<?=$id_arr['user_id']?>" style="display:none" /></td>
 
                                         </tr>

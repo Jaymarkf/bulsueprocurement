@@ -42,10 +42,20 @@ if(isset($_POST['tempx'])){
 }
 
 if(isset($_POST['id'])){
-    $d = $conn->query("select * from users where user_id = ".$_POST['id']);
+    $d = $conn->query("select * from tbl_supplier_employee where id = ".$_POST['id']);
     $f = $d->fetch_assoc();
-    $v['collegef'] = $f['branch'];
-    $v['positionf'] = $f['position'];
+//    $v['collegef'] = $f['branch'];
+//    $v['positionf'] = $f['position'];
+    $ff = $conn->query("select * from tbl_branch where branchID = ". $f['college']);
+    $ss = $ff->fetch_assoc();
+
+    $x = $conn->query("select * from tbl_supplier_position where id = ". $f['position']);
+    $xd = $x->fetch_assoc();
+
+    $v['collegef'] = $ss['branch'];
+    $v['positionf'] = $xd['name'];
+
+
     echo json_encode($v);
 
 }

@@ -11,8 +11,6 @@
                 <th>PAR No.</th>
                 <th>Code</th>
                 <th>College</th>
-                <th>Quantity</th>
-                <th>Unit</th>
                 <th>Status</th>
             </tr>
             </thead>
@@ -24,10 +22,30 @@
                 $aa = $conn->query("select * from equipment_code where id = ". $row['e_code']);
                 $data_code = $aa->fetch_assoc();
                 $e_code  = $data_code['description']. '-' . '('.$data_code['code'].')';
+                //get the college
+                //explode user
+                $user = explode(",",$row['received_by_ids']);
+                $college = array();
+                foreach ($user as $item => $val) {
+                    $ff = $conn->query("select emp.*,col.* from tbl_supplier_employee emp inner join tbl_branch col on emp.college = col.branchID  where emp.id = ".$val);
+                    $data = $ff->fetch_assoc();
+                    $college[$item] = $data['branch'];
+                }
+
+                if(count(array_unique($college)) > 1 ){
+                    $datax = implode(",",$college);
+                }else{
+                    $temp = array_unique($college);
+                    $datax = $temp[0];
+                }
+
                 ?>
             <tr>
                 <td><button type="button" class="btn btn-small btn-success flag" data-id="<?=$row['id'];?>"><i class="icon icon-plus"></i> Add to Transfer</button></td>
                 <td><?=$row['ics_num']?></td>
+                <td><?=$e_code?></td>
+                <td><?=$datax?></td>
+                <td>untransfered</td>
 
             </tr>
             <?php
