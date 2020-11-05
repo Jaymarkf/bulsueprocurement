@@ -11,7 +11,6 @@
                 <th>PAR No.</th>
                 <th>Code</th>
                 <th>College</th>
-                <th>Status</th>
             </tr>
             </thead>
             <tbody>
@@ -31,7 +30,6 @@
                     $data = $ff->fetch_assoc();
                     $college[$item] = $data['branch'];
                 }
-
                 if(count(array_unique($college)) > 1 ){
                     $datax = implode(",",$college);
                 }else{
@@ -41,11 +39,10 @@
 
                 ?>
             <tr>
-                <td><button type="button" class="btn btn-small btn-success flag" data-id="<?=$row['id'];?>"><i class="icon icon-plus"></i> Add to Transfer</button></td>
+                <td><a href="?pt=<?=$row['id']?>" class="btn btn-small btn-success flag"><i class="icon icon-plus"></i> Add to Transfer</a></td>
                 <td><?=$row['ics_num']?></td>
                 <td><?=$e_code?></td>
                 <td><?=$datax?></td>
-                <td>untransfered</td>
 
             </tr>
             <?php
@@ -54,21 +51,107 @@
             ?>
             </tbody>
         </table>
-        <div class="row-fluid">
-            <div class="span6" style="border-right: 1px solid gray">
-                <form method="post">
-                    <div style="" id="data_add">
+    </div>
+</div>
+<?php
+if(isset($_GET['pt'])){
+    $id = $_GET['pt'];
+    $cc = $conn->query('select * from tbl_par_items where par_id = '.$id);
+?>
+<div class="block">
+    <div class="container-header text-center" style="position:relative;width:100%;height:40px;background-image:linear-gradient(#db9898, #d06868); ">
+        <span style="color:#e9e9e9;font-weight: bold;line-height: 35px;">Selected Data</span>
+    </div>
+    <div class="container-fluid">
+        <table class="table" cellpadding="0" cellspacing="0">
+            <thead>
+            <tr>
+                <th>Select</th>
+                <th>Item Description</th>
+                <th>Quantity</th>
+                <th>Unit</th>
+                <th>Unit Cost</th>
+                <th>Total Cost</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            while($rows = $cc->fetch_assoc()){
+             ?>
+                <tr>
+                    <td><input type="radio" name="ck"/></td>
+                    <td><?=$rows['item_description']?></td>
+                    <td><input type="number" value="<?=$rows['quantity']?>" id="num"/></td>
+                    <td><?=$rows['unit']?></td>
+                    <td><?=$rows['unit_cost']?></td>
+                    <td><?=$rows['total_cost']?></td>
+                </tr>
+            <?php
+            }
+            ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="block">
+    <div class="container-fluid" style="padding:24px;">
+        <div class="row">
 
-                    </div>
-            </div>
-            </form>
-            <form method="post" id="transfer_property_submit">
-                <div class="span6 text-center" id="block_span">
-
-                </div>
-            </form>
+        </div>
+        <div class="row">
+        <div class="span3">
+           <label style="display:block"> Released / Issued By:</label>
+            <select class="form-control" name="issued_by">
+                <option style="display:none" selected hidden disabled>select enduser</option>
+                <?php
+                    $ffz = $conn->query("select * from tbl_par where id = ".$_GET['pt']);
+                    $dataz = $ffz->fetch_assoc();
+                    $idz = explode(",",$dataz['received_by_ids']);
+                foreach ($idz as $index) {
+                    $d = $conn->query("select * from tbl_supplier_employee where id = ".$index);
+                    $name = $d->fetch_assoc();
+                    ?>
+                    <option value="<?=$name['id']?>"><?php echo $name['first_name']. ' '. $name['middle_name']. ' '. $name['last_name']?></option>
+                <?php
+                  }
+                ?>
+            </select>
         </div>
 
-    </div>
 
+        <div class="span3">
+            <label style="display:block">Received By</label>
+            <select class="form-control" name="received_by">
+                <option style="display:none" selected hidden disabled>select enduser</option>
+            </select>
+        </div>
+        <div class="span3">
+            <label style="display:block">Reason for transfer</label>
+            <textarea name="reason"></textarea>
+        </div>
+        <div class="span3">
+            <button type="button" class="btn btn-success"><i class="icon icon-indent-right"> Transfer Property</i></button>
+        </div>
+        </div>
+    </div>
 </div>
+
+
+
+
+<?php
+}
+?>
+<script>
+    $(document).ready(function(){
+        const cur_val = $('#num').val();
+       $('#num').change(function(){
+            if(parseInt($(this).val()) > parseInt(cur_val)){
+                $(this).val(cur_val);
+            }else if(parseInt($(this).val()) < 0 ){
+                $(this).val(0);
+            }
+       });
+        
+    });
+</script>
