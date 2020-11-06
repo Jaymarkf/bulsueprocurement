@@ -280,3 +280,16 @@ CREATE TABLE `tbl_activity_log` (
   `activity` varchar(255) NOT NULL,
   `date_time` datetime NOT NULL
 );
+
+ALTER TABLE `tbl_par_items`
+ADD `transfer_id` int(100) NOT NULL;
+
+
+CREATE TABLE `tbl_pt_par_items` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `par_items_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `issued_by` int(11) NOT NULL,
+  `received_by` int(11) NOT NULL,
+  `reason_for_transfer` varchar(100) NOT NULL
+);
