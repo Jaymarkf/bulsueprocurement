@@ -50,10 +50,27 @@
                 }else{
                     $receiver_name = $receiver[0];
                 }
-
+                                        $btn = '<a href="?pt='.$row['id'].'" class="btn btn-small btn-success flag"> <i class="icon icon-plus"></i> Add to Transfer</a>';
+                    //select if quantity = 0;
+                  $r = $conn->query("select * from tbl_par_items where par_id = " .$row['id']);
+                  $quantityz = array();
+                                          $btn = '<a href="?pt='.$row['id'].'" class="btn btn-small btn-success flag"> <i class="icon icon-plus"></i> Add to Transfer</a>';
+                  while($res = $r->fetch_assoc()){
+                   
+                    $quantityz[] = $res['quantity'];
+                    $temp = array_filter($quantityz, function($value){
+                        return $value > 0;
+                    });
+                    
+                    if(count($temp) == 0){
+                        $btn = '<button class="btn btn-small btn-default flag"> <i class="icon icon-ban-circle"></i> Already Transfered</button>';
+                    }else{
+                        $btn = '<a href="?pt='.$row['id'].'" class="btn btn-small btn-success flag"> <i class="icon icon-plus"></i> Add to Transfer</a>';
+                    }
+                 }
                 ?>
             <tr>
-                <td><a href="?pt=<?=$row['id']?>" class="btn btn-small btn-success flag"><i class="icon icon-plus"></i> Add to Transfer</a></td>
+                <td><?=$btn?></td>
                 <td><?=$row['ics_num']?></td>
                 <td><?=$e_code?></td>
                 <td><?=$datax?></td>
@@ -142,11 +159,17 @@ if(isset($_GET['pt'])){
                 <option style="display:none" selected hidden disabled>select enduser</option>
                 <?php
                     $sc = $conn->query("select * from tbl_supplier_employee");
+                    $loop = 0;
+            
                     while($data_emp = $sc->fetch_assoc()){
+                            if(!(in_array($data_emp['id'],$idz))){
                         ?>
-                            <option value="<?=$data_emp['id']?>"><?=$data_emp['first_name'] . ' '. $data_emp['middle_name'] . ' '. $data_emp['last_name']?></option>
+                            <option value="<?=$data_emp['id']?>"><?=$data_emp['first_name'].' '. $data_emp['middle_name'] . ' '. $data_emp['last_name']?></option>
                         <?php
+                            }
+                            
                     }
+                    $loop = 0;
                 ?>
             </select>
         </div>
@@ -163,14 +186,139 @@ if(isset($_GET['pt'])){
 </div>
 
 </form>
+<div class="block">
+    <div class="container-fluid" style="padding:24px;">
+    <div class="text-center" style="padding:24px;">
+    Transfer Item Data Logs</div>
+        <table class="table table-responsive table-stripped table-bordered example" cellpadding="0" cellspacing="0">
+            <thead>
+                    <tr>
+                        <td>transfer par id</td>
+                        <td>quantity</td>
+                        <td>issued by</td>
+                        <td>received by</td>
+                        <td>reason for transfer</td>
+                        <td>action</td>
+                    </tr>
+            </thead>
+                <tbody>
+                        <?php
+                            $cc = $conn->query("select * from tbl_pt_par_items");
+                            while($row_data = $cc->fetch_assoc()){
+                                //get name
+                                $n = $conn->query("select * from tbl_supplier_employee where id = ".$row_data['issued_by']);
+                                $f = $n->fetch_assoc();
+                                $issued_by = $f['first_name']. ' ' .$f['middle_name'] . ' ' . $f['last_name'];
 
+                                $m = $conn->query("select * from tbl_supplier_employee where id = ". $row_data['received_by']);
+                                $x = $m->fetch_assoc();
+                                $received_by = $x['first_name']. ' '. $x['middle_name'] . ' '. $x['last_name'];
+                                ?>
+                                <tr>
+                                    <td><?=$row_data['par_items_id']?></td>
+                                    <td><?=$row_data['quantity']?></td>
+                                    <td><?=$issued_by?></td>
+                                    <td><?=$received_by?></td>
+                                    <td><?=$row_data['reason_for_transfer']?></td>
+                                    <td><button class="btn-pt-transfer btn btn-success btn-small" data-toggle="modal" data-target="#exampleModalCenter" data-id="<?=$row_data['id']?>"><i class="icon icon-plus"></i> Re Transfer Item</button></td>
+                                </tr>
+                                <?php
+                            }
+                        ?>
+                </tbody>
+        </table>                    
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display:none">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="border-bottom-left-radius:0px;border-bottom-right-radius:0px;">
+        <h5 class="modal-title" id="exampleModalLongTitle">Re Transfer Item</h5>
+      </div>
+      <div class="modal-body">
+        <div class="row-fluid span12">
+            <div class="row">
+                            <div class="text-center">Transfer to</div>
+                            <div class="text-center"><i class="icon icon-exchange"></i></div>
+            </div>
+               
+            <div class="span6" style="margin:0px;">
+                <div class="row-fluid">
+                        <label>par id</label>
+                        <input type="text" name="mpar_id" id="mpar_id"  class="span8" readonly/>
+                </div>
+                <div class="row-fluid">
+                        <label>quantity</label>
+                        <input type="number" name="mquantity" id="mquantity"  class="span8" />
+                </div>
+                <div class="row-fluid">
+                        <label>issued by</label>
+                        <input type="text" name="missued_by" id="missued_by"  class="span8" readonly/>
+                </div>
+                <div class="row-fluid">
+                        <label>received by</label>
+                        <input type="text" name="mreceived_by" id="mreceived_by"  class="span8" readonly/>
+                </div>
+                <div class="row-fluid">
+                        <label>reason for transfer </label>
+                        <input type="text" name="mreason_for_transfer" id="mreason_for_transfer" class="span8"  readonly/>
+                </div>
+            </div>
+            <div class="span6" style="margin:0px;">
+                <div class="row-fluid">
+                        <label>Transfer To</label>
+                        <input type="text" name="mpar_id" id="mpar_id" class="span10" readonly/>
+                </div>
+            
+            </div>
+        
 
-
+                            
+              
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Proceed Transfer</button>
+      </div>
+    </div>
+  </div>
+</div>
 <?php
 }
 ?>
 <script>
     $(document).ready(function(){
+
+        $('.btn-pt-transfer').click(function(){
+            var id_modal = $(this).attr("data-id");
+            $.ajax({
+                url: 'form_submit/pt_par.php',
+                data:{id_modal:id_modal},
+                dataType:'json',
+                type: 'post',
+                success:function(e){
+                   $('#mpar_id').val(e.par_id);
+                   $('#mquantity').val(e.quantity);
+                   $('#mquantity').attr('default-val',e.quantity);
+                   $('#missued_by').val(e.issued_by);
+                   $('#mreceived_by').val(e.received_by);
+                   $('#mreason_for_transfer').val(e.reason_for_transfer);
+                }
+            });
+        });
+
+       $('#exampleModalCenter').on('change','#mquantity',function(){
+             var cur_val = $(this).attr('default-val');
+            if(parseInt($(this).val()) > parseInt(cur_val)){
+                $(this).val(cur_val);
+            }else if(parseInt($(this).val()) < 0 ){
+                $(this).val(0);
+            }
+        
+       });
+
         function getRadioVal(form, name) {
             var val;
             // get list of radio buttons with specified name
@@ -210,6 +358,7 @@ if(isset($_GET['pt'])){
                   type:'post',
                   data:{radio_id:radio_id,quantity:quantity,str_reason:str_reason,issued_by:issued_by,received_by:received_by},
                   success:function(x){  
+                      console.log(x);
                     $.jGrowl("ACCESS GRANTED! Wait for a moment while preparing the system for you... ", { header: 'LOGIN SUCCESS' });
 					var delay = 3000;
 					setTimeout(function(){ window.location = 'pt_par.php'; }, delay);
