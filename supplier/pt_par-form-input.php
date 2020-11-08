@@ -32,8 +32,8 @@
                 $college = array();
                 $receiver = array();
                 foreach ($user as $item => $val) {
-                    $ff = $conn->query("select emp.*,col.* from tbl_supplier_employee emp inner join tbl_branch col on emp.college = col.branchID  where emp.id = ".$val);
-                    $data = $ff->fetch_assoc();
+                    $names = $conn->query("select emp.*,col.* from tbl_supplier_employee emp inner join tbl_branch col on emp.college = col.branchID  where emp.id = ".$val);
+                    $data = $names->fetch_assoc();
                     $college[$item] = $data['branch'];
                     $receiver[$item] = $data['first_name'] .' '.  $data['middle_name']. ' '. $data['last_name'];
                 }
