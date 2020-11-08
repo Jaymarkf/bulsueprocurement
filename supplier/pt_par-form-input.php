@@ -82,6 +82,15 @@
             }
             ?>
             </tbody>
+            <tfoot>
+                <tr>
+                    <th>Select</th>
+                    <th>PAR No.</th>
+                    <th>Code</th>
+                    <th>College</th>
+                    <th>Owner</th>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
@@ -313,6 +322,37 @@ if(isset($_GET['pt'])){
 </div>
 </form>
 <script>
+
+$('#example1 tfoot th').each( function () {
+        var title = $(this).text();
+        if(title == 'Select'){
+            var text = 'hidden';
+        }else{
+            var text = 'text';
+        }
+        $(this).html( '<input type="'+text+'" placeholder="Search '+title+'" />' );
+    } );
+
+
+    $('#example1').DataTable({
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        }
+        ,"scrollX": true,
+        "scrollY": 200
+    });
+
     $(document).ready(function(){
 
         $('#form-modal').submit(

@@ -27,13 +27,14 @@
     <script src="../assets/responsiveslides.min.js" rel="stylesheet" media="screen"></script>
     <script src="../assets/responsiveslides-call.js" rel="stylesheet" media="screen"></script>
     <link rel="stylesheet" type="text/css" href="../bootstrap/js/datatables/media/css/jquery.dataTables.css">
-    <script type="text/javascript" language="javascript" src="../bootstrap/js/datatables/media/js/jquery.dataTables.js"></script>
+    <!-- <script type="text/javascript" language="javascript" src="../bootstrap/js/datatables/media/js/jquery.dataTables.js"></script> -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" language="javascript" class="init">
+
         $(document).ready(function() {
-            $('#example1').dataTable( {
-                "scrollY": 200,
-                "scrollX": true
-            } );
+
+        
+    
             $('.example').dataTable( {
                 "scrollY": 200,
                 "scrollX": true

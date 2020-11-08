@@ -74,6 +74,16 @@ ul{
                     }
                    ?>
                </tbody>
+               <tfoot>
+               <tr>
+                   <th>Select</th>
+                   <th>ICS No.</th>
+                   <th>College</th>
+                   <th>Quantity</th>
+                   <th>Unit</th>
+                   <th>Status</th>
+               </tr>
+               </tfoot>
            </table>
            <div class="row-fluid">
                <div class="span6" style="border-right: 1px solid gray">
@@ -450,6 +460,34 @@ ul{
 
 
     });
+    $('#example1 tfoot th').each( function () {
+        var title = $(this).text();
+        if(title == 'Select'){
+            var text = 'hidden';
+        }else{
+            var text = 'text';
+        }
+        $(this).html( '<input type="'+text+'" placeholder="Search '+title+'" />' );
+    } );
 
+
+    $('#example1').DataTable({
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        }
+        ,"scrollX": true,
+        "scrollY": 200
+    });
 
 </script>
