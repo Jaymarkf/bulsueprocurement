@@ -28,6 +28,16 @@
                 //get total price of item
                 $q_total  = $conn->query('select SUM(total_cost) as total_cost from tbl_par_items where par_id = '.$data_ics['id']);
                 $result = $q_total->fetch_assoc();
+                if($result['total_cost'] == 0){
+                   $buttons = '<span class="span12" style="color:blue;font-weight:bold;">All items is already transfered</span>';
+
+                }else{
+
+                    $buttons = '<a href="par.php?edit='.$data_ics['id'].'" class="btn btn-primary"><i class="icon icon-edit"></i> Edit</a>
+                    <button class="delete_dashboard_btn_par btn btn-danger" data-id='.$data_ics['id'].'"> <i class="icon icon-trash"></i> Delete</button>
+                    <a href="par-print-preview.php?preview='.$data_ics['id'].'" class="btn btn-success"><i class="icon icon-print"></i> Print</a>';
+                }
+
                 ?>
                 <tr>
                     <td style="text-align:center;"><?php echo str_replace(",","-",$data_ics['ics_num'])?></td>
@@ -37,9 +47,7 @@
                     <td style="text-align:center;">Php: <?=$result['total_cost']?></td>
                     <td style="text-align:center;"><?=str_replace(",","-",$data_ics['fundcluster_code'])?></td>
                     <td style="text-align:center;">
-                        <a href="par.php?edit=<?=$data_ics['id']?>" class="btn btn-primary"><i class="icon icon-edit"></i> Edit</a>
-                        <button class="delete_dashboard_btn_par btn btn-danger" data-id="<?=$data_ics['id']?>"><i class="icon icon-trash"></i> Delete</button>
-                        <a href="par-print-preview.php?preview=<?=$data_ics['id']?>" class="btn btn-success"><i class="icon icon-print"></i> Print</a>
+                       <?=$buttons?>
                     </td>
                 </tr>
                 <?php

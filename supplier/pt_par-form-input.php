@@ -126,7 +126,6 @@ if(isset($_GET['pt'])){
         </table>
     </div>
 </div>
-
 <div class="block">
     <div class="container-fluid" style="padding:24px;">
         <div class="row">
@@ -135,8 +134,8 @@ if(isset($_GET['pt'])){
         <div class="row">
         <div class="span3">
            <label style="display:block"> Released / Issued By:</label>
-            <select class="form-control" name="issued_by" id="issued_by">
-                <option style="display:none" selected hidden disabled>select enduser</option>
+            <select class="form-control" name="issued_by" id="issued_by" required>
+                <option style="display:none" value="" selected hidden disabled>select enduser</option>
                 <?php
                     $ffz = $conn->query("select * from tbl_par where id = ".$_GET['pt']);
                     $dataz = $ffz->fetch_assoc();
@@ -155,8 +154,8 @@ if(isset($_GET['pt'])){
 
         <div class="span3">
             <label style="display:block">Received By</label>
-            <select class="form-control" name="received_by" id="received_by">
-                <option style="display:none" selected hidden disabled>select enduser</option>
+            <select class="form-control" name="received_by" id="received_by" required>
+                <option style="display:none" value="" selected hidden disabled>select enduser</option>
                 <?php
                     $sc = $conn->query("select * from tbl_supplier_employee");
                     $loop = 0;
@@ -175,7 +174,7 @@ if(isset($_GET['pt'])){
         </div>
         <div class="span3">
             <label style="display:block">Reason for transfer</label>
-            <textarea name="reason" id="reason"></textarea>
+            <textarea name="reason" id="reason" required></textarea>
         </div>
         <div class="span3">
             <button type="submit" name="submit" value="submit" class="btn btn-success"><i class="icon icon-indent-right"></i> Transfer Property</button>
@@ -186,6 +185,10 @@ if(isset($_GET['pt'])){
 </div>
 
 </form>
+<?php
+}
+?>
+
 <div class="block">
     <div class="container-fluid" style="padding:24px;">
     <div class="text-center" style="padding:24px;">
@@ -194,10 +197,12 @@ if(isset($_GET['pt'])){
             <thead>
                     <tr>
                         <td>transfer par id</td>
+                        <td>item description</td>
                         <td>quantity</td>
                         <td>issued by</td>
                         <td>received by</td>
                         <td>reason for transfer</td>
+                        <td>date transfered</td>
                         <td>action</td>
                     </tr>
             </thead>
@@ -213,14 +218,24 @@ if(isset($_GET['pt'])){
                                 $m = $conn->query("select * from tbl_supplier_employee where id = ". $row_data['received_by']);
                                 $x = $m->fetch_assoc();
                                 $received_by = $x['first_name']. ' '. $x['middle_name'] . ' '. $x['last_name'];
+                                $par_item = $conn->query("select * from tbl_item_details where itemdetailID = ".$row_data['item_id']);
+                                $item = $par_item->fetch_assoc();
+                                if($row_data['quantity'] == 0){
+                                    $btnt = '<button class="btn btn-warning btn-small"><i class="icon icon-ban-circle"></i> all item was transfered</button>';
+                                }else{
+                                    $btnt = '<button class="btn-pt-transfer btn btn-success btn-small" data-toggle="modal" data-target="#exampleModalCenter" data-id="'.$row_data['id'].'"><i class="icon icon-plus"></i> Re Transfer Item</button></td>';
+                                }
+
                                 ?>
                                 <tr>
                                     <td><?=$row_data['par_items_id']?></td>
+                                    <td><?=$item['itemdetailDesc']?></td>
                                     <td><?=$row_data['quantity']?></td>
                                     <td><?=$issued_by?></td>
                                     <td><?=$received_by?></td>
                                     <td><?=$row_data['reason_for_transfer']?></td>
-                                    <td><button class="btn-pt-transfer btn btn-success btn-small" data-toggle="modal" data-target="#exampleModalCenter" data-id="<?=$row_data['id']?>"><i class="icon icon-plus"></i> Re Transfer Item</button></td>
+                                    <td><?=$row_data['date_transfered']?></td>
+                                    <td><?=$btnt?></td>
                                 </tr>
                                 <?php
                             }
@@ -229,7 +244,9 @@ if(isset($_GET['pt'])){
         </table>                    
     </div>
 </div>
-<!-- Modal -->
+
+<!-- MODAL -->
+<form method="post" id="form-modal">
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display:none">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -249,6 +266,10 @@ if(isset($_GET['pt'])){
                         <input type="text" name="mpar_id" id="mpar_id"  class="span8" readonly/>
                 </div>
                 <div class="row-fluid">
+                        <label>item description</label>
+                        <input type="text" name="mitem" id="mitem"  class="span8" readonly/>
+                </div>
+                <div class="row-fluid">
                         <label>quantity</label>
                         <input type="number" name="mquantity" id="mquantity"  class="span8" />
                 </div>
@@ -259,6 +280,7 @@ if(isset($_GET['pt'])){
                 <div class="row-fluid">
                         <label>received by</label>
                         <input type="text" name="mreceived_by" id="mreceived_by"  class="span8" readonly/>
+                        <input type="hidden" name="mhreceived_by" id="mhreceived_by"/>
                 </div>
                 <div class="row-fluid">
                         <label>reason for transfer </label>
@@ -267,29 +289,50 @@ if(isset($_GET['pt'])){
             </div>
             <div class="span6" style="margin:0px;">
                 <div class="row-fluid">
-                        <label>Transfer To</label>
-                        <input type="text" name="mpar_id" id="mpar_id" class="span10" readonly/>
+                        <label>Receiver name</label>
+                        <select class="span10" name="mrec_name" id="mrec_name">
+                        
+                        
+                        </select>
+                </div>
+                <div class="row-fluid">
+                        <label>Reason for Transfer</label>
+                        <textarea name="mres" id="mres" required></textarea>
+                        <input type="hidden" id="idpar" name="idpar"/>
                 </div>
             
-            </div>
-        
-
-                            
-              
+            </div>           
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Proceed Transfer</button>
+        <button type="submit" class="btn btn-primary">Proceed Transfer</button>
       </div>
     </div>
   </div>
 </div>
-<?php
-}
-?>
+</form>
 <script>
     $(document).ready(function(){
+
+        $('#form-modal').submit(
+            function(e){
+                e.preventDefault();
+                var post_data = $(this).serialize();
+                console.log(post_data);
+               $.ajax({
+                   url: 'form_submit/pt_par.php',
+                   type:'post',
+                   data:post_data,
+                   success:function(result){
+                        console.log(result);
+                   }
+
+               });
+            }
+        );
+
+
 
         $('.btn-pt-transfer').click(function(){
             var id_modal = $(this).attr("data-id");
@@ -305,6 +348,10 @@ if(isset($_GET['pt'])){
                    $('#missued_by').val(e.issued_by);
                    $('#mreceived_by').val(e.received_by);
                    $('#mreason_for_transfer').val(e.reason_for_transfer);
+                   $('#mrec_name').html(e.option);
+                   $('#mitem').val(e.item);
+                   $('#idpar').val(e.id);
+                   $('#mhreceived_by').val(e.rhidden);
                 }
             });
         });
@@ -322,12 +369,12 @@ if(isset($_GET['pt'])){
         function getRadioVal(form, name) {
             var val;
             // get list of radio buttons with specified name
-            var radios = form.elements[name];
-
+            var rad = document.getElementsByClassName("ck");
             // loop through list of radio buttons
-            for (var i=0, len=radios.length; i<len; i++) {
-                if ( radios[i].checked ) { // radio checked?
-                    val = radios[i].value; // if so, hold its value in val
+            
+            for (var i=0, len=rad.length; i<=len; i++) {
+                if ( rad[i].checked ) { // radio checked?
+                    val = rad[i].value; // if so, hold its value in val
                     break; // and break out of for loop
                 }
             }
@@ -347,8 +394,8 @@ if(isset($_GET['pt'])){
         }
         $('#form-desc').submit(
               function(e){
-              e.preventDefault();
-              var radio_id    =  getRadioVal(document.getElementById('form-desc'),'ck');
+              e.preventDefault(); 
+              var radio_id    = getRadioVal(document.getElementById('form-desc'),'ck');
               var quantity    = getquantity();
               var str_reason  = $('#reason').val();
               var issued_by   = $('#issued_by').val();
@@ -358,7 +405,6 @@ if(isset($_GET['pt'])){
                   type:'post',
                   data:{radio_id:radio_id,quantity:quantity,str_reason:str_reason,issued_by:issued_by,received_by:received_by},
                   success:function(x){  
-                      console.log(x);
                     $.jGrowl("ACCESS GRANTED! Wait for a moment while preparing the system for you... ", { header: 'LOGIN SUCCESS' });
 					var delay = 3000;
 					setTimeout(function(){ window.location = 'pt_par.php'; }, delay);
