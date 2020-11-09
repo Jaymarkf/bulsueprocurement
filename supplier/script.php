@@ -9,7 +9,7 @@
     });
 </script>
 <!-- data table -->
-<script src="..//datatables/js/jquery.dataTables.min.js"></script>
+<!-- <script src="..//datatables/js/jquery.dataTables.min.js"></script> -->
 <script src="../assets/DT_bootstrap.js"></script>
 <script src="../vendors/jGrowl/jquery.jgrowl.js"></script>
 <script>

@@ -68,7 +68,8 @@ if(isset($_POST['ics_transfer_id'])){
                                                            '$pt_total_cost');
                                                     ");
         //update the tbl_ics  set the transfer id to receiver
-        $sql_ics_update = $conn->query("update tbl_ics set transfer_item_id = ".$conn->insert_id." where id = ".$ics_transfer_id);
+
+        $sql_ics_update = $conn->query("update tbl_ics set transfer_item_id = 1,quantity = quantity - ".$pt_quantity." where id = ".$ics_transfer_id);
     }
 
 

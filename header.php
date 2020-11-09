@@ -31,7 +31,7 @@
 		<!-- notification  -->
 		<link href="vendors/jGrowl/jquery.jgrowl.css" rel="stylesheet" media="screen">
 		<script src="vendors/jGrowl/jquery.jgrowl.js"></script>
-		<script src="vendor/easy-pie-chart-master/src/easypiechart.js"></script>
+		<!-- <script src="vendor/easy-pie-chart-master/src/easypiechart.js"></script> -->
 		<link href="vendors/fullcalendar/fullcalendar.css" rel="stylesheet" media="screen">
 		<script src="vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 		<!-- wysiwug  -->
@@ -80,14 +80,15 @@
 		document.onkeyup=function(e){
 		if(e.which == 17)
 			isCtrl=false;
-		} document.onkeydown=function(e){
-			if(e.which == 17)
-				isCtrl=true;
-			if((e.which == 85) || (e.which == 67) &amp;&amp; isCtrl == true){
-				// alert(&#8216;Keyboard shortcuts are cool!&#8217;);
-				return false;
-			}
-		}
+		} 
+		// document.onkeydown=function(x){
+		// 	if(x.which == 17)
+		// 		isCtrl=true;
+		// 	if((x.which == 85) || (x.which == 67) == true){
+		// 		// alert(&#8216;Keyboard shortcuts are cool!&#8217;);
+		// 		return false;
+		// 	}
+		// }
 		
 		var isNS = (navigator.appName == "Netscape") ? 1 : 0;
 		if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);
