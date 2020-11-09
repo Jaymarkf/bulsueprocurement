@@ -54,7 +54,7 @@ ul{
                         $college = $res['college'];
                         $qty = $res['quantity'];
                         $unit = $res['unit'];
-                        if($res['transfer_item_id'] == null){
+                        if($res['transfer_item_id'] == 0 || $res['transfer_item_id'] == null ){
                             $status = '<span style="background-color:lightseagreen;padding:5px;border-radius: 10px;font-size:11px;color:white;">Item not transfered</span>';
                         }else{
                             $status = '<span style="background-color:lawngreen;padding:5px;border-radius: 10px;font-size:11px;color:black;">Item is transfered</span>';
@@ -117,8 +117,8 @@ ul{
                         <tr>
                             <th>Transfer ID</th>
                             <th>PTR No. </th>
-                            <th>ISSUED BY</th>
-                            <th>ISSUED TO</th>
+                            <th>RELEASED / ISSUED BY</th>
+                            <th>RECEIVED BY</th>
                             <th>REASON FOR TRANSFER</th>
                             <th>PTR DATE</th>
                             <th>ITEM DESC</th>
@@ -274,7 +274,7 @@ ul{
                     $('#data_add').html("" +
                         "<div class='row-fluid text-warning' style='font-weight: bolder'>Data to be Transfer <span style='font-weight: bold;' class='text-success'>(Confirmation)</span></div><div class='row-fluid'><span style='font-weight: bold'>ICS No. </span> <input class='' type='text' name='ics_num' id='ics_num' value='"+ics_num+"' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>College </span><input class='span8' type='text' name='college' id='college' value='"+college+"' readonly/></div>" +
-                        "<div class='row-fluid'><span style='font-weight: bold'>Quantity </span><input class='form-control' type='text' name='quantity' id='quantity' value='"+quantity+"' readonly/div>" +
+                        "<div class='row-fluid'><span style='font-weight: bold'>Quantity </span><input class='form-control' type='number' name='quantity' id='quantity' value='"+quantity+"'/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>Unit </span> <input class='' type='text' name='unit' id='unit' value='"+unit+"' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>From - FundCluster </span> <input class='' type='text' name='fund' id='fund' value='"+fund+"' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>To - FundCluster </span><select class = '' name='to_fund' id='to_fund' required>"+fund_all+"</select></div>" +
@@ -456,10 +456,21 @@ ul{
             }
 
         });
-
-
-
     });
+
+    $('#data_add').on('change','#quantity',
+        function(){
+          
+           var cur_val = this.defaultValue;
+            if(parseInt($(this).val()) > parseInt(cur_val)){
+                $(this).val(cur_val);
+            }else if(parseInt($(this).val()) < 0 ){
+                $(this).val(0);
+            
+        }
+        }
+    );
+
     $('#example1 tfoot th').each( function () {
         var title = $(this).text();
         if(title == 'Select'){

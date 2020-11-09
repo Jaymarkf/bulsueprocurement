@@ -2,6 +2,10 @@
     .highlight{
         background-color: #b3c2a1;
     }
+    div.dataTables_scrollBody table {
+    table-layout: fixed;
+    width: 98% !important;
+}
 </style>
 <div class="block">
     <div class="container-header text-center" style="position:relative;width:100%;height:40px;background-image:linear-gradient(#bababa, #454545); ">
@@ -208,7 +212,7 @@ if(isset($_GET['pt'])){
                         <td>transfer par id</td>
                         <td>item description</td>
                         <td>quantity</td>
-                        <td>issued by</td>
+                        <td>released / issued by</td>
                         <td>received by</td>
                         <td>reason for transfer</td>
                         <td>date transfered</td>
@@ -429,7 +433,6 @@ $('#example1 tfoot th').each( function () {
                   }
               }
             );
-
             return f;
         }
         $('#form-desc').submit(
@@ -445,7 +448,7 @@ $('#example1 tfoot th').each( function () {
                   type:'post',
                   data:{radio_id:radio_id,quantity:quantity,str_reason:str_reason,issued_by:issued_by,received_by:received_by},
                   success:function(x){  
-                    $.jGrowl("ACCESS GRANTED! Wait for a moment while preparing the system for you... ", { header: 'LOGIN SUCCESS' });
+                    $.jGrowl("Property Transfer PAR Success", { header: 'PT-PAR SUCCESS' });
 					var delay = 3000;
 					setTimeout(function(){ window.location = 'pt_par.php'; }, delay);
                   }

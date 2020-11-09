@@ -114,7 +114,7 @@
             <div id="coll" class="nav-collapse collapse">
                 <ul class="nav pull-right">
                     <li class="dropdown">
-                        <a><i class="icon-hdd icon-large"></i>Supplier</a>
+                        <a><i class="icon-hdd icon-large"></i>Supply Office</a>
                     </li>
 
                     <?php

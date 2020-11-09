@@ -8,7 +8,7 @@
         <div class="span12" id="content">
             <div class="row-fluid">
                 <div class="pull-left">
-                    <h3><img src="../images/buttons/ppmp.png" width="5%"> Supplier  - Dashboard</h3>
+                    <h3><img src="../images/buttons/ppmp.png" width="5%"> Supply Office  - Dashboard</h3>
                     <i class="icon-calendar icon-large"></i>
                     <?php
                     $Today=date('y:m:d');
