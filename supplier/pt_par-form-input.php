@@ -67,7 +67,7 @@
                     });
                     
                     if(count($temp) == 0){
-                        $btn = '<button class="btn btn-small btn-default flag"> <i class="icon icon-ban-circle"></i> Already Transfered</button>';
+                        $btn = '<button class="btn btn-small btn-default flag"> <i class="icon icon-ban-circle"></i> Transfered All</button>';
                     }else{
                         $btn = '<a href="?pt='.$row['id'].'" class="btn btn-small btn-success flag"> <i class="icon icon-plus"></i> Add to Transfer</a>';
                     }

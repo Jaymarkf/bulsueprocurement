@@ -22,20 +22,21 @@ if(isset($_POST['ics_transfer_id'])){
 
 
     //check if item is already transfered or not
-    if($_POST['is_transfer'] == 1){
-        $conn->query("update transfer_item set  issued_by = '$issued_by',
-                                                       issued_to = '$issued_to',
-                                                       reason_for_transfer = '$reason_for_transfer',
-                                                       from_fundcluster = '$pt_from_fundcluster', 
-                                                       to_fundcluster = '$pt_to_fundcluster',
-                                                       ptr_date = '$pt_ptr_date',
-                                                       ptr_no = '$pt_ptr_no' 
-                                                       
-                                                       where id = ".$ics_transfer_id);
-//        echo mysqli_error($conn);
-    }else if($_POST['is_transfer'] == 0){
+//     if($_POST['is_transfer'] == 1){
+//         $conn->query("update transfer_item set  issued_by = '$issued_by',
+//                                                        issued_to = '$issued_to',
+//                                                        reason_for_transfer = '$reason_for_transfer',
+//                                                        from_fundcluster = '$pt_from_fundcluster', 
+//                                                        to_fundcluster = '$pt_to_fundcluster',
+//                                                        ptr_date = '$pt_ptr_date',
+//                                                        ptr_no = '$pt_ptr_no' 
+//                                                        where id = ".$ics_transfer_id);
+// //        echo mysqli_error($conn);
 
-        $conn->query("insert into transfer_item (`issued_by`,
+
+//     }else if($_POST['is_transfer'] == 0){
+
+        $conn->query("insert into transfer_item (`issued_by`,`ics_id`,
                                                     `issued_to`,
                                                     `reason_for_transfer`,
                                                     `from_fundcluster`,
@@ -52,6 +53,7 @@ if(isset($_POST['ics_transfer_id'])){
                                                     `total_cost`)
                                                     
                                                     VALUES('$issued_by',
+                                                           '$ics_transfer_id',
                                                            '$issued_to',
                                                            '$reason_for_transfer',
                                                            '$pt_from_fundcluster',
@@ -70,14 +72,7 @@ if(isset($_POST['ics_transfer_id'])){
         //update the tbl_ics  set the transfer id to receiver
 
         $sql_ics_update = $conn->query("update tbl_ics set transfer_item_id = 1,quantity = quantity - ".$pt_quantity." where id = ".$ics_transfer_id);
-    }
-
-
-
-
-
-
-
+    // }
 }
 if(isset($_POST['id_view'])){ // ptr transfer table
 

@@ -40,6 +40,7 @@ ul{
                    <th>Select</th>
                    <th>ICS No.</th>
                    <th>College</th>
+                   <th>Item Description</th>
                    <th>Quantity</th>
                    <th>Unit</th>
                    <th>Status</th>
@@ -48,24 +49,31 @@ ul{
                <tbody>
                    <?php
                     $sql_ics = $conn->query("select * from tbl_ics");
-
                     while( $res = $sql_ics->fetch_assoc()) {
                         $ics_num = str_replace(",", "-", $res['ics_num']);
                         $college = $res['college'];
                         $qty = $res['quantity'];
                         $unit = $res['unit'];
-                        if($res['transfer_item_id'] == 0 || $res['transfer_item_id'] == null ){
+                        if($res['transfer_item_id'] == 0){
                             $status = '<span style="background-color:lightseagreen;padding:5px;border-radius: 10px;font-size:11px;color:white;">Item not transfered</span>';
                         }else{
                             $status = '<span style="background-color:lawngreen;padding:5px;border-radius: 10px;font-size:11px;color:black;">Item is transfered</span>';
                         }
+                        //get item description
+                        $c = $conn->query("select * from tbl_rfq_item_details where id = ".$res['item_desc']);
+                        $item = $c->fetch_assoc();
+                        if($res['quantity'] == 0){
+                            $btn_transfer = '<button type="button" class="btn btn-small btn-default"><i class="icon icon-ban-circle"></i> Transfered All </button>';
+                        }else{
+                            $btn_transfer = '<button type="button" class="btn btn-small btn-success flag" data-id="'.$res['id'].'"><i class="icon icon-plus"></i> Add to Transfer</button>';
 
-
+                        }
                         ?>
                         <tr>
-                            <td><button type="button" class="btn btn-small btn-success flag" data-id="<?=$res['id'];?>"><i class="icon icon-plus"></i> Add to Transfer</button></td>
+                            <td><?=$btn_transfer?></td>
                             <td><?=$ics_num?></td>
                             <td><?=$college?></td>
+                            <td><?=$item['item_and_specification']?></td>
                             <td><?=$qty?></td>
                             <td><?=$unit?></td>
                             <td><?=$status?></td>
@@ -79,6 +87,7 @@ ul{
                    <th>Select</th>
                    <th>ICS No.</th>
                    <th>College</th>
+                   <th>Item Description</th>
                    <th>Quantity</th>
                    <th>Unit</th>
                    <th>Status</th>
@@ -230,7 +239,7 @@ ul{
                 data:data_transfer,
                 //check if exist yung ics kapag na trasfer na make the ics table into status == transfer
                 success:function(result){
-                    console.log(result);
+                    // console.log(result);
                     $.jGrowl("New Item was successfully Transfered!.", { header: 'SUCCESS' });
                     var delay = 3000;
                     setTimeout(function(){ window.location = 'pt_ics.php'  }, delay);
@@ -242,13 +251,13 @@ ul{
 
         $('.flag').click(function(){
             var f_id_pt = $(this).attr('data-id');
-
             $.ajax({
                 url: '../ajaxPOST/supplier_2.php',
                 type: 'post',
                 data: {f_id_pt:f_id_pt},
                 dataType: 'json',
                 success:function(result){
+                    // console.log(result);
                 var ics_num  = result.ics_num;
                 var college = result.college;
                 var quantity = result.quantity;
@@ -261,15 +270,15 @@ ul{
                 var total_cost = result.total_cost;
                 var btn_id = result.transfer_check;
                 var is_transfer = result.is_transfer;
-                var transfer = '';
-                if(is_transfer == '1'){
-                    transfer = result.transfer_check;
+                var transfer = f_id_pt;
+                // if(is_transfer == '1'){
+                //     transfer = result.transfer_check;
 
 
 
-                }else if(is_transfer == '0'){
-                    transfer = f_id_pt;
-                }
+                // }else if(is_transfer == '0'){
+                //     transfer = f_id_pt;
+                // }
                 var d = new Date();
                     $('#data_add').html("" +
                         "<div class='row-fluid text-warning' style='font-weight: bolder'>Data to be Transfer <span style='font-weight: bold;' class='text-success'>(Confirmation)</span></div><div class='row-fluid'><span style='font-weight: bold'>ICS No. </span> <input class='' type='text' name='ics_num' id='ics_num' value='"+ics_num+"' readonly/></div>" +
@@ -288,7 +297,12 @@ ul{
                     // console.log(result);
 
 
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert("error in server");
                 }
+
+
             });
 
     });
@@ -312,12 +326,15 @@ ul{
 
                 var id_transfer = $(this).attr('data-id');
                 var is_transfer = $(this).attr('is-transfer');
+                // console.log(id_transfer);
+                // console.log(is_transfer);
                 $.ajax({
                     url: '../ajaxPOST/supplier_2.php',
                     type: 'post',
                     dataType:'json',
                     data:{id_transfer:id_transfer,is_transfer:is_transfer},
                     success:function(qwe){
+                        // console.log(qwe);
                         let pt_from_fund = $('#fund').val();
                         let pt_to_fund = $('#to_fund option:selected').text();
                         let pt_to_fund_id = $('#to_fund option:selected').val();
@@ -467,7 +484,7 @@ ul{
             }else if(parseInt($(this).val()) < 0 ){
                 $(this).val(0);
             
-        }
+            }
         }
     );
 
@@ -479,7 +496,7 @@ ul{
             var text = 'text';
         }
         $(this).html( '<input type="'+text+'" placeholder="Search '+title+'" />' );
-    } );
+    });
 
 
     $('#example1').DataTable({

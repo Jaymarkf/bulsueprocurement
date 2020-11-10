@@ -294,19 +294,17 @@ if(isset($_POST['e_id_supply'])){
 }
 
 if(isset($_POST['f_id_pt'])){
-
     $sql = $conn->query("select * from tbl_ics where id = ". $_POST['f_id_pt']);
     $ics_res = $sql->fetch_assoc();
-    if($ics_res['transfer_item_id'] != null){
-        $res['transfer_check'] = $ics_res['transfer_item_id'];
+    if($ics_res['transfer_item_id'] != 0){
+        $res['transfer_check'] = $ics_res['id'];
         $res['is_transfer'] = '1';
 
-
-        $get_fund = $conn->query("select * from transfer_item where id = ".$ics_res['transfer_item_id']);
+        //get fund in table ics
+        $fundcode = explode(",",$ics_res['fundcluster_code']);
+        $get_fund = $conn->query("select * from tbl_fund where fund_id  = " . $fundcode[0]);
         $fund = $get_fund->fetch_assoc();
-        $res['fund_name'] = $fund['to_fundcluster'];
-
-
+        $res['fund_name'] = $fund['fund_description'];
 
     }else{
         $res['is_transfer'] = '0';
@@ -314,6 +312,7 @@ if(isset($_POST['f_id_pt'])){
         $get_fund = $conn->query("select * from tbl_fund where fund_id  = " . $fundcode[0]);
         $fund = $get_fund->fetch_assoc();
         $res['fund_name'] = $fund['fund_description'];
+     
     }
 
     $res['ics_num'] = str_replace(",","-",$ics_res['ics_num']);
@@ -335,6 +334,8 @@ if(isset($_POST['f_id_pt'])){
 
     while($xx  = $ss->fetch_assoc()){
         $res['fund_all'] .= '<option value="'.$xx['fund_id'].'">'.$xx['fund_description'].'</option>';
+    
+        
     }
 
 
@@ -342,20 +343,27 @@ if(isset($_POST['f_id_pt'])){
 
 }
 if(isset($_POST['id_transfer'])){
-    if($_POST['is_transfer'] == '1'){
-        $ss = $conn->query("select * from transfer_item where id = ".$_POST['id_transfer']);
-        $ff = $ss->fetch_assoc();
-        $employee = $conn->query("select * from tbl_supplier_employee where id = ". $ff['issued_to']);
-        $emp_ex = $employee->fetch_assoc();
+    // if($_POST['is_transfer'] == 1){
+        // $ss = $conn->query("select * from transfer_item where id = ".$_POST['id_transfer']);
+        // $ff = $ss->fetch_assoc();
+        // $employee = $conn->query("select * from tbl_supplier_employee where id = ". $ff['issued_to']);
+        // $emp_ex = $employee->fetch_assoc();
 
-    }else{
+        // $ics_tbl = $conn->query("select * from tbl_ics where id = ". $_POST['id_transfer']);
+        // $ics_ex = $ics_tbl->fetch_assoc();
+
+        // $employee = $conn->query("select * from tbl_supplier_employee where id = ". $ics_ex['received_by']);
+        // $emp_ex = $employee->fetch_assoc();
+        // $data['error'] = mysqli_error($conn);
+    // }else{
         $ics_tbl = $conn->query("select * from tbl_ics where id = ". $_POST['id_transfer']);
         $ics_ex = $ics_tbl->fetch_assoc();
 
         $employee = $conn->query("select * from tbl_supplier_employee where id = ". $ics_ex['received_by']);
         $emp_ex = $employee->fetch_assoc();
+        $data['error'] = mysqli_error($conn);
 
-    }
+    // }
 
 
     $current_emp = $emp_ex['first_name']. ' ' . $emp_ex['middle_name']. ' ' .$emp_ex['last_name'];
