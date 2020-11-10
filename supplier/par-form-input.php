@@ -160,7 +160,7 @@ $sender_position = '';
                 <div class="row-fluid">
                     <div class="span3">
                         <select class="form-control text-center" name="fundcluster_name" style="width:70%;font-size:12px;" required>
-                            <option style="display:none" selected hidden>select fundcluster here..</option>
+                            <option value ="" style="display:none" selected hidden>select fundcluster here..</option>
                             <?php
                             $s = $conn->query("select * from tbl_fund");
                             while($dcluster = $s->fetch_assoc()){

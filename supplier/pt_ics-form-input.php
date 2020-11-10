@@ -490,12 +490,15 @@ ul{
 
     $('#example1 tfoot th').each( function () {
         var title = $(this).text();
+        var btn ='';
         if(title == 'Select'){
-            var text = 'hidden';
+            var text = 'text';
+             btn = 'placeholder="" style="border:none;background-color:white" readonly';
         }else{
             var text = 'text';
+            btn = 'placeholder="Search '+title+'"';
         }
-        $(this).html( '<input type="'+text+'" placeholder="Search '+title+'" />' );
+        $(this).html( '<input type="'+text+'"' +btn+'/>' );
     });
 
 

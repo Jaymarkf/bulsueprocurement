@@ -143,7 +143,7 @@
                         <div class="text-center padd-bottom" style="font-weight: bold;color:gray;font-family: 'Courier New', Courier, monospace">Quantity</div>
                     </div>
                     <div class="row-fluid">
-                        <input type="text" class="form-control span12" name="quantity" value="<?php if(isset($_GET['edit'])){ echo $d['quantity']; }?>" id="quantity" placeholder="input quantity here..." readonly required>
+                        <input type="text" class="form-control span12" name="quantity" value="<?php if(isseft($_GET['edit'])){ echo $d['quantity']; }?>" id="quantity" placeholder="input quantity here..." readonly required>
 
                     </div>
                 </div>
@@ -297,7 +297,7 @@
             <div class="row-fluid">
                 <div class="span3">
                     <select class="form-control text-center" name="fundcluster_name" style="width:70%;font-size:12px;" required>
-                        <option style="display:none" selected hidden>select fundcluster here..</option>
+                        <option value="" style="display:none" selected hidden>select fundcluster here..</option>
                         <?php
                             $s = $conn->query("select * from tbl_fund");
                             while($dcluster = $s->fetch_assoc()){

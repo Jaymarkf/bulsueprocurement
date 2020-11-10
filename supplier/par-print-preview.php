@@ -19,6 +19,7 @@ $pdf = new FPDF('P','mm','A4');
 $p_width = $pdf->GetPageWidth();
 $p_height = $pdf->GetPageHeight();
 $pdf->AddPage();
+$pdf->Image('../images/header_logo.png',65,3,80);
 $pdf->SetFont('Arial','B',13);
 $pdf->Cell("","20",'PROPERTY ACKNOWLEDGEMENT RECEIPT','','','C');
 $pdf->Ln(10);

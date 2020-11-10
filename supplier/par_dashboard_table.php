@@ -29,7 +29,7 @@
                 $q_total  = $conn->query('select SUM(total_cost) as total_cost from tbl_par_items where par_id = '.$data_ics['id']);
                 $result = $q_total->fetch_assoc();
                 if($result['total_cost'] == 0){
-                   $buttons = '<span class="span12" style="color:blue;font-weight:bold;">All items is already transfered</span>';
+                   $buttons = '<span class="span12" style="color:blue;font-weight:bold;">All items is already transfered</span> <a href="par-print-preview.php?preview='.$data_ics['id'].'" class="btn btn-success"><i class="icon icon-print"></i> Print</a>';
 
                 }else{
 
