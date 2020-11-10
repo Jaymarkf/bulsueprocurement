@@ -259,6 +259,8 @@
 <script>
 	jQuery(document).ready(function($){
 		$("#savePR").submit(function(e){
+			$('#save').text("please wait...");
+			$('#save').attr('disabled','disabled');
 			e.preventDefault();
 			var _this = $(e.target);
 			var formData = $(this).serialize();
@@ -274,6 +276,9 @@
 			});
 		});
 	});
+	
+
+
 </script>
 	
 </html>
