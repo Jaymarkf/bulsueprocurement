@@ -76,21 +76,21 @@ $pdf->SetFont('Courier','B',10);
 $pdf->Text($pdf->GetX()+ 10,$pdf->GetY() - 40,'Received from: ');
 $pdf->Text($pdf->GetX()+ 120,$pdf->GetY() - 40,'Received by: ');
 $pdf->Text($pdf->GetX()+22,$pdf->GetY() - 25,'Signature Over Printed Name');
-$pdf->Line($pdf->GetX()+17,$pdf->GetY() - 28,$pdf->GetX()+85,$pdf->GetY()-28);
+$pdf->Line($pdf->GetX()+5,$pdf->GetY() - 28,$pdf->GetX()+100,$pdf->GetY()-28);
 
 $pdf->Text($pdf->GetX()+120,$pdf->GetY() - 25,'Signature Over Printed Name');
-$pdf->Line($pdf->GetX()+115,$pdf->GetY() - 28,$pdf->GetX()+180,$pdf->GetY()-28);
+$pdf->Line($pdf->GetX()+110,$pdf->GetY() - 28,$pdf->GetX()+180,$pdf->GetY()-28);
 
 
 $pdf->Text($pdf->GetX()+127,$pdf->GetY() - 12,'Position / Office');
-$pdf->Line($pdf->GetX()+115,$pdf->GetY() - 15,$pdf->GetX()+180,$pdf->GetY()-15);
+$pdf->Line($pdf->GetX()+110,$pdf->GetY() - 15,$pdf->GetX()+180,$pdf->GetY()-15);
 
 
 $pdf->Text($pdf->GetX()+31,$pdf->GetY() - 12,'Position / Office');
-$pdf->Line($pdf->GetX()+25,$pdf->GetY() - 15,$pdf->GetX()+85,$pdf->GetY()-15);
+$pdf->Line($pdf->GetX()+5,$pdf->GetY() - 15,$pdf->GetX()+100,$pdf->GetY()-15);
 
 $pdf->Text($pdf->GetX()+50,$pdf->GetY() - 2,'Date');
-$pdf->Line($pdf->GetX()+25,$pdf->GetY() - 5,$pdf->GetX()+85,$pdf->GetY()-5);
+$pdf->Line($pdf->GetX()+5,$pdf->GetY() - 5,$pdf->GetX()+100,$pdf->GetY()-5);
 
 $pdf->Text($pdf->GetX()+140,$pdf->GetY() - 2,'Date');
 $pdf->Line($pdf->GetX()+110,$pdf->GetY() - 5,$pdf->GetX()+180,$pdf->GetY()-5);
