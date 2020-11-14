@@ -30,14 +30,11 @@
                 $result = $q_total->fetch_assoc();
                 if($result['total_cost'] == 0){
                    $buttons = '<span class="span12" style="color:blue;font-weight:bold;">All items is already transfered</span> <a href="par-print-preview.php?preview='.$data_ics['id'].'" class="btn btn-success"><i class="icon icon-print"></i> Print</a>';
-
                 }else{
-
                     $buttons = '<a href="par.php?edit='.$data_ics['id'].'" class="btn btn-primary"><i class="icon icon-edit"></i> Edit</a>
                     <button class="delete_dashboard_btn_par btn btn-danger" data-id='.$data_ics['id'].'"> <i class="icon icon-trash"></i> Delete</button>
                     <a href="par-print-preview.php?preview='.$data_ics['id'].'" class="btn btn-success"><i class="icon icon-print"></i> Print</a>';
                 }
-
                 ?>
                 <tr>
                     <td style="text-align:center;"><?php echo str_replace(",","-",$data_ics['ics_num'])?></td>

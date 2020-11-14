@@ -20,6 +20,7 @@
                 <th>Code</th>
                 <th>College</th>
                 <th>Owner</th>
+                <th>Status</th>
             </tr>
             </thead>
             <tbody>
@@ -35,6 +36,8 @@
                 $user = explode(",",$row['received_by_ids']);
                 $college = array();
                 $receiver = array();
+
+                //getting branch and name of user
                 foreach ($user as $item => $val) {
                     $names = $conn->query("select emp.*,col.* from tbl_supplier_employee emp inner join tbl_branch col on emp.college = col.branchID  where emp.id = ".$val);
                     $data = $names->fetch_assoc();
@@ -53,19 +56,17 @@
                     $receiver_name = implode(" and ", $receiver);
                 }else{
                     $receiver_name = $receiver[0];
-                }
-                                        $btn = '<a href="?pt='.$row['id'].'" class="btn btn-small btn-success flag"> <i class="icon icon-plus"></i> Add to Transfer</a>';
-                    //select if quantity = 0;
+                }                  
+                  //select if quantity = 0;
                   $r = $conn->query("select * from tbl_par_items where par_id = " .$row['id']);
                   $quantityz = array();
-                                          $btn = '<a href="?pt='.$row['id'].'" class="btn btn-small btn-success flag"> <i class="icon icon-plus"></i> Add to Transfer</a>';
+                
                   while($res = $r->fetch_assoc()){
-                   
+                    
                     $quantityz[] = $res['quantity'];
                     $temp = array_filter($quantityz, function($value){
                         return $value > 0;
                     });
-                    
                     if(count($temp) == 0){
                         $btn = '<button class="btn btn-small btn-default flag"> <i class="icon icon-ban-circle"></i> Transfered All</button>';
                     }else{
@@ -79,6 +80,7 @@
                 <td><?=$e_code?></td>
                 <td><?=$datax?></td>
                 <td><?=$receiver_name?></td>
+                <td></td>
 
             </tr>
             <?php
@@ -93,6 +95,7 @@
                     <th>Code</th>
                     <th>College</th>
                     <th>Owner</th>
+                    <th>Status</th>
                 </tr>
             </tfoot>
         </table>
@@ -125,7 +128,7 @@ if(isset($_GET['pt'])){
             while($rows = $cc->fetch_assoc()){
              ?>
                 <tr>
-                    <td><input type="radio" name="ck" class="ck" value="<?=$rows['id']?>"/></td>
+                    <td><input type="radio" name="ck" class="ck" value="<?=$rows['id']?>" required/></td>
                     <td><?=$rows['item_description']?></td>
                     <td><input type="number" name="quantity" value="<?=$rows['quantity']?>" class="num" fixnum="<?=$rows['quantity']?>" readonly/></td>
                     <td><?=$rows['unit']?></td>
@@ -141,8 +144,27 @@ if(isset($_GET['pt'])){
 </div>
 <div class="block">
     <div class="container-fluid" style="padding:24px;">
-        <div class="row">
+        <div class="row-fluid">
+              <div class="span3">  
+                <label>PTR No.</label>
+                <input type="text" name="pt_par_ptr_no" id="pt_par_ptr_no" placeholder="ptr no..." required/>
+              </div>
+              <div class="span1"></div>
+              <div class="span3">
+                <label>Fundcluster</label>
+                  <select name="pt_par_fundcluster" id="pt_par_fundcluster" required>
+                    <option value="" style="display:none" disabled hidden selected>select fundcluster</option>
+                    <?php
+                        $sql = $conn->query("select * from tbl_fund");
+                        while($datal_fund = $sql->fetch_assoc()){
+                            ?>
+                            <option value="<?=$datal_fund['fund_id']?>"><?=$datal_fund['fund_description']?></option>
+                            <?php
+                        }
 
+                    ?>
+                  </select>
+              </div>
         </div>
         <div class="row">
         <div class="span3">
@@ -178,7 +200,7 @@ if(isset($_GET['pt'])){
                         ?>
                             <option value="<?=$data_emp['id']?>"><?=$data_emp['first_name'].' '. $data_emp['middle_name'] . ' '. $data_emp['last_name']?></option>
                         <?php
-                            }
+                         }
                             
                     }
                     $loop = 0;
@@ -216,7 +238,7 @@ if(isset($_GET['pt'])){
                         <td>received by</td>
                         <td>reason for transfer</td>
                         <td>date transfered</td>
-                        <td>action</td>
+                        <!-- <td>action</td> -->
                     </tr>
             </thead>
                 <tbody>
@@ -233,11 +255,11 @@ if(isset($_GET['pt'])){
                                 $received_by = $x['first_name']. ' '. $x['middle_name'] . ' '. $x['last_name'];
                                 $par_item = $conn->query("select * from tbl_item_details where itemdetailID = ".$row_data['item_id']);
                                 $item = $par_item->fetch_assoc();
-                                if($row_data['quantity'] == 0){
-                                    $btnt = '<button class="btn btn-warning btn-small"><i class="icon icon-ban-circle"></i> all item was transfered</button>';
-                                }else{
-                                    $btnt = '<button class="btn-pt-transfer btn btn-success btn-small" data-toggle="modal" data-target="#exampleModalCenter" data-id="'.$row_data['id'].'"><i class="icon icon-plus"></i> Re Transfer Item</button></td>';
-                                }
+                                // if($row_data['quantity'] == 0){
+                                //     $btnt = '<button class="btn btn-warning btn-small"><i class="icon icon-ban-circle"></i> all item was transfered</button>';
+                                // }else{
+                                //     $btnt = '<button class="btn-pt-transfer btn btn-success btn-small" data-toggle="modal" data-target="#exampleModalCenter" data-id="'.$row_data['id'].'"><i class="icon icon-plus"></i> Re Transfer Item</button></td>';
+                                // }
 
                                 ?>
                                 <tr>
@@ -248,7 +270,11 @@ if(isset($_GET['pt'])){
                                     <td><?=$received_by?></td>
                                     <td><?=$row_data['reason_for_transfer']?></td>
                                     <td><?=$row_data['date_transfered']?></td>
-                                    <td><?=$btnt?></td>
+                                    <td>
+                                    <?
+                                    // echo $btnt;
+                                    ?>
+                                    </td>
                                 </tr>
                                 <?php
                             }
@@ -359,6 +385,7 @@ $('#example1 tfoot th').each( function () {
 
     $(document).ready(function(){
 
+        //re transfer function
         $('#form-modal').submit(
             function(e){
                 e.preventDefault();
@@ -369,7 +396,7 @@ $('#example1 tfoot th').each( function () {
                    type:'post',
                    data:post_data,
                    success:function(result){
-                        console.log(result);
+                        // console.log(result);
                    }
 
                });
@@ -377,7 +404,7 @@ $('#example1 tfoot th').each( function () {
         );
 
 
-
+            //last row of dashboard table disabled retransfer button
         $('.btn-pt-transfer').click(function(){
             var id_modal = $(this).attr("data-id");
             $.ajax({
@@ -440,17 +467,22 @@ $('#example1 tfoot th').each( function () {
               e.preventDefault(); 
               var radio_id    = getRadioVal(document.getElementById('form-desc'),'ck');
               var quantity    = getquantity();
-              var str_reason  = $('#reason').val();
-              var issued_by   = $('#issued_by').val();
-              var received_by = $('#received_by').val();
+              var str_reason  =        $('#reason').val();
+              var issued_by   =        $('#issued_by').val();
+              var received_by =        $('#received_by').val();
+              var pt_par_ptr_no =      $("#pt_par_ptr_no").val();
+              var pt_par_fundcluster = $('#pt_par_fundcluster').val();
               $.ajax({
                   url:'form_submit/pt_par.php',
                   type:'post',
-                  data:{radio_id:radio_id,quantity:quantity,str_reason:str_reason,issued_by:issued_by,received_by:received_by},
+                  data:{radio_id:radio_id,quantity:quantity,str_reason:str_reason,issued_by:issued_by,received_by:received_by,pt_par_ptr_no:pt_par_ptr_no,pt_par_fundcluster:pt_par_fundcluster},
                   success:function(x){  
-                    $.jGrowl("Property Transfer PAR Success", { header: 'PT-PAR SUCCESS' });
-					var delay = 3000;
-					setTimeout(function(){ window.location = 'pt_par.php'; }, delay);
+                      console.log(x);
+                      return false;
+
+                    // $.jGrowl("Property Transfer PAR Success", { header: 'PT-PAR SUCCESS' });
+					// var delay = 3000;
+					// setTimeout(function(){ window.location = 'pt_par.php'; }, delay);
                   }
               });
 

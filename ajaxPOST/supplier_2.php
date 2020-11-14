@@ -13,8 +13,7 @@ if(isset($_POST['update_id']) && strlen($_POST['update_id']) != 0){
             $res['flag'] = 'true';
              $qry = $conn->query("update equipment_code set code ='".$_POST['e_code']."',description='".$_POST['e_desc']."' where id = " .$_POST['update_id'].";");
         }
-            echo json_encode($res);
-
+    echo json_encode($res);
 }elseif(isset($_POST['e_code']) &&strlen($_POST['e_code']) !=0){
 
     $cqry = "select * from equipment_code where code = '" . $_POST['e_code'] . "'  or description  = '".$_POST['e_desc']."'";
@@ -25,11 +24,8 @@ if(isset($_POST['update_id']) && strlen($_POST['update_id']) != 0){
             $res['flag'] = 'true';
             $qry = $conn->query("insert into equipment_code (`code`,`description`) values('" . $_POST['e_code'] . "','".$_POST['e_desc']."')");
         }
-
-        echo json_encode($res);
+    echo json_encode($res);
 }
-
-
 if(isset($_POST['delete_id'])){
     $conn->query("delete from equipment_code where id = ".$_POST['delete_id']);
 }
@@ -51,13 +47,9 @@ if(isset($_POST['id'])){
 
     $x = $conn->query("select * from tbl_supplier_position where id = ". $f['position']);
     $xd = $x->fetch_assoc();
-
     $v['collegef'] = $ss['branch'];
     $v['positionf'] = $xd['name'];
-
-
     echo json_encode($v);
-
 }
 if(isset($_POST['ics_save'])){
 

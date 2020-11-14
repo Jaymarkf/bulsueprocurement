@@ -16,7 +16,7 @@
                             <div id="block_bg" class="block">
                                 <div class="navbar navbar-inner block-header">
                                     <?php
-                                    $query = mysqli_query($conn,"SELECT * FROM users WHERE level='user' OR level='administrator'");
+                                    $query = mysqli_query($conn,"SELECT * FROM users WHERE level='user' OR level='administrator' or level ='supplier' ");
                                     $count = mysqli_num_rows($query);
                                     ?>
                                     <div class="muted pull-left"><i class="icon-user icon-large"></i> Users List</div>
@@ -53,7 +53,7 @@
                                                 </thead>
                                                 <tbody>
                                                 <?php
-                                                $user_query1 = mysqli_query($conn,"SELECT * FROM users WHERE level='user' OR level='administrator' or level='supplier' and branch <> 'Supplier' ORDER BY user_id DESC");
+                                                $user_query1 = mysqli_query($conn,"SELECT * FROM users WHERE level='user' OR level='administrator' or level ='supplier' ORDER BY user_id DESC");
                                                 while($row = mysqli_fetch_array($user_query1)){
                                                     $id = $row['user_id'];
                                                     ?>

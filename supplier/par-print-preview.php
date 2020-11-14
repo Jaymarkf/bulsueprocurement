@@ -19,8 +19,14 @@ $pdf = new FPDF('P','mm','A4');
 $p_width = $pdf->GetPageWidth();
 $p_height = $pdf->GetPageHeight();
 $pdf->AddPage();
-$pdf->Image('../images/header_logo.png',65,3,80);
-$pdf->SetFont('Arial','B',13);
+$pdf->Image('../images/logo.png',60,4,15);
+$pdf->SetFont('Arial','B',9);
+$pdf->SetY($pdf->GetY()-10);
+$pdf->Cell("","20",'Republic of the Philippines','','1','C');
+$pdf->SetFont('Arial','B',14);
+$pdf->SetY($pdf->GetY()-15);
+$pdf->Cell("","20",'Bulacan State University','','1','C');
+$pdf->SetY($pdf->GetY()-8);
 $pdf->Cell("","20",'PROPERTY ACKNOWLEDGEMENT RECEIPT','','','C');
 $pdf->Ln(10);
 $pdf->SetFont('Times','B',10);
@@ -86,8 +92,6 @@ $pdf->Line($pdf->GetX()+5,$pdf->GetY() - 5,$pdf->GetX()+100,$pdf->GetY()-5);
 
 $pdf->Text($pdf->GetX()+140,$pdf->GetY() - 2,'Date');
 $pdf->Line($pdf->GetX()+110,$pdf->GetY() - 5,$pdf->GetX()+180,$pdf->GetY()-5);
-
-
 
 $pdf->Output();
 ?>

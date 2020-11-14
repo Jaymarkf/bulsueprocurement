@@ -5,7 +5,7 @@
     }
 </style>
 <?php
-
+   
     if(isset($_GET['edit'])){
         $qry = $conn->query("select * from tbl_ics where id = ".$_GET['edit']);
         $d = $qry->fetch_assoc();
@@ -143,7 +143,7 @@
                         <div class="text-center padd-bottom" style="font-weight: bold;color:gray;font-family: 'Courier New', Courier, monospace">Quantity</div>
                     </div>
                     <div class="row-fluid">
-                        <input type="text" class="form-control span12" name="quantity" value="<?php if(isseft($_GET['edit'])){ echo $d['quantity']; }?>" id="quantity" placeholder="input quantity here..." readonly required>
+                        <input type="text" class="form-control span12" name="quantity" value="<?php if(isset($_GET['edit'])){ echo $d['quantity']; }?>" id="quantity" placeholder="input quantity here..." readonly required/>
 
                     </div>
                 </div>

@@ -28,7 +28,7 @@
 							<select name="level" placeholder = "Status" class="span12" onchange="fetch_select(this.value);" required>
 								<option value="" disabled selected>Select Access Level</option>
 								<?php
-									$select=mysqli_query($conn,"SELECT level FROM tbl_branch where level <> 'supplier' GROUP BY level");
+									$select=mysqli_query($conn,"SELECT level FROM tbl_branch  GROUP BY level");
 									while($row=mysqli_fetch_array($select)){
 										echo "<option>".$row['level']."</option>";
 									}

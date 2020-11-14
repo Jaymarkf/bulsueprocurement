@@ -1,17 +1,21 @@
 <?php
 include('../../dbcon.php');
+
+//submit the property transfer of par
 if(isset($_POST['radio_id'])){
     $radio_id = $_POST['radio_id'];
     $quantity = $_POST['quantity'];
     $str_reason = $_POST['str_reason'];
     $issued_by = $_POST['issued_by'];
     $received_by = $_POST['received_by'];
-    echo print_r($_POST);
+    //new added
+    $pt_par_ptr_no = $_POST['pt_par_ptr_no'];
+    $pt_par_fundcluster = $_POST['pt_par_fundcluster'];
     
 
     $sql = $conn->query("select * from tbl_par_items where id = ".$radio_id);
-    $data = $sql->fetch_assoc();
-
+    $data = $sql->fetch_assoc(); 
+    //if transfer was already transfer but not equal to quantity in tbl_par then do some query
     if($data['transfer_id'] != 0 ){
         $conn->query("update  tbl_pt_par_items set quantity = (quantity + ".$quantity."),reason_for_transfer = '$str_reason' where id = '".$data['transfer_id']."' ");
         $conn->query("update tbl_par_items set quantity = quantity - ".$quantity." where id =".$radio_id);
@@ -22,12 +26,16 @@ if(isset($_POST['radio_id'])){
         $n = $conn->query("select * from tbl_item_details where itemdetailDesc = '".$data['item_description']."'");
         $get_id = $n->fetch_assoc();
         $item_id = $get_id['itemdetailID'];
-    $conn->query("insert into tbl_pt_par_items (`par_items_id`,`item_id`,`quantity`,`issued_by`,`received_by`,`reason_for_transfer`,`date_transfered`) 
-    values('$radio_id','$item_id','$quantity','$issued_by','$received_by','$str_reason',NOW())");
+
+    $conn->query("insert into tbl_pt_par_items (`par_items_id`,`item_id`,`quantity`,`issued_by`,`received_by`,`reason_for_transfer`,`date_transfered`,`ptr_no`,`ptr_date`,`fundcluster`) 
+    values('$radio_id','$item_id','$quantity','$issued_by','$received_by','$str_reason',NOW(),$pt_par_ptr_no,NOW(),$pt_par_fundcluster)");
     $insert_id = $conn->insert_id;
+    echo mysqli_error($conn);
     $conn->query("update tbl_par_items set transfer_id = ".$insert_id. ",quantity = quantity - ".$quantity." where id = $radio_id");
+    echo mysqli_error($conn);
     $conn->query("update tbl_par_items set total_cost =   quantity * unit_cost where id = ".$radio_id);
 
+    echo mysqli_error($conn);
     }
 
 }
