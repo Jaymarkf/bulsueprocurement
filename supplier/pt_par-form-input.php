@@ -7,6 +7,7 @@
     width: 98% !important;
 }
 </style>
+
 <div class="block">
     <div class="container-header text-center" style="position:relative;width:100%;height:40px;background-image:linear-gradient(#bababa, #454545); ">
         <span style="color:#e9e9e9;font-weight: bold;line-height: 35px;">Transfer PAR Data</span>
@@ -81,7 +82,6 @@
                 <td><?=$datax?></td>
                 <td><?=$receiver_name?></td>
                 <td></td>
-
             </tr>
             <?php
 
@@ -103,8 +103,18 @@
 </div>
 <?php
 if(isset($_GET['pt'])){
-    $id = $_GET['pt'];
-    $cc = $conn->query('select * from tbl_par_items where par_id = '.$id);
+    $idt = $_GET['pt'];
+    $sc = $conn->query('select * from tbl_par_items where par_id = '.$idt);
+    $get_par = $conn->query("select * from tbl_par where id = ".$idt);
+    $get_item_in_par = $get_par->fetch_assoc();
+    $_SESSION['PAR_NO'] = $get_item_in_par['ics_num'];
+    $_SESSION['EQUIPMENT_CODE']  = $get_item_in_par['e_code'];
+    $get_college = explode(",",$get_item_in_par['received_by_ids']);
+    $get_college_name = $conn->query("select emp.*,coll.* from tbl_supplier_employee emp inner join tbl_branch coll on emp.college = coll.branchID where emp.id = '$get_college[0]' limit 1");
+    $college_name = $get_college_name->fetch_assoc();
+    $_SESSION['COLLEGE'] = $college_name['branch']
+   
+
 ?>
 <form method="post" id="form-desc">
 <div class="block">
@@ -125,7 +135,7 @@ if(isset($_GET['pt'])){
             </thead>
             <tbody>
             <?php
-            while($rows = $cc->fetch_assoc()){
+            while($rows = $sc->fetch_assoc()){
              ?>
                 <tr>
                     <td><input type="radio" name="ck" class="ck" value="<?=$rows['id']?>" required/></td>
@@ -228,18 +238,18 @@ if(isset($_GET['pt'])){
     <div class="container-fluid" style="padding:24px;">
     <div class="text-center" style="padding:24px;">
     Transfer Item Data Logs</div>
-        <table class="table table-responsive table-stripped table-bordered example" cellpadding="0" cellspacing="0">
+        <table class="table table-responsive table-stripped table-bordered" cellpadding="0" cellspacing="0">
             <thead>
-                    <tr>
-                        <td>transfer par id</td>
-                        <td>item description</td>
-                        <td>quantity</td>
-                        <td>released / issued by</td>
-                        <td>received by</td>
-                        <td>reason for transfer</td>
-                        <td>date transfered</td>
-                        <!-- <td>action</td> -->
-                    </tr>
+                <tr>
+                    <td>transfer par id</td>
+                    <td>item description</td>
+                    <td>quantity</td>
+                    <td>released / issued by</td>
+                    <td>received by</td>
+                    <td>reason for transfer</td>
+                    <td>date transfered</td>
+                    <!-- <td>action</td> -->
+                </tr>
             </thead>
                 <tbody>
                         <?php
@@ -270,11 +280,11 @@ if(isset($_GET['pt'])){
                                     <td><?=$received_by?></td>
                                     <td><?=$row_data['reason_for_transfer']?></td>
                                     <td><?=$row_data['date_transfered']?></td>
-                                    <td>
-                                    <?
+                                    <!-- <td> -->
+                                    <?php
                                     // echo $btnt;
                                     ?>
-                                    </td>
+                                    <!-- </td> -->
                                 </tr>
                                 <?php
                             }
@@ -285,7 +295,7 @@ if(isset($_GET['pt'])){
 </div>
 
 <!-- MODAL -->
-<form method="post" id="form-modal">
+<!-- <form method="post" id="form-modal">
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="display:none">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -330,8 +340,6 @@ if(isset($_GET['pt'])){
                 <div class="row-fluid">
                         <label>Receiver name</label>
                         <select class="span10" name="mrec_name" id="mrec_name">
-                        
-                        
                         </select>
                 </div>
                 <div class="row-fluid">
@@ -350,7 +358,7 @@ if(isset($_GET['pt'])){
     </div>
   </div>
 </div>
-</form>
+</form> -->
 <script>
 
 $('#example1 tfoot th').each( function () {
@@ -477,12 +485,12 @@ $('#example1 tfoot th').each( function () {
                   type:'post',
                   data:{radio_id:radio_id,quantity:quantity,str_reason:str_reason,issued_by:issued_by,received_by:received_by,pt_par_ptr_no:pt_par_ptr_no,pt_par_fundcluster:pt_par_fundcluster},
                   success:function(x){  
-                      console.log(x);
-                      return false;
+                      // console.log(x);
+                      // return false;
 
-                    // $.jGrowl("Property Transfer PAR Success", { header: 'PT-PAR SUCCESS' });
-					// var delay = 3000;
-					// setTimeout(function(){ window.location = 'pt_par.php'; }, delay);
+                    $.jGrowl("Property Transfer PAR Success", { header: 'PT-PAR SUCCESS' });
+					var delay = 3000;
+					setTimeout(function(){ window.location = 'pt_par.php'; }, delay);
                   }
               });
 
@@ -499,6 +507,7 @@ $('#example1 tfoot th').each( function () {
        });
 
         $('#tbl_id tr').click(function () {
+           
             $(this).find('td input:radio').prop('checked', true);
             $('.num').attr('readonly',true);
             $(this).find('td input[type="number"]').attr('readonly',false);
@@ -507,6 +516,7 @@ $('#example1 tfoot th').each( function () {
         });
 
 
-
+        
     });
+  
 </script>

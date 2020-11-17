@@ -1,6 +1,6 @@
 <?php
+session_start();
 include('../../dbcon.php');
-
 //submit the property transfer of par
 if(isset($_POST['radio_id'])){
     $radio_id = $_POST['radio_id'];
@@ -11,16 +11,72 @@ if(isset($_POST['radio_id'])){
     //new added
     $pt_par_ptr_no = $_POST['pt_par_ptr_no'];
     $pt_par_fundcluster = $_POST['pt_par_fundcluster'];
-    
+    $PT_PAR_NO = $_SESSION['PAR_NO'];
+    $PT_PAR_EQUIPMENT_CODE = $_SESSION['EQUIPMENT_CODE'];
+    $PT_PAR_COLLEGE = $_SESSION['COLLEGE'];
+
 
     $sql = $conn->query("select * from tbl_par_items where id = ".$radio_id);
     $data = $sql->fetch_assoc(); 
     //if transfer was already transfer but not equal to quantity in tbl_par then do some query
     if($data['transfer_id'] != 0 ){
-        $conn->query("update  tbl_pt_par_items set quantity = (quantity + ".$quantity."),reason_for_transfer = '$str_reason' where id = '".$data['transfer_id']."' ");
+
+        $n = $conn->query("select * from tbl_item_details where itemdetailDesc = '".$data['item_description']."'");
+        $get_id = $n->fetch_assoc();
+        $item_id = $get_id['itemdetailID'];
+
+        $conn->query("insert into tbl_pt_par_items (`par_items_id`,`item_id`,`quantity`,`issued_by`,`received_by`,`reason_for_transfer`,`date_transfered`,`ptr_no`,`ptr_date`,`fundcluster`) 
+        values('$radio_id','$item_id','$quantity','$issued_by','$received_by','$str_reason',NOW(),$pt_par_ptr_no,NOW(),$pt_par_fundcluster)");
         $conn->query("update tbl_par_items set quantity = quantity - ".$quantity." where id =".$radio_id);
         $conn->query("update tbl_par_items set total_cost =  quantity * unit_cost where id = ".$radio_id);
-        echo mysqli_error($conn);
+
+        $get_unit = $conn->query("select * from tbl_par_items where id = ".$radio_id);
+        $get_unit_data = $get_unit->fetch_assoc();
+        $unit = $get_unit_data['unit'];
+        //get date_acquired
+        $get_date_acquired_sql = $conn->query("select par.*,items.* from tbl_par par inner join tbl_par_items items on par.id = items.par_id where items.id  = ".$radio_id);
+        $gg = $get_date_acquired_sql->fetch_assoc();
+        $date_acquired = $gg['date_acquired'];
+
+        $item_description = $get_unit_data['item_description'];
+        $unit_cost = $get_unit_data['unit_cost'];
+        $total_cost = $get_unit_data['total_cost'];
+
+        $conn->query("insert into summary_report (`par_no`,
+                                                    `college`,
+                                                    `quantity`,
+                                                    `unit`,
+                                                    `equipment_code`,
+                                                    `fundcluster`,
+                                                    `ptr_no`,
+                                                    `ptr_date`,
+                                                    `date_acquired`,
+                                                    `item_description`,
+                                                    `unit_cost`,
+                                                    `total_cost`,
+                                                    `issued_by`,
+                                                    `issued_to`,
+                                                    `reason_for_transfer`
+                                                    )
+                                             values('$PT_PAR_NO',
+                                                    '$PT_PAR_COLLEGE',
+                                                    '$quantity',
+                                                    '$unit',
+                                                    '$PT_PAR_EQUIPMENT_CODE',
+                                                    '$pt_par_fundcluster',
+                                                    '$pt_par_ptr_no',
+                                                     NOW(),
+                                                    '$date_acquired',
+                                                    '$item_description',
+                                                    '$unit_cost',
+                                                    '$total_cost',
+                                                    '$issued_by',
+                                                    '$received_by',
+                                                    '$str_reason'
+                                                    )");
+
+
+
     }else{
         //get item iar id 
         $n = $conn->query("select * from tbl_item_details where itemdetailDesc = '".$data['item_description']."'");
@@ -28,14 +84,59 @@ if(isset($_POST['radio_id'])){
         $item_id = $get_id['itemdetailID'];
 
     $conn->query("insert into tbl_pt_par_items (`par_items_id`,`item_id`,`quantity`,`issued_by`,`received_by`,`reason_for_transfer`,`date_transfered`,`ptr_no`,`ptr_date`,`fundcluster`) 
-    values('$radio_id','$item_id','$quantity','$issued_by','$received_by','$str_reason',NOW(),$pt_par_ptr_no,NOW(),$pt_par_fundcluster)");
-    $insert_id = $conn->insert_id;
-    echo mysqli_error($conn);
+                values('$radio_id','$item_id','$quantity','$issued_by','$received_by','$str_reason',NOW(),$pt_par_ptr_no,NOW(),$pt_par_fundcluster)");
+                $insert_id = $conn->insert_id;
+    $get_unit = $conn->query("select * from tbl_par_items where id = ".$radio_id);
+    $get_unit_data = $get_unit->fetch_assoc();
+    $unit = $get_unit_data['unit'];
+    //get date_acquired
+        $get_date_acquired_sql = $conn->query("select par.*,items.* from tbl_par par inner join tbl_par_items items on par.id = items.par_id where items.id  = ".$radio_id);
+        $gg = $get_date_acquired_sql->fetch_assoc();
+        $date_acquired = $gg['date_acquired'];
+
+    $item_description = $get_unit_data['item_description'];
+    $unit_cost = $get_unit_data['unit_cost'];
+    $total_cost = $get_unit_data['total_cost'];
+
     $conn->query("update tbl_par_items set transfer_id = ".$insert_id. ",quantity = quantity - ".$quantity." where id = $radio_id");
-    echo mysqli_error($conn);
+
     $conn->query("update tbl_par_items set total_cost =   quantity * unit_cost where id = ".$radio_id);
 
+    $conn->query("insert into summary_report (`par_no`,
+                                                    `college`,
+                                                    `quantity`,
+                                                    `unit`,
+                                                    `equipment_code`,
+                                                    `fundcluster`,
+                                                    `ptr_no`,
+                                                    `ptr_date`,
+                                                    `date_acquired`,
+                                                    `item_description`,
+                                                    `unit_cost`,
+                                                    `total_cost`,
+                                                    `issued_by`,
+                                                    `issued_to`,
+                                                    `reason_for_transfer`
+                                                    )
+                                             values('$PT_PAR_NO',
+                                                    '$PT_PAR_COLLEGE',
+                                                    '$quantity',
+                                                    '$unit',
+                                                    '$PT_PAR_EQUIPMENT_CODE',
+                                                    '$pt_par_fundcluster',
+                                                    '$pt_par_ptr_no',
+                                                     NOW(),
+                                                    '$date_acquired',
+                                                    '$item_description',
+                                                    '$unit_cost',
+                                                    '$total_cost',
+                                                    '$issued_by',
+                                                    '$received_by',
+                                                    '$str_reason'
+                                                    )");
     echo mysqli_error($conn);
+
+
     }
 
 }

@@ -229,6 +229,8 @@ ul{
             });
         });
 
+
+        //submit transfer property
         $('#transfer_property_submit').submit(function(e){
             var data_transfer = $(this).serialize();
             // console.log(data_transfer);

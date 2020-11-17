@@ -31,10 +31,38 @@ if(isset($_POST['ics_transfer_id'])){
 //                                                        ptr_date = '$pt_ptr_date',
 //                                                        ptr_no = '$pt_ptr_no' 
 //                                                        where id = ".$ics_transfer_id);
-// //        echo mysqli_error($conn);
-
-
+//      echo mysqli_error($conn);
 //     }else if($_POST['is_transfer'] == 0){
+    $conn->query("insert into summary_report (`ics_no`,
+                                              `college`,
+                                              `quantity`,
+                                              `unit`,
+                                              `fundcluster`,
+                                              `ptr_no`,
+                                              `ptr_date`,
+                                              `date_acquired`,
+                                              `item_description`,
+                                              `unit_cost`,
+                                              `total_cost`,
+                                              `issued_by`,
+                                              `issued_to`,
+                                              `reason_for_transfer`) 
+                                       values('$pt_ics',
+                                              '$pt_college',
+                                              '$pt_quantity',
+                                              '$pt_unit',
+                                              '$pt_to_fundcluster',
+                                              '$pt_ptr_no',
+                                              '$pt_ptr_date',
+                                              '$pt_date_acquired',
+                                              '$pt_item_description',
+                                              '$pt_unit_cost',
+                                              '$pt_total_cost',
+                                              '$issued_by',
+                                              '$issued_to',
+                                              '$reason_for_transfer'
+                                       )");
+
 
         $conn->query("insert into transfer_item (`issued_by`,`ics_id`,
                                                     `issued_to`,
@@ -74,31 +102,30 @@ if(isset($_POST['ics_transfer_id'])){
         $sql_ics_update = $conn->query("update tbl_ics set transfer_item_id = 1,quantity = quantity - ".$pt_quantity." where id = ".$ics_transfer_id);
     // }
 }
-if(isset($_POST['id_view'])){ // ptr transfer table
 
-$ss = $conn->query("select * from transfer_item where id =".$_POST['id_view']);
-$ff = $ss->fetch_assoc();
-$a['reason_for_transfer'] = $ff['reason_for_transfer'];
-$a['from_fundcluster'] = $ff['from_fundcluster'];
-$a['to_fundcluster'] = $ff['to_fundcluster'];
-$a['ptr_no'] = $ff['ptr_no'];
-$a['ptr_date'] = $ff['ptr_date'];
-$a['ics_no'] = $ff['ics_no'];
-$a['date_acquired'] = $ff['date_acquired'];
-$a['item_desc'] = $ff['item_desc'];
-$a['college'] = $ff['college'];
-$a['quantity'] = $ff['quantity'];
-$a['unit'] = $ff['unit'];
-$a['unit_cost'] = $ff['unit_cost'];
-$a['total_cost'] = $ff['total_cost'];
-//get issued names
+//rendering last table data in pt ics, 
+if(isset($_POST['id_view'])){ // ptr transfer table
+    $ss = $conn->query("select * from transfer_item where id =".$_POST['id_view']);
+    $ff = $ss->fetch_assoc();
+    $a['reason_for_transfer'] = $ff['reason_for_transfer'];
+    $a['from_fundcluster'] = $ff['from_fundcluster'];
+    $a['to_fundcluster'] = $ff['to_fundcluster'];
+    $a['ptr_no'] = $ff['ptr_no'];
+    $a['ptr_date'] = $ff['ptr_date'];
+    $a['ics_no'] = $ff['ics_no'];
+    $a['date_acquired'] = $ff['date_acquired'];
+    $a['item_desc'] = $ff['item_desc'];
+    $a['college'] = $ff['college'];
+    $a['quantity'] = $ff['quantity'];
+    $a['unit'] = $ff['unit'];
+    $a['unit_cost'] = $ff['unit_cost'];
+    $a['total_cost'] = $ff['total_cost'];
+    //get issued names
     $fs = $conn->query("select * from tbl_supplier_employee where id=".$ff['issued_by']);
     $af = $fs->fetch_assoc();
     $a['issued_by'] = $af['first_name']. ' '. $af['middle_name']. ' '. $af['last_name'];
     $fss = $conn->query("select * from tbl_supplier_employee where id=".$ff['issued_to']);
     $afs = $fss->fetch_assoc();
     $a['issued_to'] = $afs['first_name']. ' '. $afs['middle_name']. ' '. $afs['last_name'];
-
-
 echo json_encode($a);
 }

@@ -55,8 +55,12 @@
                                 <i class="icon icon-external-link"></i>Property Transfer<i class="icon icon-angle-right" style="position:absolute;right:0px;top:5px;"></i>
                                 <ul style="position:absolute;left:100%;top:0px; height:0px;">
                                     <li class="pt_css" style="font-size:11px !important;border-top-right-radius: 5px;" id="pt_ics"><img src="../images/buttons/app.png" width="10%"> Inventory Custodian Slip</li>
-                                    <li class="pt_css" style="font-size:9px !important; border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;" id="pt_par"><img src="../images/buttons/ppmp.png" width="10%"> Property Acknowledgement Receipt</li>
+                                    <li class="pt_css" style="font-size:9px !important;" id="pt_par"><img src="../images/buttons/ppmp.png" width="10%"> Property Acknowledgement Receipt</li>
+                                    <li class="pt_css" style="font-size:11px !important; border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;" id="summary_report"><i class="icon icon-file"></i> Summary Report</li>
                                 </ul>
+                            </li>
+                            <li>
+                                <a tabindex="-1" href="unserviceable_property.php" class="jkl"><i class="icon icon-trash"></i> Unserviceable Property</a>
                             </li>
 
                         </ul>
@@ -147,6 +151,9 @@
         });
         $('#pt_par').click(function(){
            window.location = 'pt_par.php';
+        });
+        $('#summary_report').click(function(){
+            window.location = 'summary_report.php';
         });
     });
 </script>

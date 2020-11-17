@@ -33,17 +33,27 @@
 
         $(document).ready(function() {
 
+            $('#pt_ics').click(function(){
+            window.location = 'pt_ics.php';
+
+        });
+        $('#pt_par').click(function(){
+           window.location = 'pt_par.php';
+        });
         
+        $('#summary_report').click(function(){
+            window.location = 'summary_report.php';
+        });
     
             $('.example').dataTable( {
                 "scrollY": 200,
                 "scrollX": true
             });
-            $('#t').dataTable( {
+            $('#t').dataTable({
                 "scrollY": 200,
                 "scrollX": true
             });
-        } );
+        });
     </script>
 
     <script type="text/javascript">
