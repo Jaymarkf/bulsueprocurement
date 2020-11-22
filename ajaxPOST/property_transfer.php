@@ -6,19 +6,31 @@ if(isset($_POST['ics_transfer_id'])){
     $issued_by = $_POST['issued_by_id'];
     $issued_to = $_POST['issue_to'];
     $reason_for_transfer = $_POST['reason_for_transfer'];
-    $pt_from_fundcluster = $_POST['pt_from_fundcluster'];
+    $pt_from_fundclusters = $_POST['pt_from_fundcluster'];
+    //get id of from fundcluster
+    $sql = $conn->query("select * from tbl_fund where fund_description = '$pt_from_fundclusters'");
+    $ff = $sql->fetch_assoc();
+    $pt_from_fundcluster = $ff['fund_id'];
+
     $pt_ptr_no =  $_POST['pt_ptr_no'];
     $pt_ics = $_POST['pt_ics_no'];
     $pt_item_description = $_POST['pt_item_description'];
     $pt_quantity = $_POST['pt_quantity'];
     $pt_unit_cost = $_POST['pt_unit_cost'];
-    $pt_to_fundcluster = $_POST['pt_to_fundcluster'];
+    $pt_to_fundclusters = $_POST['pt_to_fundcluster'];
     $pt_ptr_date = $_POST['pt_ptr_date'];
     $pt_date_acquired = $_POST['pt_date_acquired'];
     $pt_college = $_POST['pt_college'];
     $pt_unit = $_POST['pt_unit'];
     $pt_total_cost = $_POST['pt_total_cost'];
     $ics_transfer_id = $_POST['ics_transfer_id']; //primary key of ics table
+
+//get fundcluster
+    $sql = $conn->query("select * from tbl_fund where fund_description = '$pt_to_fundclusters'");
+    $_fundcluster = $sql->fetch_assoc();
+
+    $pt_to_fundcluster = $_fundcluster['fund_id'];
+
 
 
     //check if item is already transfered or not
@@ -37,6 +49,7 @@ if(isset($_POST['ics_transfer_id'])){
                                               `college`,
                                               `quantity`,
                                               `unit`,
+                                              `from_fundcluster`,
                                               `fundcluster`,
                                               `ptr_no`,
                                               `ptr_date`,
@@ -51,6 +64,7 @@ if(isset($_POST['ics_transfer_id'])){
                                               '$pt_college',
                                               '$pt_quantity',
                                               '$pt_unit',
+                                              '$pt_from_fundcluster',
                                               '$pt_to_fundcluster',
                                               '$pt_ptr_no',
                                               '$pt_ptr_date',

@@ -50,8 +50,12 @@
                 "scrollX": true
             });
             $('#t').dataTable({
-                "scrollY": 200,
-                "scrollX": true
+                "sScrollX": "100%",
+                "sScrollXInner": "110%",
+                "bScrollCollapse": true,
+                "fixedColumns":   {
+                    "leftColumns": 1
+                }
             });
         });
     </script>

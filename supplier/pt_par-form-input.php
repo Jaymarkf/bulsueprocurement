@@ -470,11 +470,12 @@ $('#example1 tfoot th').each( function () {
             );
             return f;
         }
+
         $('#form-desc').submit(
               function(e){
               e.preventDefault(); 
-              var radio_id    = getRadioVal(document.getElementById('form-desc'),'ck');
-              var quantity    = getquantity();
+              var radio_id    =        getRadioVal(document.getElementById('form-desc'),'ck');
+              var quantity    =        getquantity();
               var str_reason  =        $('#reason').val();
               var issued_by   =        $('#issued_by').val();
               var received_by =        $('#received_by').val();
@@ -487,7 +488,6 @@ $('#example1 tfoot th').each( function () {
                   success:function(x){  
                       // console.log(x);
                       // return false;
-
                     $.jGrowl("Property Transfer PAR Success", { header: 'PT-PAR SUCCESS' });
 					var delay = 3000;
 					setTimeout(function(){ window.location = 'pt_par.php'; }, delay);
@@ -496,7 +496,6 @@ $('#example1 tfoot th').each( function () {
 
             }
         );
-
        $('.num').change(function(){
            var cur_val = this.defaultValue;
             if(parseInt($(this).val()) > parseInt(cur_val)){
@@ -507,7 +506,6 @@ $('#example1 tfoot th').each( function () {
        });
 
         $('#tbl_id tr').click(function () {
-           
             $(this).find('td input:radio').prop('checked', true);
             $('.num').attr('readonly',true);
             $(this).find('td input[type="number"]').attr('readonly',false);

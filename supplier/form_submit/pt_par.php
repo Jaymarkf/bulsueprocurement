@@ -17,7 +17,21 @@ if(isset($_POST['radio_id'])){
 
 
     $sql = $conn->query("select * from tbl_par_items where id = ".$radio_id);
-    $data = $sql->fetch_assoc(); 
+    $data = $sql->fetch_assoc();
+
+    //get par_id
+    $par_id = $data['par_id'];
+    //get fundcluster from its original
+    $ss = $conn->query("select * from tbl_par where id = ".$par_id);
+    $data_ = $ss->fetch_assoc();
+    $fund_cluster = $data_['fundcluster_code'];
+    //extract the first
+    $fc = explode(",",$fund_cluster);
+    //result
+    $fundcluster_no = $fc[0];
+    //save it into summary rerport
+
+
     //if transfer was already transfer but not equal to quantity in tbl_par then do some query
     if($data['transfer_id'] != 0 ){
 
@@ -40,13 +54,18 @@ if(isset($_POST['radio_id'])){
 
         $item_description = $get_unit_data['item_description'];
         $unit_cost = $get_unit_data['unit_cost'];
-        $total_cost = $get_unit_data['total_cost'];
+        $total_cost = $quantity * $get_unit_data['unit_cost'];
+        $temp =  $get_unit_data['fundcluster_code'];
+        $a = expode(",",$temp);
+        $pt_par_from = $a[0];
+
 
         $conn->query("insert into summary_report (`par_no`,
                                                     `college`,
                                                     `quantity`,
                                                     `unit`,
                                                     `equipment_code`,
+                                                    `from_fundcluster`,
                                                     `fundcluster`,
                                                     `ptr_no`,
                                                     `ptr_date`,
@@ -63,6 +82,7 @@ if(isset($_POST['radio_id'])){
                                                     '$quantity',
                                                     '$unit',
                                                     '$PT_PAR_EQUIPMENT_CODE',
+                                                    '$fundcluster_no',
                                                     '$pt_par_fundcluster',
                                                     '$pt_par_ptr_no',
                                                      NOW(),
@@ -95,8 +115,8 @@ if(isset($_POST['radio_id'])){
         $date_acquired = $gg['date_acquired'];
 
     $item_description = $get_unit_data['item_description'];
-    $unit_cost = $get_unit_data['unit_cost'];
-    $total_cost = $get_unit_data['total_cost'];
+        $unit_cost = $get_unit_data['unit_cost'];
+        $total_cost = $quantity * $get_unit_data['unit_cost'];
 
     $conn->query("update tbl_par_items set transfer_id = ".$insert_id. ",quantity = quantity - ".$quantity." where id = $radio_id");
 
@@ -107,6 +127,7 @@ if(isset($_POST['radio_id'])){
                                                     `quantity`,
                                                     `unit`,
                                                     `equipment_code`,
+                                                    `from_fundcluster`,
                                                     `fundcluster`,
                                                     `ptr_no`,
                                                     `ptr_date`,
@@ -123,6 +144,7 @@ if(isset($_POST['radio_id'])){
                                                     '$quantity',
                                                     '$unit',
                                                     '$PT_PAR_EQUIPMENT_CODE',
+                                                    '$fundcluster_no',
                                                     '$pt_par_fundcluster',
                                                     '$pt_par_ptr_no',
                                                      NOW(),

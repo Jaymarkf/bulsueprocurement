@@ -241,7 +241,6 @@ $sender_position = '';
 <!--                        <option style="display:none" selected hidden disabled>select Item Description...</option>-->
                         <?php
                         if(isset($_GET['edit'])) {
-
                             $dd = "select * from tbl_iar_items iar
                                    inner join tbl_po po on iar.poID = po.id
                                    inner join tbl_generate_bac_report bac on po.bac_id = bac.id
@@ -461,8 +460,6 @@ $sender_position = '';
                 e.preventDefault();
                 console.log("errr");
             }else{
-
-
                       <?php
                       if(isset($_GET['edit'])){
                           ?>
@@ -476,8 +473,6 @@ $sender_position = '';
                               $.jGrowl("PAR was successfully Edited!", { header: 'SUCCESS' });
                               var delay = 3000;
                               setTimeout(function(){ window.location = 'dashboard.php'  }, delay);
-
-
                           }
                       });
                       <?php
@@ -501,10 +496,7 @@ $sender_position = '';
                       <?php
                       }
                       ?>
-
             }
-
-
         });
         $('#iar_id').change(function(){
             var xpar = $(this).val();
@@ -518,10 +510,7 @@ $sender_position = '';
                     $('#item_desc').html(e.item_desc);
                 }
             });
-
         });
-
-
         $('#item_desc').change(function(){
             let b = $(this).val();
             // console.log(b);
