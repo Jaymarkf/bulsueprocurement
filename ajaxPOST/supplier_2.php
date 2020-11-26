@@ -110,8 +110,9 @@ if(isset($_POST['ics_save'])){
 
     foreach ($_POST['item_id_rfq_details'] as $index => $v) {
         $conn->query("insert into tbl_par_items (`par_id`,`item_description`,`quantity`,`unit`,`unit_cost`,`total_cost`) values('$getid','".$_POST['item_desc'][$index]."','".$_POST['quantity'][$index]."','".$_POST['unit'][$index]."','".$_POST['unit_cost'][$index]."','".$_POST['total_cost'][$index]."')");
-    }
 
+        $conn->query("insert into item_owner (`item_id`,`unit_price`,`transaction_type`,`par_owner_id`,`quantity`,`equipment_code_id`,`date_acquired`) values('".$_POST['item_desc'][$index]."','".$_POST['unit_cost'][$index]."','PAR','$received_by_ids','".$_POST['quantity'][$index]."','$e_code',NOW())");
+    }
 
 
 }

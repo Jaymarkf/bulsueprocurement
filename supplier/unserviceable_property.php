@@ -45,10 +45,48 @@
         <h4>Unserviceable Property</h4>
     </div>
     <?php
-
+    include('unserviceable_table.php');
     include('footer.php');
     ?>
 </div>
 <?php include('script.php'); ?>
 </body>
 </html>
+<script>
+    $('#gg tfoot th').each( function () {
+        var title = $(this).text();
+        if(title == 'Select'){
+            var text = 'style="border:none;background-color:white" disabled';
+        }else{
+            var text = 'placeholder="Search '+title+'"';
+        }
+        $(this).html( '<input type="text" '+text+'/>' );
+    } );
+
+
+    $('#gg').DataTable({
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        },
+        "sScrollX": "100%",
+        "sScrollXInner": "110%",
+        "bScrollCollapse": true,
+        "fixedColumns": {
+            "leftColumns": 1
+        }
+
+    });
+
+</script>
+

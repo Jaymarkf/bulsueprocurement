@@ -115,6 +115,29 @@ if(isset($_POST['ics_transfer_id'])){
 
         $sql_ics_update = $conn->query("update tbl_ics set transfer_item_id = 1,quantity = quantity - ".$pt_quantity." where id = ".$ics_transfer_id);
     // }
+
+
+    //check if 0 then delete if quantity is zero
+    $conn->query("insert into item_owner (`owner_id`,`item_id`,`unit_price`,`transaction_type`,`quantity`,`date_acquired`) values('$issued_to','$pt_item_description','$pt_unit_cost','ICS','$pt_quantity',NOW())");
+
+    $query_owner = $conn->query("select * from item_owner where owner_id = '$issued_by' and item_id = '$pt_item_description'");
+
+    $gg = $query_owner->fetch_assoc();
+    if($gg['quantity'] == '0'){
+        $conn->query("delete from item_owner where owner_id = '$issued_by' and item_id = '$pt_item_description'");
+
+    }else{
+            $conn->query("update item_owner set quantity = quantity - ".$pt_quantity ." where owner_id = '$issued_by' and item_id = '$pt_item_description'");
+            $fzfz = $conn->query("select * from item_owner where owner_id = '$issued_by' and item_id = '$pt_item_description'");
+            $ggf = $fzfz->fetch_assoc();
+            if($ggf['quantity'] == 0 ){
+                $conn->query("delete from item_owner where owner_id = '$issued_by' and item_id = '$pt_item_description'");
+            }
+    }
+
+
+
+
 }
 
 //rendering last table data in pt ics, 

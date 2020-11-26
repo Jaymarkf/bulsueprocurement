@@ -56,7 +56,7 @@ if(isset($_POST['radio_id'])){
         $unit_cost = $get_unit_data['unit_cost'];
         $total_cost = $quantity * $get_unit_data['unit_cost'];
         $temp =  $get_unit_data['fundcluster_code'];
-        $a = expode(",",$temp);
+        $a = explode(",",$temp);
         $pt_par_from = $a[0];
 
 
@@ -95,8 +95,26 @@ if(isset($_POST['radio_id'])){
                                                     '$str_reason'
                                                     )");
 
+        $get_item_owner_desc = $conn->query("select * from item_owner where par_owner_id = '".$gg['received_by_ids']."' and item_id = '$item_description'");
+        $get_ecode = $get_item_owner_desc->fetch_assoc();
+        $equipment_c = $get_ecode['equipment_code_id'];
+        $conn->query("insert into item_owner (`item_id`,`unit_price`,`transaction_type`,`par_owner_id`,`quantity`,`equipment_code_id`,`date_acquired`) 
+                                             values(
+                                                    '$item_description',
+                                                    '$unit_cost',
+                                                    'PAR',
+                                                    '$received_by',
+                                                    '$quantity',
+                                                    '$equipment_c',
+                                                    NOW())");
+        $conn->query("update item_owner set quantity = quantity - ".$quantity." where par_owner_id = '".$gg['received_by_ids']."' and item_id = '$item_description'");
+        $get_if = $conn->query("select * from item_owner  where par_owner_id = '".$gg['received_by_ids']."' and item_id = '$item_description'");
+        $ggf = $get_if->fetch_assoc();
 
-
+        if($ggf['quantity'] == 0 ){
+            $conn->query("delete from item_owner  where par_owner_id = '".$gg['received_by_ids']."' and item_id = '$item_description'");
+        }
+        echo mysqli_error($conn);
     }else{
         //get item iar id 
         $n = $conn->query("select * from tbl_item_details where itemdetailDesc = '".$data['item_description']."'");
@@ -156,8 +174,27 @@ if(isset($_POST['radio_id'])){
                                                     '$received_by',
                                                     '$str_reason'
                                                     )");
-    echo mysqli_error($conn);
 
+
+        $get_item_owner_desc = $conn->query("select * from item_owner where par_owner_id = '".$gg['received_by_ids']."' and item_id = '$item_description'");
+        $get_ecode = $get_item_owner_desc->fetch_assoc();
+        $equipment_c = $get_ecode['equipment_code_id'];
+        $conn->query("insert into item_owner (`item_id`,`unit_price`,`transaction_type`,`par_owner_id`,`quantity`,`equipment_code_id`,`date_acquired`) 
+                                             values(
+                                                    '$item_description',
+                                                    '$unit_cost',
+                                                    'PAR',
+                                                    '$received_by',
+                                                    '$quantity',
+                                                    '$equipment_c',
+                                                    NOW())");
+
+        $conn->query("update item_owner set quantity = quantity - ".$quantity." where par_owner_id = '".$gg['received_by_ids']."' and item_id = '$item_description'");
+        $get_if = $conn->query("select * from item_owner  where par_owner_id = '".$gg['received_by_ids']."' and item_id = '$item_description'");
+        $ggf = $get_if->fetch_assoc();
+        if($ggf['quantity'] == 0 ){
+            $conn->query("delete from item_owner  where par_owner_id = '".$gg['received_by_ids']."' and item_id = '$item_description'");
+        }
 
     }
 

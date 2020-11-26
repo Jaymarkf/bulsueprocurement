@@ -81,7 +81,7 @@ $sender_position = '';
                         </div>
                         <div class="row-fluid">
                             <select class="span12 form-control" name="received_from" id="sender_id" required>
-                                <option style="display:none" selected hidden>Select Sender</option>
+                                <option style="display:none" selected hidden>Select Issued by</option>
                                 <?php
                                 $qq = $conn->query("select * from tbl_supply_office_employee");
                                 while($dc = $qq->fetch_assoc()){
@@ -485,6 +485,7 @@ $sender_position = '';
                           data:data,
                           success:function(ex){
                               // console.log(ex);
+                              // return false;
                               e.preventDefault();
                               $.jGrowl("New PAR was successfully saved!", { header: 'SUCCESS' });
                               var delay = 3000;

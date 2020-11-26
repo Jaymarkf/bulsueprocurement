@@ -242,6 +242,7 @@ ul{
                 //check if exist yung ics kapag na trasfer na make the ics table into status == transfer
                 success:function(result){
                     // console.log(result);
+                    // return false;
                     $.jGrowl("New Item was successfully Transfered!.", { header: 'SUCCESS' });
                     var delay = 3000;
                     setTimeout(function(){ window.location = 'pt_ics.php'  }, delay);

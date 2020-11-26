@@ -97,11 +97,7 @@
         {
             if(e.which == 17)
                 isCtrl=true;
-            if((e.which == 85) || (e.which == 67)  == true)
-            {
-                // alert(&#8216;Keyboard shortcuts are cool!&#8217;);
-                return false;
-            }
+
         }
         var isNS = (navigator.appName == "Netscape") ? 1 : 0;
         if(navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN||Event.MOUSEUP);

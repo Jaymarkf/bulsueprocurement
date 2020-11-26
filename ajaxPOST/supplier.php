@@ -328,6 +328,13 @@ elseif(isset($_POST['ics_save'])){
     /** @var TYPE_NAME $conn */
     $conn->query($qry);
 
+    $fz = $conn->query("select * from tbl_rfq_item_details where id = ".$item_desc);
+    $ffz = $fz->fetch_assoc();
+    $item_name = $ffz['item_and_specification'];
+    $conn->query("insert into item_owner (`owner_id`,`item_id`,`unit_price`,`transaction_type`,`quantity`,`date_acquired`)
+                        values('$received_by','$item_name','$unit_cost','ICS','$quantity',NOW());
+");
+
 
 }
 elseif(isset($_POST['idd_received_by'])){
