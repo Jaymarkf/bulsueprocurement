@@ -178,11 +178,10 @@
                         <td><?=$row_request['date_acquired']?></td>
                         <td><?=$row_request['particulars_articles']?></td>
                         <td><?=$emp_info['first_name']. ' '. $emp_info['middle_name'] . ' '. $emp_info['last_name']?></td>
-                        <td><a href="print_disposal_request.php?id=<?=$row_request['id']?>" class="btn btn-success btn-small"><i class="icon icon-print"></i> Print Preview</a></td>
+                        <td><a href="print_unserviceable_report.php?id=<?=$row_request['id']?>" class="btn btn-success btn-small"><i class="icon icon-print"></i> Print Preview</a></td>
                     </tr>
                     <?php
                 }
-
                 ?>
                 </tbody>
             </table>
