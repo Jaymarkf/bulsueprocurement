@@ -4,6 +4,7 @@ include('../dbcon.php');
 
 //save the dispose item
 if(isset($_POST['d_name'])){
+    $item_id = $_POST['item_id'];
     $emp_name = $_POST['d_name'];
     $date_acquired = $_POST['d_acquired'];
     $particulars_articles = $_POST['description'];
@@ -39,8 +40,7 @@ $conn->query("insert into disposal_request (`date_acquired`,
                                                   '$total_cost',
                                                   NOW(),
                                                   '$office_college_campus',
-                                                  '$name_of_employee'
-                                                  )
-                                                  ");
+                                                  '$name_of_employee')");
+$conn->query("update item_owner set disposed_quantity = '$qty' where id = ".$item_id);
 echo mysqli_error($conn);
 }

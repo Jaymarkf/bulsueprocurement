@@ -44,15 +44,17 @@
                         $cc = $conn->query("select * from item_owner where owner_id = '$id_owner' or par_owner_id like '%$id_owner%'");
                         $html  = '';
                         if($cc->num_rows > 0 ) {
-
-
                             while ($data_item = $cc->fetch_assoc()) {
-
+                                if($data_item['disposed_quantity'] != null){
+                                    $qty = $data_item['quantity'] - $data_item['disposed_quantity'];
+                                }else{
+                                    $qty = $data_item['quantity'];
+                                }
                                echo '<tr> 
                                       <td><input type="radio" name="rdx" value="' . $data_item['id'] . '" required></td>
                                       <td>' . $data_item['transaction_type'] . '</td>
                                       <td>' . $data_item['item_id'] . '</td>
-                                      <td>' . $data_item['quantity'] . '</td>
+                                      <td>' .$qty. '</td>
                                       <td>' . $data_item['date_acquired'] . '</td>
                                     </tr>';
                             }
@@ -224,15 +226,17 @@
     $('#dispose_submit').submit(
         function(e){
             var data  = $(this).serialize();
+            data = data + '<?php if(isset($_GET['item_id'])){ echo '&item_id='.$_GET['item_id']; }?>';
             e.preventDefault();
             $.ajax({
                 url: '../ajaxPOST/unserviceable.php',
                 type: 'post',
                 data:data,
                 success:function(x){
-                    $.jGrowl("New Unserviceable data has been added", { header: 'UNSERVICEABLE PROPERTY SUCCESS' });
-                    var delay = 3000;
-                    setTimeout(function(){ window.location = 'unserviceable_property.php'; }, delay);
+                    console.log(x);
+                    // $.jGrowl("New Unserviceable data has been added", { header: 'UNSERVICEABLE PROPERTY SUCCESS' });
+                    // var delay = 3000;
+                    // setTimeout(function(){ window.location = 'unserviceable_property.php'; }, delay);
                 }
             });
         }
