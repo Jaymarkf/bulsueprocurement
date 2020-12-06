@@ -136,6 +136,25 @@
                             <option style="display:none" selected hidden disabled>select Item Description...</option>
                             <?php if(isset($_GET['edit'])){ echo $html; }?>
                         </select>
+                        <input type="hidden" id="item_id" name="item_id"/>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="row-fluid">
+                        <div class="text-center padd-bottom" style="font-weight: bold;color:gray;font-family: 'Courier New', Courier, monospace">Article</div>
+                    </div>
+                    <div class="row-fluid">
+                        <input type="text" class="form-control span12" name="id_item" value="<?php if(isset($_GET['edit'])){ echo $d['item_id']; }?>" id="id_item" placeholder="Article" readonly required/>
+
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="row-fluid">
+                        <div class="text-center padd-bottom" style="font-weight: bold;color:gray;font-family: 'Courier New', Courier, monospace">Serial Number</div>
+                    </div>
+                    <div class="row-fluid">
+                        <input type="text" class="form-control span12" name="serial_number" value="<?php if(isset($_GET['edit'])){ echo $d['serial_number']; }?>" id="serial_number" placeholder="input serial number" required/>
+
                     </div>
                 </div>
                 <div class="row-fluid">
@@ -485,11 +504,13 @@
                 data:{b:b},
                 dataType: 'json',
                 success:function(x){
-                    // console.log(x.value);
+                    console.log(x);
                     $('#quantity').val(x.quantity);
                     $('#unit_cost').val(x.unit_cost);
                     $('#total_cost').val(x.total_cost);
                     $('#unit').val(x.unit);
+                    $('#item_id').val(x.item_id);
+                    $('#id_item').val(x.article);
                 }
             });
         });

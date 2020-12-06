@@ -7,7 +7,8 @@ $idDesc = $_POST['idDesc'];
 $idPrice = $_POST['idPrice'];
 $uname = $idCode.'.'.$idDesc;
 $uom = $_POST['UoM'];
+$art = $_POST['idArticle'];
 //mysqli_query($conn,"insert into tbl_item_details (itemcategoryID,itemdetailCode,itemdetailDesc,PriceCatalogue) values('$idCat','$idCode','$idDesc','$idPrice')");
-mysqli_query($conn,"insert into tbl_item_details (itemcategoryID,itemdetailDesc,UnitOfMeasurement,PriceCatalogue) values('$idCat','$idDesc','$uom','$idPrice')");
+mysqli_query($conn,"insert into tbl_item_details (itemcategoryID,itemdetailDesc,article,UnitOfMeasurement,PriceCatalogue) values('$idCat','$idDesc','$art','$uom','$idPrice')");
 //mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')");
 ?>

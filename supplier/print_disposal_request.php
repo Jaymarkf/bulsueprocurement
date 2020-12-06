@@ -34,7 +34,7 @@ $id = $_GET['id'];
 $sql = $conn->query("select * from disposal_request where id = ".$id);
 $data = $sql->fetch_assoc();
 $pdf->Cell(32,"10",$data['date_acquired'],"1","0","C");
-$pdf->MultiCell(64 ,'5',$data['particulars_articles'] . " | ". " Qty: ". $data['qty'] . "      Unit cost: ". $data['unit_cost'],"1","L","");
+$pdf->MultiCell(64 ,'5',$data['particulars_articles'] . "    | ". " Qty: ". $data['qty'] . "                    Unit cost: ". $data['unit_cost'],"1","L","");
 $pdf->SetXY($pdf->GetX() + 96,$pdf->GetY() - 10);
 $pdf->Cell(25 ,"10",$data['total_cost'],"1","0","C");
 $pdf->Cell(37 ,"10","_____________","1","0","C");

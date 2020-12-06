@@ -235,12 +235,12 @@
 									var formData = $(this).serialize();
 									$.ajax({
 										type: "POST",
-										url: "product-details-save.php",
+										url: "product-details-save.php<?php if(isset($_GET['prodid'])){ echo '?prodid='. $_GET['prodid']; }?>",
 										data: formData,
 										success: function(html){
 											$.jGrowl("Item successfully added to cart!", { header: 'SUCCESS' });
 											var delay = 1000;
-                                        setTimeout(function(){ window.location = 'dashboard.php'  }, delay);
+                                            setTimeout(function(){ window.location = 'dashboard.php'  }, delay);
 										}
 									});
 								});

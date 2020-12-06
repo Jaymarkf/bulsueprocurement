@@ -126,6 +126,9 @@ elseif(isset($_POST['b'])){
      $v['unit'] = $data_fetch['UnitOfMeasurement'];
      $v['unit_cost'] = $data['unit_price'];
      $v['total_cost'] = $data['total_price'];
+     $v['item_id'] = $data_fetch['itemdetailID'];
+     $v['article'] = $data_fetch['article'];
+
      echo json_encode($v);
 
 }elseif(isset($_POST['p_name'])){
@@ -259,6 +262,7 @@ $id = $_POST['xx'];
 }elseif(isset($_POST['data_id_delete_ics'])){
     $conn->query("delete from tbl_ics where id = ". $_POST['data_id_delete_ics']);
 }
+//save ics item form
 elseif(isset($_POST['ics_save'])){
 
     $ics_num_year = $_POST['ics_num_year'];
@@ -285,7 +289,8 @@ elseif(isset($_POST['ics_save'])){
     $fundcluster_year = $_POST['fundcluster_year'];
     $fundcluster_month = $_POST['fundcluster_month'];
     $fundcluster_series = $_POST['fundcluster_series'];
-
+    $item_id = $_POST['item_id'];
+    $serial_number = $_POST['serial_number'];
 
     $ics_num_merge = $ics_num_year. ','. $ics_num_month. ','.$ics_num_series;
     $purchase_num_merge = $purchase_num_month . ','. $purchase_num_series. ','. $purchase_num_year;
@@ -296,6 +301,8 @@ elseif(isset($_POST['ics_save'])){
                             `iar_id`,
                             `date_acquired`,
                             `item_desc`,
+                            `item_id`,
+                            `serial_number`,
                             `quantity`,
                             `unit`,
                             `unit_cost`,
@@ -312,6 +319,8 @@ elseif(isset($_POST['ics_save'])){
                                    '$iar_idd',
                                    '$date_acquired',
                                    '$item_desc',
+                                   '$item_id',
+                                   '$serial_number',
                                    '$quantity',
                                    '$unit',
                                    '$unit_cost',
@@ -331,8 +340,8 @@ elseif(isset($_POST['ics_save'])){
     $fz = $conn->query("select * from tbl_rfq_item_details where id = ".$item_desc);
     $ffz = $fz->fetch_assoc();
     $item_name = $ffz['item_and_specification'];
-    $conn->query("insert into item_owner (`owner_id`,`item_id`,`unit_price`,`transaction_type`,`quantity`,`date_acquired`)
-                        values('$received_by','$item_name','$unit_cost','ICS','$quantity',NOW());
+    $conn->query("insert into item_owner (`owner_id`,`item_idd`,`serial_number`,`item_id`,`unit_price`,`transaction_type`,`quantity`,`date_acquired`)
+                        values('$received_by','$item_id','$serial_number','$item_name','$unit_cost','ICS','$quantity',NOW());
 ");
 
 

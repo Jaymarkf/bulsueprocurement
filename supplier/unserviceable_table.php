@@ -233,10 +233,10 @@
                 type: 'post',
                 data:data,
                 success:function(x){
-                    console.log(x);
-                    // $.jGrowl("New Unserviceable data has been added", { header: 'UNSERVICEABLE PROPERTY SUCCESS' });
-                    // var delay = 3000;
-                    // setTimeout(function(){ window.location = 'unserviceable_property.php'; }, delay);
+                    // console.log(x);
+                    $.jGrowl("New Unserviceable data has been added", { header: 'UNSERVICEABLE PROPERTY SUCCESS' });
+                    var delay = 3000;
+                    setTimeout(function(){ window.location = 'unserviceable_property.php'; }, delay);
                 }
             });
         }

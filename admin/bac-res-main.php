@@ -55,7 +55,7 @@ while($dc = $rc->fetch_array()){
     $data = array();
     foreach ($ac as $index => $item) {
 
-        $qr = "select a.*,b.* from tbl_rfq a inner join tbl_rfq_item_details b on a.id = b.id where b.approved_by = 'approved' and a.id_company= '$item'";
+        $qr = "select a.*,b.* from tbl_rfq a inner join tbl_rfq_item_details b on a.id = b.rfq_item_id where b.approved_by = 'approved' and a.id_company= '$item'";
         $qrc  = $conn->query($qr);
 
         while($qres = $qrc->fetch_array()){
@@ -68,6 +68,11 @@ while($dc = $rc->fetch_array()){
 
 
     }
+
+//    echo '<pre>';
+//    print_r($data);
+//    echo '</pre>';
+//    die();
     foreach ($data as $index => $datum) {
         $datum['array_id'] = substr($datum['array_id'],1);
         $squery = "insert into tbl_generate_bac_report (`company_id`,`item_details_id_array`,`total_price`,`date_generated`,`abc_input`)

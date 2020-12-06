@@ -25,7 +25,7 @@ $data = array();
 
 foreach ($ac as $index => $item) {
     $qr = "select a.*,b.*,c.* from tbl_rfq a 
-            inner join tbl_rfq_item_details b on a.id = b.id 
+            inner join tbl_rfq_item_details b on a.id = b.rfq_item_id 
             inner join tbl_generate_bac_report c on a.id_company = c.company_id
             where
             b.approved_by = 'approved' and a.id_company= '$item' and c.date_generated = '$time_filter'";

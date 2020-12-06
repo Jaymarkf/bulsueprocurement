@@ -274,6 +274,8 @@ ul{
                 var btn_id = result.transfer_check;
                 var is_transfer = result.is_transfer;
                 var transfer = f_id_pt;
+                var item_idd = result.item_idd;
+                var serial_number = result.serial_number;
                 // if(is_transfer == '1'){
                 //     transfer = result.transfer_check;
 
@@ -284,13 +286,20 @@ ul{
                 // }
                 var d = new Date();
                     $('#data_add').html("" +
+                        "<input type='hidden' name='item_idd' id='item_idd' value='" + item_idd + "'/> " +
+                        "<input type='hidden' name='serial_number' id='serial_number' value='" + serial_number + "'/> " +
                         "<div class='row-fluid text-warning' style='font-weight: bolder'>Data to be Transfer <span style='font-weight: bold;' class='text-success'>(Confirmation)</span></div><div class='row-fluid'><span style='font-weight: bold'>ICS No. </span> <input class='' type='text' name='ics_num' id='ics_num' value='"+ics_num+"' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>College </span><input class='span8' type='text' name='college' id='college' value='"+college+"' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>Quantity </span><input class='form-control' type='number' name='quantity' id='quantity' value='"+quantity+"'/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>Unit </span> <input class='' type='text' name='unit' id='unit' value='"+unit+"' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>From - FundCluster </span> <input class='' type='text' name='fund' id='fund' value='"+fund+"' readonly/></div>" +
-                        "<div class='row-fluid'><span style='font-weight: bold'>To - FundCluster </span><select class = '' name='to_fund' id='to_fund' required>"+fund_all+"</select></div>" +
-                        "<div class='row-fluid'><span style='font-weight: bold'>PTR No.</span> <input class='' type='text' name='ptr_no' id='ptr_no'  placeholder='input ptr no.' required/></div>" +
+                        "<div class='row-fluid'><span style='font-weight: bold'>To - FundCluster </span><input type='text' class = '' name='to_fund' id='to_fund' value='"+fund+"' required readonly></div>" +
+                        "<?php
+                            $ss = $conn->query("select * from transfer_item");
+                            $rowcount = $ss->num_rows + 1;
+                            $ptr_no = date('Y') .'-'. date('m').'-'. sprintf('%03d',$rowcount);
+                            ?>" +
+                        "<div class='row-fluid'><span style='font-weight: bold'>PTR No.</span> <input class='' type='text' name='ptr_no' id='ptr_no' value='<?=$ptr_no?>' readonly required/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>PTR Date </span> <input class='' type='text' name='ptr_date' id='ptr_date'  value='" + d.getFullYear() + "-" + (d.getUTCMonth()+1) + "-" + d.getDate() + "' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>Date Acquired</span> <input class='' type='text' name='date_acquired' id='date_acquired'  value='"+ date_acquired +"' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>Item Description</span> <input class='' type='text' name='item_desc' id='item_desc'  value='"+ item_and_specification +"' readonly/></div>" +
@@ -339,7 +348,7 @@ ul{
                     success:function(qwe){
                         // console.log(qwe);
                         let pt_from_fund = $('#fund').val();
-                        let pt_to_fund = $('#to_fund option:selected').text();
+                        let pt_to_fund = $('#to_fund').val();
                         let pt_to_fund_id = $('#to_fund option:selected').val();
                         let pt_ptr_no = $('#ptr_no').val();
                         let pt_ptr_date = $('#ptr_date').val();
@@ -351,13 +360,17 @@ ul{
                         let pt_unit = $('#unit').val();
                         let pt_unit_cost = $('#unit_cost').val();
                         let pt_total_cost = $('#total_cost').val();
+                        let item_id = $('#item_idd').val();
+                        let serial_number = $('#serial_number').val();
                         $('#data_add').css('opacity','0.6');
                         $('#ptr_no').attr('disabled','disabled');
                         $('#to_fund').attr('disabled','disabled');
                         $('#confirm_transfer_btn').attr('disabled','disabled');
                         $('#btn_undo').attr('disabled','disabled');
 
-                        let data = '<input type="hidden" name="ics_transfer_id" value="'+id_transfer+'"><div class="block" style="padding:25px;position:relative;">\n' +
+                        let data = '<input type="hidden" name="item_id" value="' + item_id +'"/>  ' +
+                            '<input type="hidden" name="serial_number" value="' + serial_number + '"/>' +
+                            '<input type="hidden" name="ics_transfer_id" value="'+id_transfer+'"><div class="block" style="padding:25px;position:relative;">\n' +
                             '                       <div style="position:absolute;width:100%;height:30px;top:0;left:0;background-color:#8181c6;">\n' +
                             '                           <label class="text-center" style="color:white;line-height:32px;font-weight: bolder">Property Transfer Report</label>\n' +
                             '                       </div>\n' +
@@ -467,30 +480,22 @@ ul{
 
                         $('#block_span').html(data);
                     }
-
                 });
-
-
             }else{
                 alert("please input PTR No.");
             }
-
         });
     });
-
     $('#data_add').on('change','#quantity',
         function(){
-          
            var cur_val = this.defaultValue;
             if(parseInt($(this).val()) > parseInt(cur_val)){
                 $(this).val(cur_val);
             }else if(parseInt($(this).val()) < 0 ){
                 $(this).val(0);
-            
             }
         }
     );
-
     $('#example1 tfoot th').each( function () {
         var title = $(this).text();
         var btn ='';
@@ -503,8 +508,6 @@ ul{
         }
         $(this).html( '<input type="'+text+'"' +btn+'/>' );
     });
-
-
     $('#example1').DataTable({
         initComplete: function () {
             // Apply the search
@@ -523,5 +526,4 @@ ul{
         ,"scrollX": true,
         "scrollY": 200
     });
-
 </script>

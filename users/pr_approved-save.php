@@ -7,6 +7,7 @@ $PRno = $_POST['ciPRno'];
 $qry = mysqli_query($conn,"SELECT * FROM tbl_pr_items WHERE PRno = '$PRno'");
 while($row = mysqli_fetch_array($qry)) {
 $PRexist = $row['PRno'];
+$item_id = $row['item_id'];
 }
 
 if ($PRexist == $PRno){
@@ -20,10 +21,12 @@ if ($PRexist == $PRno){
 	$FundCluster = $_POST['ciFundCluster'];
 	$ResCenter = $_POST['ciResCenter'];
 	$ApprovedBy = $_POST['ciApprovedBy'];
-	$uname = $fname.'.'.$lname;
+//	$uname = $fname.'.'.$lname;
     $fc = $_POST['fc'];
-	mysqli_query($conn,"INSERT INTO tbl_pr (user_id,Year,EntityName,FundCluster,OfficeSection,PRno,PR_Date,RequestedBy,ApprovedBy)
-							  VALUES('$session_id','$Year','$EntityName','$fc','$OfficeSection','$PRno','$PRDate','$RequestBy','$ApprovedBy')");
+
+
+	mysqli_query($conn,"INSERT INTO tbl_pr (user_id,Year,EntityName,FundCluster,OfficeSection,PRno,item_id,PR_Date,RequestedBy,ApprovedBy)
+							  VALUES('$session_id','$Year','$EntityName','$fc','$OfficeSection','$PRno','$item_id','$PRDate','$RequestBy','$ApprovedBy')");
 
 //	mysqli_query($conn,"INSERT INTO activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')");
 }

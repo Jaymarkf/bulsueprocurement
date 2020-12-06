@@ -42,6 +42,7 @@
                             <tr>
                                 <input type="hidden" name="estimated_budget" value="<?=$row4['EstimatedBudget'];?>"/>
                                 <input id="Year" type="hidden" name="Year" value="<?php echo $Year3;?>"/>
+                                <input type="hidden" name="item_id" value="<?=$row4['item_id']?>"/>
                                 <input id="PR" type="hidden" name="PR" value="<?php echo $PR;?>"/>
                                 <input type="hidden" name="user_id" value="<?=$row4['user_id'];?>"/>
                                 <td><input id="itemDesc" type="checkbox" name="itemDesc[]" value="<?php echo $row4['itemdetailDesc']; ?>"/></td>

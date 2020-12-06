@@ -98,6 +98,11 @@ $pdf->Cell(13.7,5,"","1","0","C");
 $pdf->Cell(24/2,5,"","1","0","C");
 $pdf->Cell(24/2,5,"","1","1","C");
 
+
+
+
+
+
 $pdf->SetFont('Helvetica','',7);
 $pdf->Cell(200,30,"","1","");
 $pdf->Cell(77.5,30,"","1","1");
@@ -127,9 +132,9 @@ $pdf->SetXY($pdf->GetX()+239,$pdf->GetY()-12);
 $pdf->MultiCell(40,2,'I CERTIFY that i have witnessed the disposition  of the articles enumerated on this report this _______ day of __________','','L','');
 $pdf->SetXY($pdf->GetX()+202,$pdf->GetY()+10);
 $pdf->SetFont('Helvetica','B',7);
-$pdf->Cell(77.5 / 2.1,4,'DR. JAIME P. PULUMBARIT','T','','C');
+$pdf->Cell(77.5 / 2.1,4,'','T','','C');
 $pdf->SetX($pdf->GetX()+2);
-$pdf->Cell(77.5 / 2.2,4,'MR. IVY MAR RAMOS','T','1','C');
+$pdf->Cell(77.5 / 2.2,4,'','T','1','C');
 $pdf->SetFont('Helvetica','',7);
 $pdf->SetXY($pdf->GetX()+202,$pdf->GetY());
 $pdf->Cell(77.5 / 2.2,4,'Chairman, Disposal Committee','','','C');
@@ -139,8 +144,8 @@ $pdf->SetY($pdf->GetY()+2.7);
 $pdf->Cell(200,25,'','1','','');
 $pdf->Cell(77.5,25,'','1','1','');
 $pdf->SetY($pdf->GetY()-15);
-$pdf->Cell(200 / 2,4,'ISABELITA C. BENEDICTOS','','0','C');
-$pdf->Cell(77.5 ,4,'FELICITAS G. MIRABUENOS','','1','C');
+$pdf->Cell(200 / 2,4,'','','0','C');
+$pdf->Cell(77.5 ,4,'','','1','C');
 $pdf->SetX($pdf->GetX()+16);
 $pdf->Cell(200 / 3,4,'Disposal Committee - Member(ADMIN)','T','0','C');
 $pdf->SetX($pdf->GetX()+16);
@@ -148,8 +153,9 @@ $pdf->Cell(77,4,'Disposal Committee - Member(ACCOUNTING)','T','1','C');
 $pdf->SetXY($pdf->GetX()+200,$pdf->GetY() -17);
 $pdf->MultiCell(77,3,'I CERTIFY that i have witnessed the disposition of the articles enumerated on this report this ______ day of ________________','','C');
 $pdf->SetXY($pdf->GetX()+200,$pdf->GetY()+5);
-$pdf->Cell(77,4,'BARBARA FRANCISCO','','1','C');
+$pdf->Cell(77,4,'','','1','C');
 $pdf->SetXY($pdf->GetX()+200,$pdf->GetY()-1.5);
 $pdf->SetFont('Arial','',6);
-$pdf->Cell(77,4,'COA  Representative','','1','C');
+$pdf->SetX($pdf->GetX()+20);
+$pdf->Cell(42,4,'COA  Representative','T','1','C');
 $pdf->Output();

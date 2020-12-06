@@ -169,7 +169,7 @@
 					<?php
 							//mysqli_query($conn,"insert into user_log (username,login_date,user_id)values('$username',NOW(),".$row['user_id'].")");
 						}
-					}elseif($level =='supplier' AND $department == 'Supplier'){
+					}elseif($level =='administrator' AND $department == 'Supply Office'){
                             $_SESSION['supplier_id']=$row['user_id'];
                             if($password=='12345'){
                             //header('location: budget-office/password-default');

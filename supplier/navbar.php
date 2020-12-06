@@ -62,6 +62,9 @@
                             <li>
                                 <a tabindex="-1" href="unserviceable_property.php" class="jkl"><i class="icon icon-trash"></i> Unserviceable Property</a>
                             </li>
+                            <li>
+                                <a tabindex="-1" href="general_inventory.php" class="jkl"><img src="../images/inventory_logo.png" width="10%"> General Inventory Reports</a>
+                            </li>
 
                         </ul>
 

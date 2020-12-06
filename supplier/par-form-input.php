@@ -198,6 +198,39 @@ $sender_position = '';
                         </div>
                     </div>
                 </div>
+                <div class="row-fluid">
+                    <div class="text-center padd-bottom" style="font-weight: bold;color:gray;font-family: 'Courier New', Courier, monospace">Property No.</div>
+                </div>
+                <div class="row-fluid">
+
+                    <div class="span4">
+                        <input type="text" class="text-center  flag" name="property_no_year" id="property_no_year" style="width:70%" placeholder="input year"  value="" maxlength="4" readonly required/>
+                        <div class="text-left" style="margin:0;padding:0;">
+                            <small class="js_number_only" style="color:red"></small>
+                        </div>
+                    </div>
+
+                    <div class="span4">
+                        <input type="text" class="text-center  flag" name="property_no_month" id="property_no_month" style="width:70%" placeholder="input month"  value="" maxlength="4" readonly required/>
+                        <div class="text-left" style="margin:0;padding:0;">
+                            <small class="js_number_only" style="color:red"></small>
+                        </div>
+                    </div>
+                    <?php
+                    //increment the series number base on the number of par in table
+                    $qq = $conn->query("select * from tbl_par");
+                    $fz = $qq->num_rows;
+                    $fz = $fz + 1;
+                    $value = sprintf('%03d', $fz);
+                    ?>
+                    <div class="span4">
+                        <input type="text" class="text-center  flag" name="property_no_series" id="property_no_series" style="width:70%" placeholder="series" value="<?=$value?>" maxlength="4" readonly required/>
+                        <div class="text-left" style="margin:0;padding:0;">
+                            <small class="js_number_only" style="color:red"></small>
+                        </div>
+                    </div>
+
+                </div>
                 <div style="margin-bottom:80px;"></div>
                 <div class="row-fluid">
                 </div>
@@ -274,19 +307,23 @@ $sender_position = '';
 
 
                     </select>
-                    <div class="block" style="display:flex;padding:10px;">
-                        <label style="font-weight: bold;margin-right:5px;line-height: 30px;">Quantity</label>
-                        <input type="text" class="form-control" name="quantity"   value="<?php if(isset($_GET['edit'])){ echo $f_data['quantity']; }?>"  id="quantity" placeholder="input quantity here..." readonly required>
-                        <div style="margin-right:20px;"></div>
-                        <label style="font-weight: bold;margin-right:5px;line-height: 30px;">Unit</label>
-                        <input type="text" class="form-control" name="unit"  value="<?php if(isset($_GET['edit'])){ echo $f_data['unit']; }?>"  id="unit" placeholder="input unit here..."   readonly required>
-                        <div style="margin-right:20px;"></div>
-                        <label style="font-weight: bold;margin-right:5px;line-height: 30px;">Unit Cost</label>
-                        <input type="text" class="form-control" name="unit_cost" value="<?php if(isset($_GET['edit'])){ echo $f_data['unit_cost']; }?>"  id="unit_cost" placeholder="input unit cost here..." readonly required>
-                        <div style="margin-right:20px;"></div>
-                        <label style="font-weight: bold;margin-right:5px;line-height: 30px;">Total Cost</label>
-                        <input type="text" class="form-control t_cost" name="total_cost" value="<?php if(isset($_GET['edit'])){ echo $f_data['total_cost']; }?>" id="total_cost" placeholder="input total cost here..." readonly required>
-                        <div style="margin-right:20px;"></div>
+                    <div class="block" style="display:flex;padding:20px;overflow-x: auto">
+                            <label style="font-weight: bold;margin-right:5px;line-height: 30px;">Serial No.</label>
+                            <input type="text" class="form-control" name="serial_number" value="<?php if(isset($_GET['edit'])){ echo $f_data['serial_number']; }?>"  id="serial_number" placeholder="" required>
+                            <label style="font-weight: bold;margin-right:5px;line-height: 30px;">Article</label>
+                            <input type="text" class="form-control" name="article" value="<?php if(isset($_GET['edit'])){ echo $f_data['article']; }?>"  id="article" placeholder="" readonly required>
+                            <label style="font-weight: bold;margin-right:5px;line-height: 30px;">Quantity</label>
+                            <input type="text" class="form-control" name="quantity" value="<?php if(isset($_GET['edit'])){ echo $f_data['quantity']; }?>"  id="quantity" placeholder="" readonly required>
+                            <div style="margin-right:20px;"></div>
+                            <label style="font-weight: bold;margin-right:5px;line-height: 30px;">Unit</label>
+                            <input type="text" class="form-control" name="unit"  value="<?php if(isset($_GET['edit'])){ echo $f_data['unit']; }?>"  id="unit" placeholder="" readonly required>
+                            <div style="margin-right:20px;"></div>
+                            <label style="font-weight: bold;margin-right:5px;line-height: 30px;min-width:70px;">Unit Cost</label>
+                            <input type="text" class="form-control" name="unit_cost" value="<?php if(isset($_GET['edit'])){ echo $f_data['unit_cost']; }?>"  id="unit_cost" placeholder="" readonly required>
+                            <div style="margin-right:20px;"></div>
+                            <label style="font-weight: bold;margin-right:5px;line-height: 30px;min-width:70px;">Total Cost</label>
+                            <input type="text" class="form-control t_cost" name="total_cost" value="<?php if(isset($_GET['edit'])){ echo $f_data['total_cost']; }?>" id="total_cost" placeholder="" readonly required>
+                            <div style="margin-right:20px;"></div>
                     </div>
                     <div class="row-fluid">
                         <input type="button" class="btn btn-success add-row" value="Add Row">
@@ -294,19 +331,22 @@ $sender_position = '';
                     </div>
 
                 </form>
-                <table style="position:relative;">
-                    <thead>
-                    <tr>
-                        <th>Select</th>
-                        <th>Description</th>
-                        <th>Quantity</th>
-                        <th>Unit</th>
-                        <th>Unit Cost</th>
-                        <th>Total Cost</th>
-                    </tr>
-                    </thead>
-                    <tbody id="body_item">
-                    <?php
+                <div class="row-fluid">
+                    <table style="position:relative;">
+                        <thead>
+                        <tr>
+                            <th>Select</th>
+                            <th>Serial Number</th>
+                            <th>Article</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Unit</th>
+                            <th>Unit Cost</th>
+                            <th>Total Cost</th>
+                        </tr>
+                        </thead>
+                        <tbody id="body_item">
+                        <?php
                         if(isset($_GET['edit'])){
                             //get all items and render
                             $dq = $conn->query("select * from tbl_par_items where par_id = " . $res['id']);
@@ -314,6 +354,8 @@ $sender_position = '';
                                 ?>
                                 <tr>
                                     <td><input type='checkbox' name='record'></td>
+                                    <td><input type="text" name="serial_number[]" value="<?=$resfetch['serial_number']?>" readonly/></td>
+                                    <td><input type="text" name="article[]" value="<?=$resfetch['article']?>" readonly/></td>
                                     <td><input type="text" name="item_desc[]" value="<?=$resfetch['item_description']?>" readonly/></td>
                                     <td><input type="text" name="quantity[]" value="<?=$resfetch['quantity']?>" readonly/></td>
                                     <td><input type="text" name="unit[]" value="<?=$resfetch['unit']?>" readonly/></td>
@@ -325,9 +367,11 @@ $sender_position = '';
                                 <?php
                             }
                         }
-                    ?>
-                    </tbody>
-                </table>
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
 
         </div>
@@ -436,6 +480,19 @@ $sender_position = '';
 
     $(document).ready(function(){
 
+        function myFunction(m) {
+            var d = new Date();
+            var n;
+            if(m ==='y'){
+                n = d.getFullYear();
+            }else{
+                n = d.getMonth();
+            }
+           return n;
+        }
+        $('#property_no_year').val(myFunction('y'));
+        $('#property_no_month').val(myFunction());
+
         var err = 0;
 
         $('#ff').submit(function(e){
@@ -526,6 +583,7 @@ $sender_position = '';
                     $('#unit_cost').val(x.unit_cost);
                     $('#total_cost').val(x.total_cost);
                     $('#unit').val(x.unit);
+                    $('#article').val(x.article);
                 }
             });
         });
@@ -574,6 +632,10 @@ $sender_position = '';
                     var unit = $("#unit").val();
                     var unit_cost = $("#unit_cost").val();
                     var total_cost = $("#total_cost").val();
+                    var serial_number = $('#serial_number').val();
+                    var article = $('#article').val();
+                    var html_serial_number = '<input type="text" name="serial_number[]" value="' + serial_number + '" readonly/>';
+                    var html_article = '<input type="text" name="article[]" value="' + article + '" readonly/>';
                     var html_item_desc = '<input type="text" name="item_desc[]" value="' + e.val + '" readonly/>';
                     var html_quantity = '<input type="text" name="quantity[]" value="' + quantity + '" readonly/>';
                     var html_unit = '<input type="text" name="unit[]" value="' + unit + '" readonly/>';
@@ -581,7 +643,7 @@ $sender_position = '';
                     var html_total_cost = '<input type="text" class="td_cost" name="total_cost[]" id="tcosta" value="' + total_cost + '" readonly/>';
                     var xx = '<input type="text" name="item_id_rfq_details[]" value="'+ tempx +'" style="display:none;"/>';
 
-                    var markup = "<tr><td><input type='checkbox' name='record'></td><td>" +  html_item_desc + "</td><td>" + html_quantity  + "</td><td>" + html_unit + "</td><td>" + html_unit_cost  + "</td><td>" + html_total_cost + xx + "</td></tr>";
+                    var markup = "<tr><td><input type='checkbox' name='record'></td><td>" +html_serial_number+  "</td><td>"  + html_article +  "</td><td>" +  html_item_desc + "</td><td>" + html_quantity  + "</td><td>" + html_unit + "</td><td>" + html_unit_cost  + "</td><td>" + html_total_cost + xx + "</td></tr>";
                     $("table tbody#body_item").append(markup);
 
 

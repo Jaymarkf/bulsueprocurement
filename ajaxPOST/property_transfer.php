@@ -30,9 +30,11 @@ if(isset($_POST['ics_transfer_id'])){
     $_fundcluster = $sql->fetch_assoc();
 
     $pt_to_fundcluster = $_fundcluster['fund_id'];
+    $item_id  = $_POST['item_id'];
+    $serial_number = $_POST['serial_number'];
 
-
-
+//    echo print_r($_POST);
+//    die();
     //check if item is already transfered or not
 //     if($_POST['is_transfer'] == 1){
 //         $conn->query("update transfer_item set  issued_by = '$issued_by',
@@ -118,7 +120,7 @@ if(isset($_POST['ics_transfer_id'])){
 
 
     //check if 0 then delete if quantity is zero
-    $conn->query("insert into item_owner (`owner_id`,`item_id`,`unit_price`,`transaction_type`,`quantity`,`date_acquired`) values('$issued_to','$pt_item_description','$pt_unit_cost','ICS','$pt_quantity',NOW())");
+    $conn->query("insert into item_owner (`owner_id`,`item_idd`,`serial_number`,`item_id`,`unit_price`,`transaction_type`,`quantity`,`date_acquired`) values('$issued_to','$item_id','$serial_number','$pt_item_description','$pt_unit_cost','ICS','$pt_quantity',NOW())");
 
     $query_owner = $conn->query("select * from item_owner where owner_id = '$issued_by' and item_id = '$pt_item_description'");
 

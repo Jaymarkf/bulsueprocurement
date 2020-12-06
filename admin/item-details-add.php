@@ -26,12 +26,12 @@
 					  </div>
 					</div>
 					
-				<!--	<div class="control-group">
+					<div class="control-group">
 					  <div class="controls">
-					  <label>Code</label>
-					   <input class="input focused span12"  name="idCode" id="focusedInput" type="text" placeholder = "Code" required>
+					  <label>Article</label>
+					   <input class="input focused span12"  name="idArticle" id="focusedInput" type="text" placeholder = "Article" required>
 					  </div>
-					</div> -->
+					</div>
 					
 					<div class="control-group">
 					  <div class="controls">

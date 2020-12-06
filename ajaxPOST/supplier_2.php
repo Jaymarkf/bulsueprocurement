@@ -74,6 +74,7 @@ if(isset($_POST['ics_save'])){
     $purchase_num_merge = $purchase_num_month . ','. $purchase_num_series. ','. $purchase_num_year;
     $fundcluster_num_merge = $fundcluster_name. ','. $fundcluster_year. ','. $fundcluster_month. ','. $fundcluster_series;
     $received_by_ids = implode(",",$_POST['received_by_id_hidden']);
+    $property_no = $_POST['property_no_year'].'-'.$_POST['property_no_month']. '-'. $_POST['property_no_series'];
 
 
 //    echo $received_by_ids;
@@ -92,7 +93,8 @@ if(isset($_POST['ics_save'])){
                                 `received_by_ids`,
                                 `date_issued`,
                                 `delivered_by`,
-                                `fundcluster_code`)
+                                `fundcluster_code`,
+                                `property_number`)
                             VALUES('$ics_num_merge',
                                    '$iar_idd',
                                    '$e_code',
@@ -102,16 +104,17 @@ if(isset($_POST['ics_save'])){
                                    '$received_by_ids',
                                    '$date_issued',
                                    '$delivered_by',
-                                   '$fundcluster_num_merge')";
+                                   '$fundcluster_num_merge',
+                                   '$property_no')";
 
     /** @var TYPE_NAME $conn */
     $conn->query($qry);
     $getid = $conn->insert_id;
 
     foreach ($_POST['item_id_rfq_details'] as $index => $v) {
-        $conn->query("insert into tbl_par_items (`par_id`,`item_description`,`quantity`,`unit`,`unit_cost`,`total_cost`) values('$getid','".$_POST['item_desc'][$index]."','".$_POST['quantity'][$index]."','".$_POST['unit'][$index]."','".$_POST['unit_cost'][$index]."','".$_POST['total_cost'][$index]."')");
+        $conn->query("insert into tbl_par_items (`par_id`,`serial_number`,`article`,`item_description`,`quantity`,`unit`,`unit_cost`,`total_cost`) values('$getid','".$_POST['serial_number'][$index]."','".$_POST['article'][$index]."','".$_POST['item_desc'][$index]."','".$_POST['quantity'][$index]."','".$_POST['unit'][$index]."','".$_POST['unit_cost'][$index]."','".$_POST['total_cost'][$index]."')");
 
-        $conn->query("insert into item_owner (`item_id`,`unit_price`,`transaction_type`,`par_owner_id`,`quantity`,`equipment_code_id`,`date_acquired`) values('".$_POST['item_desc'][$index]."','".$_POST['unit_cost'][$index]."','PAR','$received_by_ids','".$_POST['quantity'][$index]."','$e_code',NOW())");
+        $conn->query("insert into item_owner (`item_id`,serial_number,`unit_price`,`transaction_type`,`par_owner_id`,`quantity`,`equipment_code_id`,`date_acquired`) values('".$_POST['item_desc'][$index]."','".$_POST['serial_number'][$index]."','".$_POST['unit_cost'][$index]."','PAR','$received_by_ids','".$_POST['quantity'][$index]."','$e_code',NOW())");
     }
 
 
@@ -286,6 +289,8 @@ if(isset($_POST['e_id_supply'])){
 //echo "update tbl_supply_office_employee set first_name = '$fname', middle_name = '$mname', last_name = '$lname', position='$position' where id= '$id'";
 }
 
+
+//data confirm in ics pt
 if(isset($_POST['f_id_pt'])){
     $sql = $conn->query("select * from tbl_ics where id = ". $_POST['f_id_pt']);
     $ics_res = $sql->fetch_assoc();
@@ -315,6 +320,8 @@ if(isset($_POST['f_id_pt'])){
     $res['date_acquired'] = $ics_res['date_acquired'];
     $res['unit_cost'] = $ics_res['unit_cost'];
     $res['total_cost'] = $ics_res['total'];
+    $res['item_idd'] = $ics_res['item_id'];
+    $res['serial_number'] = $ics_res['serial_number'];
     //item description
     $sql_item = $conn->query("select * from tbl_rfq_item_details where id = ".$ics_res['item_desc']);
     //execute and show result

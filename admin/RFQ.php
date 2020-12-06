@@ -162,6 +162,7 @@
                 </td>
                 <td>
                     <input id='qty' type="text" name="quantity_and_unit_[]"  class="form-control" placeholder="input here.." readonly required/>
+                    <input type="hidden" id="item_id" name="item_id[]" />
                 </td>
                 <td>
                     <input type="text" name="brand_and_model_offered_[]"  class="form-control" placeholder="input here.."  required/>
@@ -211,10 +212,12 @@ $(document).ready(function () {
             data: {id:id},
             dataType:"json",
             success: function(html){
+                console.log(html);
                 var item_and_spec = html.itemdesc;
                 var quantity = html.quantity;
                 $('#idesc').val(item_and_spec);
                 $('#qty').val(quantity);
+                $('#item_id').val(html.item_id);
 
             }
         });
@@ -247,6 +250,7 @@ $(document).ready(function () {
             url: "rfq_save.php",
             data: formData,
             success: function(html){
+                // console.log(html);
                 $.jGrowl("RFQ details was successfully created.", { header: 'SUCCESS' });
                 var delay = 3000;
                 setTimeout(function(){ window.location = 'quotation.php'  }, delay);
@@ -262,7 +266,7 @@ var newRow = $("<tr>");
 
     cols += '<td><input type="text" class="form-control" name="item_no_[]" placeholder="input here..." required/></td>';
     cols += '<td><input type="text" class="form-control" name="item_and_spec_[]"  placeholder="input here..." required/></td>';
-    cols += '<td><input type="text" class="form-control" name="quantity_and_unit_[]"  placeholder="input here..." required/></td>';
+    cols += '<td><input type="text" class="form-control" name="quantity_and_unit_[]"  placeholder="input here..." required/><input type="hidden" name="item_id"/></td>';
     cols += '<td><input type="text" class="form-control" name="brand_and_model_offered_[]"  placeholder="input here..." required/></td>';
     cols += '<td><input type="text" class="form-control" name="unit_price_[]"  placeholder="input here..." required/></td>';
     cols += '<td><input type="text" class="form-control" name="total_price_[]"  placeholder="input here..." required/></td>';

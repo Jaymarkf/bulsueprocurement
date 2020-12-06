@@ -1,9 +1,9 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
 <?php
-if(isset($_POST['generate_report'])){
-    die();
-}
+//if(isset($_POST['generate_report'])){
+//    die();
+//}
 ?>
 <style>
     #container-bottom{
@@ -214,10 +214,10 @@ if(isset($_POST['generate_report'])){
                     var delay = 3000;
                     setTimeout(function(){ window.location = 'app_po_approved.php'  }, delay);
                 }
-            });
+            });unserviceable_property.php
         });
     });
-    $(document).on("click","#ipurchase_request_no",function(){
+    $(document).on("change","#ipurchase_request_no",function(){
         var data = $(this).val();
         var datefilter = $('#ciPODATE').val();
         $.ajax({
@@ -226,8 +226,11 @@ if(isset($_POST['generate_report'])){
             data: {data:data,datefilter:datefilter},
             dataType: 'json',
             success:function(e){
+                // console.log(e)
                 $('#bodybac').html(e.tbl);
                 $('#cmp').html(e.company_name);
+            },error:function(XMLHttpRequest, textStatus, errorThrown) {
+                alert("Status: " + textStatus); alert("Error: " + errorThrown);
             }
         });
     });

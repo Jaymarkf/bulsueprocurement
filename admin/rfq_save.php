@@ -29,8 +29,11 @@ if($conn->query($query) === TRUE){
         $brand = $_POST['brand_and_model_offered_'][$index];
         $unit_price = $_POST['unit_price_'][$index];
         $total_price = $_POST['total_price_'][$index];
-        $qry = "insert into tbl_rfq_item_details (rfq_item_id,item_no,item_and_specification,quantity_and_unit,brand_and_model_offered,unit_price,total_price)
-                values($getid,'$item_number','$item_and_spec','$quantity_and_unit','$brand','$unit_price','$total_price') ";
+        $item_id = $_POST['item_id'][$index];
+
+        $qry = "insert into tbl_rfq_item_details (rfq_item_id,item_no,item_id,item_and_specification,quantity_and_unit,brand_and_model_offered,unit_price,total_price)
+                values($getid,'$item_number',$item_id,'$item_and_spec','$quantity_and_unit','$brand','$unit_price','$total_price') ";
         $conn->query($qry);
     }
 }
+echo mysqli_error($conn);

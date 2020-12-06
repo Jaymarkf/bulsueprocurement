@@ -4,7 +4,7 @@
 			<div class="navbar navbar-inner block-header">
 				<div class="muted pull-left"><i class="icon-pencil icon-large"></i> Edit Item Details </div>
 			</div>
-			
+
 			<?php
 				$query1 = mysqli_query($conn,"select * from tbl_item_details where itemdetailID = '$get_id'");
 				while($row1 = mysqli_fetch_array($query1)) {
@@ -15,7 +15,6 @@
 				while($row2= mysqli_fetch_array($query2)){
 					$itemCatCode = $row2['itemcategoryID'];
 					$itemCatDesc = $row2['ItemCatDesc'];
-					
 				}
 			?>
 			<div class="block-content collapse in">
@@ -57,7 +56,12 @@
 							<input name="idDesc" value="<?php echo $row['itemdetailDesc']; ?>" class="input focused span12" id="focusedInput" placeholder = "Description" type="text" required>
 						  </div>
 						</div>
-						
+                        <div class="control-group">
+                            <div class="controls">
+                                <label>Article</label>
+                                <input name="idArticle" value="<?php echo $row['article']; ?>" class="input focused span12" id="focusedInput" placeholder = "Article" type="text" required>
+                            </div>
+                        </div>
 						<div class="control-group">
 						  <div class="controls">
 							<label>Price Catalogue</label>
@@ -96,13 +100,12 @@ $idCat = $_POST['idCat'];
 //$idCode = $_POST['idCode'];
 $idDesc = $_POST['idDesc'];
 $idPrice = $_POST['idPrice'];
+$idArticle = $_POST['idArticle'];
 $uname = $idDesc;
-
 //mysqli_query($conn,"update tbl_item_details set itemcategoryID = '$idCat',itemdetailCode = '$idCode',itemdetailDesc ='$idDesc',PriceCatalogue ='$idPrice' where itemdetailID = '$get_id' ");
-mysqli_query($conn,"update tbl_item_details set itemcategoryID = '$idCat',itemdetailDesc ='$idDesc',PriceCatalogue ='$idPrice' where itemdetailID = '$get_id' ");
+mysqli_query($conn,"update tbl_item_details set itemcategoryID = '$idCat',itemdetailDesc ='$idDesc',PriceCatalogue ='$idPrice', article = '$idArticle' where itemdetailID = '$get_id' ");
 //mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Update item $uname')");
 ?>
-
 <script>
 	$.ajax({
 		success: function(html){

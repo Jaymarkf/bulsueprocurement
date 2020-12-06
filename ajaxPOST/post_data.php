@@ -96,6 +96,7 @@ if(isset($_POST['data'])){
 
         $x['company_name']  = $a['name'];
     echo json_encode($x);
+//    echo mysqli_error($conn);
 
 
 
