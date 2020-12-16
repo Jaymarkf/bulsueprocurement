@@ -30,14 +30,23 @@
                 <tr>
                     <td style="text-align:center;"><?php echo str_replace(",","-",$data_ics['ics_num'])?></td>
                     <td style="text-align:center;"><?=$f_item['item_and_specification']?></td>
-                    <td style="text-align:center;"><?=$f_item['quantity_and_unit']?></td>
+                    <td style="text-align:center;"><?=$data_ics['quantity']?></td>
                     <td style="text-align:center;"><?=$f_item['unit_price']?></td>
                     <td style="text-align:center;"><?=$f_item['total_price']?></td>
                     <td style="text-align:center;"><?=str_replace(",","-",$data_ics['fundcluster_code'])?></td>
                     <td style="text-align:center;display:flex">
-                        <a href="ics.php?edit=<?=$data_ics['id']?>" class="btn btn-primary"><i class="icon icon-edit"></i> Edit</a>
+
+                        <?php
+                        if($data_ics['quantity'] == 0){
+                            echo '<span style="color:red;">ITEM IS TRANSFERRED</span>';
+                        }else{
+                        ?>
+                            <a href="ics.php?edit=<?=$data_ics['id']?>" class="btn btn-primary"><i class="icon icon-edit"></i> Edit</a>
                         <button class="delete_dashboard_btn btn btn-danger" data-id="<?=$data_ics['id']?>"><i class="icon icon-trash"></i> Delete</button>
                         <a href="ics-print-preview.php?preview=<?=$data_ics['id']?>" class="btn btn-success soab"><i class="icon icon-print"></i> Print</a>
+                        <?php
+                        }
+                        ?>
                     </td>
                 </tr>
                 <?php

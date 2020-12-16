@@ -190,17 +190,25 @@
                 <strong style="line-height:30px;margin-right:25px;">Select available equipment code</strong>
                 <select name="furniture" required class="form-control" style="margin-right:30px;">
                     <option value="" selected disabled hidden>equipment code</option>
+<!--                    --><?php
+//                        $sf = $conn->query("select * from item_owner where par_owner_id <> '' group by equipment_code_id");
+//                        while($id_f = $sf->fetch_assoc()){
+//                            $sql_furniture = $conn->query("select * from equipment_code where id = ".$id_f['equipment_code_id']);
+//                            $data_furniture = $sql_furniture->fetch_assoc();
+//                            $code = $data_furniture['code'];
+//                            $code_desc = $data_furniture['description'];
+//                            ?>
+<!--                            <option value="--><?//=$data_furniture['id']?><!--">--><?//=$code_desc?><!-- - (--><?//=$code?><!--)</option>-->
+<!--                        --><?php
+//                        }
+//                    ?>
                     <?php
-                        $sf = $conn->query("select * from item_owner where par_owner_id <> '' group by equipment_code_id");
-                        while($id_f = $sf->fetch_assoc()){
-                            $sql_furniture = $conn->query("select * from equipment_code where id = ".$id_f['equipment_code_id']);
-                            $data_furniture = $sql_furniture->fetch_assoc();
-                            $code = $data_furniture['code'];
-                            $code_desc = $data_furniture['description'];
-                            ?>
-                            <option value="<?=$data_furniture['id']?>"><?=$code_desc?> - (<?=$code?>)</option>
+                    $sf = $conn->query("select * from equipment_code");
+                    while($data_f = $sf->fetch_assoc()){
+                        ?>
+                            <option value="<?=$data_f['id']?>"><?=$data_f['code']?> - (<?=$data_f['description']?>)</option>
                         <?php
-                        }
+                    }
                     ?>
                 </select>
                 <button class="btn btn-success  btn-small btn-furniture" type="submit" style="max-height:30px;"><i class="icon icon-book"> Generate Report</i></button>
@@ -236,6 +244,18 @@
             ?>
             </tbody>
         </table>
+    </div>
+</div>
+
+<div class="block">
+    <div class="container-fluid">
+        <div class="text-center" style="padding:24px">
+            <h4>REPORT ON THE PHYSICAL COUNT OF PROPERTY, PLANT AND EQUIPMENT</h4>
+        </div>
+        <div class="text-center">
+           <a class="btn btn-success" href="physical_count.php"><i class="icon icon-print"></i> View Report</a>
+        </div>
+        <br>
     </div>
 </div>
 

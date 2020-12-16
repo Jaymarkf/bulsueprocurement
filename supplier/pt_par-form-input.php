@@ -112,8 +112,9 @@ if(isset($_GET['pt'])){
     $get_college = explode(",",$get_item_in_par['received_by_ids']);
     $get_college_name = $conn->query("select emp.*,coll.* from tbl_supplier_employee emp inner join tbl_branch coll on emp.college = coll.branchID where emp.id = '$get_college[0]' limit 1");
     $college_name = $get_college_name->fetch_assoc();
-    $_SESSION['COLLEGE'] = $college_name['branch']
-   
+    $_SESSION['COLLEGE'] = $college_name['branch'];
+    $arr_fund = explode(",",$get_item_in_par['fundcluster_code']);
+    $fund_id = $arr_fund[0];
 
 ?>
 <form method="post" id="form-desc">
@@ -162,13 +163,18 @@ if(isset($_GET['pt'])){
               <div class="span1"></div>
               <div class="span3">
                 <label>Fundcluster</label>
-                  <select name="pt_par_fundcluster" id="pt_par_fundcluster" required>
+                  <select name="pt_par_fundcluster" id="pt_par_fundcluster" disabled>
                     <option value="" style="display:none" disabled hidden selected>select fundcluster</option>
                     <?php
                         $sql = $conn->query("select * from tbl_fund");
                         while($datal_fund = $sql->fetch_assoc()){
+                            if($fund_id == $datal_fund['fund_id']){
+                                $r = 'selected';
+                            }else{
+                                $r = '';
+                            }
                             ?>
-                            <option value="<?=$datal_fund['fund_id']?>"><?=$datal_fund['fund_description']?></option>
+                            <option value="<?=$datal_fund['fund_id']?>" <?=$r?>><?=$datal_fund['fund_description']?></option>
                             <?php
                         }
 

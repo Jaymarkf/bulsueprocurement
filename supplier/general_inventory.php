@@ -121,6 +121,30 @@
         }
 
     });
+
+    $('#ga').DataTable({
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        },
+        "sScrollX": "100%",
+        "sScrollXInner": "110%",
+        "bScrollCollapse": true,
+        "fixedColumns": {
+            "leftColumns": 1
+        }
+
+    });
 </script>
 </body>
 </html>

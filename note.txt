@@ -272,3 +272,18 @@ show the dashboard of transfer property table
 
 >PAR design
 
+
+reset query in supplier
+===================
+delete from furniture;
+delete from disposal_request;
+delete from item_owner;
+delete from par_summary_report;
+delete from summary_report;
+delete from tbl_ics;
+delete from tbl_par;
+delete from tbl_par_items;
+delete from tbl_pt_par_items;
+delete from transfer_item;
+
+

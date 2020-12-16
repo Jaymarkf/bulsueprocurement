@@ -24,7 +24,7 @@ $pdf->SetY($pdf->GetY()-15);
 $pdf->Cell("","20",'Bulacan State University','','1','C');
 $pdf->SetY($pdf->GetY());
 $pdf->SetFont('Helvetica','B',9);
-$pdf->Cell("","5","INVENTORY OF FURNITURE AND FIXTURES (".$data['code'].")","","1","C");
+$pdf->Cell("","5","INVENTORY OF ".$data['description']." (".$data['code'].")","","1","C");
 $pdf->Cell("",5,"As of ".date("F d, Y"),"","1","C");
 $pdf->Ln(10);
 $pdf->SetFont('Helvetica','',9);

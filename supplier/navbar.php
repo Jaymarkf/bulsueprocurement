@@ -65,6 +65,9 @@
                             <li>
                                 <a tabindex="-1" href="general_inventory.php" class="jkl"><img src="../images/inventory_logo.png" width="10%"> General Inventory Reports</a>
                             </li>
+                            <li>
+                                <a tabindex="-1" href="view_inventory_reports.php" class="jkl"><i class="icon icon-book text-success"></i> View Inventory Reports</a>
+                            </li>
 
                         </ul>
 
