@@ -1,4 +1,4 @@
-<?php include('header.php'); ?>
+<?php    if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
 <body id="login">
 	<div class="span12">
 	<?php include('navbar.php') ?>

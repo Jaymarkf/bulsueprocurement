@@ -1,4 +1,4 @@
-<?php include('header.php'); ?>
+<?php    if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
 <?php include('session.php'); ?>
 <?php
 	$prodID = $_GET['prodid'];
@@ -237,10 +237,13 @@
 										type: "POST",
 										url: "product-details-save.php<?php if(isset($_GET['prodid'])){ echo '?prodid='. $_GET['prodid']; }?>",
 										data: formData,
-										success: function(html){
+										success: function(b){
+										  //  console.log(b);
 											$.jGrowl("Item successfully added to cart!", { header: 'SUCCESS' });
 											var delay = 1000;
                                             setTimeout(function(){ window.location = 'dashboard.php'  }, delay);
+										
+										    
 										}
 									});
 								});

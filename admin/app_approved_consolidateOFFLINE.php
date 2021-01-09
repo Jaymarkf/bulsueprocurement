@@ -1,4 +1,4 @@
-<?php include('header.php'); ?>
+<?php    if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
 <?php include('session.php'); ?>
 <?php
 $handle  =  mysql_connect("127.0.0.1", "root", "") ;

@@ -1,4 +1,4 @@
-<?php error_reporting(E_ALL ^ E_NOTICE);  include('header.php'); ?>
+<?php error_reporting(E_ALL ^ E_NOTICE);     if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
 <?php include('session.php'); ?>
     <body >
 		<?php include('navbar.php'); ?>					

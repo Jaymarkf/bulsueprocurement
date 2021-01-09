@@ -1,6 +1,8 @@
 <?php
+error_reporting(0);
 session_start();
-include('header.php'); ?>
+   if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
+
 <?php include('session.php'); ?>
 <?php
 if(isset($_GET['id'])){

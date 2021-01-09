@@ -288,7 +288,7 @@ ul{
                     $('#data_add').html("" +
                         "<input type='hidden' name='item_idd' id='item_idd' value='" + item_idd + "'/> " +
                         "<input type='hidden' name='serial_number' id='serial_number' value='" + serial_number + "'/> " +
-                        "<div class='row-fluid text-warning' style='font-weight: bolder'>Data to be Transfer <span style='font-weight: bold;' class='text-success'>(Confirmation)</span></div><div class='row-fluid'><span style='font-weight: bold'>ICS No. </span> <input class='' type='text' name='ics_num' id='ics_num' value='"+ics_num+"' readonly/></div>" +
+                        "<div class='row-fluid text-warning' style='font-weight: bolder'>Data to be Transfered <span style='font-weight: bold;' class='text-success'>(Confirmation)</span></div><div class='row-fluid'><span style='font-weight: bold'>ICS No. </span> <input class='' type='text' name='ics_num' id='ics_num' value='"+ics_num+"' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>College </span><input class='span8' type='text' name='college' id='college' value='"+college+"' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>Quantity </span><input class='form-control' type='number' name='quantity' id='quantity' value='"+quantity+"'/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>Unit </span> <input class='' type='text' name='unit' id='unit' value='"+unit+"' readonly/></div>" +

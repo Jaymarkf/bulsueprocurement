@@ -1,7 +1,7 @@
 <?php
 session_start();
 ?>
-<?php include('header.php'); ?>
+<?php    if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
 <?php include('session.php'); ?>
 <?php trim($filter = isset($_GET['filter']) ? $_GET['filter'] : '');?>
 <!--php starts here PART1-->

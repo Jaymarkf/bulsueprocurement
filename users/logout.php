@@ -1,7 +1,6 @@
-<?php include('header.php'); ?>
+<?php    if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
 <?php
 include('../dbcon.php');
-include('session.php');
 //mysqli_query($conn,"update user_log set logout_Date = NOW() where user_id = '$session_id' ");
 session_unset();
 session_destroy();

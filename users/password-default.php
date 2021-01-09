@@ -1,4 +1,4 @@
-<?php session_start(); include('header.php'); ?>
+<?php session_start();    if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
 <?php include('session.php'); ?>
 
   <body id="login">
@@ -20,7 +20,7 @@
 		<input type="password" id="retype_password" name="retype_password" placeholder="Re-type Password" required>
 		<br>
 		<button  type="submit" data-placement="right" id="save" name="save" class="btn btn-success"><i class="icon-save icon-large"></i> Save </button>
-        <a href="dashboard.php" title="Click to Edit" "  class="btn btn-danger"><i class="icon-remove icon-large"></i> Cancel </a>
+        <a href="dashboard.php" title="Click to Edit"  class="btn btn-danger"><i class="icon-remove icon-large"></i> Cancel </a>
 			<script>
 			jQuery(document).ready(function(){
 			jQuery("#change_password").submit(function(e){
@@ -42,6 +42,7 @@
 						url: "password-update.php",
 						data: formData,
 						success: function(html){
+					  
 					
 						$.jGrowl("Your password has been changed successfully.", { header: 'SUCCESS' });
 						var delay = 3000;

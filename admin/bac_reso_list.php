@@ -1,7 +1,7 @@
 <?php
 session_start();
 error_reporting(E_WARNING);
-include('session.php');
+// include('session.php');
 include('../dbcon.php');
 require('../fpdf/fpdf.php');
 $time_filter = $_GET['c_id'];

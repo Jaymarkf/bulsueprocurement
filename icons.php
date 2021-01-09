@@ -1,4 +1,4 @@
-<?php include('header.php'); ?>
+<?php    if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
 
 <i class="icon-glass icon-large"></i>
 <i class="icon-music icon-large"></i>

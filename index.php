@@ -1,6 +1,6 @@
 <?php
     session_start();
-	include('header.php');
+	   if(!isset($_SESSION)){ session_start(); }  include('header.php');
  ?>
 <body id="login">
 	<div class="row-fluid">

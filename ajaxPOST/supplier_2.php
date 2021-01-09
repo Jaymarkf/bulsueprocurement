@@ -51,6 +51,8 @@ if(isset($_POST['id'])){
     $v['positionf'] = $xd['name'];
     echo json_encode($v);
 }
+
+//add new par items
 if(isset($_POST['ics_save'])){
 
     $ics_num_year = $_POST['ics_num_year'];
@@ -111,11 +113,13 @@ if(isset($_POST['ics_save'])){
     $conn->query($qry);
     $getid = $conn->insert_id;
 
+        
     foreach ($_POST['item_id_rfq_details'] as $index => $v) {
         $conn->query("insert into tbl_par_items (`par_id`,`serial_number`,`article`,`item_description`,`quantity`,`unit`,`unit_cost`,`total_cost`) values('$getid','".$_POST['serial_number'][$index]."','".$_POST['article'][$index]."','".$_POST['item_desc'][$index]."','".$_POST['quantity'][$index]."','".$_POST['unit'][$index]."','".$_POST['unit_cost'][$index]."','".$_POST['total_cost'][$index]."')");
 
         $conn->query("insert into item_owner (`item_id`,serial_number,`unit_price`,`transaction_type`,`par_owner_id`,`quantity`,`equipment_code_id`,`date_acquired`) values('".$_POST['item_desc'][$index]."','".$_POST['serial_number'][$index]."','".$_POST['unit_cost'][$index]."','PAR','$received_by_ids','".$_POST['quantity'][$index]."','$e_code',NOW())");
     }
+
 
 
 }
@@ -154,7 +158,7 @@ if(isset($_POST['ics_edit'])){
         $conn->query("insert into tbl_par_items (`par_id`,`item_description`,`quantity`,`unit`,`unit_cost`,`total_cost`) values('".$_POST['ics_edit']."','".$_POST['item_desc'][$index]."','".$_POST['quantity'][$index]."','".$_POST['unit'][$index]."','".$_POST['unit_cost'][$index]."','".$_POST['total_cost'][$index]."')");
 
     }
-
+//  echo mysqli_error($conn);
 
 }
 if(isset($_POST['data_id_delete_par'])){
@@ -178,7 +182,7 @@ if(isset($_POST['view'])) {
         if ($ff->num_rows > 0) {
             $count = $ff->num_rows;
             while ($row = $ff->fetch_assoc()) {
-                $data .= '<li style="padding:3px;">Branch: ' . $row['college'] . '<span id="closebtn" class="btn btn-danger btn-small pull-right" style="font-size:9px;padding:5px;padding-top:0px;padding-bottom:0px;" data-id="' . $row['id'] . '">X</span><br>Item: ' . $row['item'] . '<br> Status: Late Submitted</li><li class="divider"></li>';
+                $data .= '<li style="padding:3px;">College/Office: ' . $row['college'] . '<span id="closebtn" class="btn btn-danger btn-small pull-right" style="font-size:9px;padding:5px;padding-top:0px;padding-bottom:0px;" data-id="' . $row['id'] . '">X</span><br>Item: ' . $row['item'] . '<br> Status: Late Submission</li><li class="divider"></li>';
             }
         } else {
             $data = '<li style="padding:4px;font-size:12px;">No notification found!</li>';

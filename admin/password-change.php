@@ -14,7 +14,7 @@
 		<button  type="submit" data-placement="right" id="save" name="save" class="btn btn-success"><i class="icon-save icon-large"></i> Save </button>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				
-		<a href="dashboard.php" title="Click to Edit" "  class="btn btn-danger"><i class="icon-remove icon-large"></i> Cancel </a>
+		<a href="dashboard.php" title="Click to Edit"  class="btn btn-danger"><i class="icon-remove icon-large"></i> Cancel </a>
 
 			<?php
 			if (isset($_POST['save'])){

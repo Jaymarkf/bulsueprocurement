@@ -1,5 +1,5 @@
 <?php session_start();
-include('header.php');
+   if(!isset($_SESSION)){ session_start(); }  include('header.php');
 include('session.php');
 ?>
 <style>

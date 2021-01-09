@@ -1,9 +1,6 @@
 <?php
 include('../dbcon.php');
-if(!isset($_SESSION))
-{
-    session_start();
-}
+
 //Check whether the session variable SESS_MEMBER_ID is present or not
 if (!isset($_SESSION['supplier_id']) || (trim($_SESSION['supplier_id']) == '')) {
     header('Location: ../index.php');

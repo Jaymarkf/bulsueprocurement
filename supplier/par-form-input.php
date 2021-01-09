@@ -326,7 +326,7 @@ $sender_position = '';
                             <div style="margin-right:20px;"></div>
                     </div>
                     <div class="row-fluid">
-                        <input type="button" class="btn btn-success add-row" value="Add Row">
+                        <input type="button" class="btn btn-success add-row" value="Add to Row">
                         <button type="button" class="btn btn-danger delete-row"><i class="icon icon-trash"></i> Delete Selected Row</button>
                     </div>
 
@@ -412,7 +412,7 @@ $sender_position = '';
                                         <input type="text" id="position_id" placeholder="Position"  class="form-control" readonly required/>
                                     </div>
                                     <div class="text-center">
-                                        <input type="button" class="btn btn-success add-row-r" value="Add Row">
+                                        <input type="button" class="btn btn-success add-row-r" value="Add to Row">
                                         <button type="button" class="btn btn-danger delete-row-r"><i class="icon icon-trash"></i> Delete Selected Row</button>
                                     </div>
                                 </div>
@@ -541,7 +541,7 @@ $sender_position = '';
                           type: 'post',
                           data:data,
                           success:function(ex){
-                              // console.log(ex);
+                            //   console.log(ex);
                               // return false;
                               e.preventDefault();
                               $.jGrowl("New PAR was successfully saved!", { header: 'SUCCESS' });

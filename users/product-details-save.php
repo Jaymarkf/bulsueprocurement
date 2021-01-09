@@ -1,4 +1,7 @@
 <?php
+if(!isset($_SESSION)){
+    session_start();
+}
 include('../dbcon.php');
 include('session.php');
 date_default_timezone_set('Asia/Manila');
@@ -43,4 +46,5 @@ mysqli_query($conn,"insert into tbl_ppmp (`user_id`,`Year`,`EndUserUnit`,`Source
          	          values($session_id, '$year', '$EndUserUnit', '$SOF', 'Pending', '$priority','','','$purpose', NOW(),'$item_id', '$itemCatDesc', '$itemDetailDesc', '$UnitOfMeasurement', '$PriceCatalogue', $Jan, $Feb, $Mar, $Apr, $May, $Jun, $Jul, $Aug, $Sep, $Oct, $Nov, $Dec,$budget, $TQtyMonth, $TotalAmount, '$rem','pending')");
 
 //mysqli_query($conn,"insert into activity_log (date,username,action) values(NOW(),'$user_username','Add User $uname')");
+echo mysqli_error($conn);
 ?>

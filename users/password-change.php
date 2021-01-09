@@ -1,4 +1,4 @@
-	<?php
+  	<?php
 			$query = mysqli_query($conn,"select * from users where user_id = '$session_id'");
 			$row = mysqli_fetch_array($query);
 								?>		
@@ -12,7 +12,7 @@
 		<input type="password" id="retype_password" name="retype_password" placeholder="Re-type New Password" required>
 		<br>
 		<button  type="submit" data-placement="right" id="save" name="save" class="btn btn-success"><i class="icon-save icon-large"></i> Save </button>
-       <a href="dashboard.php" title="Click to Edit" "  class="btn btn-danger"><i class="icon-remove icon-large"></i> Cancel </a>
+       <a href="dashboard.php" title="Click to Edit"  class="btn btn-danger"><i class="icon-remove icon-large"></i> Cancel </a>
 
 			<?php
 			if (isset($_POST['save'])){

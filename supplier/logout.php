@@ -1,4 +1,4 @@
-<?php include('header.php'); ?>
+<?php    if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
 <?php
 error_reporting(0);
 include('../dbcon.php');

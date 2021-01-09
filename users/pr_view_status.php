@@ -1,4 +1,4 @@
-<?php include('header.php'); ?>
+<?php    if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
 
 <?php
 	$PR = $_GET['pr'];
@@ -65,16 +65,16 @@
 							<?php
 							}
 							
-							$query4 = mysqli_query($conn,"SELECT * FROM tbl_iar_items WHERE ItemDescription = '$items' AND Year = '$Year'");
-							$row4 = mysqli_fetch_array($query4);
-							$count4 = mysqli_num_rows($query4);
+				// 			$query4 = mysqli_query($conn,"SELECT * FROM tbl_iar_items WHERE ItemDescription = '$items' AND Year = '$Year'");
+				// 			$row4 = mysqli_fetch_array($query4);
+				// 			$count4 = mysqli_num_rows($query4);
 							
-							if ($count4 > 0){
-							?>
-								<span class="badge badge-info">Delivered</span> <!-- pag may quotation na at nasa bacreso na BACRESO TBL-->
-							<?php
-							}
-							?>
+				// 			if ($count4 > 0){
+						?>
+				 				<!--<span class="badge badge-info">Delivered</span> <!-- pag may quotation na at nasa bacreso na BACRESO TBL-->
+				 			<?php
+				// 			}
+						?>
 							</td>
 						</tr>
 					<?php

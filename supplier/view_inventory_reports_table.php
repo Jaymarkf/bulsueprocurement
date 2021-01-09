@@ -18,10 +18,15 @@
                             //get owner name
                             $sql_owner_ics = $conn->query("select * from tbl_supplier_employee where id = ".$data_ics['owner_id']);
                             $data_owner_ics = $sql_owner_ics->fetch_assoc();
+                            if($data_ics['disposed_quantity'] > 0 && $data_ics['disposed_quantity'] != null){
+                                $qty_val = $data_ics['quantity'] - $data_ics['disposed_quantity'];
+                            }else{
+                                $qty_val = $data_ics['quantity'];
+                            }
                             ?>
                                 <tr>
                                     <td><?=$data_ics['item_id']?>  -  ( SN: <?=$data_ics['serial_number']?> )</td>
-                                    <td><?=$data_ics['quantity']?></td>
+                                    <td><?=$qty_val?></td>
                                     <td><?=$data_owner_ics['first_name'] . ' ' . $data_owner_ics['middle_name']. ' ' . $data_owner_ics['last_name']?></td>
                                 </tr>
                             <?php
@@ -63,7 +68,7 @@
                 $name = '';
                 while($data_par = $qry->fetch_assoc()){
 
-                    if(strpos($data_par['par_owner_id'],',') !== false){
+                    if(strpos($data_par['par_owner_id'],',') !== false ){
                         //comma found!
                         //explode if item_owner is separated by commas
                         //then extract its data
@@ -76,7 +81,7 @@
                         }
                         $name = rtrim($name,'& ');
 
-                    }else{
+                    }elseif($data_par['par_owner_id'] != null){
                         //data is only one owner
                         $temp_sql_row = $conn->query("select * from tbl_supplier_employee where id = ".$data_par['par_owner_id']);
                         $f = $temp_sql_row->fetch_assoc();
@@ -84,14 +89,17 @@
 
                     }
 
-
+                    if($data_par['par_owner_id'] != null){
                     ?>
+                
+                    
                     <tr>
                         <td><?=$data_par['item_id']?> - ( SN: <?=$data_par['serial_number']?> )</td>
                         <td><?=$data_par['qty']?></td>
                         <td><?=$name?></td>
                     </tr>
                     <?php
+                    }
                     $name = '';
                 }
                 ?>

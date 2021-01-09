@@ -1,5 +1,5 @@
 <?php
-include('header.php');
+   if(!isset($_SESSION)){ session_start(); }  include('header.php');
 include('../dbcon.php');
 include('session.php');
 if (isset($_POST['delete'])){

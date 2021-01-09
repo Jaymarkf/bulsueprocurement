@@ -41,6 +41,6 @@ $conn->query("insert into disposal_request (`date_acquired`,
                                                   NOW(),
                                                   '$office_college_campus',
                                                   '$name_of_employee')");
-$conn->query("update item_owner set disposed_quantity = '$qty' where id = ".$item_id);
+$conn->query("update item_owner set disposed_quantity = '$qty',quantity = quantity - '$qty' where id = ".$item_id);
 echo mysqli_error($conn);
 }
