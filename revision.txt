@@ -1,0 +1,15 @@
+save the changes made in every transaction
+price quotation- provide options only but still the BIDS committee will still decide for the winning suppplier
+               - provide parameters 
+               - report will only provide the quotation of suppier but still the BIDS will decision
+               - plain report only for the quotation of suppliers for the itmes
+               - add module in the system to provide the final output for bac reso (bac reso format)
+
+Unserviceable item - serial number of the damaged item itself
+                   - encode the actual qty. of the damaged item 
+                   - details on what cause the damage/status report of the item before disposal (add module)-put option if for maintenance only or for disposal
+                   - put serial code number for each item (to monitor items)
+                   - provide report to the end-user about the details of the damaged item (provide serial number)
+
+Property Transfer - serial number for items to be transfered
+Gen. Inventory Report - overlapped records.
