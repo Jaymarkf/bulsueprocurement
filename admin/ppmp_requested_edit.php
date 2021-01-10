@@ -6,7 +6,7 @@
 	if(!empty($prodID)){
 		$sqlSelectSpecProd = mysqli_query($conn,"SELECT * FROM tbl_ppmp where ppmpID = '$prodID'") ;
 		$getProdInfo = mysqli_fetch_array($sqlSelectSpecProd);
-		$prodcode= $getProdInfo["itemdetailCode"];
+		// $prodcode= $getProdInfo["itemdetailCode"];
 		$prodcat = $getProdInfo["ItemCatDesc"];
 		$prodprice = $getProdInfo["PriceCatalogue"];
 		$produom = $getProdInfo["UnitOfMeasurement"];
@@ -24,6 +24,7 @@
 		$prodOct = $getProdInfo["Oct"];
 		$prodNov = $getProdInfo["Nov"];
 		$prodDec = $getProdInfo["Dec"];
+		$prodRem = $getProdInfo['Remarks'];
 	} else{
 		header('location:dashboard.php'); 
 	}
@@ -83,9 +84,9 @@
 									<div class="control-group">
 										<div class="controls">
 										<div class="span6">
-											<label><b>Code: </b></label>
-											<input class="span12" type="text" name="ciCode" value="<?php echo $prodcode; ?>" placeholder = "Code" type="text" disabled>
-																							
+											<!-- <label><b>Code: </b></label> -->
+											<!-- <input class="span12" type="text" name="ciCode" value="<?php /*echo $prodcode;*/ ?>" placeholder = "Code" type="text" disabled>
+																							 -->
 											<label><b>Description: </b></label>
 											<input class="span12" type="text" name="ciDesc" value="<?php echo $proddesc; ?>" placeholder = "Code" type="text" disabled>
 																							
@@ -144,8 +145,12 @@
 												<label class="pull-right"><b>Dec: </b><input class="span8 pull-right" name="ciDecQty" placeholder = "0" type="number" value="<?php echo $prodDec; ?>" required></label>
 												</div>
 											</div>
-											
+											<div class="span10">
+													<label><b>Remarks: </b></label>
+													<input class="span12" type="text" name="ciRemarks" value="<?php echo $prodRem; ?>">
+											</div>
 										</div><!--/product-information-->
+										
 									</div>
 
 									<div class="span12"  id="content">
@@ -205,13 +210,75 @@ if (isset($_POST['saveUPDATE'])){
 	$Oct = $_POST['ciOctQty'];
 	$Nov = $_POST['ciNovQty'];
 	$Dec = $_POST['ciDecQty'];
-
+	$remark = $_POST['ciRemarks'];
 	$TQtyMonth = ($Jan+$Feb+$Mar+$Apr+$May+$Jun+$Jul+$Aug+$Sep+$Oct+$Nov+$Dec);
 	$TotalAmount = ($PriceCatalogue * $TQtyMonth);
 	
+	$qry = $conn->query("select * from tbl_ppmp where ppmpID = ".$prodID);
+	$res = $qry->fetch_assoc();
+	$desc = '';
+	$flag_desc = 0;
+	if($res['purpose'] != $purpose){
+		$desc .= 'Purpose was changed from '. $res['purpose']. ' to '. $purpose;
+		$flag_desc = 1;
+	}
+	if($res['Jan'] != $Jan){
+		$desc .= ', Jan Quantity was changed from '. $res['Jan']. ' to '. $Jan;
+		$flag_desc = 1;
+	}
+	if($res['Feb'] != $Feb){
+		$desc .= ', Feb Quantity was changed from '. $res['Feb']. ' to '. $Feb;
+		$flag_desc = 1;
+	}
+	if($res['Mar'] != $Mar){
+		$desc .= ', Mar Quantity was changed from '. $res['Mar']. ' to '. $Mar;
+		$flag_desc = 1;
+	}
+	if($res['Apr'] != $Apr){
+		$desc .= ', Apr Quantity was changed from '. $res['Apr']. ' to '. $Apr;
+		$flag_desc = 1;
+	}
+	if($res['Jun'] != $Jun){
+		$desc .= ', Jun Quantity was changed from '. $res['Jun']. ' to '. $Jun;
+		$flag_desc = 1;
+	}
+	if($res['Jul'] != $Jul){
+		$desc .= ', Jul Quantity was changed from '. $res['Jul']. ' to '. $Jul;
+		$flag_desc = 1;
+	}
+	if($res['Aug'] != $Aug){
+		$desc .= ', Aug Quantity was changed from '. $res['Aug']. ' to '. $Aug;
+		$flag_desc = 1;
+	}
+	if($res['Sep'] != $Sep){
+		$desc .= ', Sep Quantity was changed from '. $res['Sep']. ' to '. $Sep;
+		$flag_desc = 1;
+	}
+	if($res['Oct'] != $Oct){
+		$desc .= ', Oct Quantity was changed from '. $res['Oct']. ' to '. $Oct;
+		$flag_desc = 1;
+	}
+	if($res['Nov'] != $Nov){
+		$desc .= ', Nov Quantity was changed from '. $res['Nov']. ' to '. $Nov;
+		$flag_desc = 1;
+	}
+	if($res['Dec'] != $Dec){
+		$desc .= ', Dec Quantity was changed from '. $res['Dec']. ' to '. $Dec;
+		$flag_desc = 1;
+	}
+	if($res['Remarks'] != $remark){
+		$desc .= ', Remarks was changed from '. $res['Remarks']. ' to '. $remark;
+		$flag_desc = 1;
+	}
+	if($flag_desc == 1){
+		$conn->query("insert into procurement_ppmp_history (description,branch,date_change) values('$desc','".$_GET['branchid']."',NOW())");
+	}
+
+
+
 	mysqli_query($conn,"UPDATE tbl_ppmp SET `purpose`='$purpose',`Jan`='$Jan',`Feb`='$Feb',`Mar`='$Mar',
 	`Apr`='$Apr',`May`='$May',`Jun`='$Jun',`Jul`='$Jul',`Aug`='$Aug',`Sep`='$Sep',`Oct`='$Oct',
-	`Nov`='$Nov',`Dec`='$Dec',`TotalQty`='$TQtyMonth',`TotalAmount`='$TotalAmount' WHERE ppmpID = '$prodID'");
+	`Nov`='$Nov',`Dec`='$Dec',`TotalQty`='$TQtyMonth',`TotalAmount`='$TotalAmount',Remarks = '$remark' WHERE ppmpID = '$prodID'");
 
 	$query= mysqli_query($conn,"SELECT * FROM users WHERE user_id = '$session_id'");
 	$row = mysqli_fetch_array($query);

@@ -293,3 +293,12 @@ CREATE TABLE `tbl_pt_par_items` (
   `received_by` int(11) NOT NULL,
   `reason_for_transfer` varchar(100) NOT NULL
 );
+
+==================================
+defence done changes here 
+====================================
+CREATE TABLE `procurement_ppmp_history` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `description` varchar(255) NOT NULL,
+  `date_change` date NOT NULL
+);

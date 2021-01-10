@@ -59,9 +59,13 @@
 						?>
                             <div class="navbar navbar-inner block-header">
                                 <div class="muted pull-left"><img src="../images/buttons/ppmp.png" width="5%"> NEW Project Procurement Management Plan Approval - <span class="badge badge-warning">YEAR <?php echo $Year; ?></span></div>
-                                <div class="muted pull-right">
-									Total Record(s): <span class="badge badge-info"><?php  echo $count2;  ?></span>
+								<div class="muted pull-right">
+									<a href="ppmp_history.php?id=<?=$_GET['id']?>" class="btn btn-warning btn-small">Changes History Logs of PPMP</a>
 								</div>
+							   
+							    <!-- <div class="muted pull-right">
+									Total Record(s): <span class="badge badge-info"><?php  /*echo $count2;*/  ?></span>
+								</div> -->
                             </div>
                             <div class="block-content collapse in">
 								<div class="span12" id="studentTableDiv">
