@@ -271,6 +271,7 @@ if (isset($_POST['saveUPDATE'])){
 		$flag_desc = 1;
 	}
 	if($flag_desc == 1){
+
 		$conn->query("insert into procurement_ppmp_history (description,branch,date_change) values('$desc','".$_GET['branchid']."',NOW())");
 	}
 

@@ -85,6 +85,7 @@ if(isset($_GET['id'])){
                         <div class="container-fluid">
                             <a class="btn btn-success btn-lg" href="RFQ.php" style="margin-top:10px;">Add New Quotation</a>
                             <a class="btn btn-warning btn-lg" href="add_company.php" style="margin-top:10px;">Add New Company Information</a>
+                            <a class="btn btn-info btn-lg" href="view_summary_quotation.php" style="margin-top:10px;"><i class="icon icon-eye-open"></i> View Summary Reports of Quotation</a>
                         </div>
 
 

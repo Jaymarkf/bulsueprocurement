@@ -35,7 +35,6 @@
 						</div>
 					</div>
 				</div>
-			
                 <div class="span12" id="content">
                      <div class="block">
                            <div class="container-fluid">
@@ -47,11 +46,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>test</td>
-                                                <td>test</td>
-                                            </tr>
-
+                                        <?php
+                                            if(isset($_GET['id'])){
+                                                $id = $_GET['id'];
+                                                $qq = $conn->query("select * from procurement_ppmp_history where branch = '$id'");
+                                                while($row = $qq->fetch_assoc()){
+                                                    ?>
+                                                        <tr>
+                                                            <td><?=$row['description']?></td>
+                                                            <td><?=$row['date_change']?></td>
+                                                        </tr>
+                                                    <?php
+                                                }
+                                            }
+                                        ?>
                                         </tbody>
                                     </table>
                            </div>            
