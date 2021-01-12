@@ -84,7 +84,7 @@ $data_coll = $sql_coll->fetch_assoc();
 $pdf->MultiCell(12,2.5,$data_coll['branch'],"1","0","");
 $pdf->SetXY($pdf->GetX() + 123,$pdf->GetY() - 5);
 $pdf->MultiCell(13,2.5,$data_coll['first_name'] .' '. $data_coll['last_name'],"1","0","");
-$pdf->SetXY($pdf->GetX()+136,$pdf->GetY()-5);
+$pdf->SetXY($pdf->GetX()+136,$pdf->GetY()- 5);
 $pdf->Cell(17,5,"___________","1","0","C");
 $pdf->Cell(18,5,"___________","1","0","C");
 $pdf->Cell(12.6,5,"________","1","0","C");

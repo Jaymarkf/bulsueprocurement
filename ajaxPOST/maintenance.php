@@ -25,12 +25,12 @@ if(isset($_POST['d_name'])){
 
     $serial_number = $_POST['serial_number'];
 
-$conn->query("insert into disposal_request (`date_acquired`,
+$conn->query("insert into tbl_maintenance (`date_acquired`,
                                                   `particulars_articles`,
                                                   `qty`,
                                                   `unit_cost`,
                                                   `total_cost`,
-                                                  `date_returned`,
+                                                  `date_return`,
                                                   `office_college_campus`,
                                                   `name_of_employee`,
                                                   `status_damage`,

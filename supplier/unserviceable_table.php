@@ -106,12 +106,27 @@
                 </div>
                 <div class="row-fluid" style="padding:20px; display:flex">
                     <label style="line-height:34px;">Quantity: &nbsp;&nbsp;</label>
-                    <input class="num" type="number" name="quantity" id="quantity" value="<?=$fs['quantity']?>" required/>
+                    <input type="hidden" id="qhidden" value="<?=$fs['quantity']?>"/>
+                    <input class="num" type="number" name="quantity" id="quantity" value="" required/>
                     <div style="margin-left:5px;margin-right:5px;"></div>
                     <label style="line-height:34px;">Amount: &nbsp;&nbsp;</label>
                     <input type="text" name="amount" id="amount" value="<?=$total?>" def-val="<?=$fs['unit_price']?>" readonly/>
                     <div style="margin-left:5px;margin-right:5px;"></div>
-                    <button type="submit" class="btn btn-success btn-small">Dispose</button>
+                    <label style="line-height:34px;">Serial Number: &nbsp;&nbsp;</label>
+                    <input type="text" name="serial_number" id="serial_number" value="<?=$fs['serial_number']?>" readonly/>
+                    <div style="margin-left:5px;margin-right:5px;"></div>
+                    <label style="line-height:34px;">Damage/Status: &nbsp;&nbsp;</label>
+                    <textarea name="cause"></textarea>
+                    <div style="margin-left:5px;margin-right:5px;"></div>
+                </div>
+                <div class="row-fluid" style="padding:20px; display:flex">
+                    <strong>For Maintenance &nbsp;&nbsp;</strong>
+                    <input type="radio" name="rad" class="rad" value="1"/>
+                    <div style="margin-left:25px;margin-right:5px;"></div>
+                    <strong>For Disposal &nbsp;&nbsp;</strong>
+                    <input type="radio" name="rad" class="rad" value="2"/>
+                    <div style="margin-left:50px;margin-right:5px;"></div>
+                    <button type="submit" class="btn btn-success btn-small" id="btn-rad" style="display:none;">Dispose</button>
                 </div>
             </div>
         </form>
@@ -188,6 +203,43 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="block">
+            <div class="text-center" style="padding:20px;">
+                    <h5>SUMMARY OF MAINTENANCE DATA</h5>
+            </div>
+            <table class="table table-striped table-bordered table-responsive">
+                <tr>
+                    <th>Date Acquired</th>
+                    <th>Item Description</th>
+                    <th>Name of Employee</th>
+                    <th>Date Return for Maintenance</th>
+                    <th>Action</th>
+                </tr>
+      
+            <tbody>
+            <?php
+                        $sql_req = $conn->query("select * from tbl_maintenance");
+                        while($row_request = $sql_req->fetch_assoc()){
+                            //get the name of employee
+                            $sql_emp = $conn->query("select * from tbl_supplier_employee where id = ".$row_request['name_of_employee']);
+                            $emp_info = $sql_emp->fetch_assoc();
+                            ?>
+                                <tr>
+                                    <td><?=$row_request['date_acquired']?></td>
+                                    <td><?=$row_request['particulars_articles']?></td>
+                                    <td><?=$emp_info['first_name']. ' '. $emp_info['middle_name'] . ' '. $emp_info['last_name']?></td>
+                                    <td><?=$row_request['date_return']?>
+                                    <td><a href="print_maintenance_request.php?id=<?=$row_request['id']?>" class="btn btn-success btn-small"><i class="icon icon-print"></i> Print Preview</a></td>
+                                </tr>
+                            <?php
+                        }
+
+                    ?>
+            </tbody>
+            </table>
+        </div>
+
     </div>
 
 </div>
@@ -228,20 +280,53 @@
             var data  = $(this).serialize();
             data = data + '<?php if(isset($_GET['item_id'])){ echo '&item_id='.$_GET['item_id']; }?>';
             e.preventDefault();
-            $.ajax({
-                url: '../ajaxPOST/unserviceable.php',
-                type: 'post',
-                data:data,
-                success:function(x){
-                    // console.log(x);
-                    $.jGrowl("New Unserviceable data has been added", { header: 'UNSERVICEABLE PROPERTY SUCCESS' });
-                    var delay = 3000;
-                    setTimeout(function(){ window.location = 'unserviceable_property.php'; }, delay);
+            var defqty = $('#qhidden').val();
+            var qty = $('#quantity').val();
+            if(parseInt(qty) > parseInt(defqty)){
+                alert('quantity is greater than the current items!');
+                return false;
+            }else{
+                if($('#btn-rad').text() == "Proceed to Maintenance"){
+                    $.ajax({
+                    url: '../ajaxPOST/maintenance.php',
+                    type: 'post',
+                    data:data,
+                    success:function(x){
+                        console.log(x);
+                        $.jGrowl("New Unserviceable data has been added", { header: 'UNSERVICEABLE PROPERTY SUCCESS' });
+                        var delay = 3000;
+                        setTimeout(function(){ window.location = 'unserviceable_property.php'; }, delay);
+                    }
+                });
+
+                }else if($('#btn-rad').text() == "Proceed to Disposal"){
+                    $.ajax({
+                    url: '../ajaxPOST/unserviceable.php',
+                    type: 'post',
+                    data:data,
+                    success:function(x){
+                        // console.log(x);
+                        $.jGrowl("New Unserviceable data has been added", { header: 'UNSERVICEABLE PROPERTY SUCCESS' });
+                        var delay = 3000;
+                        setTimeout(function(){ window.location = 'unserviceable_property.php'; }, delay);
+                    }
+                });
+
                 }
-            });
+            }
         }
     );
-
-
+    //radio button if for maintenance or disposal
+    $('.rad').click(function() {
+        if($(this).is(':checked')) {  
+            if($(this).val() == 1){
+               $('#btn-rad').text("Proceed to Maintenance");
+               $('#btn-rad').css('display','block');
+            }else{
+               $('#btn-rad').text("Proceed to Disposal");
+               $('#btn-rad').css('display','block');
+            }
+        }
+    });
    });
 </script>

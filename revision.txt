@@ -4,6 +4,7 @@ price quotation- provide options only but still the BIDS committee will still de
                - report will only provide the quotation of suppier but still the BIDS will decision
                - plain report only for the quotation of suppliers for the itmes
                - add module in the system to provide the final output for bac reso (bac reso format)
+ ============================================================================================================ done
 
 Unserviceable item - serial number of the damaged item itself
                    - encode the actual qty. of the damaged item 
@@ -11,5 +12,5 @@ Unserviceable item - serial number of the damaged item itself
                    - put serial code number for each item (to monitor items)
                    - provide report to the end-user about the details of the damaged item (provide serial number)
 
-Property Transfer - serial number for items to be transfered
+Property Transfer - serial number for items to be transfered  == done
 Gen. Inventory Report - overlapped records.

@@ -43,11 +43,22 @@ foreach ($ac as $index => $item) {
 
 
 }
-//
-//echo '<pre>';
-//print_r($data);
-//echo '</pre>';
+$filter_arr = array();
+$flag = 99999999999999999;
+foreach($data as $key => $val){
 
+    if($val['total_amount'] < $flag){
+        $flag = $val['total_amount'];
+        $filter_arr = array($key=> array('company_name'=> $key, 'total_amount' => $val['total_amount'],'items' =>  $val['items']));
+    }
+}
+$data = $filter_arr;
+// echo '<pre>';
+// print_r($filter_arr);
+// echo '</pre>';
+// echo '<pre>';
+// print_r($data);
+// echo '</pre>';
 $textHeightY = 4;
 $margin_left = 10;
 $header_height = 13;

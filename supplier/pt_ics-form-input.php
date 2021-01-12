@@ -303,6 +303,7 @@ ul{
                         "<div class='row-fluid'><span style='font-weight: bold'>PTR Date </span> <input class='' type='text' name='ptr_date' id='ptr_date'  value='" + d.getFullYear() + "-" + (d.getUTCMonth()+1) + "-" + d.getDate() + "' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>Date Acquired</span> <input class='' type='text' name='date_acquired' id='date_acquired'  value='"+ date_acquired +"' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>Item Description</span> <input class='' type='text' name='item_desc' id='item_desc'  value='"+ item_and_specification +"' readonly/></div>" +
+                        "<div class='row-fluid'><span style='font-weight: bold'>Serial Number</span> <input class='' type='text' name='serial_number' id='serial_number'  value='"+ serial_number +"' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>Unit Cost</span> <input class='' type='text' name='unit_cost' id='unit_cost'  value='"+ unit_cost +"' readonly/></div>" +
                         "<div class='row-fluid'><span style='font-weight: bold'>Total Cost</span> <input class='' type='text' name='total_cost' id='total_cost'  value='"+ total_cost +"' readonly/></div>" +
                         "<div class='row'><button class='btn btn-danger btn-small ' style='margin-left:20px;' id='btn_undo'><i class='icon icon-undo'></i> Undo Transfer</button><span class='btn btn-small btn-success' style='margin-left:24px;' id='confirm_transfer_btn' data-id='" + transfer + "' is-transfer='"+is_transfer+"' >Confirm Transfer <i class='icon icon-caret-right'></i></span><div>");
@@ -355,6 +356,7 @@ ul{
                         let pt_ics_no = $('#ics_num').val();
                         let pt_date_acquired = $('#date_acquired').val();
                         let pt_item_description = $('#item_desc').val();
+                        let pt_serial_number = $('#serial_number').val();
                         let pt_college = $('#college').val();
                         let pt_quantity = $('#quantity').val();
                         let pt_unit = $('#unit').val();
@@ -434,6 +436,10 @@ ul{
                             '                                <div class="text-center">\n' +
                             '                                    <span class="span_label">Item description.</span>\n' +
                             '                                    <input type="text" name="pt_item_description" id="pt_item_description" value="'+pt_item_description+'" readonly/>\n' +
+                            '                                </div>\n' +
+                            '                                <div class="text-center">\n' +
+                            '                                    <span class="span_label">Serial Number.</span>\n' +
+                            '                                    <input type="text" name="pt_serial_number" id="pt_serial_number" value="'+pt_serial_number+'" readonly/>\n' +
                             '                                </div>\n' +
                             '                                <div class="text-center">\n' +
                             '                                    <span class="span_label">Qty</span>\n' +

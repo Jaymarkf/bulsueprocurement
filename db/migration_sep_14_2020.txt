@@ -302,3 +302,25 @@ CREATE TABLE `procurement_ppmp_history` (
   `description` varchar(255) NOT NULL,
   `date_change` date NOT NULL
 );
+
+ALTER TABLE `disposal_request`
+ADD `status_damage` varchar(255) COLLATE 'latin1_swedish_ci' NULL;
+
+ALTER TABLE `disposal_request`
+ADD `serial_number` varchar(255) COLLATE 'latin1_swedish_ci' NULL;
+
+
+CREATE TABLE `tbl_maintenance` (
+  `id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `date_acquired` date NOT NULL,
+  `particulars_articles` varchar(255) NOT NULL,
+  `qty` int(22) NOT NULL,
+  `unit_cost` int(22) NOT NULL,
+  `total_cost` int(22) NOT NULL,
+  `date_return` datetime NOT NULL,
+  `office_college_campus` varchar(255) NOT NULL,
+  `name_of_employee` int(11) NOT NULL,
+  `status_damage` varchar(255) NOT NULL,
+  `serial_number` varchar(255) NOT NULL
+);
+

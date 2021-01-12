@@ -44,15 +44,27 @@ $sql = $conn->query("select * from summary_report where ".$condition." <> '' and
 
 while($data = $sql->fetch_assoc()) {
     //get the user
+    $width = $pdf->GetStringWidth($data['item_description']);
+    //flag 78 
+    if($width > 78){
+        $height = 20;
+    }else{
+        $height = 10;
+    }
     $ss = $conn->query("select * from tbl_supplier_employee where id = ".$data['issued_by']);
     $fs = $ss->fetch_assoc();
     $name = $fs['first_name']. ' '. $fs['middle_name']. ' '. $fs['last_name'];
-    $pdf->Cell("10", 10, $data['quantity'], "1", "0", "C");
-    $pdf->Cell("20", 10, $data['unit'], "1", "0", "C");
-    $pdf->Cell("80", 10, $data['item_description'], "1", "0", "C");
-    $pdf->Cell("25", 10, $data['date_acquired'], "1", "0", "C");
-    $pdf->Cell("25", 10, $data['unit_cost'], "1", "0", "C");
-    $pdf->Cell("35", 10, $name, "1", "1", "C");
+    $pdf->MultiCell("10", $height, $data['quantity'], "1", "L");
+    $pdf->SetXY($pdf->GetX()+10,$pdf->GetY()-$height);
+    $pdf->MultiCell("20", $height, $data['unit'], "1", "L");
+    $pdf->SetXY($pdf->GetX()+30,$pdf->GetY()-$height);
+    $pdf->MultiCell("80", 10, $data['item_description'], "1", "L");
+    $pdf->SetXY($pdf->GetX()+110,$pdf->GetY()-$height);
+    $pdf->MultiCell("25", $height, $data['date_acquired'], "1", "L");
+    $pdf->SetXY($pdf->GetX()+135,$pdf->GetY()-$height);
+    $pdf->MultiCell("25", $height, $data['unit_cost'], "1", "L");
+    $pdf->SetXY($pdf->GetX()+160,$pdf->GetY()-$height);
+    $pdf->MultiCell("35", $height, $name, "1", "L");
 }
 $pdf->Ln(10);
 $pdf->Cell($pdf->GetPageWidth()/2,"10","Acknowledge by:",'','','L');
