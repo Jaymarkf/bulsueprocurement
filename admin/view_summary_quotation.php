@@ -74,11 +74,14 @@ if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
                         </div>
                     </div>
 
-
+                    
 
                     <div class="block-content collapse in">
                         <div class="span12">
                             <!-- <form action="quotation-delete.php" method="post" id="deleteForm"> -->
+                            <div class="row-fluid">
+                                <a href="view_summary_quotation_pdf.php" class="btn btn-success btn-lg"><i class="icon icon-print"></i> &nbsp;Print Form</a>
+                            </div>
                             <div class="container-fluid" style="padding:24px">
                                 <table class="table table-bordered table-striped table-condensed" id="quot">
                                     <thead>
@@ -91,7 +94,6 @@ if(!isset($_SESSION)){ session_start(); }  include('header.php'); ?>
 
                                     <?php
                                     $ArrList = array();
-                                    $sortedlist = array();
                                     //select company first to filter the rfq
                                     $qrycompany = $conn->query("select * from tbl_company");
                                     while($company = $qrycompany->fetch_assoc()){

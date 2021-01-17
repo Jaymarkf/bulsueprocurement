@@ -1,3 +1,11 @@
+
+<style>
+textarea {
+  resize: vertical;
+  min-width:30px;
+  max-width:120px;
+}
+</style>
 <div class="block">
     <div class="container-fluid" style="padding:24px">
         <div class="text-center">
@@ -116,7 +124,7 @@
                     <input type="text" name="serial_number" id="serial_number" value="<?=$fs['serial_number']?>" readonly/>
                     <div style="margin-left:5px;margin-right:5px;"></div>
                     <label style="line-height:34px;">Damage/Status: &nbsp;&nbsp;</label>
-                    <textarea name="cause"></textarea>
+                    <textarea name="cause" cols="5" rows="5"></textarea>
                     <div style="margin-left:5px;margin-right:5px;"></div>
                 </div>
                 <div class="row-fluid" style="padding:20px; display:flex">
