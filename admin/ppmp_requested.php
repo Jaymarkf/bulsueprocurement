@@ -60,6 +60,8 @@
                             <div class="navbar navbar-inner block-header">
                                 <div class="muted pull-left"><img src="../images/buttons/ppmp.png" width="5%"> NEW Project Procurement Management Plan Approval - <span class="badge badge-warning">YEAR <?php echo $Year; ?></span></div>
 								<div class="muted pull-right">
+								<a href="printable_ppmp_logs_pdf.php?id=<?=$_GET['id']?>" class="btn btn-info btn-small">View Printable History Logs</a>
+								
 									<a href="ppmp_history.php?id=<?=$_GET['id']?>" class="btn btn-warning btn-small">Changes History Logs of PPMP</a>
 								</div>
 							   
